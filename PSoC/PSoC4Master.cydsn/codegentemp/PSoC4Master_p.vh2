@@ -1,5 +1,5 @@
 -- Project:   PSoC4Master
--- Generated: 05/18/2016 13:43:45
+-- Generated: 05/18/2016 18:01:49
 -- PSoC Creator  3.3 CP2
 
 ENTITY PSoC4Master IS
@@ -1196,6 +1196,13 @@ BEGIN
             out_clock => open,
             out_clock_en => '1',
             out_reset => '0');
+
+    \SPIS:SCB_IRQ\:interrupt
+        GENERIC MAP(
+            int_type => "10")
+        PORT MAP(
+            interrupt => Net_10,
+            clock => ClockBlock_HFCLK);
 
     \SPIS:SCB\:m0s8scbcell
         GENERIC MAP(

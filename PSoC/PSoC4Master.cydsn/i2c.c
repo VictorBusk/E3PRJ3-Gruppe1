@@ -50,7 +50,7 @@ void i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal)
     {
         if (I2CM_I2CMasterGetWriteBufSize() == I2C_BUFFER_SIZE)
         {
-            setLed(0,1,0,255);
+            setLed(0,1,0,25);
         }
     }
     else
@@ -58,7 +58,7 @@ void i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal)
         setLed(1,0,0,255);
     }
     (void) I2CM_I2CMasterClearStatus();
-    setLed(0,0,0,255);
+    setLed(0,0,0,25);
 }
 void i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal)
 {
@@ -78,7 +78,7 @@ void i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal)
             {
                 i2cRxCmd = i2cRxData[1];
                 *i2cRxVal = i2cRxData[2];
-                setLed(0,1,0,255);
+                setLed(0,1,0,25);
             }
         }
     }
@@ -87,7 +87,7 @@ void i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal)
         setLed(1,0,0,255);
     }
     (void) I2CM_I2CMasterClearStatus(); 
-    setLed(0,0,0,255);
+    setLed(0,0,0,25);
 }
 
 void i2c_slave()

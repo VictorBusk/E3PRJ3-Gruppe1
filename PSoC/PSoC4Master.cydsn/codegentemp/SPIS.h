@@ -57,7 +57,7 @@
 #endif /* (!SPIS_CY_SCBIP_V1) */
 
 /* Interrupts remove options */
-#define SPIS_REMOVE_SCB_IRQ             (1u)
+#define SPIS_REMOVE_SCB_IRQ             (0u)
 #define SPIS_SCB_IRQ_INTERNAL           (0u == SPIS_REMOVE_SCB_IRQ)
 
 #define SPIS_REMOVE_UART_RX_WAKEUP_IRQ  (1u)

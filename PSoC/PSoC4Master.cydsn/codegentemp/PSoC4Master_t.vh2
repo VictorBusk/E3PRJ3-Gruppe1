@@ -1,5 +1,5 @@
--- Project:   C:\E3PRJ3\PSoC4Master.cydsn\PSoC4Master.cyprj
--- Generated: 05/18/2016 13:43:46
+-- Project:   C:\E3PRJ3-Gruppe1\PSoC\PSoC4Master.cydsn\PSoC4Master.cyprj
+-- Generated: 05/18/2016 18:01:50
 -- PSoC Creator  3.3 CP2
 
 ENTITY PSoC4Master IS
@@ -100,6 +100,7 @@ ARCHITECTURE __DEFAULT__ OF PSoC4Master IS
     ATTRIBUTE Location OF \I2CM:scl(0)\ : LABEL IS "P4[0]";
     ATTRIBUTE lib_model OF Knap(0) : LABEL IS "iocell10";
     ATTRIBUTE Location OF Knap(0) : LABEL IS "P1[0]";
+    ATTRIBUTE Location OF \SPIS:SCB_IRQ\ : LABEL IS "[IntrContainer=(0)][IntrId=(11)]";
     ATTRIBUTE Location OF \SPIS:SCB\ : LABEL IS "F(SCB,1)";
     ATTRIBUTE Location OF \I2CM:SCB_IRQ\ : LABEL IS "[IntrContainer=(0)][IntrId=(10)]";
     ATTRIBUTE Location OF \I2CM:SCB\ : LABEL IS "F(SCB,0)";
@@ -1210,6 +1211,13 @@ BEGIN
             out_clock => open,
             out_clock_en => '1',
             out_reset => '0');
+
+    \SPIS:SCB_IRQ\:interrupt
+        GENERIC MAP(
+            int_type => "10")
+        PORT MAP(
+            interrupt => Net_10,
+            clock => ClockBlock_HFCLK);
 
     \SPIS:SCB\:m0s8scbcell
         GENERIC MAP(

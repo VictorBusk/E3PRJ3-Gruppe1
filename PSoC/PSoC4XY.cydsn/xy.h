@@ -30,6 +30,11 @@
 #define interruptSteps (50u)
 #define resolution (255u) 
     
+extern uint32 xMax;
+extern uint32 xPos;
+extern uint32 yMax;
+extern uint32 yPos;
+    
 void xy_init(void);
 CY_ISR_PROTO(isr_X);
 CY_ISR_PROTO(isr_Y);

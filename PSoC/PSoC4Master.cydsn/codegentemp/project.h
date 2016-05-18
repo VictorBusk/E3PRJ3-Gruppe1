@@ -43,6 +43,7 @@
 #include "SPIS_ss_s_aliases.h"
 #include "SPIS_miso_s.h"
 #include "SPIS_miso_s_aliases.h"
+#include "SPIS_SCB_IRQ.h"
 #include "SPIS_sclk_s.h"
 #include "SPIS_sclk_s_aliases.h"
 #include "SPIS_mosi_s.h"

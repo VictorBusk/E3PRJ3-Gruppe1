@@ -2,7 +2,7 @@
 --	Conversion of PSoC4Master.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed May 18 13:43:45 2016
+--	Wed May 18 18:01:48 2016
 --
 
 USE cypress.cypress.all;
@@ -43,6 +43,7 @@ TERMINAL \SPIS:tmpSIOVREF__miso_s_net_0\ : bit;
 SIGNAL \SPIS:tmpINTERRUPT_0__miso_s_net_0\ : bit;
 SIGNAL \SPIS:Net_1099\ : bit;
 SIGNAL \SPIS:Net_1258\ : bit;
+SIGNAL Net_10 : bit;
 SIGNAL \SPIS:tmpOE__sclk_s_net_0\ : bit;
 SIGNAL \SPIS:tmpIO_0__sclk_s_net_0\ : bit;
 TERMINAL \SPIS:tmpSIOVREF__sclk_s_net_0\ : bit;
@@ -53,7 +54,6 @@ TERMINAL \SPIS:tmpSIOVREF__mosi_s_net_0\ : bit;
 SIGNAL \SPIS:tmpINTERRUPT_0__mosi_s_net_0\ : bit;
 SIGNAL \SPIS:Net_1175\ : bit;
 SIGNAL \SPIS:Net_747\ : bit;
-SIGNAL Net_10 : bit;
 SIGNAL \SPIS:Net_1062\ : bit;
 SIGNAL \SPIS:Net_1053\ : bit;
 SIGNAL \SPIS:Net_1061\ : bit;
@@ -302,6 +302,9 @@ one <=  ('1') ;
 		out_clock_en=>one,
 		out_reset=>zero,
 		interrupt=>\SPIS:tmpINTERRUPT_0__miso_s_net_0\);
+\SPIS:SCB_IRQ\:cy_isr_v1_0
+	GENERIC MAP(int_type=>"10")
+	PORT MAP(int_signal=>Net_10);
 \SPIS:sclk_s\:cy_psoc3_pins_v1_10
 	GENERIC MAP(id=>"8c8734ef-3644-4eed-bc55-360072b94fff/4c15b41e-e284-4978-99e7-5aaee19bd0ce",
 		drive_mode=>"001",

@@ -38,24 +38,24 @@ int main()
     for(;;)
     {
         setLed(0,0,0,0);
-        spi_rx();
+//        spi_rx();
         
-        if(Knap_Read() == 0u)
-        {
-            CyDelay(5u);
-            if(Knap_Read() == 0u)
-            {
-                struct Data test;
-                test.cmd_ = 0x20;
-                test.val_ = 0xAA;
-                pushQueue(test);
-            }
-            while(Knap_Read() == 0u)
-            {
-            }
-        }
+//        if(Knap_Read() == 0u)
+//        {
+//            CyDelay(5u);
+//            if(Knap_Read() == 0u)
+//            {
+//                struct Data test;
+//                test.cmd_ = 0x20;
+//                test.val_ = 0xAA;
+//                pushQueue(test);
+//            }
+//            while(Knap_Read() == 0u)
+//            {
+//            }
+//        }
         
-        i2c_slave();
+//        i2c_slave();
         
         while(isEmptyQueue() != 1)
         {
@@ -67,7 +67,6 @@ int main()
         
 //        spi_cleanup();
         
-        CyDelay(50);
     }
 }
 

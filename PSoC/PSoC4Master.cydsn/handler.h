@@ -40,7 +40,7 @@ extern void handler(uint8 cmd, uint8 val);
 /* I2C slave address to communicate with */
 #define PSoC_XY (0x08u)
 #define PSoC_Z (0x09u)
-#define PSoC_Sensor (0x11u)
+#define PSoC_Sensor (0x10u)
 
 /* Commands set */
 #define setXPos (0x10u)

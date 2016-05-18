@@ -27,9 +27,11 @@
 *         Function Prototypes
 ****************************************/
     
+CY_ISR_PROTO(isr_spi_rx);
 void spi_init();
 void spi_rx();
 void spi_tx(uint8 data);
+void spi_cleanup();
 
 /***************************************
 *            Constants
