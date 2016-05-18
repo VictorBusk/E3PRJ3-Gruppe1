@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>E3PJR</class>
+ <widget class="QTabWidget" name="E3PJR">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>480</width>
+    <height>278</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>TabWidget</string>
+  </property>
+  <property name="currentIndex">
+   <number>0</number>
+  </property>
+  <widget class="QWidget" name="XYZ">
+   <attribute name="title">
+    <string>XYZ</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="setXYZ">
+      <item>
+       <widget class="QSlider" name="sliderSetX">
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="setX">
+        <item>
+         <widget class="QLabel" name="labelSetX">
+          <property name="text">
+           <string>setX</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="buddy">
+           <cstring>spinSetX</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinSetX">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineGetXPos"/>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineGetXMax"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QSlider" name="sliderSetY">
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="setY">
+        <item>
+         <widget class="QLabel" name="labelSetY">
+          <property name="text">
+           <string>setY</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="buddy">
+           <cstring>spinSetY</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinSetY">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineGetYPos"/>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineGetYMax"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QSlider" name="sliderSetZ">
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="setZ">
+        <item>
+         <widget class="QLabel" name="labelSetZ">
+          <property name="text">
+           <string>setZ</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="buddy">
+           <cstring>spinSetZ</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinSetZ">
+          <property name="maximum">
+           <number>255</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineGetZPos"/>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineGetZMax"/>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="statusXYZ">
+      <item>
+       <widget class="QPushButton" name="pushSetXYZ">
+        <property name="text">
+         <string>SetXYZ</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushGetXYZPos">
+        <property name="text">
+         <string>GetXYZPos</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushGetXYZMax">
+        <property name="text">
+         <string>GetXYZMax</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushCalibrateXYZ">
+        <property name="text">
+         <string>CalibrateXYZ</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>spinSetX</tabstop>
+  <tabstop>spinSetY</tabstop>
+  <tabstop>spinSetZ</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>sliderSetX</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinSetX</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>22</x>
+     <y>117</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>75</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinSetX</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sliderSetX</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>26</x>
+     <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderSetY</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinSetY</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>175</x>
+     <y>124</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>212</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinSetY</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sliderSetY</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>286</x>
+     <y>211</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>171</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderSetZ</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinSetZ</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>118</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>211</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinSetZ</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>sliderSetZ</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>421</x>
+     <y>212</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>327</x>
+     <y>97</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

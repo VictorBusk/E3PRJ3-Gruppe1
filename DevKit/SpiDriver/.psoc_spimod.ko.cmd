@@ -1,0 +1,1 @@
+cmd_/home/stud/F16E3PRJG1/SpiDriver/psoc_spimod.ko := arm-poky-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/stud/F16E3PRJG1/SpiDriver/psoc_spimod.ko /home/stud/F16E3PRJG1/SpiDriver/psoc_spimod.o /home/stud/F16E3PRJG1/SpiDriver/psoc_spimod.mod.o
