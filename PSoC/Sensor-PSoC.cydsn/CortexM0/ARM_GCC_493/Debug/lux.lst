@@ -1,0 +1,1281 @@
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"lux.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.global	__aeabi_uidiv
+  18              		.section	.text.CalculateLux,"ax",%progbits
+  19              		.align	2
+  20              		.global	CalculateLux
+  21              		.code	16
+  22              		.thumb_func
+  23              		.type	CalculateLux, %function
+  24              	CalculateLux:
+  25              	.LFB0:
+  26              		.file 1 ".\\lux.c"
+   1:.\lux.c       **** //****************************************************************************
+   2:.\lux.c       **** //
+   3:.\lux.c       **** // Copyright ? 2004−2005 TAOS, Inc.
+   4:.\lux.c       **** //
+   5:.\lux.c       **** // THIS CODE AND INFORMATION IS PROVIDED ”AS IS” WITHOUT WARRANTY OF ANY
+   6:.\lux.c       **** // KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+   7:.\lux.c       **** // IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR
+   8:.\lux.c       **** // PURPOSE.
+   9:.\lux.c       **** //
+  10:.\lux.c       **** // Module Name:
+  11:.\lux.c       **** // lux.c
+  12:.\lux.c       **** //
+  13:.\lux.c       **** //****************************************************************************
+  14:.\lux.c       **** #define LUX_SCALE 14 // scale by 2^14
+  15:.\lux.c       **** #define RATIO_SCALE 9 // scale ratio by 2^9
+  16:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  17:.\lux.c       **** // Integration time scaling factors
+  18:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  19:.\lux.c       **** #define CH_SCALE 10 // scale channel values by 2^10
+  20:.\lux.c       **** #define CHSCALE_TINT0 0x7517 // 322/11 * 2^CH_SCALE
+  21:.\lux.c       **** #define CHSCALE_TINT1 0x0fe7 // 322/81 * 2^CH_SCALE
+  22:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  23:.\lux.c       **** // T, FN, and CL Package coefficients
+  24:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  25:.\lux.c       **** // For Ch1/Ch0=0.00 to 0.50
+  26:.\lux.c       **** // Lux/Ch0=0.0304−0.062*((Ch1/Ch0)^1.4)
+  27:.\lux.c       **** // piecewise approximation
+  28:.\lux.c       **** // For Ch1/Ch0=0.00 to 0.125:
+  29:.\lux.c       **** // Lux/Ch0=0.0304−0.0272*(Ch1/Ch0)
+  30:.\lux.c       **** //
+  31:.\lux.c       **** // For Ch1/Ch0=0.125 to 0.250:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 2
+
+
+  32:.\lux.c       **** // Lux/Ch0=0.0325−0.0440*(Ch1/Ch0)
+  33:.\lux.c       **** //
+  34:.\lux.c       **** // For Ch1/Ch0=0.250 to 0.375:
+  35:.\lux.c       **** // Lux/Ch0=0.0351−0.0544*(Ch1/Ch0)
+  36:.\lux.c       **** //
+  37:.\lux.c       **** // For Ch1/Ch0=0.375 to 0.50:
+  38:.\lux.c       **** // Lux/Ch0=0.0381−0.0624*(Ch1/Ch0)
+  39:.\lux.c       **** //
+  40:.\lux.c       **** // For Ch1/Ch0=0.50 to 0.61:
+  41:.\lux.c       **** // Lux/Ch0=0.0224−0.031*(Ch1/Ch0)
+  42:.\lux.c       **** //
+  43:.\lux.c       **** // For Ch1/Ch0=0.61 to 0.80:
+  44:.\lux.c       **** // Lux/Ch0=0.0128−0.0153*(Ch1/Ch0)
+  45:.\lux.c       **** //
+  46:.\lux.c       **** // For Ch1/Ch0=0.80 to 1.30:
+  47:.\lux.c       **** // Lux/Ch0=0.00146−0.00112*(Ch1/Ch0)
+  48:.\lux.c       **** //
+  49:.\lux.c       **** // For Ch1/Ch0>1.3:
+  50:.\lux.c       **** // Lux/Ch0=0
+  51:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  52:.\lux.c       **** #define K1T 0x0040 // 0.125 * 2^RATIO_SCALE
+  53:.\lux.c       **** #define B1T 0x01f2 // 0.0304 * 2^LUX_SCALE
+  54:.\lux.c       **** #define M1T 0x01be // 0.0272 * 2^LUX_SCALE
+  55:.\lux.c       **** #define K2T 0x0080 // 0.250 * 2^RATIO_SCALE
+  56:.\lux.c       **** #define B2T 0x0214 // 0.0325 * 2^LUX_SCALE
+  57:.\lux.c       **** #define M2T 0x02d1 // 0.0440 * 2^LUX_SCALE
+  58:.\lux.c       **** #define K3T 0x00c0 // 0.375 * 2^RATIO_SCALE
+  59:.\lux.c       **** #define B3T 0x023f // 0.0351 * 2^LUX_SCALE
+  60:.\lux.c       **** #define M3T 0x037b // 0.0544 * 2^LUX_SCALE
+  61:.\lux.c       **** #define K4T 0x0100 // 0.50 * 2^RATIO_SCALE
+  62:.\lux.c       **** #define B4T 0x0270 // 0.0381 * 2^LUX_SCALE
+  63:.\lux.c       **** #define M4T 0x03fe // 0.0624 * 2^LUX_SCALE
+  64:.\lux.c       **** #define K5T 0x0138 // 0.61 * 2^RATIO_SCALE
+  65:.\lux.c       **** #define B5T 0x016f // 0.0224 * 2^LUX_SCALE
+  66:.\lux.c       **** #define M5T 0x01fc // 0.0310 * 2^LUX_SCALE
+  67:.\lux.c       **** #define K6T 0x019a // 0.80 * 2^RATIO_SCALE
+  68:.\lux.c       **** #define B6T 0x00d2 // 0.0128 * 2^LUX_SCALE
+  69:.\lux.c       **** #define M6T 0x00fb // 0.0153 * 2^LUX_SCALE
+  70:.\lux.c       **** #define K7T 0x029a // 1.3 * 2^RATIO_SCALE
+  71:.\lux.c       **** #define B7T 0x0018 // 0.00146 * 2^LUX_SCALE
+  72:.\lux.c       **** #define M7T 0x0012 // 0.00112 * 2^LUX_SCALE
+  73:.\lux.c       **** #define K8T 0x029a // 1.3 * 2^RATIO_SCALE
+  74:.\lux.c       **** #define B8T 0x0000 // 0.000 * 2^LUX_SCALE
+  75:.\lux.c       **** #define M8T 0x0000 // 0.000 * 2^LUX_SCALE
+  76:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  77:.\lux.c       **** // CS package coefficients
+  78:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  79:.\lux.c       **** // For 0 <= Ch1/Ch0 <= 0.52
+  80:.\lux.c       **** // Lux/Ch0 = 0.0315−0.0593*((Ch1/Ch0)^1.4)
+  81:.\lux.c       **** // piecewise approximation
+  82:.\lux.c       **** // For 0 <= Ch1/Ch0 <= 0.13
+  83:.\lux.c       **** // Lux/Ch0 = 0.0315−0.0262*(Ch1/Ch0)
+  84:.\lux.c       **** // For 0.13 <= Ch1/Ch0 <= 0.26
+  85:.\lux.c       **** // Lux/Ch0 = 0.0337−0.0430*(Ch1/Ch0)
+  86:.\lux.c       **** // For 0.26 <= Ch1/Ch0 <= 0.39
+  87:.\lux.c       **** // Lux/Ch0 = 0.0363−0.0529*(Ch1/Ch0)
+  88:.\lux.c       **** // For 0.39 <= Ch1/Ch0 <= 0.52
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 3
+
+
+  89:.\lux.c       **** // Lux/Ch0 = 0.0392−0.0605*(Ch1/Ch0)
+  90:.\lux.c       **** // For 0.52 < Ch1/Ch0 <= 0.65
+  91:.\lux.c       **** // Lux/Ch0 = 0.0229−0.0291*(Ch1/Ch0)
+  92:.\lux.c       **** // For 0.65 < Ch1/Ch0 <= 0.80
+  93:.\lux.c       **** // Lux/Ch0 = 0.00157−0.00180*(Ch1/Ch0)
+  94:.\lux.c       **** // For 0.80 < Ch1/Ch0 <= 1.30
+  95:.\lux.c       **** // Lux/Ch0 = 0.00338−0.00260*(Ch1/Ch0)
+  96:.\lux.c       **** // For Ch1/Ch0 > 1.30
+  97:.\lux.c       **** // Lux = 0
+  98:.\lux.c       **** //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+  99:.\lux.c       **** #define K1C 0x0043 // 0.130 * 2^RATIO_SCALE
+ 100:.\lux.c       **** #define B1C 0x0204 // 0.0315 * 2^LUX_SCALE
+ 101:.\lux.c       **** #define M1C 0x01ad // 0.0262 * 2^LUX_SCALE
+ 102:.\lux.c       **** #define K2C 0x0085 // 0.260 * 2^RATIO_SCALE
+ 103:.\lux.c       **** #define B2C 0x0228 // 0.0337 * 2^LUX_SCALE
+ 104:.\lux.c       **** #define M2C  0x02c1 // 0.0430 * 2^LUX_SCALE
+ 105:.\lux.c       **** #define K3C 0x00c8 // 0.390 * 2^RATIO_SCALE
+ 106:.\lux.c       **** #define B3C 0x0253 // 0.0363 * 2^LUX_SCALE
+ 107:.\lux.c       **** #define M3C 0x0363 // 0.0529 * 2^LUX_SCALE
+ 108:.\lux.c       **** #define K4C 0x010a // 0.520 * 2^RATIO_SCALE
+ 109:.\lux.c       **** #define B4C 0x0282 // 0.0392 * 2^LUX_SCALE
+ 110:.\lux.c       **** #define M4C 0x03df // 0.0605 * 2^LUX_SCALE
+ 111:.\lux.c       **** #define K5C 0x014d // 0.65 * 2^RATIO_SCALE
+ 112:.\lux.c       **** #define B5C 0x0177 // 0.0229 * 2^LUX_SCALE
+ 113:.\lux.c       **** #define M5C 0x01dd // 0.0291 * 2^LUX_SCALE
+ 114:.\lux.c       **** #define K6C 0x019a // 0.80 * 2^RATIO_SCALE
+ 115:.\lux.c       **** #define B6C 0x0101 // 0.0157 * 2^LUX_SCALE
+ 116:.\lux.c       **** #define M6C 0x0127 // 0.0180 * 2^LUX_SCALE
+ 117:.\lux.c       **** #define K7C 0x029a // 1.3 * 2^RATIO_SCALE
+ 118:.\lux.c       **** #define B7C 0x0037 // 0.00338 * 2^LUX_SCALE
+ 119:.\lux.c       **** #define M7C 0x002b // 0.00260 * 2^LUX_SCALE
+ 120:.\lux.c       **** #define K8C 0x029a // 1.3 * 2^RATIO_SCALE
+ 121:.\lux.c       **** #define B8C 0x0000 // 0.000 * 2^LUX_SCALE
+ 122:.\lux.c       **** #define M8C 0x0000 // 0.000 * 2^LUX_SCALE
+ 123:.\lux.c       **** // lux equation approximation without floating point calculations
+ 124:.\lux.c       **** //////////////////////////////////////////////////////////////////////////////
+ 125:.\lux.c       **** // Routine: unsigned int CalculateLux(unsigned int ch0, unsigned int ch0, int iType)
+ 126:.\lux.c       **** //
+ 127:.\lux.c       **** // Description: Calculate the approximate illuminance (lux) given the raw
+ 128:.\lux.c       **** // channel values of the TSL2560. The equation if implemented
+ 129:.\lux.c       **** // as a piece−wise linear approximation.
+ 130:.\lux.c       **** //
+ 131:.\lux.c       **** // Arguments: unsigned int iGain − gain, where 0:1X, 1:16X
+ 132:.\lux.c       **** // unsigned int tInt − integration time, where 0:13.7mS, 1:100mS, 2:402mS,
+ 133:.\lux.c       **** // 3:Manual
+ 134:.\lux.c       **** // unsigned int ch0 − raw channel value from channel 0 of TSL2560
+ 135:.\lux.c       **** // unsigned int ch1 − raw channel value from channel 1 of TSL2560
+ 136:.\lux.c       **** // unsigned int iType − package type (T or CS)
+ 137:.\lux.c       **** //
+ 138:.\lux.c       **** // Return: unsigned int − the approximate illuminance (lux)
+ 139:.\lux.c       **** //
+ 140:.\lux.c       **** //////////////////////////////////////////////////////////////////////////////
+ 141:.\lux.c       **** unsigned int CalculateLux(unsigned int iGain, unsigned int tInt, unsigned int ch0,
+ 142:.\lux.c       ****                           unsigned int ch1, int iType)
+ 143:.\lux.c       **** {
+  27              		.loc 1 143 0
+  28              		.cfi_startproc
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 4
+
+
+  29              	.LVL0:
+  30 0000 38B5     		push	{r3, r4, r5, lr}
+  31              		.cfi_def_cfa_offset 16
+  32              		.cfi_offset 3, -16
+  33              		.cfi_offset 4, -12
+  34              		.cfi_offset 5, -8
+  35              		.cfi_offset 14, -4
+ 144:.\lux.c       ****   //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+ 145:.\lux.c       ****   // first, scale the channel values depending on the gain and integration time
+ 146:.\lux.c       ****   // 16X, 402mS is nominal.
+ 147:.\lux.c       ****   // scale if integration time is NOT 402 msec
+ 148:.\lux.c       ****   unsigned long chScale;
+ 149:.\lux.c       ****   unsigned long channel1;
+ 150:.\lux.c       ****   unsigned long channel0;
+ 151:.\lux.c       ****   switch (tInt)
+  36              		.loc 1 151 0
+  37 0002 0029     		cmp	r1, #0
+  38 0004 02D0     		beq	.L3
+  39 0006 0129     		cmp	r1, #1
+  40 0008 05D0     		beq	.L10
+  41 000a 01E0     		b	.L27
+  42              	.L3:
+ 152:.\lux.c       ****   {
+ 153:.\lux.c       ****     case 0: // 13.7 msec
+ 154:.\lux.c       ****       chScale = CHSCALE_TINT0;
+  43              		.loc 1 154 0
+  44 000c 464C     		ldr	r4, .L29
+  45 000e 03E0     		b	.L4
+  46              	.L27:
+  47              	.LVL1:
+ 155:.\lux.c       ****       break;
+ 156:.\lux.c       ****     case 1: // 101 msec
+ 157:.\lux.c       ****       chScale = CHSCALE_TINT1;
+ 158:.\lux.c       ****       break;
+ 159:.\lux.c       ****     default: // assume no scaling
+ 160:.\lux.c       ****       chScale = (1 << CH_SCALE);
+  48              		.loc 1 160 0
+  49 0010 8024     		mov	r4, #128
+  50 0012 E400     		lsl	r4, r4, #3
+ 161:.\lux.c       ****       break;
+  51              		.loc 1 161 0
+  52 0014 00E0     		b	.L4
+  53              	.LVL2:
+  54              	.L10:
+ 157:.\lux.c       ****       break;
+  55              		.loc 1 157 0
+  56 0016 454C     		ldr	r4, .L29+4
+  57              	.L4:
+  58              	.LVL3:
+ 162:.\lux.c       ****   }
+ 163:.\lux.c       ****   // scale if gain is NOT 16X
+ 164:.\lux.c       ****   if (!iGain) chScale = chScale << 4; // scale 1X to 16X
+  59              		.loc 1 164 0
+  60 0018 0028     		cmp	r0, #0
+  61 001a 00D1     		bne	.L5
+  62              		.loc 1 164 0 is_stmt 0 discriminator 1
+  63 001c 2401     		lsl	r4, r4, #4
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 5
+
+
+  64              	.LVL4:
+  65              	.L5:
+ 165:.\lux.c       ****   // scale the channel values
+ 166:.\lux.c       ****   channel0 = (ch0 * chScale) >> CH_SCALE;
+  66              		.loc 1 166 0 is_stmt 1
+  67 001e 6243     		mul	r2, r4
+  68              	.LVL5:
+  69 0020 950A     		lsr	r5, r2, #10
+  70              	.LVL6:
+ 167:.\lux.c       ****   channel1 = (ch1 * chScale) >> CH_SCALE;
+  71              		.loc 1 167 0
+  72 0022 5C43     		mul	r4, r3
+  73              	.LVL7:
+  74 0024 A40A     		lsr	r4, r4, #10
+  75              	.LVL8:
+ 168:.\lux.c       ****   //−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−�
+ 169:.\lux.c       ****   // find the ratio of the channel values (Channel1/Channel0)
+ 170:.\lux.c       ****   // protect against divide by zero
+ 171:.\lux.c       ****   unsigned long ratio1 = 0;
+ 172:.\lux.c       ****   if (channel0 != 0) ratio1 = (channel1 << (RATIO_SCALE+1)) / channel0;
+  76              		.loc 1 172 0
+  77 0026 002D     		cmp	r5, #0
+  78 0028 04D0     		beq	.L11
+  79              		.loc 1 172 0 is_stmt 0 discriminator 1
+  80 002a A002     		lsl	r0, r4, #10
+  81              	.LVL9:
+  82 002c 291C     		mov	r1, r5
+  83              	.LVL10:
+  84 002e FFF7FEFF 		bl	__aeabi_uidiv
+  85              	.LVL11:
+  86 0032 00E0     		b	.L6
+  87              	.LVL12:
+  88              	.L11:
+ 171:.\lux.c       ****   if (channel0 != 0) ratio1 = (channel1 << (RATIO_SCALE+1)) / channel0;
+  89              		.loc 1 171 0 is_stmt 1
+  90 0034 0020     		mov	r0, #0
+  91              	.LVL13:
+  92              	.L6:
+ 173:.\lux.c       ****   // round the ratio value
+ 174:.\lux.c       ****   unsigned long ratio = (ratio1 + 1) >> 1;
+  93              		.loc 1 174 0
+  94 0036 411C     		add	r1, r0, #1
+  95 0038 4908     		lsr	r1, r1, #1
+  96              	.LVL14:
+ 175:.\lux.c       ****   // is ratio <= eachBreak ?
+ 176:.\lux.c       ****   unsigned int b = 0, m = 0;
+ 177:.\lux.c       ****   switch (iType)
+  97              		.loc 1 177 0
+  98 003a 049B     		ldr	r3, [sp, #16]
+  99 003c 002B     		cmp	r3, #0
+ 100 003e 02D0     		beq	.L8
+ 101 0040 012B     		cmp	r3, #1
+ 102 0042 16D0     		beq	.L9
+ 103 0044 2CE0     		b	.L28
+ 104              	.L8:
+ 178:.\lux.c       ****   {
+ 179:.\lux.c       ****     case 0: // T, FN and CL package
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 6
+
+
+ 180:.\lux.c       ****       if ((ratio >= 0) && (ratio <= K1T))
+ 105              		.loc 1 180 0
+ 106 0046 4029     		cmp	r1, #64
+ 107 0048 2DD9     		bls	.L13
+ 181:.\lux.c       ****       {b=B1T; m=M1T;}
+ 182:.\lux.c       ****       else if (ratio <= K2T)
+ 108              		.loc 1 182 0
+ 109 004a 8029     		cmp	r1, #128
+ 110 004c 30D9     		bls	.L14
+ 183:.\lux.c       ****       {b=B2T; m=M2T;}
+ 184:.\lux.c       ****       else if (ratio <= K3T)
+ 111              		.loc 1 184 0
+ 112 004e C029     		cmp	r1, #192
+ 113 0050 32D9     		bls	.L15
+ 185:.\lux.c       ****       {b=B3T; m=M3T;}
+ 186:.\lux.c       ****       else if (ratio <= K4T)
+ 114              		.loc 1 186 0
+ 115 0052 8023     		mov	r3, #128
+ 116 0054 5B00     		lsl	r3, r3, #1
+ 117 0056 9942     		cmp	r1, r3
+ 118 0058 31D9     		bls	.L16
+ 187:.\lux.c       ****       {b=B4T; m=M4T;}
+ 188:.\lux.c       ****       else if (ratio <= K5T)
+ 119              		.loc 1 188 0
+ 120 005a 3833     		add	r3, r3, #56
+ 121 005c 9942     		cmp	r1, r3
+ 122 005e 32D9     		bls	.L17
+ 189:.\lux.c       ****       {b=B5T; m=M5T;}
+ 190:.\lux.c       ****       else if (ratio <= K6T)
+ 123              		.loc 1 190 0
+ 124 0060 6233     		add	r3, r3, #98
+ 125 0062 9942     		cmp	r1, r3
+ 126 0064 34D9     		bls	.L18
+ 191:.\lux.c       ****       {b=B6T; m=M6T;}
+ 192:.\lux.c       ****       else if (ratio <= K7T)
+ 127              		.loc 1 192 0
+ 128 0066 324B     		ldr	r3, .L29+8
+ 129 0068 9942     		cmp	r1, r3
+ 130 006a 34D8     		bhi	.L19
+ 193:.\lux.c       ****       {b=B7T; m=M7T;}
+ 131              		.loc 1 193 0
+ 132 006c 1223     		mov	r3, #18
+ 133 006e 1820     		mov	r0, #24
+ 134              	.LVL15:
+ 135 0070 4FE0     		b	.L7
+ 136              	.LVL16:
+ 137              	.L9:
+ 194:.\lux.c       ****       else if (ratio > K8T)
+ 195:.\lux.c       ****       {b=B8T; m=M8T;}
+ 196:.\lux.c       ****       break;
+ 197:.\lux.c       ****     case 1:// CS package
+ 198:.\lux.c       ****       if ((ratio >= 0) && (ratio <= K1C))
+ 138              		.loc 1 198 0
+ 139 0072 4329     		cmp	r1, #67
+ 140 0074 32D9     		bls	.L20
+ 199:.\lux.c       ****       {b=B1C; m=M1C;}
+ 200:.\lux.c       ****       else if (ratio <= K2C)
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 7
+
+
+ 141              		.loc 1 200 0
+ 142 0076 8529     		cmp	r1, #133
+ 143 0078 35D9     		bls	.L21
+ 201:.\lux.c       ****       {b=B2C; m=M2C;}
+ 202:.\lux.c       ****       else if (ratio <= K3C)
+ 144              		.loc 1 202 0
+ 145 007a C829     		cmp	r1, #200
+ 146 007c 37D9     		bls	.L22
+ 203:.\lux.c       ****       {b=B3C; m=M3C;}
+ 204:.\lux.c       ****       else if (ratio <= K4C)
+ 147              		.loc 1 204 0
+ 148 007e 8523     		mov	r3, #133
+ 149 0080 5B00     		lsl	r3, r3, #1
+ 150 0082 9942     		cmp	r1, r3
+ 151 0084 36D9     		bls	.L23
+ 205:.\lux.c       ****       {b=B4C; m=M4C;}
+ 206:.\lux.c       ****       else if (ratio <= K5C)
+ 152              		.loc 1 206 0
+ 153 0086 4E23     		mov	r3, #78
+ 154 0088 FF33     		add	r3, r3, #255
+ 155 008a 9942     		cmp	r1, r3
+ 156 008c 35D9     		bls	.L24
+ 207:.\lux.c       ****       {b=B5C; m=M5C;}
+ 208:.\lux.c       ****       else if (ratio <= K6C)
+ 157              		.loc 1 208 0
+ 158 008e 4D33     		add	r3, r3, #77
+ 159 0090 9942     		cmp	r1, r3
+ 160 0092 37D9     		bls	.L25
+ 209:.\lux.c       ****       {b=B6C; m=M6C;}
+ 210:.\lux.c       ****       else if (ratio <= K7C)
+ 161              		.loc 1 210 0
+ 162 0094 264B     		ldr	r3, .L29+8
+ 163 0096 9942     		cmp	r1, r3
+ 164 0098 39D8     		bhi	.L26
+ 211:.\lux.c       ****       {b=B7C; m=M7C;}
+ 165              		.loc 1 211 0
+ 166 009a 2B23     		mov	r3, #43
+ 167 009c 3720     		mov	r0, #55
+ 168              	.LVL17:
+ 169 009e 38E0     		b	.L7
+ 170              	.LVL18:
+ 171              	.L28:
+ 176:.\lux.c       ****   switch (iType)
+ 172              		.loc 1 176 0
+ 173 00a0 0023     		mov	r3, #0
+ 174 00a2 0020     		mov	r0, #0
+ 175              	.LVL19:
+ 176 00a4 35E0     		b	.L7
+ 177              	.LVL20:
+ 178              	.L13:
+ 181:.\lux.c       ****       else if (ratio <= K2T)
+ 179              		.loc 1 181 0
+ 180 00a6 DF23     		mov	r3, #223
+ 181 00a8 5B00     		lsl	r3, r3, #1
+ 182 00aa F920     		mov	r0, #249
+ 183              	.LVL21:
+ 184 00ac 4000     		lsl	r0, r0, #1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 8
+
+
+ 185 00ae 30E0     		b	.L7
+ 186              	.LVL22:
+ 187              	.L14:
+ 183:.\lux.c       ****       else if (ratio <= K3T)
+ 188              		.loc 1 183 0
+ 189 00b0 204B     		ldr	r3, .L29+12
+ 190 00b2 8520     		mov	r0, #133
+ 191              	.LVL23:
+ 192 00b4 8000     		lsl	r0, r0, #2
+ 193 00b6 2CE0     		b	.L7
+ 194              	.LVL24:
+ 195              	.L15:
+ 185:.\lux.c       ****       else if (ratio <= K4T)
+ 196              		.loc 1 185 0
+ 197 00b8 1F4B     		ldr	r3, .L29+16
+ 198 00ba 2048     		ldr	r0, .L29+20
+ 199              	.LVL25:
+ 200 00bc 29E0     		b	.L7
+ 201              	.LVL26:
+ 202              	.L16:
+ 187:.\lux.c       ****       else if (ratio <= K5T)
+ 203              		.loc 1 187 0
+ 204 00be 204B     		ldr	r3, .L29+24
+ 205 00c0 9C20     		mov	r0, #156
+ 206              	.LVL27:
+ 207 00c2 8000     		lsl	r0, r0, #2
+ 208 00c4 25E0     		b	.L7
+ 209              	.LVL28:
+ 210              	.L17:
+ 189:.\lux.c       ****       else if (ratio <= K6T)
+ 211              		.loc 1 189 0
+ 212 00c6 FE23     		mov	r3, #254
+ 213 00c8 5B00     		lsl	r3, r3, #1
+ 214 00ca 7020     		mov	r0, #112
+ 215              	.LVL29:
+ 216 00cc FF30     		add	r0, r0, #255
+ 217 00ce 20E0     		b	.L7
+ 218              	.LVL30:
+ 219              	.L18:
+ 191:.\lux.c       ****       else if (ratio <= K7T)
+ 220              		.loc 1 191 0
+ 221 00d0 FB23     		mov	r3, #251
+ 222 00d2 D220     		mov	r0, #210
+ 223              	.LVL31:
+ 224 00d4 1DE0     		b	.L7
+ 225              	.LVL32:
+ 226              	.L19:
+ 176:.\lux.c       ****   switch (iType)
+ 227              		.loc 1 176 0
+ 228 00d6 0023     		mov	r3, #0
+ 229 00d8 0020     		mov	r0, #0
+ 230              	.LVL33:
+ 231 00da 1AE0     		b	.L7
+ 232              	.LVL34:
+ 233              	.L20:
+ 199:.\lux.c       ****       else if (ratio <= K2C)
+ 234              		.loc 1 199 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 9
+
+
+ 235 00dc AE23     		mov	r3, #174
+ 236 00de FF33     		add	r3, r3, #255
+ 237 00e0 8120     		mov	r0, #129
+ 238              	.LVL35:
+ 239 00e2 8000     		lsl	r0, r0, #2
+ 240 00e4 15E0     		b	.L7
+ 241              	.LVL36:
+ 242              	.L21:
+ 201:.\lux.c       ****       else if (ratio <= K3C)
+ 243              		.loc 1 201 0
+ 244 00e6 174B     		ldr	r3, .L29+28
+ 245 00e8 8A20     		mov	r0, #138
+ 246              	.LVL37:
+ 247 00ea 8000     		lsl	r0, r0, #2
+ 248 00ec 11E0     		b	.L7
+ 249              	.LVL38:
+ 250              	.L22:
+ 203:.\lux.c       ****       else if (ratio <= K4C)
+ 251              		.loc 1 203 0
+ 252 00ee 164B     		ldr	r3, .L29+32
+ 253 00f0 1648     		ldr	r0, .L29+36
+ 254              	.LVL39:
+ 255 00f2 0EE0     		b	.L7
+ 256              	.LVL40:
+ 257              	.L23:
+ 205:.\lux.c       ****       else if (ratio <= K5C)
+ 258              		.loc 1 205 0
+ 259 00f4 164B     		ldr	r3, .L29+40
+ 260 00f6 1748     		ldr	r0, .L29+44
+ 261              	.LVL41:
+ 262 00f8 0BE0     		b	.L7
+ 263              	.LVL42:
+ 264              	.L24:
+ 207:.\lux.c       ****       else if (ratio <= K6C)
+ 265              		.loc 1 207 0
+ 266 00fa DE23     		mov	r3, #222
+ 267 00fc FF33     		add	r3, r3, #255
+ 268 00fe 7820     		mov	r0, #120
+ 269              	.LVL43:
+ 270 0100 FF30     		add	r0, r0, #255
+ 271 0102 06E0     		b	.L7
+ 272              	.LVL44:
+ 273              	.L25:
+ 209:.\lux.c       ****       else if (ratio <= K7C)
+ 274              		.loc 1 209 0
+ 275 0104 2823     		mov	r3, #40
+ 276 0106 FF33     		add	r3, r3, #255
+ 277 0108 0220     		mov	r0, #2
+ 278              	.LVL45:
+ 279 010a FF30     		add	r0, r0, #255
+ 280 010c 01E0     		b	.L7
+ 281              	.LVL46:
+ 282              	.L26:
+ 176:.\lux.c       ****   switch (iType)
+ 283              		.loc 1 176 0
+ 284 010e 0023     		mov	r3, #0
+ 285 0110 0020     		mov	r0, #0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 10
+
+
+ 286              	.LVL47:
+ 287              	.L7:
+ 212:.\lux.c       ****       else if (ratio > K8C)
+ 213:.\lux.c       ****       {b=B8C; m=M8C;}
+ 214:.\lux.c       ****       break;
+ 215:.\lux.c       ****   }
+ 216:.\lux.c       ****   unsigned long temp;
+ 217:.\lux.c       ****   temp = ((channel0 * b) - (channel1 * m));
+ 288              		.loc 1 217 0
+ 289 0112 021C     		mov	r2, r0
+ 290 0114 6A43     		mul	r2, r5
+ 291 0116 5C43     		mul	r4, r3
+ 292              	.LVL48:
+ 293 0118 101B     		sub	r0, r2, r4
+ 294              	.LVL49:
+ 218:.\lux.c       ****   // do not allow negative lux value
+ 219:.\lux.c       ****   if (temp < 0) temp = 0;
+ 220:.\lux.c       ****   // round lsb (2^(LUX_SCALE−1))
+ 221:.\lux.c       ****   temp += (1 << (LUX_SCALE-1));
+ 295              		.loc 1 221 0
+ 296 011a 8023     		mov	r3, #128
+ 297              	.LVL50:
+ 298 011c 9B01     		lsl	r3, r3, #6
+ 299 011e 9C46     		mov	ip, r3
+ 300 0120 6044     		add	r0, r0, ip
+ 301              	.LVL51:
+ 222:.\lux.c       ****   // strip off fractional portion
+ 223:.\lux.c       ****   unsigned long lux = temp >> LUX_SCALE;
+ 302              		.loc 1 223 0
+ 303 0122 800B     		lsr	r0, r0, #14
+ 304              	.LVL52:
+ 224:.\lux.c       ****   return(lux);
+ 225:.\lux.c       **** }
+ 305              		.loc 1 225 0
+ 306              		@ sp needed
+ 307              	.LVL53:
+ 308              	.LVL54:
+ 309 0124 38BD     		pop	{r3, r4, r5, pc}
+ 310              	.L30:
+ 311 0126 C046     		.align	2
+ 312              	.L29:
+ 313 0128 17750000 		.word	29975
+ 314 012c E70F0000 		.word	4071
+ 315 0130 9A020000 		.word	666
+ 316 0134 D1020000 		.word	721
+ 317 0138 7B030000 		.word	891
+ 318 013c 3F020000 		.word	575
+ 319 0140 FE030000 		.word	1022
+ 320 0144 C1020000 		.word	705
+ 321 0148 63030000 		.word	867
+ 322 014c 53020000 		.word	595
+ 323 0150 DF030000 		.word	991
+ 324 0154 82020000 		.word	642
+ 325              		.cfi_endproc
+ 326              	.LFE0:
+ 327              		.size	CalculateLux, .-CalculateLux
+ 328              		.text
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 11
+
+
+ 329              	.Letext0:
+ 330              		.section	.debug_info,"",%progbits
+ 331              	.Ldebug_info0:
+ 332 0000 1A010000 		.4byte	0x11a
+ 333 0004 0400     		.2byte	0x4
+ 334 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 335 000a 04       		.byte	0x4
+ 336 000b 01       		.uleb128 0x1
+ 337 000c 79000000 		.4byte	.LASF11
+ 338 0010 01       		.byte	0x1
+ 339 0011 71000000 		.4byte	.LASF12
+ 340 0015 25000000 		.4byte	.LASF13
+ 341 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 342 001d 00000000 		.4byte	0
+ 343 0021 00000000 		.4byte	.Ldebug_line0
+ 344 0025 02       		.uleb128 0x2
+ 345 0026 41000000 		.4byte	.LASF14
+ 346 002a 01       		.byte	0x1
+ 347 002b 8D       		.byte	0x8d
+ 348 002c 08010000 		.4byte	0x108
+ 349 0030 00000000 		.4byte	.LFB0
+ 350 0034 58010000 		.4byte	.LFE0-.LFB0
+ 351 0038 01       		.uleb128 0x1
+ 352 0039 9C       		.byte	0x9c
+ 353 003a 08010000 		.4byte	0x108
+ 354 003e 03       		.uleb128 0x3
+ 355 003f 1F000000 		.4byte	.LASF0
+ 356 0043 01       		.byte	0x1
+ 357 0044 8D       		.byte	0x8d
+ 358 0045 08010000 		.4byte	0x108
+ 359 0049 00000000 		.4byte	.LLST0
+ 360 004d 03       		.uleb128 0x3
+ 361 004e 56000000 		.4byte	.LASF1
+ 362 0052 01       		.byte	0x1
+ 363 0053 8D       		.byte	0x8d
+ 364 0054 08010000 		.4byte	0x108
+ 365 0058 3A000000 		.4byte	.LLST1
+ 366 005c 04       		.uleb128 0x4
+ 367 005d 63683000 		.ascii	"ch0\000"
+ 368 0061 01       		.byte	0x1
+ 369 0062 8D       		.byte	0x8d
+ 370 0063 08010000 		.4byte	0x108
+ 371 0067 74000000 		.4byte	.LLST2
+ 372 006b 04       		.uleb128 0x4
+ 373 006c 63683100 		.ascii	"ch1\000"
+ 374 0070 01       		.byte	0x1
+ 375 0071 8E       		.byte	0x8e
+ 376 0072 08010000 		.4byte	0x108
+ 377 0076 95000000 		.4byte	.LLST3
+ 378 007a 05       		.uleb128 0x5
+ 379 007b 07010000 		.4byte	.LASF2
+ 380 007f 01       		.byte	0x1
+ 381 0080 8E       		.byte	0x8e
+ 382 0081 0F010000 		.4byte	0x10f
+ 383 0085 02       		.uleb128 0x2
+ 384 0086 91       		.byte	0x91
+ 385 0087 00       		.sleb128 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 12
+
+
+ 386 0088 06       		.uleb128 0x6
+ 387 0089 4E000000 		.4byte	.LASF3
+ 388 008d 01       		.byte	0x1
+ 389 008e 94       		.byte	0x94
+ 390 008f 16010000 		.4byte	0x116
+ 391 0093 CF000000 		.4byte	.LLST4
+ 392 0097 06       		.uleb128 0x6
+ 393 0098 62000000 		.4byte	.LASF4
+ 394 009c 01       		.byte	0x1
+ 395 009d 95       		.byte	0x95
+ 396 009e 16010000 		.4byte	0x116
+ 397 00a2 F0000000 		.4byte	.LLST5
+ 398 00a6 06       		.uleb128 0x6
+ 399 00a7 0D010000 		.4byte	.LASF5
+ 400 00ab 01       		.byte	0x1
+ 401 00ac 96       		.byte	0x96
+ 402 00ad 16010000 		.4byte	0x116
+ 403 00b1 03010000 		.4byte	.LLST6
+ 404 00b5 06       		.uleb128 0x6
+ 405 00b6 5B000000 		.4byte	.LASF6
+ 406 00ba 01       		.byte	0x1
+ 407 00bb AB       		.byte	0xab
+ 408 00bc 16010000 		.4byte	0x116
+ 409 00c0 16010000 		.4byte	.LLST7
+ 410 00c4 07       		.uleb128 0x7
+ 411 00c5 6B000000 		.4byte	.LASF7
+ 412 00c9 01       		.byte	0x1
+ 413 00ca AE       		.byte	0xae
+ 414 00cb 16010000 		.4byte	0x116
+ 415 00cf 01       		.uleb128 0x1
+ 416 00d0 51       		.byte	0x51
+ 417 00d1 08       		.uleb128 0x8
+ 418 00d2 6200     		.ascii	"b\000"
+ 419 00d4 01       		.byte	0x1
+ 420 00d5 B0       		.byte	0xb0
+ 421 00d6 08010000 		.4byte	0x108
+ 422 00da FC010000 		.4byte	.LLST8
+ 423 00de 08       		.uleb128 0x8
+ 424 00df 6D00     		.ascii	"m\000"
+ 425 00e1 01       		.byte	0x1
+ 426 00e2 B0       		.byte	0xb0
+ 427 00e3 08010000 		.4byte	0x108
+ 428 00e7 1B020000 		.4byte	.LLST9
+ 429 00eb 06       		.uleb128 0x6
+ 430 00ec 16010000 		.4byte	.LASF8
+ 431 00f0 01       		.byte	0x1
+ 432 00f1 D8       		.byte	0xd8
+ 433 00f2 16010000 		.4byte	0x116
+ 434 00f6 3A020000 		.4byte	.LLST10
+ 435 00fa 09       		.uleb128 0x9
+ 436 00fb 6C757800 		.ascii	"lux\000"
+ 437 00ff 01       		.byte	0x1
+ 438 0100 DF       		.byte	0xdf
+ 439 0101 16010000 		.4byte	0x116
+ 440 0105 01       		.uleb128 0x1
+ 441 0106 50       		.byte	0x50
+ 442 0107 00       		.byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 13
+
+
+ 443 0108 0A       		.uleb128 0xa
+ 444 0109 04       		.byte	0x4
+ 445 010a 07       		.byte	0x7
+ 446 010b 00000000 		.4byte	.LASF9
+ 447 010f 0B       		.uleb128 0xb
+ 448 0110 04       		.byte	0x4
+ 449 0111 05       		.byte	0x5
+ 450 0112 696E7400 		.ascii	"int\000"
+ 451 0116 0A       		.uleb128 0xa
+ 452 0117 04       		.byte	0x4
+ 453 0118 07       		.byte	0x7
+ 454 0119 0D000000 		.4byte	.LASF10
+ 455 011d 00       		.byte	0
+ 456              		.section	.debug_abbrev,"",%progbits
+ 457              	.Ldebug_abbrev0:
+ 458 0000 01       		.uleb128 0x1
+ 459 0001 11       		.uleb128 0x11
+ 460 0002 01       		.byte	0x1
+ 461 0003 25       		.uleb128 0x25
+ 462 0004 0E       		.uleb128 0xe
+ 463 0005 13       		.uleb128 0x13
+ 464 0006 0B       		.uleb128 0xb
+ 465 0007 03       		.uleb128 0x3
+ 466 0008 0E       		.uleb128 0xe
+ 467 0009 1B       		.uleb128 0x1b
+ 468 000a 0E       		.uleb128 0xe
+ 469 000b 55       		.uleb128 0x55
+ 470 000c 17       		.uleb128 0x17
+ 471 000d 11       		.uleb128 0x11
+ 472 000e 01       		.uleb128 0x1
+ 473 000f 10       		.uleb128 0x10
+ 474 0010 17       		.uleb128 0x17
+ 475 0011 00       		.byte	0
+ 476 0012 00       		.byte	0
+ 477 0013 02       		.uleb128 0x2
+ 478 0014 2E       		.uleb128 0x2e
+ 479 0015 01       		.byte	0x1
+ 480 0016 3F       		.uleb128 0x3f
+ 481 0017 19       		.uleb128 0x19
+ 482 0018 03       		.uleb128 0x3
+ 483 0019 0E       		.uleb128 0xe
+ 484 001a 3A       		.uleb128 0x3a
+ 485 001b 0B       		.uleb128 0xb
+ 486 001c 3B       		.uleb128 0x3b
+ 487 001d 0B       		.uleb128 0xb
+ 488 001e 27       		.uleb128 0x27
+ 489 001f 19       		.uleb128 0x19
+ 490 0020 49       		.uleb128 0x49
+ 491 0021 13       		.uleb128 0x13
+ 492 0022 11       		.uleb128 0x11
+ 493 0023 01       		.uleb128 0x1
+ 494 0024 12       		.uleb128 0x12
+ 495 0025 06       		.uleb128 0x6
+ 496 0026 40       		.uleb128 0x40
+ 497 0027 18       		.uleb128 0x18
+ 498 0028 9642     		.uleb128 0x2116
+ 499 002a 19       		.uleb128 0x19
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 14
+
+
+ 500 002b 01       		.uleb128 0x1
+ 501 002c 13       		.uleb128 0x13
+ 502 002d 00       		.byte	0
+ 503 002e 00       		.byte	0
+ 504 002f 03       		.uleb128 0x3
+ 505 0030 05       		.uleb128 0x5
+ 506 0031 00       		.byte	0
+ 507 0032 03       		.uleb128 0x3
+ 508 0033 0E       		.uleb128 0xe
+ 509 0034 3A       		.uleb128 0x3a
+ 510 0035 0B       		.uleb128 0xb
+ 511 0036 3B       		.uleb128 0x3b
+ 512 0037 0B       		.uleb128 0xb
+ 513 0038 49       		.uleb128 0x49
+ 514 0039 13       		.uleb128 0x13
+ 515 003a 02       		.uleb128 0x2
+ 516 003b 17       		.uleb128 0x17
+ 517 003c 00       		.byte	0
+ 518 003d 00       		.byte	0
+ 519 003e 04       		.uleb128 0x4
+ 520 003f 05       		.uleb128 0x5
+ 521 0040 00       		.byte	0
+ 522 0041 03       		.uleb128 0x3
+ 523 0042 08       		.uleb128 0x8
+ 524 0043 3A       		.uleb128 0x3a
+ 525 0044 0B       		.uleb128 0xb
+ 526 0045 3B       		.uleb128 0x3b
+ 527 0046 0B       		.uleb128 0xb
+ 528 0047 49       		.uleb128 0x49
+ 529 0048 13       		.uleb128 0x13
+ 530 0049 02       		.uleb128 0x2
+ 531 004a 17       		.uleb128 0x17
+ 532 004b 00       		.byte	0
+ 533 004c 00       		.byte	0
+ 534 004d 05       		.uleb128 0x5
+ 535 004e 05       		.uleb128 0x5
+ 536 004f 00       		.byte	0
+ 537 0050 03       		.uleb128 0x3
+ 538 0051 0E       		.uleb128 0xe
+ 539 0052 3A       		.uleb128 0x3a
+ 540 0053 0B       		.uleb128 0xb
+ 541 0054 3B       		.uleb128 0x3b
+ 542 0055 0B       		.uleb128 0xb
+ 543 0056 49       		.uleb128 0x49
+ 544 0057 13       		.uleb128 0x13
+ 545 0058 02       		.uleb128 0x2
+ 546 0059 18       		.uleb128 0x18
+ 547 005a 00       		.byte	0
+ 548 005b 00       		.byte	0
+ 549 005c 06       		.uleb128 0x6
+ 550 005d 34       		.uleb128 0x34
+ 551 005e 00       		.byte	0
+ 552 005f 03       		.uleb128 0x3
+ 553 0060 0E       		.uleb128 0xe
+ 554 0061 3A       		.uleb128 0x3a
+ 555 0062 0B       		.uleb128 0xb
+ 556 0063 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 15
+
+
+ 557 0064 0B       		.uleb128 0xb
+ 558 0065 49       		.uleb128 0x49
+ 559 0066 13       		.uleb128 0x13
+ 560 0067 02       		.uleb128 0x2
+ 561 0068 17       		.uleb128 0x17
+ 562 0069 00       		.byte	0
+ 563 006a 00       		.byte	0
+ 564 006b 07       		.uleb128 0x7
+ 565 006c 34       		.uleb128 0x34
+ 566 006d 00       		.byte	0
+ 567 006e 03       		.uleb128 0x3
+ 568 006f 0E       		.uleb128 0xe
+ 569 0070 3A       		.uleb128 0x3a
+ 570 0071 0B       		.uleb128 0xb
+ 571 0072 3B       		.uleb128 0x3b
+ 572 0073 0B       		.uleb128 0xb
+ 573 0074 49       		.uleb128 0x49
+ 574 0075 13       		.uleb128 0x13
+ 575 0076 02       		.uleb128 0x2
+ 576 0077 18       		.uleb128 0x18
+ 577 0078 00       		.byte	0
+ 578 0079 00       		.byte	0
+ 579 007a 08       		.uleb128 0x8
+ 580 007b 34       		.uleb128 0x34
+ 581 007c 00       		.byte	0
+ 582 007d 03       		.uleb128 0x3
+ 583 007e 08       		.uleb128 0x8
+ 584 007f 3A       		.uleb128 0x3a
+ 585 0080 0B       		.uleb128 0xb
+ 586 0081 3B       		.uleb128 0x3b
+ 587 0082 0B       		.uleb128 0xb
+ 588 0083 49       		.uleb128 0x49
+ 589 0084 13       		.uleb128 0x13
+ 590 0085 02       		.uleb128 0x2
+ 591 0086 17       		.uleb128 0x17
+ 592 0087 00       		.byte	0
+ 593 0088 00       		.byte	0
+ 594 0089 09       		.uleb128 0x9
+ 595 008a 34       		.uleb128 0x34
+ 596 008b 00       		.byte	0
+ 597 008c 03       		.uleb128 0x3
+ 598 008d 08       		.uleb128 0x8
+ 599 008e 3A       		.uleb128 0x3a
+ 600 008f 0B       		.uleb128 0xb
+ 601 0090 3B       		.uleb128 0x3b
+ 602 0091 0B       		.uleb128 0xb
+ 603 0092 49       		.uleb128 0x49
+ 604 0093 13       		.uleb128 0x13
+ 605 0094 02       		.uleb128 0x2
+ 606 0095 18       		.uleb128 0x18
+ 607 0096 00       		.byte	0
+ 608 0097 00       		.byte	0
+ 609 0098 0A       		.uleb128 0xa
+ 610 0099 24       		.uleb128 0x24
+ 611 009a 00       		.byte	0
+ 612 009b 0B       		.uleb128 0xb
+ 613 009c 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 16
+
+
+ 614 009d 3E       		.uleb128 0x3e
+ 615 009e 0B       		.uleb128 0xb
+ 616 009f 03       		.uleb128 0x3
+ 617 00a0 0E       		.uleb128 0xe
+ 618 00a1 00       		.byte	0
+ 619 00a2 00       		.byte	0
+ 620 00a3 0B       		.uleb128 0xb
+ 621 00a4 24       		.uleb128 0x24
+ 622 00a5 00       		.byte	0
+ 623 00a6 0B       		.uleb128 0xb
+ 624 00a7 0B       		.uleb128 0xb
+ 625 00a8 3E       		.uleb128 0x3e
+ 626 00a9 0B       		.uleb128 0xb
+ 627 00aa 03       		.uleb128 0x3
+ 628 00ab 08       		.uleb128 0x8
+ 629 00ac 00       		.byte	0
+ 630 00ad 00       		.byte	0
+ 631 00ae 00       		.byte	0
+ 632              		.section	.debug_loc,"",%progbits
+ 633              	.Ldebug_loc0:
+ 634              	.LLST0:
+ 635 0000 00000000 		.4byte	.LVL0
+ 636 0004 2C000000 		.4byte	.LVL9
+ 637 0008 0100     		.2byte	0x1
+ 638 000a 50       		.byte	0x50
+ 639 000b 2C000000 		.4byte	.LVL9
+ 640 000f 34000000 		.4byte	.LVL12
+ 641 0013 0400     		.2byte	0x4
+ 642 0015 F3       		.byte	0xf3
+ 643 0016 01       		.uleb128 0x1
+ 644 0017 50       		.byte	0x50
+ 645 0018 9F       		.byte	0x9f
+ 646 0019 34000000 		.4byte	.LVL12
+ 647 001d 36000000 		.4byte	.LVL13
+ 648 0021 0100     		.2byte	0x1
+ 649 0023 50       		.byte	0x50
+ 650 0024 36000000 		.4byte	.LVL13
+ 651 0028 58010000 		.4byte	.LFE0
+ 652 002c 0400     		.2byte	0x4
+ 653 002e F3       		.byte	0xf3
+ 654 002f 01       		.uleb128 0x1
+ 655 0030 50       		.byte	0x50
+ 656 0031 9F       		.byte	0x9f
+ 657 0032 00000000 		.4byte	0
+ 658 0036 00000000 		.4byte	0
+ 659              	.LLST1:
+ 660 003a 00000000 		.4byte	.LVL0
+ 661 003e 2E000000 		.4byte	.LVL10
+ 662 0042 0100     		.2byte	0x1
+ 663 0044 51       		.byte	0x51
+ 664 0045 2E000000 		.4byte	.LVL10
+ 665 0049 34000000 		.4byte	.LVL12
+ 666 004d 0400     		.2byte	0x4
+ 667 004f F3       		.byte	0xf3
+ 668 0050 01       		.uleb128 0x1
+ 669 0051 51       		.byte	0x51
+ 670 0052 9F       		.byte	0x9f
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 17
+
+
+ 671 0053 34000000 		.4byte	.LVL12
+ 672 0057 36000000 		.4byte	.LVL13
+ 673 005b 0100     		.2byte	0x1
+ 674 005d 51       		.byte	0x51
+ 675 005e 36000000 		.4byte	.LVL13
+ 676 0062 58010000 		.4byte	.LFE0
+ 677 0066 0400     		.2byte	0x4
+ 678 0068 F3       		.byte	0xf3
+ 679 0069 01       		.uleb128 0x1
+ 680 006a 51       		.byte	0x51
+ 681 006b 9F       		.byte	0x9f
+ 682 006c 00000000 		.4byte	0
+ 683 0070 00000000 		.4byte	0
+ 684              	.LLST2:
+ 685 0074 00000000 		.4byte	.LVL0
+ 686 0078 20000000 		.4byte	.LVL5
+ 687 007c 0100     		.2byte	0x1
+ 688 007e 52       		.byte	0x52
+ 689 007f 20000000 		.4byte	.LVL5
+ 690 0083 58010000 		.4byte	.LFE0
+ 691 0087 0400     		.2byte	0x4
+ 692 0089 F3       		.byte	0xf3
+ 693 008a 01       		.uleb128 0x1
+ 694 008b 52       		.byte	0x52
+ 695 008c 9F       		.byte	0x9f
+ 696 008d 00000000 		.4byte	0
+ 697 0091 00000000 		.4byte	0
+ 698              	.LLST3:
+ 699 0095 00000000 		.4byte	.LVL0
+ 700 0099 31000000 		.4byte	.LVL11-1
+ 701 009d 0100     		.2byte	0x1
+ 702 009f 53       		.byte	0x53
+ 703 00a0 31000000 		.4byte	.LVL11-1
+ 704 00a4 34000000 		.4byte	.LVL12
+ 705 00a8 0400     		.2byte	0x4
+ 706 00aa F3       		.byte	0xf3
+ 707 00ab 01       		.uleb128 0x1
+ 708 00ac 53       		.byte	0x53
+ 709 00ad 9F       		.byte	0x9f
+ 710 00ae 34000000 		.4byte	.LVL12
+ 711 00b2 36000000 		.4byte	.LVL13
+ 712 00b6 0100     		.2byte	0x1
+ 713 00b8 53       		.byte	0x53
+ 714 00b9 36000000 		.4byte	.LVL13
+ 715 00bd 58010000 		.4byte	.LFE0
+ 716 00c1 0400     		.2byte	0x4
+ 717 00c3 F3       		.byte	0xf3
+ 718 00c4 01       		.uleb128 0x1
+ 719 00c5 53       		.byte	0x53
+ 720 00c6 9F       		.byte	0x9f
+ 721 00c7 00000000 		.4byte	0
+ 722 00cb 00000000 		.4byte	0
+ 723              	.LLST4:
+ 724 00cf 10000000 		.4byte	.LVL1
+ 725 00d3 16000000 		.4byte	.LVL2
+ 726 00d7 0400     		.2byte	0x4
+ 727 00d9 0A       		.byte	0xa
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 18
+
+
+ 728 00da 0004     		.2byte	0x400
+ 729 00dc 9F       		.byte	0x9f
+ 730 00dd 18000000 		.4byte	.LVL3
+ 731 00e1 24000000 		.4byte	.LVL7
+ 732 00e5 0100     		.2byte	0x1
+ 733 00e7 54       		.byte	0x54
+ 734 00e8 00000000 		.4byte	0
+ 735 00ec 00000000 		.4byte	0
+ 736              	.LLST5:
+ 737 00f0 26000000 		.4byte	.LVL8
+ 738 00f4 18010000 		.4byte	.LVL48
+ 739 00f8 0100     		.2byte	0x1
+ 740 00fa 54       		.byte	0x54
+ 741 00fb 00000000 		.4byte	0
+ 742 00ff 00000000 		.4byte	0
+ 743              	.LLST6:
+ 744 0103 22000000 		.4byte	.LVL6
+ 745 0107 24010000 		.4byte	.LVL54
+ 746 010b 0100     		.2byte	0x1
+ 747 010d 55       		.byte	0x55
+ 748 010e 00000000 		.4byte	0
+ 749 0112 00000000 		.4byte	0
+ 750              	.LLST7:
+ 751 0116 26000000 		.4byte	.LVL8
+ 752 011a 32000000 		.4byte	.LVL11
+ 753 011e 0200     		.2byte	0x2
+ 754 0120 30       		.byte	0x30
+ 755 0121 9F       		.byte	0x9f
+ 756 0122 32000000 		.4byte	.LVL11
+ 757 0126 34000000 		.4byte	.LVL12
+ 758 012a 0100     		.2byte	0x1
+ 759 012c 50       		.byte	0x50
+ 760 012d 34000000 		.4byte	.LVL12
+ 761 0131 36000000 		.4byte	.LVL13
+ 762 0135 0200     		.2byte	0x2
+ 763 0137 30       		.byte	0x30
+ 764 0138 9F       		.byte	0x9f
+ 765 0139 36000000 		.4byte	.LVL13
+ 766 013d 70000000 		.4byte	.LVL15
+ 767 0141 0100     		.2byte	0x1
+ 768 0143 50       		.byte	0x50
+ 769 0144 72000000 		.4byte	.LVL16
+ 770 0148 9E000000 		.4byte	.LVL17
+ 771 014c 0100     		.2byte	0x1
+ 772 014e 50       		.byte	0x50
+ 773 014f A0000000 		.4byte	.LVL18
+ 774 0153 A4000000 		.4byte	.LVL19
+ 775 0157 0100     		.2byte	0x1
+ 776 0159 50       		.byte	0x50
+ 777 015a A6000000 		.4byte	.LVL20
+ 778 015e AC000000 		.4byte	.LVL21
+ 779 0162 0100     		.2byte	0x1
+ 780 0164 50       		.byte	0x50
+ 781 0165 B0000000 		.4byte	.LVL22
+ 782 0169 B4000000 		.4byte	.LVL23
+ 783 016d 0100     		.2byte	0x1
+ 784 016f 50       		.byte	0x50
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 19
+
+
+ 785 0170 B8000000 		.4byte	.LVL24
+ 786 0174 BC000000 		.4byte	.LVL25
+ 787 0178 0100     		.2byte	0x1
+ 788 017a 50       		.byte	0x50
+ 789 017b BE000000 		.4byte	.LVL26
+ 790 017f C2000000 		.4byte	.LVL27
+ 791 0183 0100     		.2byte	0x1
+ 792 0185 50       		.byte	0x50
+ 793 0186 C6000000 		.4byte	.LVL28
+ 794 018a CC000000 		.4byte	.LVL29
+ 795 018e 0100     		.2byte	0x1
+ 796 0190 50       		.byte	0x50
+ 797 0191 D0000000 		.4byte	.LVL30
+ 798 0195 D4000000 		.4byte	.LVL31
+ 799 0199 0100     		.2byte	0x1
+ 800 019b 50       		.byte	0x50
+ 801 019c D6000000 		.4byte	.LVL32
+ 802 01a0 DA000000 		.4byte	.LVL33
+ 803 01a4 0100     		.2byte	0x1
+ 804 01a6 50       		.byte	0x50
+ 805 01a7 DC000000 		.4byte	.LVL34
+ 806 01ab E2000000 		.4byte	.LVL35
+ 807 01af 0100     		.2byte	0x1
+ 808 01b1 50       		.byte	0x50
+ 809 01b2 E6000000 		.4byte	.LVL36
+ 810 01b6 EA000000 		.4byte	.LVL37
+ 811 01ba 0100     		.2byte	0x1
+ 812 01bc 50       		.byte	0x50
+ 813 01bd EE000000 		.4byte	.LVL38
+ 814 01c1 F2000000 		.4byte	.LVL39
+ 815 01c5 0100     		.2byte	0x1
+ 816 01c7 50       		.byte	0x50
+ 817 01c8 F4000000 		.4byte	.LVL40
+ 818 01cc F8000000 		.4byte	.LVL41
+ 819 01d0 0100     		.2byte	0x1
+ 820 01d2 50       		.byte	0x50
+ 821 01d3 FA000000 		.4byte	.LVL42
+ 822 01d7 00010000 		.4byte	.LVL43
+ 823 01db 0100     		.2byte	0x1
+ 824 01dd 50       		.byte	0x50
+ 825 01de 04010000 		.4byte	.LVL44
+ 826 01e2 0A010000 		.4byte	.LVL45
+ 827 01e6 0100     		.2byte	0x1
+ 828 01e8 50       		.byte	0x50
+ 829 01e9 0E010000 		.4byte	.LVL46
+ 830 01ed 12010000 		.4byte	.LVL47
+ 831 01f1 0100     		.2byte	0x1
+ 832 01f3 50       		.byte	0x50
+ 833 01f4 00000000 		.4byte	0
+ 834 01f8 00000000 		.4byte	0
+ 835              	.LLST8:
+ 836 01fc 3A000000 		.4byte	.LVL14
+ 837 0200 12010000 		.4byte	.LVL47
+ 838 0204 0200     		.2byte	0x2
+ 839 0206 30       		.byte	0x30
+ 840 0207 9F       		.byte	0x9f
+ 841 0208 12010000 		.4byte	.LVL47
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 20
+
+
+ 842 020c 1A010000 		.4byte	.LVL49
+ 843 0210 0100     		.2byte	0x1
+ 844 0212 50       		.byte	0x50
+ 845 0213 00000000 		.4byte	0
+ 846 0217 00000000 		.4byte	0
+ 847              	.LLST9:
+ 848 021b 3A000000 		.4byte	.LVL14
+ 849 021f 12010000 		.4byte	.LVL47
+ 850 0223 0200     		.2byte	0x2
+ 851 0225 30       		.byte	0x30
+ 852 0226 9F       		.byte	0x9f
+ 853 0227 12010000 		.4byte	.LVL47
+ 854 022b 1C010000 		.4byte	.LVL50
+ 855 022f 0100     		.2byte	0x1
+ 856 0231 53       		.byte	0x53
+ 857 0232 00000000 		.4byte	0
+ 858 0236 00000000 		.4byte	0
+ 859              	.LLST10:
+ 860 023a 1A010000 		.4byte	.LVL49
+ 861 023e 24010000 		.4byte	.LVL52
+ 862 0242 0100     		.2byte	0x1
+ 863 0244 50       		.byte	0x50
+ 864 0245 24010000 		.4byte	.LVL52
+ 865 0249 24010000 		.4byte	.LVL53
+ 866 024d 0900     		.2byte	0x9
+ 867 024f 72       		.byte	0x72
+ 868 0250 00       		.sleb128 0
+ 869 0251 74       		.byte	0x74
+ 870 0252 00       		.sleb128 0
+ 871 0253 1C       		.byte	0x1c
+ 872 0254 73       		.byte	0x73
+ 873 0255 00       		.sleb128 0
+ 874 0256 22       		.byte	0x22
+ 875 0257 9F       		.byte	0x9f
+ 876 0258 00000000 		.4byte	0
+ 877 025c 00000000 		.4byte	0
+ 878              		.section	.debug_aranges,"",%progbits
+ 879 0000 1C000000 		.4byte	0x1c
+ 880 0004 0200     		.2byte	0x2
+ 881 0006 00000000 		.4byte	.Ldebug_info0
+ 882 000a 04       		.byte	0x4
+ 883 000b 00       		.byte	0
+ 884 000c 0000     		.2byte	0
+ 885 000e 0000     		.2byte	0
+ 886 0010 00000000 		.4byte	.LFB0
+ 887 0014 58010000 		.4byte	.LFE0-.LFB0
+ 888 0018 00000000 		.4byte	0
+ 889 001c 00000000 		.4byte	0
+ 890              		.section	.debug_ranges,"",%progbits
+ 891              	.Ldebug_ranges0:
+ 892 0000 00000000 		.4byte	.LFB0
+ 893 0004 58010000 		.4byte	.LFE0
+ 894 0008 00000000 		.4byte	0
+ 895 000c 00000000 		.4byte	0
+ 896              		.section	.debug_line,"",%progbits
+ 897              	.Ldebug_line0:
+ 898 0000 7B000000 		.section	.debug_str,"MS",%progbits,1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 21
+
+
+ 898      02001E00 
+ 898      00000201 
+ 898      FB0E0D00 
+ 898      01010101 
+ 899              	.LASF9:
+ 900 0000 756E7369 		.ascii	"unsigned int\000"
+ 900      676E6564 
+ 900      20696E74 
+ 900      00
+ 901              	.LASF10:
+ 902 000d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 902      20756E73 
+ 902      69676E65 
+ 902      6420696E 
+ 902      7400
+ 903              	.LASF0:
+ 904 001f 69476169 		.ascii	"iGain\000"
+ 904      6E00
+ 905              	.LASF13:
+ 906 0025 433A5C45 		.ascii	"C:\\E3PRJ3\\Sensor-PSoC.cydsn\000"
+ 906      3350524A 
+ 906      335C5365 
+ 906      6E736F72 
+ 906      2D50536F 
+ 907              	.LASF14:
+ 908 0041 43616C63 		.ascii	"CalculateLux\000"
+ 908      756C6174 
+ 908      654C7578 
+ 908      00
+ 909              	.LASF3:
+ 910 004e 63685363 		.ascii	"chScale\000"
+ 910      616C6500 
+ 911              	.LASF1:
+ 912 0056 74496E74 		.ascii	"tInt\000"
+ 912      00
+ 913              	.LASF6:
+ 914 005b 72617469 		.ascii	"ratio1\000"
+ 914      6F3100
+ 915              	.LASF4:
+ 916 0062 6368616E 		.ascii	"channel1\000"
+ 916      6E656C31 
+ 916      00
+ 917              	.LASF7:
+ 918 006b 72617469 		.ascii	"ratio\000"
+ 918      6F00
+ 919              	.LASF12:
+ 920 0071 2E5C6C75 		.ascii	".\\lux.c\000"
+ 920      782E6300 
+ 921              	.LASF11:
+ 922 0079 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 922      4320342E 
+ 922      392E3320 
+ 922      32303135 
+ 922      30333033 
+ 923 00ac 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 923      20726576 
+ 923      6973696F 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccGcRxeH.s 			page 22
+
+
+ 923      6E203232 
+ 923      31323230 
+ 924 00df 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 924      66756E63 
+ 924      74696F6E 
+ 924      2D736563 
+ 924      74696F6E 
+ 925              	.LASF2:
+ 926 0107 69547970 		.ascii	"iType\000"
+ 926      6500
+ 927              	.LASF5:
+ 928 010d 6368616E 		.ascii	"channel0\000"
+ 928      6E656C30 
+ 928      00
+ 929              	.LASF8:
+ 930 0116 74656D70 		.ascii	"temp\000"
+ 930      00
+ 931              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

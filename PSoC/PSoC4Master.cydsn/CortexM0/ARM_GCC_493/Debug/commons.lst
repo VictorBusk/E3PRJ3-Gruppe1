@@ -1,0 +1,943 @@
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"commons.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.commons_Write,"ax",%progbits
+  18              		.align	2
+  19              		.global	commons_Write
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	commons_Write, %function
+  23              	commons_Write:
+  24              	.LFB0:
+  25              		.file 1 ".\\Generated_Source\\PSoC4\\commons.c"
+   1:.\Generated_Source\PSoC4/commons.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC4/commons.c **** * File Name: commons.c  
+   3:.\Generated_Source\PSoC4/commons.c **** * Version 2.10
+   4:.\Generated_Source\PSoC4/commons.c **** *
+   5:.\Generated_Source\PSoC4/commons.c **** * Description:
+   6:.\Generated_Source\PSoC4/commons.c **** *  This file contains API to enable firmware control of a Pins component.
+   7:.\Generated_Source\PSoC4/commons.c **** *
+   8:.\Generated_Source\PSoC4/commons.c **** * Note:
+   9:.\Generated_Source\PSoC4/commons.c **** *
+  10:.\Generated_Source\PSoC4/commons.c **** ********************************************************************************
+  11:.\Generated_Source\PSoC4/commons.c **** * Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+  12:.\Generated_Source\PSoC4/commons.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  13:.\Generated_Source\PSoC4/commons.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  14:.\Generated_Source\PSoC4/commons.c **** * the software package with which this file was provided.
+  15:.\Generated_Source\PSoC4/commons.c **** *******************************************************************************/
+  16:.\Generated_Source\PSoC4/commons.c **** 
+  17:.\Generated_Source\PSoC4/commons.c **** #include "cytypes.h"
+  18:.\Generated_Source\PSoC4/commons.c **** #include "commons.h"
+  19:.\Generated_Source\PSoC4/commons.c **** 
+  20:.\Generated_Source\PSoC4/commons.c **** #define SetP4PinDriveMode(shift, mode)  \
+  21:.\Generated_Source\PSoC4/commons.c ****     do { \
+  22:.\Generated_Source\PSoC4/commons.c ****         commons_PC =   (commons_PC & \
+  23:.\Generated_Source\PSoC4/commons.c ****                                 (uint32)(~(uint32)(commons_DRIVE_MODE_IND_MASK << (commons_DRIVE_MO
+  24:.\Generated_Source\PSoC4/commons.c ****                                 (uint32)((uint32)(mode) << (commons_DRIVE_MODE_BITS * (shift))); \
+  25:.\Generated_Source\PSoC4/commons.c ****     } while (0)
+  26:.\Generated_Source\PSoC4/commons.c **** 
+  27:.\Generated_Source\PSoC4/commons.c **** 
+  28:.\Generated_Source\PSoC4/commons.c **** /*******************************************************************************
+  29:.\Generated_Source\PSoC4/commons.c **** * Function Name: commons_Write
+  30:.\Generated_Source\PSoC4/commons.c **** ********************************************************************************
+  31:.\Generated_Source\PSoC4/commons.c **** *
+  32:.\Generated_Source\PSoC4/commons.c **** * Summary:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 2
+
+
+  33:.\Generated_Source\PSoC4/commons.c **** *  Assign a new value to the digital port's data output register.  
+  34:.\Generated_Source\PSoC4/commons.c **** *
+  35:.\Generated_Source\PSoC4/commons.c **** * Parameters:  
+  36:.\Generated_Source\PSoC4/commons.c **** *  prtValue:  The value to be assigned to the Digital Port. 
+  37:.\Generated_Source\PSoC4/commons.c **** *
+  38:.\Generated_Source\PSoC4/commons.c **** * Return: 
+  39:.\Generated_Source\PSoC4/commons.c **** *  None 
+  40:.\Generated_Source\PSoC4/commons.c **** *  
+  41:.\Generated_Source\PSoC4/commons.c **** *******************************************************************************/
+  42:.\Generated_Source\PSoC4/commons.c **** void commons_Write(uint8 value) 
+  43:.\Generated_Source\PSoC4/commons.c **** {
+  26              		.loc 1 43 0
+  27              		.cfi_startproc
+  28              	.LVL0:
+  44:.\Generated_Source\PSoC4/commons.c ****     uint8 drVal = (uint8)(commons_DR & (uint8)(~commons_MASK));
+  29              		.loc 1 44 0
+  30 0000 0449     		ldr	r1, .L2
+  31 0002 0A68     		ldr	r2, [r1]
+  32 0004 E123     		mov	r3, #225
+  33 0006 1A40     		and	r2, r3
+  34              	.LVL1:
+  45:.\Generated_Source\PSoC4/commons.c ****     drVal = (drVal | ((uint8)(value << commons_SHIFT) & commons_MASK));
+  35              		.loc 1 45 0
+  36 0008 4000     		lsl	r0, r0, #1
+  37              	.LVL2:
+  38 000a C33B     		sub	r3, r3, #195
+  39 000c 1840     		and	r0, r3
+  40 000e 1043     		orr	r0, r2
+  41              	.LVL3:
+  46:.\Generated_Source\PSoC4/commons.c ****     commons_DR = (uint32)drVal;
+  42              		.loc 1 46 0
+  43 0010 0860     		str	r0, [r1]
+  47:.\Generated_Source\PSoC4/commons.c **** }
+  44              		.loc 1 47 0
+  45              		@ sp needed
+  46 0012 7047     		bx	lr
+  47              	.L3:
+  48              		.align	2
+  49              	.L2:
+  50 0014 00010440 		.word	1074004224
+  51              		.cfi_endproc
+  52              	.LFE0:
+  53              		.size	commons_Write, .-commons_Write
+  54              		.section	.text.commons_SetDriveMode,"ax",%progbits
+  55              		.align	2
+  56              		.global	commons_SetDriveMode
+  57              		.code	16
+  58              		.thumb_func
+  59              		.type	commons_SetDriveMode, %function
+  60              	commons_SetDriveMode:
+  61              	.LFB1:
+  48:.\Generated_Source\PSoC4/commons.c **** 
+  49:.\Generated_Source\PSoC4/commons.c **** 
+  50:.\Generated_Source\PSoC4/commons.c **** /*******************************************************************************
+  51:.\Generated_Source\PSoC4/commons.c **** * Function Name: commons_SetDriveMode
+  52:.\Generated_Source\PSoC4/commons.c **** ********************************************************************************
+  53:.\Generated_Source\PSoC4/commons.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 3
+
+
+  54:.\Generated_Source\PSoC4/commons.c **** * Summary:
+  55:.\Generated_Source\PSoC4/commons.c **** *  Change the drive mode on the pins of the port.
+  56:.\Generated_Source\PSoC4/commons.c **** * 
+  57:.\Generated_Source\PSoC4/commons.c **** * Parameters:  
+  58:.\Generated_Source\PSoC4/commons.c **** *  mode:  Change the pins to one of the following drive modes.
+  59:.\Generated_Source\PSoC4/commons.c **** *
+  60:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_STRONG     Strong Drive 
+  61:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_OD_HI      Open Drain, Drives High 
+  62:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_OD_LO      Open Drain, Drives Low 
+  63:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_RES_UP     Resistive Pull Up 
+  64:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_RES_DWN    Resistive Pull Down 
+  65:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_RES_UPDWN  Resistive Pull Up/Down 
+  66:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_DIG_HIZ    High Impedance Digital 
+  67:.\Generated_Source\PSoC4/commons.c **** *  commons_DM_ALG_HIZ    High Impedance Analog 
+  68:.\Generated_Source\PSoC4/commons.c **** *
+  69:.\Generated_Source\PSoC4/commons.c **** * Return: 
+  70:.\Generated_Source\PSoC4/commons.c **** *  None
+  71:.\Generated_Source\PSoC4/commons.c **** *
+  72:.\Generated_Source\PSoC4/commons.c **** *******************************************************************************/
+  73:.\Generated_Source\PSoC4/commons.c **** void commons_SetDriveMode(uint8 mode) 
+  74:.\Generated_Source\PSoC4/commons.c **** {
+  62              		.loc 1 74 0
+  63              		.cfi_startproc
+  64              	.LVL4:
+  75:.\Generated_Source\PSoC4/commons.c **** 	SetP4PinDriveMode(commons__0__SHIFT, mode);
+  65              		.loc 1 75 0
+  66 0000 0C4B     		ldr	r3, .L5
+  67 0002 1A68     		ldr	r2, [r3]
+  68 0004 3821     		mov	r1, #56
+  69 0006 8A43     		bic	r2, r1
+  70 0008 C100     		lsl	r1, r0, #3
+  71 000a 0A43     		orr	r2, r1
+  72 000c 1A60     		str	r2, [r3]
+  76:.\Generated_Source\PSoC4/commons.c **** 	SetP4PinDriveMode(commons__1__SHIFT, mode);
+  73              		.loc 1 76 0
+  74 000e 1968     		ldr	r1, [r3]
+  75 0010 094A     		ldr	r2, .L5+4
+  76 0012 0A40     		and	r2, r1
+  77 0014 8101     		lsl	r1, r0, #6
+  78 0016 0A43     		orr	r2, r1
+  79 0018 1A60     		str	r2, [r3]
+  77:.\Generated_Source\PSoC4/commons.c **** 	SetP4PinDriveMode(commons__2__SHIFT, mode);
+  80              		.loc 1 77 0
+  81 001a 1968     		ldr	r1, [r3]
+  82 001c 074A     		ldr	r2, .L5+8
+  83 001e 0A40     		and	r2, r1
+  84 0020 4102     		lsl	r1, r0, #9
+  85 0022 0A43     		orr	r2, r1
+  86 0024 1A60     		str	r2, [r3]
+  78:.\Generated_Source\PSoC4/commons.c **** 	SetP4PinDriveMode(commons__3__SHIFT, mode);
+  87              		.loc 1 78 0
+  88 0026 1968     		ldr	r1, [r3]
+  89 0028 054A     		ldr	r2, .L5+12
+  90 002a 0A40     		and	r2, r1
+  91 002c 0003     		lsl	r0, r0, #12
+  92              	.LVL5:
+  93 002e 1043     		orr	r0, r2
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 4
+
+
+  94 0030 1860     		str	r0, [r3]
+  79:.\Generated_Source\PSoC4/commons.c **** }
+  95              		.loc 1 79 0
+  96              		@ sp needed
+  97 0032 7047     		bx	lr
+  98              	.L6:
+  99              		.align	2
+ 100              	.L5:
+ 101 0034 08010440 		.word	1074004232
+ 102 0038 3FFEFFFF 		.word	-449
+ 103 003c FFF1FFFF 		.word	-3585
+ 104 0040 FF8FFFFF 		.word	-28673
+ 105              		.cfi_endproc
+ 106              	.LFE1:
+ 107              		.size	commons_SetDriveMode, .-commons_SetDriveMode
+ 108              		.section	.text.commons_Read,"ax",%progbits
+ 109              		.align	2
+ 110              		.global	commons_Read
+ 111              		.code	16
+ 112              		.thumb_func
+ 113              		.type	commons_Read, %function
+ 114              	commons_Read:
+ 115              	.LFB2:
+  80:.\Generated_Source\PSoC4/commons.c **** 
+  81:.\Generated_Source\PSoC4/commons.c **** 
+  82:.\Generated_Source\PSoC4/commons.c **** /*******************************************************************************
+  83:.\Generated_Source\PSoC4/commons.c **** * Function Name: commons_Read
+  84:.\Generated_Source\PSoC4/commons.c **** ********************************************************************************
+  85:.\Generated_Source\PSoC4/commons.c **** *
+  86:.\Generated_Source\PSoC4/commons.c **** * Summary:
+  87:.\Generated_Source\PSoC4/commons.c **** *  Read the current value on the pins of the Digital Port in right justified 
+  88:.\Generated_Source\PSoC4/commons.c **** *  form.
+  89:.\Generated_Source\PSoC4/commons.c **** *
+  90:.\Generated_Source\PSoC4/commons.c **** * Parameters:  
+  91:.\Generated_Source\PSoC4/commons.c **** *  None 
+  92:.\Generated_Source\PSoC4/commons.c **** *
+  93:.\Generated_Source\PSoC4/commons.c **** * Return: 
+  94:.\Generated_Source\PSoC4/commons.c **** *  Returns the current value of the Digital Port as a right justified number
+  95:.\Generated_Source\PSoC4/commons.c **** *  
+  96:.\Generated_Source\PSoC4/commons.c **** * Note:
+  97:.\Generated_Source\PSoC4/commons.c **** *  Macro commons_ReadPS calls this function. 
+  98:.\Generated_Source\PSoC4/commons.c **** *  
+  99:.\Generated_Source\PSoC4/commons.c **** *******************************************************************************/
+ 100:.\Generated_Source\PSoC4/commons.c **** uint8 commons_Read(void) 
+ 101:.\Generated_Source\PSoC4/commons.c **** {
+ 116              		.loc 1 101 0
+ 117              		.cfi_startproc
+ 102:.\Generated_Source\PSoC4/commons.c ****     return (uint8)((commons_PS & commons_MASK) >> commons_SHIFT);
+ 118              		.loc 1 102 0
+ 119 0000 024B     		ldr	r3, .L8
+ 120 0002 1868     		ldr	r0, [r3]
+ 121 0004 C006     		lsl	r0, r0, #27
+ 122 0006 000F     		lsr	r0, r0, #28
+ 103:.\Generated_Source\PSoC4/commons.c **** }
+ 123              		.loc 1 103 0
+ 124              		@ sp needed
+ 125 0008 7047     		bx	lr
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 5
+
+
+ 126              	.L9:
+ 127 000a C046     		.align	2
+ 128              	.L8:
+ 129 000c 04010440 		.word	1074004228
+ 130              		.cfi_endproc
+ 131              	.LFE2:
+ 132              		.size	commons_Read, .-commons_Read
+ 133              		.section	.text.commons_ReadDataReg,"ax",%progbits
+ 134              		.align	2
+ 135              		.global	commons_ReadDataReg
+ 136              		.code	16
+ 137              		.thumb_func
+ 138              		.type	commons_ReadDataReg, %function
+ 139              	commons_ReadDataReg:
+ 140              	.LFB3:
+ 104:.\Generated_Source\PSoC4/commons.c **** 
+ 105:.\Generated_Source\PSoC4/commons.c **** 
+ 106:.\Generated_Source\PSoC4/commons.c **** /*******************************************************************************
+ 107:.\Generated_Source\PSoC4/commons.c **** * Function Name: commons_ReadDataReg
+ 108:.\Generated_Source\PSoC4/commons.c **** ********************************************************************************
+ 109:.\Generated_Source\PSoC4/commons.c **** *
+ 110:.\Generated_Source\PSoC4/commons.c **** * Summary:
+ 111:.\Generated_Source\PSoC4/commons.c **** *  Read the current value assigned to a Digital Port's data output register
+ 112:.\Generated_Source\PSoC4/commons.c **** *
+ 113:.\Generated_Source\PSoC4/commons.c **** * Parameters:  
+ 114:.\Generated_Source\PSoC4/commons.c **** *  None 
+ 115:.\Generated_Source\PSoC4/commons.c **** *
+ 116:.\Generated_Source\PSoC4/commons.c **** * Return: 
+ 117:.\Generated_Source\PSoC4/commons.c **** *  Returns the current value assigned to the Digital Port's data output register
+ 118:.\Generated_Source\PSoC4/commons.c **** *  
+ 119:.\Generated_Source\PSoC4/commons.c **** *******************************************************************************/
+ 120:.\Generated_Source\PSoC4/commons.c **** uint8 commons_ReadDataReg(void) 
+ 121:.\Generated_Source\PSoC4/commons.c **** {
+ 141              		.loc 1 121 0
+ 142              		.cfi_startproc
+ 122:.\Generated_Source\PSoC4/commons.c ****     return (uint8)((commons_DR & commons_MASK) >> commons_SHIFT);
+ 143              		.loc 1 122 0
+ 144 0000 024B     		ldr	r3, .L11
+ 145 0002 1868     		ldr	r0, [r3]
+ 146 0004 C006     		lsl	r0, r0, #27
+ 147 0006 000F     		lsr	r0, r0, #28
+ 123:.\Generated_Source\PSoC4/commons.c **** }
+ 148              		.loc 1 123 0
+ 149              		@ sp needed
+ 150 0008 7047     		bx	lr
+ 151              	.L12:
+ 152 000a C046     		.align	2
+ 153              	.L11:
+ 154 000c 00010440 		.word	1074004224
+ 155              		.cfi_endproc
+ 156              	.LFE3:
+ 157              		.size	commons_ReadDataReg, .-commons_ReadDataReg
+ 158              		.section	.text.commons_ClearInterrupt,"ax",%progbits
+ 159              		.align	2
+ 160              		.global	commons_ClearInterrupt
+ 161              		.code	16
+ 162              		.thumb_func
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 6
+
+
+ 163              		.type	commons_ClearInterrupt, %function
+ 164              	commons_ClearInterrupt:
+ 165              	.LFB4:
+ 124:.\Generated_Source\PSoC4/commons.c **** 
+ 125:.\Generated_Source\PSoC4/commons.c **** 
+ 126:.\Generated_Source\PSoC4/commons.c **** /* If Interrupts Are Enabled for this Pins component */ 
+ 127:.\Generated_Source\PSoC4/commons.c **** #if defined(commons_INTSTAT) 
+ 128:.\Generated_Source\PSoC4/commons.c **** 
+ 129:.\Generated_Source\PSoC4/commons.c ****     /*******************************************************************************
+ 130:.\Generated_Source\PSoC4/commons.c ****     * Function Name: commons_ClearInterrupt
+ 131:.\Generated_Source\PSoC4/commons.c ****     ********************************************************************************
+ 132:.\Generated_Source\PSoC4/commons.c ****     *
+ 133:.\Generated_Source\PSoC4/commons.c ****     * Summary:
+ 134:.\Generated_Source\PSoC4/commons.c ****     *  Clears any active interrupts attached to port and returns the value of the 
+ 135:.\Generated_Source\PSoC4/commons.c ****     *  interrupt status register.
+ 136:.\Generated_Source\PSoC4/commons.c ****     *
+ 137:.\Generated_Source\PSoC4/commons.c ****     * Parameters:  
+ 138:.\Generated_Source\PSoC4/commons.c ****     *  None 
+ 139:.\Generated_Source\PSoC4/commons.c ****     *
+ 140:.\Generated_Source\PSoC4/commons.c ****     * Return: 
+ 141:.\Generated_Source\PSoC4/commons.c ****     *  Returns the value of the interrupt status register
+ 142:.\Generated_Source\PSoC4/commons.c ****     *  
+ 143:.\Generated_Source\PSoC4/commons.c ****     *******************************************************************************/
+ 144:.\Generated_Source\PSoC4/commons.c ****     uint8 commons_ClearInterrupt(void) 
+ 145:.\Generated_Source\PSoC4/commons.c ****     {
+ 166              		.loc 1 145 0
+ 167              		.cfi_startproc
+ 146:.\Generated_Source\PSoC4/commons.c **** 		uint8 maskedStatus = (uint8)(commons_INTSTAT & commons_MASK);
+ 168              		.loc 1 146 0
+ 169 0000 034A     		ldr	r2, .L14
+ 170 0002 1068     		ldr	r0, [r2]
+ 171 0004 1E23     		mov	r3, #30
+ 172 0006 1840     		and	r0, r3
+ 173              	.LVL6:
+ 147:.\Generated_Source\PSoC4/commons.c **** 		commons_INTSTAT = maskedStatus;
+ 174              		.loc 1 147 0
+ 175 0008 1060     		str	r0, [r2]
+ 148:.\Generated_Source\PSoC4/commons.c ****         return maskedStatus >> commons_SHIFT;
+ 176              		.loc 1 148 0
+ 177 000a 4008     		lsr	r0, r0, #1
+ 178              	.LVL7:
+ 149:.\Generated_Source\PSoC4/commons.c ****     }
+ 179              		.loc 1 149 0
+ 180              		@ sp needed
+ 181 000c 7047     		bx	lr
+ 182              	.L15:
+ 183 000e C046     		.align	2
+ 184              	.L14:
+ 185 0010 10010440 		.word	1074004240
+ 186              		.cfi_endproc
+ 187              	.LFE4:
+ 188              		.size	commons_ClearInterrupt, .-commons_ClearInterrupt
+ 189              		.text
+ 190              	.Letext0:
+ 191              		.file 2 ".\\Generated_Source\\PSoC4\\cytypes.h"
+ 192              		.section	.debug_info,"",%progbits
+ 193              	.Ldebug_info0:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 7
+
+
+ 194 0000 4E010000 		.4byte	0x14e
+ 195 0004 0400     		.2byte	0x4
+ 196 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 197 000a 04       		.byte	0x4
+ 198 000b 01       		.uleb128 0x1
+ 199 000c 3C010000 		.4byte	.LASF24
+ 200 0010 01       		.byte	0x1
+ 201 0011 42000000 		.4byte	.LASF25
+ 202 0015 20000000 		.4byte	.LASF26
+ 203 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 204 001d 00000000 		.4byte	0
+ 205 0021 00000000 		.4byte	.Ldebug_line0
+ 206 0025 02       		.uleb128 0x2
+ 207 0026 01       		.byte	0x1
+ 208 0027 06       		.byte	0x6
+ 209 0028 E3010000 		.4byte	.LASF0
+ 210 002c 02       		.uleb128 0x2
+ 211 002d 01       		.byte	0x1
+ 212 002e 08       		.byte	0x8
+ 213 002f 65000000 		.4byte	.LASF1
+ 214 0033 02       		.uleb128 0x2
+ 215 0034 02       		.byte	0x2
+ 216 0035 05       		.byte	0x5
+ 217 0036 CA010000 		.4byte	.LASF2
+ 218 003a 02       		.uleb128 0x2
+ 219 003b 02       		.byte	0x2
+ 220 003c 07       		.byte	0x7
+ 221 003d 99000000 		.4byte	.LASF3
+ 222 0041 02       		.uleb128 0x2
+ 223 0042 04       		.byte	0x4
+ 224 0043 05       		.byte	0x5
+ 225 0044 DA010000 		.4byte	.LASF4
+ 226 0048 02       		.uleb128 0x2
+ 227 0049 04       		.byte	0x4
+ 228 004a 07       		.byte	0x7
+ 229 004b 87000000 		.4byte	.LASF5
+ 230 004f 02       		.uleb128 0x2
+ 231 0050 08       		.byte	0x8
+ 232 0051 05       		.byte	0x5
+ 233 0052 1C010000 		.4byte	.LASF6
+ 234 0056 02       		.uleb128 0x2
+ 235 0057 08       		.byte	0x8
+ 236 0058 07       		.byte	0x7
+ 237 0059 D4000000 		.4byte	.LASF7
+ 238 005d 03       		.uleb128 0x3
+ 239 005e 04       		.byte	0x4
+ 240 005f 05       		.byte	0x5
+ 241 0060 696E7400 		.ascii	"int\000"
+ 242 0064 02       		.uleb128 0x2
+ 243 0065 04       		.byte	0x4
+ 244 0066 07       		.byte	0x7
+ 245 0067 BA000000 		.4byte	.LASF8
+ 246 006b 04       		.uleb128 0x4
+ 247 006c D4010000 		.4byte	.LASF9
+ 248 0070 02       		.byte	0x2
+ 249 0071 3801     		.2byte	0x138
+ 250 0073 2C000000 		.4byte	0x2c
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 8
+
+
+ 251 0077 04       		.uleb128 0x4
+ 252 0078 B3000000 		.4byte	.LASF10
+ 253 007c 02       		.byte	0x2
+ 254 007d 3A01     		.2byte	0x13a
+ 255 007f 48000000 		.4byte	0x48
+ 256 0083 02       		.uleb128 0x2
+ 257 0084 04       		.byte	0x4
+ 258 0085 04       		.byte	0x4
+ 259 0086 3C000000 		.4byte	.LASF11
+ 260 008a 02       		.uleb128 0x2
+ 261 008b 08       		.byte	0x8
+ 262 008c 04       		.byte	0x4
+ 263 008d AC000000 		.4byte	.LASF12
+ 264 0091 02       		.uleb128 0x2
+ 265 0092 01       		.byte	0x1
+ 266 0093 08       		.byte	0x8
+ 267 0094 37010000 		.4byte	.LASF13
+ 268 0098 04       		.uleb128 0x4
+ 269 0099 00000000 		.4byte	.LASF14
+ 270 009d 02       		.byte	0x2
+ 271 009e E401     		.2byte	0x1e4
+ 272 00a0 A4000000 		.4byte	0xa4
+ 273 00a4 05       		.uleb128 0x5
+ 274 00a5 77000000 		.4byte	0x77
+ 275 00a9 06       		.uleb128 0x6
+ 276 00aa 79000000 		.4byte	.LASF15
+ 277 00ae 01       		.byte	0x1
+ 278 00af 2A       		.byte	0x2a
+ 279 00b0 00000000 		.4byte	.LFB0
+ 280 00b4 18000000 		.4byte	.LFE0-.LFB0
+ 281 00b8 01       		.uleb128 0x1
+ 282 00b9 9C       		.byte	0x9c
+ 283 00ba DD000000 		.4byte	0xdd
+ 284 00be 07       		.uleb128 0x7
+ 285 00bf 1A000000 		.4byte	.LASF17
+ 286 00c3 01       		.byte	0x1
+ 287 00c4 2A       		.byte	0x2a
+ 288 00c5 6B000000 		.4byte	0x6b
+ 289 00c9 00000000 		.4byte	.LLST0
+ 290 00cd 08       		.uleb128 0x8
+ 291 00ce 73000000 		.4byte	.LASF22
+ 292 00d2 01       		.byte	0x1
+ 293 00d3 2C       		.byte	0x2c
+ 294 00d4 6B000000 		.4byte	0x6b
+ 295 00d8 21000000 		.4byte	.LLST1
+ 296 00dc 00       		.byte	0
+ 297 00dd 06       		.uleb128 0x6
+ 298 00de EB000000 		.4byte	.LASF16
+ 299 00e2 01       		.byte	0x1
+ 300 00e3 49       		.byte	0x49
+ 301 00e4 00000000 		.4byte	.LFB1
+ 302 00e8 44000000 		.4byte	.LFE1-.LFB1
+ 303 00ec 01       		.uleb128 0x1
+ 304 00ed 9C       		.byte	0x9c
+ 305 00ee 02010000 		.4byte	0x102
+ 306 00f2 07       		.uleb128 0x7
+ 307 00f3 00010000 		.4byte	.LASF18
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 9
+
+
+ 308 00f7 01       		.byte	0x1
+ 309 00f8 49       		.byte	0x49
+ 310 00f9 6B000000 		.4byte	0x6b
+ 311 00fd 3F000000 		.4byte	.LLST2
+ 312 0101 00       		.byte	0
+ 313 0102 09       		.uleb128 0x9
+ 314 0103 C7000000 		.4byte	.LASF19
+ 315 0107 01       		.byte	0x1
+ 316 0108 64       		.byte	0x64
+ 317 0109 6B000000 		.4byte	0x6b
+ 318 010d 00000000 		.4byte	.LFB2
+ 319 0111 10000000 		.4byte	.LFE2-.LFB2
+ 320 0115 01       		.uleb128 0x1
+ 321 0116 9C       		.byte	0x9c
+ 322 0117 09       		.uleb128 0x9
+ 323 0118 06000000 		.4byte	.LASF20
+ 324 011c 01       		.byte	0x1
+ 325 011d 78       		.byte	0x78
+ 326 011e 6B000000 		.4byte	0x6b
+ 327 0122 00000000 		.4byte	.LFB3
+ 328 0126 10000000 		.4byte	.LFE3-.LFB3
+ 329 012a 01       		.uleb128 0x1
+ 330 012b 9C       		.byte	0x9c
+ 331 012c 0A       		.uleb128 0xa
+ 332 012d 05010000 		.4byte	.LASF21
+ 333 0131 01       		.byte	0x1
+ 334 0132 90       		.byte	0x90
+ 335 0133 6B000000 		.4byte	0x6b
+ 336 0137 00000000 		.4byte	.LFB4
+ 337 013b 14000000 		.4byte	.LFE4-.LFB4
+ 338 013f 01       		.uleb128 0x1
+ 339 0140 9C       		.byte	0x9c
+ 340 0141 08       		.uleb128 0x8
+ 341 0142 2A010000 		.4byte	.LASF23
+ 342 0146 01       		.byte	0x1
+ 343 0147 92       		.byte	0x92
+ 344 0148 6B000000 		.4byte	0x6b
+ 345 014c 60000000 		.4byte	.LLST3
+ 346 0150 00       		.byte	0
+ 347 0151 00       		.byte	0
+ 348              		.section	.debug_abbrev,"",%progbits
+ 349              	.Ldebug_abbrev0:
+ 350 0000 01       		.uleb128 0x1
+ 351 0001 11       		.uleb128 0x11
+ 352 0002 01       		.byte	0x1
+ 353 0003 25       		.uleb128 0x25
+ 354 0004 0E       		.uleb128 0xe
+ 355 0005 13       		.uleb128 0x13
+ 356 0006 0B       		.uleb128 0xb
+ 357 0007 03       		.uleb128 0x3
+ 358 0008 0E       		.uleb128 0xe
+ 359 0009 1B       		.uleb128 0x1b
+ 360 000a 0E       		.uleb128 0xe
+ 361 000b 55       		.uleb128 0x55
+ 362 000c 17       		.uleb128 0x17
+ 363 000d 11       		.uleb128 0x11
+ 364 000e 01       		.uleb128 0x1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 10
+
+
+ 365 000f 10       		.uleb128 0x10
+ 366 0010 17       		.uleb128 0x17
+ 367 0011 00       		.byte	0
+ 368 0012 00       		.byte	0
+ 369 0013 02       		.uleb128 0x2
+ 370 0014 24       		.uleb128 0x24
+ 371 0015 00       		.byte	0
+ 372 0016 0B       		.uleb128 0xb
+ 373 0017 0B       		.uleb128 0xb
+ 374 0018 3E       		.uleb128 0x3e
+ 375 0019 0B       		.uleb128 0xb
+ 376 001a 03       		.uleb128 0x3
+ 377 001b 0E       		.uleb128 0xe
+ 378 001c 00       		.byte	0
+ 379 001d 00       		.byte	0
+ 380 001e 03       		.uleb128 0x3
+ 381 001f 24       		.uleb128 0x24
+ 382 0020 00       		.byte	0
+ 383 0021 0B       		.uleb128 0xb
+ 384 0022 0B       		.uleb128 0xb
+ 385 0023 3E       		.uleb128 0x3e
+ 386 0024 0B       		.uleb128 0xb
+ 387 0025 03       		.uleb128 0x3
+ 388 0026 08       		.uleb128 0x8
+ 389 0027 00       		.byte	0
+ 390 0028 00       		.byte	0
+ 391 0029 04       		.uleb128 0x4
+ 392 002a 16       		.uleb128 0x16
+ 393 002b 00       		.byte	0
+ 394 002c 03       		.uleb128 0x3
+ 395 002d 0E       		.uleb128 0xe
+ 396 002e 3A       		.uleb128 0x3a
+ 397 002f 0B       		.uleb128 0xb
+ 398 0030 3B       		.uleb128 0x3b
+ 399 0031 05       		.uleb128 0x5
+ 400 0032 49       		.uleb128 0x49
+ 401 0033 13       		.uleb128 0x13
+ 402 0034 00       		.byte	0
+ 403 0035 00       		.byte	0
+ 404 0036 05       		.uleb128 0x5
+ 405 0037 35       		.uleb128 0x35
+ 406 0038 00       		.byte	0
+ 407 0039 49       		.uleb128 0x49
+ 408 003a 13       		.uleb128 0x13
+ 409 003b 00       		.byte	0
+ 410 003c 00       		.byte	0
+ 411 003d 06       		.uleb128 0x6
+ 412 003e 2E       		.uleb128 0x2e
+ 413 003f 01       		.byte	0x1
+ 414 0040 3F       		.uleb128 0x3f
+ 415 0041 19       		.uleb128 0x19
+ 416 0042 03       		.uleb128 0x3
+ 417 0043 0E       		.uleb128 0xe
+ 418 0044 3A       		.uleb128 0x3a
+ 419 0045 0B       		.uleb128 0xb
+ 420 0046 3B       		.uleb128 0x3b
+ 421 0047 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 11
+
+
+ 422 0048 27       		.uleb128 0x27
+ 423 0049 19       		.uleb128 0x19
+ 424 004a 11       		.uleb128 0x11
+ 425 004b 01       		.uleb128 0x1
+ 426 004c 12       		.uleb128 0x12
+ 427 004d 06       		.uleb128 0x6
+ 428 004e 40       		.uleb128 0x40
+ 429 004f 18       		.uleb128 0x18
+ 430 0050 9742     		.uleb128 0x2117
+ 431 0052 19       		.uleb128 0x19
+ 432 0053 01       		.uleb128 0x1
+ 433 0054 13       		.uleb128 0x13
+ 434 0055 00       		.byte	0
+ 435 0056 00       		.byte	0
+ 436 0057 07       		.uleb128 0x7
+ 437 0058 05       		.uleb128 0x5
+ 438 0059 00       		.byte	0
+ 439 005a 03       		.uleb128 0x3
+ 440 005b 0E       		.uleb128 0xe
+ 441 005c 3A       		.uleb128 0x3a
+ 442 005d 0B       		.uleb128 0xb
+ 443 005e 3B       		.uleb128 0x3b
+ 444 005f 0B       		.uleb128 0xb
+ 445 0060 49       		.uleb128 0x49
+ 446 0061 13       		.uleb128 0x13
+ 447 0062 02       		.uleb128 0x2
+ 448 0063 17       		.uleb128 0x17
+ 449 0064 00       		.byte	0
+ 450 0065 00       		.byte	0
+ 451 0066 08       		.uleb128 0x8
+ 452 0067 34       		.uleb128 0x34
+ 453 0068 00       		.byte	0
+ 454 0069 03       		.uleb128 0x3
+ 455 006a 0E       		.uleb128 0xe
+ 456 006b 3A       		.uleb128 0x3a
+ 457 006c 0B       		.uleb128 0xb
+ 458 006d 3B       		.uleb128 0x3b
+ 459 006e 0B       		.uleb128 0xb
+ 460 006f 49       		.uleb128 0x49
+ 461 0070 13       		.uleb128 0x13
+ 462 0071 02       		.uleb128 0x2
+ 463 0072 17       		.uleb128 0x17
+ 464 0073 00       		.byte	0
+ 465 0074 00       		.byte	0
+ 466 0075 09       		.uleb128 0x9
+ 467 0076 2E       		.uleb128 0x2e
+ 468 0077 00       		.byte	0
+ 469 0078 3F       		.uleb128 0x3f
+ 470 0079 19       		.uleb128 0x19
+ 471 007a 03       		.uleb128 0x3
+ 472 007b 0E       		.uleb128 0xe
+ 473 007c 3A       		.uleb128 0x3a
+ 474 007d 0B       		.uleb128 0xb
+ 475 007e 3B       		.uleb128 0x3b
+ 476 007f 0B       		.uleb128 0xb
+ 477 0080 27       		.uleb128 0x27
+ 478 0081 19       		.uleb128 0x19
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 12
+
+
+ 479 0082 49       		.uleb128 0x49
+ 480 0083 13       		.uleb128 0x13
+ 481 0084 11       		.uleb128 0x11
+ 482 0085 01       		.uleb128 0x1
+ 483 0086 12       		.uleb128 0x12
+ 484 0087 06       		.uleb128 0x6
+ 485 0088 40       		.uleb128 0x40
+ 486 0089 18       		.uleb128 0x18
+ 487 008a 9742     		.uleb128 0x2117
+ 488 008c 19       		.uleb128 0x19
+ 489 008d 00       		.byte	0
+ 490 008e 00       		.byte	0
+ 491 008f 0A       		.uleb128 0xa
+ 492 0090 2E       		.uleb128 0x2e
+ 493 0091 01       		.byte	0x1
+ 494 0092 3F       		.uleb128 0x3f
+ 495 0093 19       		.uleb128 0x19
+ 496 0094 03       		.uleb128 0x3
+ 497 0095 0E       		.uleb128 0xe
+ 498 0096 3A       		.uleb128 0x3a
+ 499 0097 0B       		.uleb128 0xb
+ 500 0098 3B       		.uleb128 0x3b
+ 501 0099 0B       		.uleb128 0xb
+ 502 009a 27       		.uleb128 0x27
+ 503 009b 19       		.uleb128 0x19
+ 504 009c 49       		.uleb128 0x49
+ 505 009d 13       		.uleb128 0x13
+ 506 009e 11       		.uleb128 0x11
+ 507 009f 01       		.uleb128 0x1
+ 508 00a0 12       		.uleb128 0x12
+ 509 00a1 06       		.uleb128 0x6
+ 510 00a2 40       		.uleb128 0x40
+ 511 00a3 18       		.uleb128 0x18
+ 512 00a4 9742     		.uleb128 0x2117
+ 513 00a6 19       		.uleb128 0x19
+ 514 00a7 00       		.byte	0
+ 515 00a8 00       		.byte	0
+ 516 00a9 00       		.byte	0
+ 517              		.section	.debug_loc,"",%progbits
+ 518              	.Ldebug_loc0:
+ 519              	.LLST0:
+ 520 0000 00000000 		.4byte	.LVL0
+ 521 0004 0A000000 		.4byte	.LVL2
+ 522 0008 0100     		.2byte	0x1
+ 523 000a 50       		.byte	0x50
+ 524 000b 0A000000 		.4byte	.LVL2
+ 525 000f 18000000 		.4byte	.LFE0
+ 526 0013 0400     		.2byte	0x4
+ 527 0015 F3       		.byte	0xf3
+ 528 0016 01       		.uleb128 0x1
+ 529 0017 50       		.byte	0x50
+ 530 0018 9F       		.byte	0x9f
+ 531 0019 00000000 		.4byte	0
+ 532 001d 00000000 		.4byte	0
+ 533              	.LLST1:
+ 534 0021 08000000 		.4byte	.LVL1
+ 535 0025 10000000 		.4byte	.LVL3
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 13
+
+
+ 536 0029 0100     		.2byte	0x1
+ 537 002b 52       		.byte	0x52
+ 538 002c 10000000 		.4byte	.LVL3
+ 539 0030 18000000 		.4byte	.LFE0
+ 540 0034 0100     		.2byte	0x1
+ 541 0036 50       		.byte	0x50
+ 542 0037 00000000 		.4byte	0
+ 543 003b 00000000 		.4byte	0
+ 544              	.LLST2:
+ 545 003f 00000000 		.4byte	.LVL4
+ 546 0043 2E000000 		.4byte	.LVL5
+ 547 0047 0100     		.2byte	0x1
+ 548 0049 50       		.byte	0x50
+ 549 004a 2E000000 		.4byte	.LVL5
+ 550 004e 44000000 		.4byte	.LFE1
+ 551 0052 0400     		.2byte	0x4
+ 552 0054 F3       		.byte	0xf3
+ 553 0055 01       		.uleb128 0x1
+ 554 0056 50       		.byte	0x50
+ 555 0057 9F       		.byte	0x9f
+ 556 0058 00000000 		.4byte	0
+ 557 005c 00000000 		.4byte	0
+ 558              	.LLST3:
+ 559 0060 08000000 		.4byte	.LVL6
+ 560 0064 0C000000 		.4byte	.LVL7
+ 561 0068 0100     		.2byte	0x1
+ 562 006a 50       		.byte	0x50
+ 563 006b 0C000000 		.4byte	.LVL7
+ 564 006f 14000000 		.4byte	.LFE4
+ 565 0073 0400     		.2byte	0x4
+ 566 0075 72       		.byte	0x72
+ 567 0076 00       		.sleb128 0
+ 568 0077 06       		.byte	0x6
+ 569 0078 9F       		.byte	0x9f
+ 570 0079 00000000 		.4byte	0
+ 571 007d 00000000 		.4byte	0
+ 572              		.section	.debug_aranges,"",%progbits
+ 573 0000 3C000000 		.4byte	0x3c
+ 574 0004 0200     		.2byte	0x2
+ 575 0006 00000000 		.4byte	.Ldebug_info0
+ 576 000a 04       		.byte	0x4
+ 577 000b 00       		.byte	0
+ 578 000c 0000     		.2byte	0
+ 579 000e 0000     		.2byte	0
+ 580 0010 00000000 		.4byte	.LFB0
+ 581 0014 18000000 		.4byte	.LFE0-.LFB0
+ 582 0018 00000000 		.4byte	.LFB1
+ 583 001c 44000000 		.4byte	.LFE1-.LFB1
+ 584 0020 00000000 		.4byte	.LFB2
+ 585 0024 10000000 		.4byte	.LFE2-.LFB2
+ 586 0028 00000000 		.4byte	.LFB3
+ 587 002c 10000000 		.4byte	.LFE3-.LFB3
+ 588 0030 00000000 		.4byte	.LFB4
+ 589 0034 14000000 		.4byte	.LFE4-.LFB4
+ 590 0038 00000000 		.4byte	0
+ 591 003c 00000000 		.4byte	0
+ 592              		.section	.debug_ranges,"",%progbits
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 14
+
+
+ 593              	.Ldebug_ranges0:
+ 594 0000 00000000 		.4byte	.LFB0
+ 595 0004 18000000 		.4byte	.LFE0
+ 596 0008 00000000 		.4byte	.LFB1
+ 597 000c 44000000 		.4byte	.LFE1
+ 598 0010 00000000 		.4byte	.LFB2
+ 599 0014 10000000 		.4byte	.LFE2
+ 600 0018 00000000 		.4byte	.LFB3
+ 601 001c 10000000 		.4byte	.LFE3
+ 602 0020 00000000 		.4byte	.LFB4
+ 603 0024 14000000 		.4byte	.LFE4
+ 604 0028 00000000 		.4byte	0
+ 605 002c 00000000 		.4byte	0
+ 606              		.section	.debug_line,"",%progbits
+ 607              	.Ldebug_line0:
+ 608 0000 AC000000 		.section	.debug_str,"MS",%progbits,1
+ 608      02004600 
+ 608      00000201 
+ 608      FB0E0D00 
+ 608      01010101 
+ 609              	.LASF14:
+ 610 0000 72656733 		.ascii	"reg32\000"
+ 610      3200
+ 611              	.LASF20:
+ 612 0006 636F6D6D 		.ascii	"commons_ReadDataReg\000"
+ 612      6F6E735F 
+ 612      52656164 
+ 612      44617461 
+ 612      52656700 
+ 613              	.LASF17:
+ 614 001a 76616C75 		.ascii	"value\000"
+ 614      6500
+ 615              	.LASF26:
+ 616 0020 433A5C45 		.ascii	"C:\\E3PRJ3\\PSoC4Master.cydsn\000"
+ 616      3350524A 
+ 616      335C5053 
+ 616      6F43344D 
+ 616      61737465 
+ 617              	.LASF11:
+ 618 003c 666C6F61 		.ascii	"float\000"
+ 618      7400
+ 619              	.LASF25:
+ 620 0042 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\commons.c\000"
+ 620      6E657261 
+ 620      7465645F 
+ 620      536F7572 
+ 620      63655C50 
+ 621              	.LASF1:
+ 622 0065 756E7369 		.ascii	"unsigned char\000"
+ 622      676E6564 
+ 622      20636861 
+ 622      7200
+ 623              	.LASF22:
+ 624 0073 64725661 		.ascii	"drVal\000"
+ 624      6C00
+ 625              	.LASF15:
+ 626 0079 636F6D6D 		.ascii	"commons_Write\000"
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 15
+
+
+ 626      6F6E735F 
+ 626      57726974 
+ 626      6500
+ 627              	.LASF5:
+ 628 0087 6C6F6E67 		.ascii	"long unsigned int\000"
+ 628      20756E73 
+ 628      69676E65 
+ 628      6420696E 
+ 628      7400
+ 629              	.LASF3:
+ 630 0099 73686F72 		.ascii	"short unsigned int\000"
+ 630      7420756E 
+ 630      7369676E 
+ 630      65642069 
+ 630      6E7400
+ 631              	.LASF12:
+ 632 00ac 646F7562 		.ascii	"double\000"
+ 632      6C6500
+ 633              	.LASF10:
+ 634 00b3 75696E74 		.ascii	"uint32\000"
+ 634      333200
+ 635              	.LASF8:
+ 636 00ba 756E7369 		.ascii	"unsigned int\000"
+ 636      676E6564 
+ 636      20696E74 
+ 636      00
+ 637              	.LASF19:
+ 638 00c7 636F6D6D 		.ascii	"commons_Read\000"
+ 638      6F6E735F 
+ 638      52656164 
+ 638      00
+ 639              	.LASF7:
+ 640 00d4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 640      206C6F6E 
+ 640      6720756E 
+ 640      7369676E 
+ 640      65642069 
+ 641              	.LASF16:
+ 642 00eb 636F6D6D 		.ascii	"commons_SetDriveMode\000"
+ 642      6F6E735F 
+ 642      53657444 
+ 642      72697665 
+ 642      4D6F6465 
+ 643              	.LASF18:
+ 644 0100 6D6F6465 		.ascii	"mode\000"
+ 644      00
+ 645              	.LASF21:
+ 646 0105 636F6D6D 		.ascii	"commons_ClearInterrupt\000"
+ 646      6F6E735F 
+ 646      436C6561 
+ 646      72496E74 
+ 646      65727275 
+ 647              	.LASF6:
+ 648 011c 6C6F6E67 		.ascii	"long long int\000"
+ 648      206C6F6E 
+ 648      6720696E 
+ 648      7400
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccNxa2PS.s 			page 16
+
+
+ 649              	.LASF23:
+ 650 012a 6D61736B 		.ascii	"maskedStatus\000"
+ 650      65645374 
+ 650      61747573 
+ 650      00
+ 651              	.LASF13:
+ 652 0137 63686172 		.ascii	"char\000"
+ 652      00
+ 653              	.LASF24:
+ 654 013c 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 654      4320342E 
+ 654      392E3320 
+ 654      32303135 
+ 654      30333033 
+ 655 016f 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 655      20726576 
+ 655      6973696F 
+ 655      6E203232 
+ 655      31323230 
+ 656 01a2 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 656      66756E63 
+ 656      74696F6E 
+ 656      2D736563 
+ 656      74696F6E 
+ 657              	.LASF2:
+ 658 01ca 73686F72 		.ascii	"short int\000"
+ 658      7420696E 
+ 658      7400
+ 659              	.LASF9:
+ 660 01d4 75696E74 		.ascii	"uint8\000"
+ 660      3800
+ 661              	.LASF4:
+ 662 01da 6C6F6E67 		.ascii	"long int\000"
+ 662      20696E74 
+ 662      00
+ 663              	.LASF0:
+ 664 01e3 7369676E 		.ascii	"signed char\000"
+ 664      65642063 
+ 664      68617200 
+ 665              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

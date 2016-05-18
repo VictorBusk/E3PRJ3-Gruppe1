@@ -1,0 +1,1574 @@
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"queue.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.queue_init,"ax",%progbits
+  18              		.align	2
+  19              		.global	queue_init
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	queue_init, %function
+  23              	queue_init:
+  24              	.LFB34:
+  25              		.file 1 ".\\queue.c"
+   1:.\queue.c     **** /* ========================================
+   2:.\queue.c     ****  *
+   3:.\queue.c     ****  * File: queue.c
+   4:.\queue.c     ****  * Description:
+   5:.\queue.c     ****  *
+   6:.\queue.c     ****  * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
+   7:.\queue.c     ****  * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
+   8:.\queue.c     ****  * Group: 1
+   9:.\queue.c     ****  *
+  10:.\queue.c     ****  * Author: Jeppe Stærk
+  11:.\queue.c     ****  * Matriculation number: 201271201
+  12:.\queue.c     ****  *
+  13:.\queue.c     ****  * Version: 1.0
+  14:.\queue.c     ****  * Date: 13-05-2016
+  15:.\queue.c     ****  *
+  16:.\queue.c     ****  * ========================================
+  17:.\queue.c     ****  */
+  18:.\queue.c     **** 
+  19:.\queue.c     **** #include "queue.h"
+  20:.\queue.c     **** 
+  21:.\queue.c     **** struct Node* frontOfQueuePtr;
+  22:.\queue.c     **** struct Node* backOfQueuePtr;
+  23:.\queue.c     **** 
+  24:.\queue.c     **** void queue_init()
+  25:.\queue.c     **** {
+  26              		.loc 1 25 0
+  27              		.cfi_startproc
+  26:.\queue.c     ****   frontOfQueuePtr = NULL;
+  28              		.loc 1 26 0
+  29 0000 0023     		mov	r3, #0
+  30 0002 034A     		ldr	r2, .L2
+  31 0004 1360     		str	r3, [r2]
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 2
+
+
+  27:.\queue.c     ****   frontOfQueuePtr->next_ = NULL;
+  32              		.loc 1 27 0
+  33 0006 9B60     		str	r3, [r3, #8]
+  28:.\queue.c     ****   backOfQueuePtr = NULL;
+  34              		.loc 1 28 0
+  35 0008 024A     		ldr	r2, .L2+4
+  36 000a 1360     		str	r3, [r2]
+  29:.\queue.c     ****   backOfQueuePtr->next_ = NULL;
+  30:.\queue.c     **** }
+  37              		.loc 1 30 0
+  38              		@ sp needed
+  39 000c 7047     		bx	lr
+  40              	.L3:
+  41 000e C046     		.align	2
+  42              	.L2:
+  43 0010 00000000 		.word	frontOfQueuePtr
+  44 0014 00000000 		.word	backOfQueuePtr
+  45              		.cfi_endproc
+  46              	.LFE34:
+  47              		.size	queue_init, .-queue_init
+  48              		.section	.text.frontQueue,"ax",%progbits
+  49              		.align	2
+  50              		.global	frontQueue
+  51              		.code	16
+  52              		.thumb_func
+  53              		.type	frontQueue, %function
+  54              	frontQueue:
+  55              	.LFB37:
+  31:.\queue.c     **** 
+  32:.\queue.c     **** void pushQueue(const struct Data data)
+  33:.\queue.c     **** {
+  34:.\queue.c     ****   if(isEmptyQueue() != 1)
+  35:.\queue.c     ****   {
+  36:.\queue.c     ****     backInsert(&backOfQueuePtr, data);
+  37:.\queue.c     ****     backOfQueuePtr = backOfQueuePtr->next_;
+  38:.\queue.c     ****   }
+  39:.\queue.c     ****   else
+  40:.\queue.c     ****   {
+  41:.\queue.c     ****     headInsert(&frontOfQueuePtr, data);
+  42:.\queue.c     ****     backOfQueuePtr = frontOfQueuePtr;
+  43:.\queue.c     ****   }
+  44:.\queue.c     **** }
+  45:.\queue.c     **** 
+  46:.\queue.c     **** void popQueue()
+  47:.\queue.c     **** {
+  48:.\queue.c     ****   headRemove(&frontOfQueuePtr);
+  49:.\queue.c     ****   if(isEmptyQueue() == 1)
+  50:.\queue.c     ****   {
+  51:.\queue.c     ****     backOfQueuePtr = NULL;
+  52:.\queue.c     ****   }
+  53:.\queue.c     **** }
+  54:.\queue.c     **** 
+  55:.\queue.c     **** struct Data frontQueue()
+  56:.\queue.c     **** {
+  56              		.loc 1 56 0
+  57              		.cfi_startproc
+  58              	.LVL0:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 3
+
+
+  59 0000 10B5     		push	{r4, lr}
+  60              		.cfi_def_cfa_offset 8
+  61              		.cfi_offset 4, -8
+  62              		.cfi_offset 14, -4
+  57:.\queue.c     ****   return frontOfQueuePtr->data_;
+  63              		.loc 1 57 0
+  64 0002 034B     		ldr	r3, .L5
+  65 0004 1B68     		ldr	r3, [r3]
+  66 0006 021C     		mov	r2, r0
+  67 0008 12CB     		ldmia	r3!, {r1, r4}
+  68 000a 12C2     		stmia	r2!, {r1, r4}
+  58:.\queue.c     **** }
+  69              		.loc 1 58 0
+  70              		@ sp needed
+  71 000c 10BD     		pop	{r4, pc}
+  72              	.L6:
+  73 000e C046     		.align	2
+  74              	.L5:
+  75 0010 00000000 		.word	frontOfQueuePtr
+  76              		.cfi_endproc
+  77              	.LFE37:
+  78              		.size	frontQueue, .-frontQueue
+  79              		.section	.text.isEmptyQueue,"ax",%progbits
+  80              		.align	2
+  81              		.global	isEmptyQueue
+  82              		.code	16
+  83              		.thumb_func
+  84              		.type	isEmptyQueue, %function
+  85              	isEmptyQueue:
+  86              	.LFB38:
+  59:.\queue.c     **** 
+  60:.\queue.c     **** int isEmptyQueue()
+  61:.\queue.c     **** {
+  87              		.loc 1 61 0
+  88              		.cfi_startproc
+  62:.\queue.c     ****   if(frontOfQueuePtr == NULL)
+  89              		.loc 1 62 0
+  90 0000 034B     		ldr	r3, .L10
+  91 0002 1B68     		ldr	r3, [r3]
+  92 0004 002B     		cmp	r3, #0
+  93 0006 01D1     		bne	.L9
+  63:.\queue.c     ****   {
+  64:.\queue.c     ****     return 1;
+  94              		.loc 1 64 0
+  95 0008 0120     		mov	r0, #1
+  96 000a 00E0     		b	.L8
+  97              	.L9:
+  65:.\queue.c     ****   }
+  66:.\queue.c     ****   else
+  67:.\queue.c     ****   {
+  68:.\queue.c     ****     return 0;
+  98              		.loc 1 68 0
+  99 000c 0020     		mov	r0, #0
+ 100              	.L8:
+  69:.\queue.c     ****   }
+  70:.\queue.c     **** }
+ 101              		.loc 1 70 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 4
+
+
+ 102              		@ sp needed
+ 103 000e 7047     		bx	lr
+ 104              	.L11:
+ 105              		.align	2
+ 106              	.L10:
+ 107 0010 00000000 		.word	frontOfQueuePtr
+ 108              		.cfi_endproc
+ 109              	.LFE38:
+ 110              		.size	isEmptyQueue, .-isEmptyQueue
+ 111              		.section	.text.headInsert,"ax",%progbits
+ 112              		.align	2
+ 113              		.global	headInsert
+ 114              		.code	16
+ 115              		.thumb_func
+ 116              		.type	headInsert, %function
+ 117              	headInsert:
+ 118              	.LFB39:
+  71:.\queue.c     **** 
+  72:.\queue.c     **** void headInsert(struct Node** headPtr, const struct Data data)
+  73:.\queue.c     **** {
+ 119              		.loc 1 73 0
+ 120              		.cfi_startproc
+ 121              	.LVL1:
+ 122 0000 30B5     		push	{r4, r5, lr}
+ 123              		.cfi_def_cfa_offset 12
+ 124              		.cfi_offset 4, -12
+ 125              		.cfi_offset 5, -8
+ 126              		.cfi_offset 14, -4
+ 127 0002 83B0     		sub	sp, sp, #12
+ 128              		.cfi_def_cfa_offset 24
+ 129 0004 041C     		mov	r4, r0
+ 130 0006 0091     		str	r1, [sp]
+ 131 0008 0192     		str	r2, [sp, #4]
+  74:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+ 132              		.loc 1 74 0
+ 133 000a 0C20     		mov	r0, #12
+ 134              	.LVL2:
+ 135 000c FFF7FEFF 		bl	malloc
+ 136              	.LVL3:
+  75:.\queue.c     ****   if(temp == NULL)
+ 137              		.loc 1 75 0
+ 138 0010 0028     		cmp	r0, #0
+ 139 0012 06D0     		beq	.L12
+  76:.\queue.c     ****   {
+  77:.\queue.c     ****     return;
+  78:.\queue.c     ****   }
+  79:.\queue.c     ****   
+  80:.\queue.c     ****   temp->data_ = data;
+ 140              		.loc 1 80 0
+ 141 0014 6B46     		mov	r3, sp
+ 142 0016 021C     		mov	r2, r0
+ 143 0018 22CB     		ldmia	r3!, {r1, r5}
+ 144 001a 22C2     		stmia	r2!, {r1, r5}
+  81:.\queue.c     ****   temp->next_ = NULL;
+ 145              		.loc 1 81 0
+ 146 001c 0023     		mov	r3, #0
+ 147 001e 8360     		str	r3, [r0, #8]
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 5
+
+
+  82:.\queue.c     ****   
+  83:.\queue.c     ****   *headPtr = temp;
+ 148              		.loc 1 83 0
+ 149 0020 2060     		str	r0, [r4]
+ 150              	.L12:
+  84:.\queue.c     **** }
+ 151              		.loc 1 84 0
+ 152 0022 03B0     		add	sp, sp, #12
+ 153              		@ sp needed
+ 154              	.LVL4:
+ 155 0024 30BD     		pop	{r4, r5, pc}
+ 156              		.cfi_endproc
+ 157              	.LFE39:
+ 158              		.size	headInsert, .-headInsert
+ 159 0026 C046     		.section	.text.headRemove,"ax",%progbits
+ 160              		.align	2
+ 161              		.global	headRemove
+ 162              		.code	16
+ 163              		.thumb_func
+ 164              		.type	headRemove, %function
+ 165              	headRemove:
+ 166              	.LFB40:
+  85:.\queue.c     **** 
+  86:.\queue.c     **** void headRemove(struct Node** headPtr)
+  87:.\queue.c     **** {
+ 167              		.loc 1 87 0
+ 168              		.cfi_startproc
+ 169              	.LVL5:
+ 170 0000 08B5     		push	{r3, lr}
+ 171              		.cfi_def_cfa_offset 8
+ 172              		.cfi_offset 3, -8
+ 173              		.cfi_offset 14, -4
+  88:.\queue.c     ****   if(headPtr != NULL)
+ 174              		.loc 1 88 0
+ 175 0002 0028     		cmp	r0, #0
+ 176 0004 05D0     		beq	.L14
+ 177 0006 031C     		mov	r3, r0
+ 178              	.LBB2:
+  89:.\queue.c     ****   {
+  90:.\queue.c     ****     struct Node* condemned;
+  91:.\queue.c     ****     condemned = *headPtr;
+ 179              		.loc 1 91 0
+ 180 0008 0068     		ldr	r0, [r0]
+ 181              	.LVL6:
+  92:.\queue.c     ****     *headPtr = (*headPtr)->next_;
+ 182              		.loc 1 92 0
+ 183 000a 8268     		ldr	r2, [r0, #8]
+ 184 000c 1A60     		str	r2, [r3]
+  93:.\queue.c     ****     free(condemned);
+ 185              		.loc 1 93 0
+ 186 000e FFF7FEFF 		bl	free
+ 187              	.LVL7:
+ 188              	.L14:
+ 189              	.LBE2:
+  94:.\queue.c     ****   }
+  95:.\queue.c     **** }
+ 190              		.loc 1 95 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 6
+
+
+ 191              		@ sp needed
+ 192 0012 08BD     		pop	{r3, pc}
+ 193              		.cfi_endproc
+ 194              	.LFE40:
+ 195              		.size	headRemove, .-headRemove
+ 196              		.section	.text.popQueue,"ax",%progbits
+ 197              		.align	2
+ 198              		.global	popQueue
+ 199              		.code	16
+ 200              		.thumb_func
+ 201              		.type	popQueue, %function
+ 202              	popQueue:
+ 203              	.LFB36:
+  47:.\queue.c     ****   headRemove(&frontOfQueuePtr);
+ 204              		.loc 1 47 0
+ 205              		.cfi_startproc
+ 206 0000 08B5     		push	{r3, lr}
+ 207              		.cfi_def_cfa_offset 8
+ 208              		.cfi_offset 3, -8
+ 209              		.cfi_offset 14, -4
+  48:.\queue.c     ****   if(isEmptyQueue() == 1)
+ 210              		.loc 1 48 0
+ 211 0002 0548     		ldr	r0, .L18
+ 212 0004 FFF7FEFF 		bl	headRemove
+ 213              	.LVL8:
+  49:.\queue.c     ****   {
+ 214              		.loc 1 49 0
+ 215 0008 FFF7FEFF 		bl	isEmptyQueue
+ 216              	.LVL9:
+ 217 000c 0128     		cmp	r0, #1
+ 218 000e 02D1     		bne	.L16
+  51:.\queue.c     ****   }
+ 219              		.loc 1 51 0
+ 220 0010 0022     		mov	r2, #0
+ 221 0012 024B     		ldr	r3, .L18+4
+ 222 0014 1A60     		str	r2, [r3]
+ 223              	.L16:
+  53:.\queue.c     **** 
+ 224              		.loc 1 53 0
+ 225              		@ sp needed
+ 226 0016 08BD     		pop	{r3, pc}
+ 227              	.L19:
+ 228              		.align	2
+ 229              	.L18:
+ 230 0018 00000000 		.word	frontOfQueuePtr
+ 231 001c 00000000 		.word	backOfQueuePtr
+ 232              		.cfi_endproc
+ 233              	.LFE36:
+ 234              		.size	popQueue, .-popQueue
+ 235              		.section	.text.backInsert,"ax",%progbits
+ 236              		.align	2
+ 237              		.global	backInsert
+ 238              		.code	16
+ 239              		.thumb_func
+ 240              		.type	backInsert, %function
+ 241              	backInsert:
+ 242              	.LFB41:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 7
+
+
+  96:.\queue.c     **** 
+  97:.\queue.c     **** void backInsert(struct Node** backPtr, const struct Data data)
+  98:.\queue.c     **** {
+ 243              		.loc 1 98 0
+ 244              		.cfi_startproc
+ 245              	.LVL10:
+ 246 0000 70B5     		push	{r4, r5, r6, lr}
+ 247              		.cfi_def_cfa_offset 16
+ 248              		.cfi_offset 4, -16
+ 249              		.cfi_offset 5, -12
+ 250              		.cfi_offset 6, -8
+ 251              		.cfi_offset 14, -4
+ 252 0002 82B0     		sub	sp, sp, #8
+ 253              		.cfi_def_cfa_offset 24
+ 254 0004 0091     		str	r1, [sp]
+ 255 0006 0192     		str	r2, [sp, #4]
+  99:.\queue.c     ****   if(*backPtr == NULL)
+ 256              		.loc 1 99 0
+ 257 0008 0368     		ldr	r3, [r0]
+ 258 000a 002B     		cmp	r3, #0
+ 259 000c 0BD0     		beq	.L20
+ 260 000e 041C     		mov	r4, r0
+ 100:.\queue.c     ****   {
+ 101:.\queue.c     ****     return;
+ 102:.\queue.c     ****   }
+ 103:.\queue.c     ****   
+ 104:.\queue.c     ****   struct Node* next = (*backPtr)->next_;
+ 261              		.loc 1 104 0
+ 262 0010 9D68     		ldr	r5, [r3, #8]
+ 263              	.LVL11:
+ 105:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+ 264              		.loc 1 105 0
+ 265 0012 0C20     		mov	r0, #12
+ 266              	.LVL12:
+ 267 0014 FFF7FEFF 		bl	malloc
+ 268              	.LVL13:
+ 106:.\queue.c     ****   temp->data_ = data;
+ 269              		.loc 1 106 0
+ 270 0018 6B46     		mov	r3, sp
+ 271 001a 021C     		mov	r2, r0
+ 272 001c 42CB     		ldmia	r3!, {r1, r6}
+ 273 001e 42C2     		stmia	r2!, {r1, r6}
+ 107:.\queue.c     ****   temp->next_ = next;
+ 274              		.loc 1 107 0
+ 275 0020 8560     		str	r5, [r0, #8]
+ 108:.\queue.c     ****   (*backPtr)->next_ = temp;
+ 276              		.loc 1 108 0
+ 277 0022 2368     		ldr	r3, [r4]
+ 278 0024 9860     		str	r0, [r3, #8]
+ 279              	.LVL14:
+ 280              	.L20:
+ 109:.\queue.c     **** }
+ 281              		.loc 1 109 0
+ 282 0026 02B0     		add	sp, sp, #8
+ 283              		@ sp needed
+ 284 0028 70BD     		pop	{r4, r5, r6, pc}
+ 285              		.cfi_endproc
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 8
+
+
+ 286              	.LFE41:
+ 287              		.size	backInsert, .-backInsert
+ 288 002a C046     		.section	.text.pushQueue,"ax",%progbits
+ 289              		.align	2
+ 290              		.global	pushQueue
+ 291              		.code	16
+ 292              		.thumb_func
+ 293              		.type	pushQueue, %function
+ 294              	pushQueue:
+ 295              	.LFB35:
+  33:.\queue.c     ****   if(isEmptyQueue() != 1)
+ 296              		.loc 1 33 0
+ 297              		.cfi_startproc
+ 298 0000 10B5     		push	{r4, lr}
+ 299              		.cfi_def_cfa_offset 8
+ 300              		.cfi_offset 4, -8
+ 301              		.cfi_offset 14, -4
+ 302 0002 82B0     		sub	sp, sp, #8
+ 303              		.cfi_def_cfa_offset 16
+ 304 0004 0090     		str	r0, [sp]
+ 305 0006 0191     		str	r1, [sp, #4]
+  34:.\queue.c     ****   {
+ 306              		.loc 1 34 0
+ 307 0008 FFF7FEFF 		bl	isEmptyQueue
+ 308              	.LVL15:
+ 309 000c 0128     		cmp	r0, #1
+ 310 000e 09D0     		beq	.L23
+  36:.\queue.c     ****     backOfQueuePtr = backOfQueuePtr->next_;
+ 311              		.loc 1 36 0
+ 312 0010 0A4C     		ldr	r4, .L25
+ 313 0012 201C     		mov	r0, r4
+ 314 0014 0099     		ldr	r1, [sp]
+ 315 0016 019A     		ldr	r2, [sp, #4]
+ 316 0018 FFF7FEFF 		bl	backInsert
+ 317              	.LVL16:
+  37:.\queue.c     ****   }
+ 318              		.loc 1 37 0
+ 319 001c 2368     		ldr	r3, [r4]
+ 320 001e 9B68     		ldr	r3, [r3, #8]
+ 321 0020 2360     		str	r3, [r4]
+ 322 0022 08E0     		b	.L22
+ 323              	.L23:
+  41:.\queue.c     ****     backOfQueuePtr = frontOfQueuePtr;
+ 324              		.loc 1 41 0
+ 325 0024 064C     		ldr	r4, .L25+4
+ 326 0026 201C     		mov	r0, r4
+ 327 0028 0099     		ldr	r1, [sp]
+ 328 002a 019A     		ldr	r2, [sp, #4]
+ 329 002c FFF7FEFF 		bl	headInsert
+ 330              	.LVL17:
+  42:.\queue.c     ****   }
+ 331              		.loc 1 42 0
+ 332 0030 2268     		ldr	r2, [r4]
+ 333 0032 024B     		ldr	r3, .L25
+ 334 0034 1A60     		str	r2, [r3]
+ 335              	.L22:
+  44:.\queue.c     **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 9
+
+
+ 336              		.loc 1 44 0
+ 337 0036 02B0     		add	sp, sp, #8
+ 338              		@ sp needed
+ 339 0038 10BD     		pop	{r4, pc}
+ 340              	.L26:
+ 341 003a C046     		.align	2
+ 342              	.L25:
+ 343 003c 00000000 		.word	backOfQueuePtr
+ 344 0040 00000000 		.word	frontOfQueuePtr
+ 345              		.cfi_endproc
+ 346              	.LFE35:
+ 347              		.size	pushQueue, .-pushQueue
+ 348              		.comm	backOfQueuePtr,4,4
+ 349              		.comm	frontOfQueuePtr,4,4
+ 350              		.text
+ 351              	.Letext0:
+ 352              		.file 2 ".\\queue.h"
+ 353              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 354              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
+ 355              		.section	.debug_info,"",%progbits
+ 356              	.Ldebug_info0:
+ 357 0000 E8020000 		.4byte	0x2e8
+ 358 0004 0400     		.2byte	0x4
+ 359 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 360 000a 04       		.byte	0x4
+ 361 000b 01       		.uleb128 0x1
+ 362 000c 55010000 		.4byte	.LASF34
+ 363 0010 01       		.byte	0x1
+ 364 0011 04010000 		.4byte	.LASF35
+ 365 0015 34010000 		.4byte	.LASF36
+ 366 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 367 001d 00000000 		.4byte	0
+ 368 0021 00000000 		.4byte	.Ldebug_line0
+ 369 0025 02       		.uleb128 0x2
+ 370 0026 01       		.byte	0x1
+ 371 0027 06       		.byte	0x6
+ 372 0028 07020000 		.4byte	.LASF0
+ 373 002c 02       		.uleb128 0x2
+ 374 002d 01       		.byte	0x1
+ 375 002e 08       		.byte	0x8
+ 376 002f 56000000 		.4byte	.LASF1
+ 377 0033 02       		.uleb128 0x2
+ 378 0034 02       		.byte	0x2
+ 379 0035 05       		.byte	0x5
+ 380 0036 E3010000 		.4byte	.LASF2
+ 381 003a 02       		.uleb128 0x2
+ 382 003b 02       		.byte	0x2
+ 383 003c 07       		.byte	0x7
+ 384 003d 8D000000 		.4byte	.LASF3
+ 385 0041 02       		.uleb128 0x2
+ 386 0042 04       		.byte	0x4
+ 387 0043 05       		.byte	0x5
+ 388 0044 25000000 		.4byte	.LASF4
+ 389 0048 02       		.uleb128 0x2
+ 390 0049 04       		.byte	0x4
+ 391 004a 07       		.byte	0x7
+ 392 004b 76000000 		.4byte	.LASF5
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 10
+
+
+ 393 004f 02       		.uleb128 0x2
+ 394 0050 08       		.byte	0x8
+ 395 0051 05       		.byte	0x5
+ 396 0052 26010000 		.4byte	.LASF6
+ 397 0056 02       		.uleb128 0x2
+ 398 0057 08       		.byte	0x8
+ 399 0058 07       		.byte	0x7
+ 400 0059 CD000000 		.4byte	.LASF7
+ 401 005d 03       		.uleb128 0x3
+ 402 005e 04       		.byte	0x4
+ 403 005f 05       		.byte	0x5
+ 404 0060 696E7400 		.ascii	"int\000"
+ 405 0064 02       		.uleb128 0x2
+ 406 0065 04       		.byte	0x4
+ 407 0066 07       		.byte	0x7
+ 408 0067 C0000000 		.4byte	.LASF8
+ 409 006b 02       		.uleb128 0x2
+ 410 006c 04       		.byte	0x4
+ 411 006d 04       		.byte	0x4
+ 412 006e 4B000000 		.4byte	.LASF9
+ 413 0072 02       		.uleb128 0x2
+ 414 0073 08       		.byte	0x8
+ 415 0074 04       		.byte	0x4
+ 416 0075 AA000000 		.4byte	.LASF10
+ 417 0079 02       		.uleb128 0x2
+ 418 007a 01       		.byte	0x1
+ 419 007b 08       		.byte	0x8
+ 420 007c 02020000 		.4byte	.LASF11
+ 421 0080 04       		.uleb128 0x4
+ 422 0081 0E000000 		.4byte	.LASF37
+ 423 0085 03       		.byte	0x3
+ 424 0086 D4       		.byte	0xd4
+ 425 0087 64000000 		.4byte	0x64
+ 426 008b 02       		.uleb128 0x2
+ 427 008c 04       		.byte	0x4
+ 428 008d 07       		.byte	0x7
+ 429 008e 17010000 		.4byte	.LASF12
+ 430 0092 05       		.uleb128 0x5
+ 431 0093 04       		.byte	0x4
+ 432 0094 06       		.uleb128 0x6
+ 433 0095 EF000000 		.4byte	.LASF15
+ 434 0099 08       		.byte	0x8
+ 435 009a 02       		.byte	0x2
+ 436 009b 1A       		.byte	0x1a
+ 437 009c B9000000 		.4byte	0xb9
+ 438 00a0 07       		.uleb128 0x7
+ 439 00a1 50010000 		.4byte	.LASF13
+ 440 00a5 02       		.byte	0x2
+ 441 00a6 1C       		.byte	0x1c
+ 442 00a7 5D000000 		.4byte	0x5d
+ 443 00ab 00       		.byte	0
+ 444 00ac 07       		.uleb128 0x7
+ 445 00ad ED010000 		.4byte	.LASF14
+ 446 00b1 02       		.byte	0x2
+ 447 00b2 1D       		.byte	0x1d
+ 448 00b3 5D000000 		.4byte	0x5d
+ 449 00b7 04       		.byte	0x4
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 11
+
+
+ 450 00b8 00       		.byte	0
+ 451 00b9 06       		.uleb128 0x6
+ 452 00ba FD010000 		.4byte	.LASF16
+ 453 00be 0C       		.byte	0xc
+ 454 00bf 02       		.byte	0x2
+ 455 00c0 20       		.byte	0x20
+ 456 00c1 DE000000 		.4byte	0xde
+ 457 00c5 07       		.uleb128 0x7
+ 458 00c6 00000000 		.4byte	.LASF17
+ 459 00ca 02       		.byte	0x2
+ 460 00cb 22       		.byte	0x22
+ 461 00cc 94000000 		.4byte	0x94
+ 462 00d0 00       		.byte	0
+ 463 00d1 07       		.uleb128 0x7
+ 464 00d2 20010000 		.4byte	.LASF18
+ 465 00d6 02       		.byte	0x2
+ 466 00d7 23       		.byte	0x23
+ 467 00d8 DE000000 		.4byte	0xde
+ 468 00dc 08       		.byte	0x8
+ 469 00dd 00       		.byte	0
+ 470 00de 08       		.uleb128 0x8
+ 471 00df 04       		.byte	0x4
+ 472 00e0 B9000000 		.4byte	0xb9
+ 473 00e4 09       		.uleb128 0x9
+ 474 00e5 2E000000 		.4byte	.LASF38
+ 475 00e9 01       		.byte	0x1
+ 476 00ea 18       		.byte	0x18
+ 477 00eb 00000000 		.4byte	.LFB34
+ 478 00ef 18000000 		.4byte	.LFE34-.LFB34
+ 479 00f3 01       		.uleb128 0x1
+ 480 00f4 9C       		.byte	0x9c
+ 481 00f5 0A       		.uleb128 0xa
+ 482 00f6 13020000 		.4byte	.LASF19
+ 483 00fa 01       		.byte	0x1
+ 484 00fb 37       		.byte	0x37
+ 485 00fc 94000000 		.4byte	0x94
+ 486 0100 00000000 		.4byte	.LFB37
+ 487 0104 14000000 		.4byte	.LFE37-.LFB37
+ 488 0108 01       		.uleb128 0x1
+ 489 0109 9C       		.byte	0x9c
+ 490 010a 0A       		.uleb128 0xa
+ 491 010b 69000000 		.4byte	.LASF20
+ 492 010f 01       		.byte	0x1
+ 493 0110 3C       		.byte	0x3c
+ 494 0111 5D000000 		.4byte	0x5d
+ 495 0115 00000000 		.4byte	.LFB38
+ 496 0119 14000000 		.4byte	.LFE38-.LFB38
+ 497 011d 01       		.uleb128 0x1
+ 498 011e 9C       		.byte	0x9c
+ 499 011f 0B       		.uleb128 0xb
+ 500 0120 1A000000 		.4byte	.LASF23
+ 501 0124 01       		.byte	0x1
+ 502 0125 48       		.byte	0x48
+ 503 0126 00000000 		.4byte	.LFB39
+ 504 012a 26000000 		.4byte	.LFE39-.LFB39
+ 505 012e 01       		.uleb128 0x1
+ 506 012f 9C       		.byte	0x9c
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 12
+
+
+ 507 0130 6E010000 		.4byte	0x16e
+ 508 0134 0C       		.uleb128 0xc
+ 509 0135 06000000 		.4byte	.LASF21
+ 510 0139 01       		.byte	0x1
+ 511 013a 48       		.byte	0x48
+ 512 013b 6E010000 		.4byte	0x16e
+ 513 013f 00000000 		.4byte	.LLST0
+ 514 0143 0D       		.uleb128 0xd
+ 515 0144 51000000 		.4byte	.LASF22
+ 516 0148 01       		.byte	0x1
+ 517 0149 48       		.byte	0x48
+ 518 014a 74010000 		.4byte	0x174
+ 519 014e 02       		.uleb128 0x2
+ 520 014f 91       		.byte	0x91
+ 521 0150 68       		.sleb128 -24
+ 522 0151 0E       		.uleb128 0xe
+ 523 0152 88000000 		.4byte	.LASF25
+ 524 0156 01       		.byte	0x1
+ 525 0157 4A       		.byte	0x4a
+ 526 0158 DE000000 		.4byte	0xde
+ 527 015c 01       		.uleb128 0x1
+ 528 015d 50       		.byte	0x50
+ 529 015e 0F       		.uleb128 0xf
+ 530 015f 10000000 		.4byte	.LVL3
+ 531 0163 C9020000 		.4byte	0x2c9
+ 532 0167 10       		.uleb128 0x10
+ 533 0168 01       		.uleb128 0x1
+ 534 0169 50       		.byte	0x50
+ 535 016a 01       		.uleb128 0x1
+ 536 016b 3C       		.byte	0x3c
+ 537 016c 00       		.byte	0
+ 538 016d 00       		.byte	0
+ 539 016e 08       		.uleb128 0x8
+ 540 016f 04       		.byte	0x4
+ 541 0170 DE000000 		.4byte	0xde
+ 542 0174 11       		.uleb128 0x11
+ 543 0175 94000000 		.4byte	0x94
+ 544 0179 0B       		.uleb128 0xb
+ 545 017a F2010000 		.4byte	.LASF24
+ 546 017e 01       		.byte	0x1
+ 547 017f 56       		.byte	0x56
+ 548 0180 00000000 		.4byte	.LFB40
+ 549 0184 14000000 		.4byte	.LFE40-.LFB40
+ 550 0188 01       		.uleb128 0x1
+ 551 0189 9C       		.byte	0x9c
+ 552 018a C0010000 		.4byte	0x1c0
+ 553 018e 0C       		.uleb128 0xc
+ 554 018f 06000000 		.4byte	.LASF21
+ 555 0193 01       		.byte	0x1
+ 556 0194 56       		.byte	0x56
+ 557 0195 6E010000 		.4byte	0x16e
+ 558 0199 2C000000 		.4byte	.LLST1
+ 559 019d 12       		.uleb128 0x12
+ 560 019e 08000000 		.4byte	.LBB2
+ 561 01a2 0A000000 		.4byte	.LBE2-.LBB2
+ 562 01a6 13       		.uleb128 0x13
+ 563 01a7 A0000000 		.4byte	.LASF26
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 13
+
+
+ 564 01ab 01       		.byte	0x1
+ 565 01ac 5A       		.byte	0x5a
+ 566 01ad DE000000 		.4byte	0xde
+ 567 01b1 58000000 		.4byte	.LLST2
+ 568 01b5 14       		.uleb128 0x14
+ 569 01b6 12000000 		.4byte	.LVL7
+ 570 01ba DE020000 		.4byte	0x2de
+ 571 01be 00       		.byte	0
+ 572 01bf 00       		.byte	0
+ 573 01c0 0B       		.uleb128 0xb
+ 574 01c1 0E010000 		.4byte	.LASF27
+ 575 01c5 01       		.byte	0x1
+ 576 01c6 2E       		.byte	0x2e
+ 577 01c7 00000000 		.4byte	.LFB36
+ 578 01cb 20000000 		.4byte	.LFE36-.LFB36
+ 579 01cf 01       		.uleb128 0x1
+ 580 01d0 9C       		.byte	0x9c
+ 581 01d1 F6010000 		.4byte	0x1f6
+ 582 01d5 15       		.uleb128 0x15
+ 583 01d6 08000000 		.4byte	.LVL8
+ 584 01da 79010000 		.4byte	0x179
+ 585 01de EC010000 		.4byte	0x1ec
+ 586 01e2 10       		.uleb128 0x10
+ 587 01e3 01       		.uleb128 0x1
+ 588 01e4 50       		.byte	0x50
+ 589 01e5 05       		.uleb128 0x5
+ 590 01e6 03       		.byte	0x3
+ 591 01e7 00000000 		.4byte	frontOfQueuePtr
+ 592 01eb 00       		.byte	0
+ 593 01ec 14       		.uleb128 0x14
+ 594 01ed 0C000000 		.4byte	.LVL9
+ 595 01f1 0A010000 		.4byte	0x10a
+ 596 01f5 00       		.byte	0
+ 597 01f6 0B       		.uleb128 0xb
+ 598 01f7 E4000000 		.4byte	.LASF28
+ 599 01fb 01       		.byte	0x1
+ 600 01fc 61       		.byte	0x61
+ 601 01fd 00000000 		.4byte	.LFB41
+ 602 0201 2A000000 		.4byte	.LFE41-.LFB41
+ 603 0205 01       		.uleb128 0x1
+ 604 0206 9C       		.byte	0x9c
+ 605 0207 56020000 		.4byte	0x256
+ 606 020b 0C       		.uleb128 0xc
+ 607 020c 43000000 		.4byte	.LASF29
+ 608 0210 01       		.byte	0x1
+ 609 0211 61       		.byte	0x61
+ 610 0212 6E010000 		.4byte	0x16e
+ 611 0216 6B000000 		.4byte	.LLST3
+ 612 021a 0D       		.uleb128 0xd
+ 613 021b 51000000 		.4byte	.LASF22
+ 614 021f 01       		.byte	0x1
+ 615 0220 61       		.byte	0x61
+ 616 0221 74010000 		.4byte	0x174
+ 617 0225 02       		.uleb128 0x2
+ 618 0226 91       		.byte	0x91
+ 619 0227 68       		.sleb128 -24
+ 620 0228 13       		.uleb128 0x13
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 14
+
+
+ 621 0229 15000000 		.4byte	.LASF30
+ 622 022d 01       		.byte	0x1
+ 623 022e 68       		.byte	0x68
+ 624 022f DE000000 		.4byte	0xde
+ 625 0233 97000000 		.4byte	.LLST4
+ 626 0237 13       		.uleb128 0x13
+ 627 0238 88000000 		.4byte	.LASF25
+ 628 023c 01       		.byte	0x1
+ 629 023d 69       		.byte	0x69
+ 630 023e DE000000 		.4byte	0xde
+ 631 0242 AA000000 		.4byte	.LLST5
+ 632 0246 0F       		.uleb128 0xf
+ 633 0247 18000000 		.4byte	.LVL13
+ 634 024b C9020000 		.4byte	0x2c9
+ 635 024f 10       		.uleb128 0x10
+ 636 0250 01       		.uleb128 0x1
+ 637 0251 50       		.byte	0x50
+ 638 0252 01       		.uleb128 0x1
+ 639 0253 3C       		.byte	0x3c
+ 640 0254 00       		.byte	0
+ 641 0255 00       		.byte	0
+ 642 0256 0B       		.uleb128 0xb
+ 643 0257 39000000 		.4byte	.LASF31
+ 644 025b 01       		.byte	0x1
+ 645 025c 20       		.byte	0x20
+ 646 025d 00000000 		.4byte	.LFB35
+ 647 0261 44000000 		.4byte	.LFE35-.LFB35
+ 648 0265 01       		.uleb128 0x1
+ 649 0266 9C       		.byte	0x9c
+ 650 0267 A7020000 		.4byte	0x2a7
+ 651 026b 0D       		.uleb128 0xd
+ 652 026c 51000000 		.4byte	.LASF22
+ 653 0270 01       		.byte	0x1
+ 654 0271 20       		.byte	0x20
+ 655 0272 74010000 		.4byte	0x174
+ 656 0276 02       		.uleb128 0x2
+ 657 0277 91       		.byte	0x91
+ 658 0278 70       		.sleb128 -16
+ 659 0279 14       		.uleb128 0x14
+ 660 027a 0C000000 		.4byte	.LVL15
+ 661 027e 0A010000 		.4byte	0x10a
+ 662 0282 15       		.uleb128 0x15
+ 663 0283 1C000000 		.4byte	.LVL16
+ 664 0287 F6010000 		.4byte	0x1f6
+ 665 028b 96020000 		.4byte	0x296
+ 666 028f 10       		.uleb128 0x10
+ 667 0290 01       		.uleb128 0x1
+ 668 0291 50       		.byte	0x50
+ 669 0292 02       		.uleb128 0x2
+ 670 0293 74       		.byte	0x74
+ 671 0294 00       		.sleb128 0
+ 672 0295 00       		.byte	0
+ 673 0296 0F       		.uleb128 0xf
+ 674 0297 30000000 		.4byte	.LVL17
+ 675 029b 1F010000 		.4byte	0x11f
+ 676 029f 10       		.uleb128 0x10
+ 677 02a0 01       		.uleb128 0x1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 15
+
+
+ 678 02a1 50       		.byte	0x50
+ 679 02a2 02       		.uleb128 0x2
+ 680 02a3 74       		.byte	0x74
+ 681 02a4 00       		.sleb128 0
+ 682 02a5 00       		.byte	0
+ 683 02a6 00       		.byte	0
+ 684 02a7 16       		.uleb128 0x16
+ 685 02a8 F4000000 		.4byte	.LASF32
+ 686 02ac 01       		.byte	0x1
+ 687 02ad 15       		.byte	0x15
+ 688 02ae DE000000 		.4byte	0xde
+ 689 02b2 05       		.uleb128 0x5
+ 690 02b3 03       		.byte	0x3
+ 691 02b4 00000000 		.4byte	frontOfQueuePtr
+ 692 02b8 16       		.uleb128 0x16
+ 693 02b9 B1000000 		.4byte	.LASF33
+ 694 02bd 01       		.byte	0x1
+ 695 02be 16       		.byte	0x16
+ 696 02bf DE000000 		.4byte	0xde
+ 697 02c3 05       		.uleb128 0x5
+ 698 02c4 03       		.byte	0x3
+ 699 02c5 00000000 		.4byte	backOfQueuePtr
+ 700 02c9 17       		.uleb128 0x17
+ 701 02ca 1E020000 		.4byte	.LASF39
+ 702 02ce 04       		.byte	0x4
+ 703 02cf 61       		.byte	0x61
+ 704 02d0 92000000 		.4byte	0x92
+ 705 02d4 DE020000 		.4byte	0x2de
+ 706 02d8 18       		.uleb128 0x18
+ 707 02d9 80000000 		.4byte	0x80
+ 708 02dd 00       		.byte	0
+ 709 02de 19       		.uleb128 0x19
+ 710 02df 64000000 		.4byte	.LASF40
+ 711 02e3 04       		.byte	0x4
+ 712 02e4 56       		.byte	0x56
+ 713 02e5 18       		.uleb128 0x18
+ 714 02e6 92000000 		.4byte	0x92
+ 715 02ea 00       		.byte	0
+ 716 02eb 00       		.byte	0
+ 717              		.section	.debug_abbrev,"",%progbits
+ 718              	.Ldebug_abbrev0:
+ 719 0000 01       		.uleb128 0x1
+ 720 0001 11       		.uleb128 0x11
+ 721 0002 01       		.byte	0x1
+ 722 0003 25       		.uleb128 0x25
+ 723 0004 0E       		.uleb128 0xe
+ 724 0005 13       		.uleb128 0x13
+ 725 0006 0B       		.uleb128 0xb
+ 726 0007 03       		.uleb128 0x3
+ 727 0008 0E       		.uleb128 0xe
+ 728 0009 1B       		.uleb128 0x1b
+ 729 000a 0E       		.uleb128 0xe
+ 730 000b 55       		.uleb128 0x55
+ 731 000c 17       		.uleb128 0x17
+ 732 000d 11       		.uleb128 0x11
+ 733 000e 01       		.uleb128 0x1
+ 734 000f 10       		.uleb128 0x10
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 16
+
+
+ 735 0010 17       		.uleb128 0x17
+ 736 0011 00       		.byte	0
+ 737 0012 00       		.byte	0
+ 738 0013 02       		.uleb128 0x2
+ 739 0014 24       		.uleb128 0x24
+ 740 0015 00       		.byte	0
+ 741 0016 0B       		.uleb128 0xb
+ 742 0017 0B       		.uleb128 0xb
+ 743 0018 3E       		.uleb128 0x3e
+ 744 0019 0B       		.uleb128 0xb
+ 745 001a 03       		.uleb128 0x3
+ 746 001b 0E       		.uleb128 0xe
+ 747 001c 00       		.byte	0
+ 748 001d 00       		.byte	0
+ 749 001e 03       		.uleb128 0x3
+ 750 001f 24       		.uleb128 0x24
+ 751 0020 00       		.byte	0
+ 752 0021 0B       		.uleb128 0xb
+ 753 0022 0B       		.uleb128 0xb
+ 754 0023 3E       		.uleb128 0x3e
+ 755 0024 0B       		.uleb128 0xb
+ 756 0025 03       		.uleb128 0x3
+ 757 0026 08       		.uleb128 0x8
+ 758 0027 00       		.byte	0
+ 759 0028 00       		.byte	0
+ 760 0029 04       		.uleb128 0x4
+ 761 002a 16       		.uleb128 0x16
+ 762 002b 00       		.byte	0
+ 763 002c 03       		.uleb128 0x3
+ 764 002d 0E       		.uleb128 0xe
+ 765 002e 3A       		.uleb128 0x3a
+ 766 002f 0B       		.uleb128 0xb
+ 767 0030 3B       		.uleb128 0x3b
+ 768 0031 0B       		.uleb128 0xb
+ 769 0032 49       		.uleb128 0x49
+ 770 0033 13       		.uleb128 0x13
+ 771 0034 00       		.byte	0
+ 772 0035 00       		.byte	0
+ 773 0036 05       		.uleb128 0x5
+ 774 0037 0F       		.uleb128 0xf
+ 775 0038 00       		.byte	0
+ 776 0039 0B       		.uleb128 0xb
+ 777 003a 0B       		.uleb128 0xb
+ 778 003b 00       		.byte	0
+ 779 003c 00       		.byte	0
+ 780 003d 06       		.uleb128 0x6
+ 781 003e 13       		.uleb128 0x13
+ 782 003f 01       		.byte	0x1
+ 783 0040 03       		.uleb128 0x3
+ 784 0041 0E       		.uleb128 0xe
+ 785 0042 0B       		.uleb128 0xb
+ 786 0043 0B       		.uleb128 0xb
+ 787 0044 3A       		.uleb128 0x3a
+ 788 0045 0B       		.uleb128 0xb
+ 789 0046 3B       		.uleb128 0x3b
+ 790 0047 0B       		.uleb128 0xb
+ 791 0048 01       		.uleb128 0x1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 17
+
+
+ 792 0049 13       		.uleb128 0x13
+ 793 004a 00       		.byte	0
+ 794 004b 00       		.byte	0
+ 795 004c 07       		.uleb128 0x7
+ 796 004d 0D       		.uleb128 0xd
+ 797 004e 00       		.byte	0
+ 798 004f 03       		.uleb128 0x3
+ 799 0050 0E       		.uleb128 0xe
+ 800 0051 3A       		.uleb128 0x3a
+ 801 0052 0B       		.uleb128 0xb
+ 802 0053 3B       		.uleb128 0x3b
+ 803 0054 0B       		.uleb128 0xb
+ 804 0055 49       		.uleb128 0x49
+ 805 0056 13       		.uleb128 0x13
+ 806 0057 38       		.uleb128 0x38
+ 807 0058 0B       		.uleb128 0xb
+ 808 0059 00       		.byte	0
+ 809 005a 00       		.byte	0
+ 810 005b 08       		.uleb128 0x8
+ 811 005c 0F       		.uleb128 0xf
+ 812 005d 00       		.byte	0
+ 813 005e 0B       		.uleb128 0xb
+ 814 005f 0B       		.uleb128 0xb
+ 815 0060 49       		.uleb128 0x49
+ 816 0061 13       		.uleb128 0x13
+ 817 0062 00       		.byte	0
+ 818 0063 00       		.byte	0
+ 819 0064 09       		.uleb128 0x9
+ 820 0065 2E       		.uleb128 0x2e
+ 821 0066 00       		.byte	0
+ 822 0067 3F       		.uleb128 0x3f
+ 823 0068 19       		.uleb128 0x19
+ 824 0069 03       		.uleb128 0x3
+ 825 006a 0E       		.uleb128 0xe
+ 826 006b 3A       		.uleb128 0x3a
+ 827 006c 0B       		.uleb128 0xb
+ 828 006d 3B       		.uleb128 0x3b
+ 829 006e 0B       		.uleb128 0xb
+ 830 006f 27       		.uleb128 0x27
+ 831 0070 19       		.uleb128 0x19
+ 832 0071 11       		.uleb128 0x11
+ 833 0072 01       		.uleb128 0x1
+ 834 0073 12       		.uleb128 0x12
+ 835 0074 06       		.uleb128 0x6
+ 836 0075 40       		.uleb128 0x40
+ 837 0076 18       		.uleb128 0x18
+ 838 0077 9742     		.uleb128 0x2117
+ 839 0079 19       		.uleb128 0x19
+ 840 007a 00       		.byte	0
+ 841 007b 00       		.byte	0
+ 842 007c 0A       		.uleb128 0xa
+ 843 007d 2E       		.uleb128 0x2e
+ 844 007e 00       		.byte	0
+ 845 007f 3F       		.uleb128 0x3f
+ 846 0080 19       		.uleb128 0x19
+ 847 0081 03       		.uleb128 0x3
+ 848 0082 0E       		.uleb128 0xe
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 18
+
+
+ 849 0083 3A       		.uleb128 0x3a
+ 850 0084 0B       		.uleb128 0xb
+ 851 0085 3B       		.uleb128 0x3b
+ 852 0086 0B       		.uleb128 0xb
+ 853 0087 27       		.uleb128 0x27
+ 854 0088 19       		.uleb128 0x19
+ 855 0089 49       		.uleb128 0x49
+ 856 008a 13       		.uleb128 0x13
+ 857 008b 11       		.uleb128 0x11
+ 858 008c 01       		.uleb128 0x1
+ 859 008d 12       		.uleb128 0x12
+ 860 008e 06       		.uleb128 0x6
+ 861 008f 40       		.uleb128 0x40
+ 862 0090 18       		.uleb128 0x18
+ 863 0091 9742     		.uleb128 0x2117
+ 864 0093 19       		.uleb128 0x19
+ 865 0094 00       		.byte	0
+ 866 0095 00       		.byte	0
+ 867 0096 0B       		.uleb128 0xb
+ 868 0097 2E       		.uleb128 0x2e
+ 869 0098 01       		.byte	0x1
+ 870 0099 3F       		.uleb128 0x3f
+ 871 009a 19       		.uleb128 0x19
+ 872 009b 03       		.uleb128 0x3
+ 873 009c 0E       		.uleb128 0xe
+ 874 009d 3A       		.uleb128 0x3a
+ 875 009e 0B       		.uleb128 0xb
+ 876 009f 3B       		.uleb128 0x3b
+ 877 00a0 0B       		.uleb128 0xb
+ 878 00a1 27       		.uleb128 0x27
+ 879 00a2 19       		.uleb128 0x19
+ 880 00a3 11       		.uleb128 0x11
+ 881 00a4 01       		.uleb128 0x1
+ 882 00a5 12       		.uleb128 0x12
+ 883 00a6 06       		.uleb128 0x6
+ 884 00a7 40       		.uleb128 0x40
+ 885 00a8 18       		.uleb128 0x18
+ 886 00a9 9742     		.uleb128 0x2117
+ 887 00ab 19       		.uleb128 0x19
+ 888 00ac 01       		.uleb128 0x1
+ 889 00ad 13       		.uleb128 0x13
+ 890 00ae 00       		.byte	0
+ 891 00af 00       		.byte	0
+ 892 00b0 0C       		.uleb128 0xc
+ 893 00b1 05       		.uleb128 0x5
+ 894 00b2 00       		.byte	0
+ 895 00b3 03       		.uleb128 0x3
+ 896 00b4 0E       		.uleb128 0xe
+ 897 00b5 3A       		.uleb128 0x3a
+ 898 00b6 0B       		.uleb128 0xb
+ 899 00b7 3B       		.uleb128 0x3b
+ 900 00b8 0B       		.uleb128 0xb
+ 901 00b9 49       		.uleb128 0x49
+ 902 00ba 13       		.uleb128 0x13
+ 903 00bb 02       		.uleb128 0x2
+ 904 00bc 17       		.uleb128 0x17
+ 905 00bd 00       		.byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 19
+
+
+ 906 00be 00       		.byte	0
+ 907 00bf 0D       		.uleb128 0xd
+ 908 00c0 05       		.uleb128 0x5
+ 909 00c1 00       		.byte	0
+ 910 00c2 03       		.uleb128 0x3
+ 911 00c3 0E       		.uleb128 0xe
+ 912 00c4 3A       		.uleb128 0x3a
+ 913 00c5 0B       		.uleb128 0xb
+ 914 00c6 3B       		.uleb128 0x3b
+ 915 00c7 0B       		.uleb128 0xb
+ 916 00c8 49       		.uleb128 0x49
+ 917 00c9 13       		.uleb128 0x13
+ 918 00ca 02       		.uleb128 0x2
+ 919 00cb 18       		.uleb128 0x18
+ 920 00cc 00       		.byte	0
+ 921 00cd 00       		.byte	0
+ 922 00ce 0E       		.uleb128 0xe
+ 923 00cf 34       		.uleb128 0x34
+ 924 00d0 00       		.byte	0
+ 925 00d1 03       		.uleb128 0x3
+ 926 00d2 0E       		.uleb128 0xe
+ 927 00d3 3A       		.uleb128 0x3a
+ 928 00d4 0B       		.uleb128 0xb
+ 929 00d5 3B       		.uleb128 0x3b
+ 930 00d6 0B       		.uleb128 0xb
+ 931 00d7 49       		.uleb128 0x49
+ 932 00d8 13       		.uleb128 0x13
+ 933 00d9 02       		.uleb128 0x2
+ 934 00da 18       		.uleb128 0x18
+ 935 00db 00       		.byte	0
+ 936 00dc 00       		.byte	0
+ 937 00dd 0F       		.uleb128 0xf
+ 938 00de 898201   		.uleb128 0x4109
+ 939 00e1 01       		.byte	0x1
+ 940 00e2 11       		.uleb128 0x11
+ 941 00e3 01       		.uleb128 0x1
+ 942 00e4 31       		.uleb128 0x31
+ 943 00e5 13       		.uleb128 0x13
+ 944 00e6 00       		.byte	0
+ 945 00e7 00       		.byte	0
+ 946 00e8 10       		.uleb128 0x10
+ 947 00e9 8A8201   		.uleb128 0x410a
+ 948 00ec 00       		.byte	0
+ 949 00ed 02       		.uleb128 0x2
+ 950 00ee 18       		.uleb128 0x18
+ 951 00ef 9142     		.uleb128 0x2111
+ 952 00f1 18       		.uleb128 0x18
+ 953 00f2 00       		.byte	0
+ 954 00f3 00       		.byte	0
+ 955 00f4 11       		.uleb128 0x11
+ 956 00f5 26       		.uleb128 0x26
+ 957 00f6 00       		.byte	0
+ 958 00f7 49       		.uleb128 0x49
+ 959 00f8 13       		.uleb128 0x13
+ 960 00f9 00       		.byte	0
+ 961 00fa 00       		.byte	0
+ 962 00fb 12       		.uleb128 0x12
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 20
+
+
+ 963 00fc 0B       		.uleb128 0xb
+ 964 00fd 01       		.byte	0x1
+ 965 00fe 11       		.uleb128 0x11
+ 966 00ff 01       		.uleb128 0x1
+ 967 0100 12       		.uleb128 0x12
+ 968 0101 06       		.uleb128 0x6
+ 969 0102 00       		.byte	0
+ 970 0103 00       		.byte	0
+ 971 0104 13       		.uleb128 0x13
+ 972 0105 34       		.uleb128 0x34
+ 973 0106 00       		.byte	0
+ 974 0107 03       		.uleb128 0x3
+ 975 0108 0E       		.uleb128 0xe
+ 976 0109 3A       		.uleb128 0x3a
+ 977 010a 0B       		.uleb128 0xb
+ 978 010b 3B       		.uleb128 0x3b
+ 979 010c 0B       		.uleb128 0xb
+ 980 010d 49       		.uleb128 0x49
+ 981 010e 13       		.uleb128 0x13
+ 982 010f 02       		.uleb128 0x2
+ 983 0110 17       		.uleb128 0x17
+ 984 0111 00       		.byte	0
+ 985 0112 00       		.byte	0
+ 986 0113 14       		.uleb128 0x14
+ 987 0114 898201   		.uleb128 0x4109
+ 988 0117 00       		.byte	0
+ 989 0118 11       		.uleb128 0x11
+ 990 0119 01       		.uleb128 0x1
+ 991 011a 31       		.uleb128 0x31
+ 992 011b 13       		.uleb128 0x13
+ 993 011c 00       		.byte	0
+ 994 011d 00       		.byte	0
+ 995 011e 15       		.uleb128 0x15
+ 996 011f 898201   		.uleb128 0x4109
+ 997 0122 01       		.byte	0x1
+ 998 0123 11       		.uleb128 0x11
+ 999 0124 01       		.uleb128 0x1
+ 1000 0125 31       		.uleb128 0x31
+ 1001 0126 13       		.uleb128 0x13
+ 1002 0127 01       		.uleb128 0x1
+ 1003 0128 13       		.uleb128 0x13
+ 1004 0129 00       		.byte	0
+ 1005 012a 00       		.byte	0
+ 1006 012b 16       		.uleb128 0x16
+ 1007 012c 34       		.uleb128 0x34
+ 1008 012d 00       		.byte	0
+ 1009 012e 03       		.uleb128 0x3
+ 1010 012f 0E       		.uleb128 0xe
+ 1011 0130 3A       		.uleb128 0x3a
+ 1012 0131 0B       		.uleb128 0xb
+ 1013 0132 3B       		.uleb128 0x3b
+ 1014 0133 0B       		.uleb128 0xb
+ 1015 0134 49       		.uleb128 0x49
+ 1016 0135 13       		.uleb128 0x13
+ 1017 0136 3F       		.uleb128 0x3f
+ 1018 0137 19       		.uleb128 0x19
+ 1019 0138 02       		.uleb128 0x2
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 21
+
+
+ 1020 0139 18       		.uleb128 0x18
+ 1021 013a 00       		.byte	0
+ 1022 013b 00       		.byte	0
+ 1023 013c 17       		.uleb128 0x17
+ 1024 013d 2E       		.uleb128 0x2e
+ 1025 013e 01       		.byte	0x1
+ 1026 013f 3F       		.uleb128 0x3f
+ 1027 0140 19       		.uleb128 0x19
+ 1028 0141 03       		.uleb128 0x3
+ 1029 0142 0E       		.uleb128 0xe
+ 1030 0143 3A       		.uleb128 0x3a
+ 1031 0144 0B       		.uleb128 0xb
+ 1032 0145 3B       		.uleb128 0x3b
+ 1033 0146 0B       		.uleb128 0xb
+ 1034 0147 27       		.uleb128 0x27
+ 1035 0148 19       		.uleb128 0x19
+ 1036 0149 49       		.uleb128 0x49
+ 1037 014a 13       		.uleb128 0x13
+ 1038 014b 3C       		.uleb128 0x3c
+ 1039 014c 19       		.uleb128 0x19
+ 1040 014d 01       		.uleb128 0x1
+ 1041 014e 13       		.uleb128 0x13
+ 1042 014f 00       		.byte	0
+ 1043 0150 00       		.byte	0
+ 1044 0151 18       		.uleb128 0x18
+ 1045 0152 05       		.uleb128 0x5
+ 1046 0153 00       		.byte	0
+ 1047 0154 49       		.uleb128 0x49
+ 1048 0155 13       		.uleb128 0x13
+ 1049 0156 00       		.byte	0
+ 1050 0157 00       		.byte	0
+ 1051 0158 19       		.uleb128 0x19
+ 1052 0159 2E       		.uleb128 0x2e
+ 1053 015a 01       		.byte	0x1
+ 1054 015b 3F       		.uleb128 0x3f
+ 1055 015c 19       		.uleb128 0x19
+ 1056 015d 03       		.uleb128 0x3
+ 1057 015e 0E       		.uleb128 0xe
+ 1058 015f 3A       		.uleb128 0x3a
+ 1059 0160 0B       		.uleb128 0xb
+ 1060 0161 3B       		.uleb128 0x3b
+ 1061 0162 0B       		.uleb128 0xb
+ 1062 0163 27       		.uleb128 0x27
+ 1063 0164 19       		.uleb128 0x19
+ 1064 0165 3C       		.uleb128 0x3c
+ 1065 0166 19       		.uleb128 0x19
+ 1066 0167 00       		.byte	0
+ 1067 0168 00       		.byte	0
+ 1068 0169 00       		.byte	0
+ 1069              		.section	.debug_loc,"",%progbits
+ 1070              	.Ldebug_loc0:
+ 1071              	.LLST0:
+ 1072 0000 00000000 		.4byte	.LVL1
+ 1073 0004 0C000000 		.4byte	.LVL2
+ 1074 0008 0100     		.2byte	0x1
+ 1075 000a 50       		.byte	0x50
+ 1076 000b 0C000000 		.4byte	.LVL2
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 22
+
+
+ 1077 000f 24000000 		.4byte	.LVL4
+ 1078 0013 0100     		.2byte	0x1
+ 1079 0015 54       		.byte	0x54
+ 1080 0016 24000000 		.4byte	.LVL4
+ 1081 001a 26000000 		.4byte	.LFE39
+ 1082 001e 0400     		.2byte	0x4
+ 1083 0020 F3       		.byte	0xf3
+ 1084 0021 01       		.uleb128 0x1
+ 1085 0022 50       		.byte	0x50
+ 1086 0023 9F       		.byte	0x9f
+ 1087 0024 00000000 		.4byte	0
+ 1088 0028 00000000 		.4byte	0
+ 1089              	.LLST1:
+ 1090 002c 00000000 		.4byte	.LVL5
+ 1091 0030 0A000000 		.4byte	.LVL6
+ 1092 0034 0100     		.2byte	0x1
+ 1093 0036 50       		.byte	0x50
+ 1094 0037 0A000000 		.4byte	.LVL6
+ 1095 003b 11000000 		.4byte	.LVL7-1
+ 1096 003f 0100     		.2byte	0x1
+ 1097 0041 53       		.byte	0x53
+ 1098 0042 11000000 		.4byte	.LVL7-1
+ 1099 0046 14000000 		.4byte	.LFE40
+ 1100 004a 0400     		.2byte	0x4
+ 1101 004c F3       		.byte	0xf3
+ 1102 004d 01       		.uleb128 0x1
+ 1103 004e 50       		.byte	0x50
+ 1104 004f 9F       		.byte	0x9f
+ 1105 0050 00000000 		.4byte	0
+ 1106 0054 00000000 		.4byte	0
+ 1107              	.LLST2:
+ 1108 0058 0A000000 		.4byte	.LVL6
+ 1109 005c 11000000 		.4byte	.LVL7-1
+ 1110 0060 0100     		.2byte	0x1
+ 1111 0062 50       		.byte	0x50
+ 1112 0063 00000000 		.4byte	0
+ 1113 0067 00000000 		.4byte	0
+ 1114              	.LLST3:
+ 1115 006b 00000000 		.4byte	.LVL10
+ 1116 006f 14000000 		.4byte	.LVL12
+ 1117 0073 0100     		.2byte	0x1
+ 1118 0075 50       		.byte	0x50
+ 1119 0076 14000000 		.4byte	.LVL12
+ 1120 007a 26000000 		.4byte	.LVL14
+ 1121 007e 0100     		.2byte	0x1
+ 1122 0080 54       		.byte	0x54
+ 1123 0081 26000000 		.4byte	.LVL14
+ 1124 0085 2A000000 		.4byte	.LFE41
+ 1125 0089 0400     		.2byte	0x4
+ 1126 008b F3       		.byte	0xf3
+ 1127 008c 01       		.uleb128 0x1
+ 1128 008d 50       		.byte	0x50
+ 1129 008e 9F       		.byte	0x9f
+ 1130 008f 00000000 		.4byte	0
+ 1131 0093 00000000 		.4byte	0
+ 1132              	.LLST4:
+ 1133 0097 12000000 		.4byte	.LVL11
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 23
+
+
+ 1134 009b 26000000 		.4byte	.LVL14
+ 1135 009f 0100     		.2byte	0x1
+ 1136 00a1 55       		.byte	0x55
+ 1137 00a2 00000000 		.4byte	0
+ 1138 00a6 00000000 		.4byte	0
+ 1139              	.LLST5:
+ 1140 00aa 18000000 		.4byte	.LVL13
+ 1141 00ae 26000000 		.4byte	.LVL14
+ 1142 00b2 0100     		.2byte	0x1
+ 1143 00b4 50       		.byte	0x50
+ 1144 00b5 00000000 		.4byte	0
+ 1145 00b9 00000000 		.4byte	0
+ 1146              		.section	.debug_aranges,"",%progbits
+ 1147 0000 54000000 		.4byte	0x54
+ 1148 0004 0200     		.2byte	0x2
+ 1149 0006 00000000 		.4byte	.Ldebug_info0
+ 1150 000a 04       		.byte	0x4
+ 1151 000b 00       		.byte	0
+ 1152 000c 0000     		.2byte	0
+ 1153 000e 0000     		.2byte	0
+ 1154 0010 00000000 		.4byte	.LFB34
+ 1155 0014 18000000 		.4byte	.LFE34-.LFB34
+ 1156 0018 00000000 		.4byte	.LFB37
+ 1157 001c 14000000 		.4byte	.LFE37-.LFB37
+ 1158 0020 00000000 		.4byte	.LFB38
+ 1159 0024 14000000 		.4byte	.LFE38-.LFB38
+ 1160 0028 00000000 		.4byte	.LFB39
+ 1161 002c 26000000 		.4byte	.LFE39-.LFB39
+ 1162 0030 00000000 		.4byte	.LFB40
+ 1163 0034 14000000 		.4byte	.LFE40-.LFB40
+ 1164 0038 00000000 		.4byte	.LFB36
+ 1165 003c 20000000 		.4byte	.LFE36-.LFB36
+ 1166 0040 00000000 		.4byte	.LFB41
+ 1167 0044 2A000000 		.4byte	.LFE41-.LFB41
+ 1168 0048 00000000 		.4byte	.LFB35
+ 1169 004c 44000000 		.4byte	.LFE35-.LFB35
+ 1170 0050 00000000 		.4byte	0
+ 1171 0054 00000000 		.4byte	0
+ 1172              		.section	.debug_ranges,"",%progbits
+ 1173              	.Ldebug_ranges0:
+ 1174 0000 00000000 		.4byte	.LFB34
+ 1175 0004 18000000 		.4byte	.LFE34
+ 1176 0008 00000000 		.4byte	.LFB37
+ 1177 000c 14000000 		.4byte	.LFE37
+ 1178 0010 00000000 		.4byte	.LFB38
+ 1179 0014 14000000 		.4byte	.LFE38
+ 1180 0018 00000000 		.4byte	.LFB39
+ 1181 001c 26000000 		.4byte	.LFE39
+ 1182 0020 00000000 		.4byte	.LFB40
+ 1183 0024 14000000 		.4byte	.LFE40
+ 1184 0028 00000000 		.4byte	.LFB36
+ 1185 002c 20000000 		.4byte	.LFE36
+ 1186 0030 00000000 		.4byte	.LFB41
+ 1187 0034 2A000000 		.4byte	.LFE41
+ 1188 0038 00000000 		.4byte	.LFB35
+ 1189 003c 44000000 		.4byte	.LFE35
+ 1190 0040 00000000 		.4byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 24
+
+
+ 1191 0044 00000000 		.4byte	0
+ 1192              		.section	.debug_line,"",%progbits
+ 1193              	.Ldebug_line0:
+ 1194 0000 CA010000 		.section	.debug_str,"MS",%progbits,1
+ 1194      02002301 
+ 1194      00000201 
+ 1194      FB0E0D00 
+ 1194      01010101 
+ 1195              	.LASF17:
+ 1196 0000 64617461 		.ascii	"data_\000"
+ 1196      5F00
+ 1197              	.LASF21:
+ 1198 0006 68656164 		.ascii	"headPtr\000"
+ 1198      50747200 
+ 1199              	.LASF37:
+ 1200 000e 73697A65 		.ascii	"size_t\000"
+ 1200      5F7400
+ 1201              	.LASF30:
+ 1202 0015 6E657874 		.ascii	"next\000"
+ 1202      00
+ 1203              	.LASF23:
+ 1204 001a 68656164 		.ascii	"headInsert\000"
+ 1204      496E7365 
+ 1204      727400
+ 1205              	.LASF4:
+ 1206 0025 6C6F6E67 		.ascii	"long int\000"
+ 1206      20696E74 
+ 1206      00
+ 1207              	.LASF38:
+ 1208 002e 71756575 		.ascii	"queue_init\000"
+ 1208      655F696E 
+ 1208      697400
+ 1209              	.LASF31:
+ 1210 0039 70757368 		.ascii	"pushQueue\000"
+ 1210      51756575 
+ 1210      6500
+ 1211              	.LASF29:
+ 1212 0043 6261636B 		.ascii	"backPtr\000"
+ 1212      50747200 
+ 1213              	.LASF9:
+ 1214 004b 666C6F61 		.ascii	"float\000"
+ 1214      7400
+ 1215              	.LASF22:
+ 1216 0051 64617461 		.ascii	"data\000"
+ 1216      00
+ 1217              	.LASF1:
+ 1218 0056 756E7369 		.ascii	"unsigned char\000"
+ 1218      676E6564 
+ 1218      20636861 
+ 1218      7200
+ 1219              	.LASF40:
+ 1220 0064 66726565 		.ascii	"free\000"
+ 1220      00
+ 1221              	.LASF20:
+ 1222 0069 6973456D 		.ascii	"isEmptyQueue\000"
+ 1222      70747951 
+ 1222      75657565 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 25
+
+
+ 1222      00
+ 1223              	.LASF5:
+ 1224 0076 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1224      20756E73 
+ 1224      69676E65 
+ 1224      6420696E 
+ 1224      7400
+ 1225              	.LASF25:
+ 1226 0088 74656D70 		.ascii	"temp\000"
+ 1226      00
+ 1227              	.LASF3:
+ 1228 008d 73686F72 		.ascii	"short unsigned int\000"
+ 1228      7420756E 
+ 1228      7369676E 
+ 1228      65642069 
+ 1228      6E7400
+ 1229              	.LASF26:
+ 1230 00a0 636F6E64 		.ascii	"condemned\000"
+ 1230      656D6E65 
+ 1230      6400
+ 1231              	.LASF10:
+ 1232 00aa 646F7562 		.ascii	"double\000"
+ 1232      6C6500
+ 1233              	.LASF33:
+ 1234 00b1 6261636B 		.ascii	"backOfQueuePtr\000"
+ 1234      4F665175 
+ 1234      65756550 
+ 1234      747200
+ 1235              	.LASF8:
+ 1236 00c0 756E7369 		.ascii	"unsigned int\000"
+ 1236      676E6564 
+ 1236      20696E74 
+ 1236      00
+ 1237              	.LASF7:
+ 1238 00cd 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1238      206C6F6E 
+ 1238      6720756E 
+ 1238      7369676E 
+ 1238      65642069 
+ 1239              	.LASF28:
+ 1240 00e4 6261636B 		.ascii	"backInsert\000"
+ 1240      496E7365 
+ 1240      727400
+ 1241              	.LASF15:
+ 1242 00ef 44617461 		.ascii	"Data\000"
+ 1242      00
+ 1243              	.LASF32:
+ 1244 00f4 66726F6E 		.ascii	"frontOfQueuePtr\000"
+ 1244      744F6651 
+ 1244      75657565 
+ 1244      50747200 
+ 1245              	.LASF35:
+ 1246 0104 2E5C7175 		.ascii	".\\queue.c\000"
+ 1246      6575652E 
+ 1246      6300
+ 1247              	.LASF27:
+ 1248 010e 706F7051 		.ascii	"popQueue\000"
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 26
+
+
+ 1248      75657565 
+ 1248      00
+ 1249              	.LASF12:
+ 1250 0117 73697A65 		.ascii	"sizetype\000"
+ 1250      74797065 
+ 1250      00
+ 1251              	.LASF18:
+ 1252 0120 6E657874 		.ascii	"next_\000"
+ 1252      5F00
+ 1253              	.LASF6:
+ 1254 0126 6C6F6E67 		.ascii	"long long int\000"
+ 1254      206C6F6E 
+ 1254      6720696E 
+ 1254      7400
+ 1255              	.LASF36:
+ 1256 0134 433A5C45 		.ascii	"C:\\E3PRJ3\\Sensor-PSoC.cydsn\000"
+ 1256      3350524A 
+ 1256      335C5365 
+ 1256      6E736F72 
+ 1256      2D50536F 
+ 1257              	.LASF13:
+ 1258 0150 636D645F 		.ascii	"cmd_\000"
+ 1258      00
+ 1259              	.LASF34:
+ 1260 0155 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1260      4320342E 
+ 1260      392E3320 
+ 1260      32303135 
+ 1260      30333033 
+ 1261 0188 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1261      20726576 
+ 1261      6973696F 
+ 1261      6E203232 
+ 1261      31323230 
+ 1262 01bb 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1262      66756E63 
+ 1262      74696F6E 
+ 1262      2D736563 
+ 1262      74696F6E 
+ 1263              	.LASF2:
+ 1264 01e3 73686F72 		.ascii	"short int\000"
+ 1264      7420696E 
+ 1264      7400
+ 1265              	.LASF14:
+ 1266 01ed 76616C5F 		.ascii	"val_\000"
+ 1266      00
+ 1267              	.LASF24:
+ 1268 01f2 68656164 		.ascii	"headRemove\000"
+ 1268      52656D6F 
+ 1268      766500
+ 1269              	.LASF16:
+ 1270 01fd 4E6F6465 		.ascii	"Node\000"
+ 1270      00
+ 1271              	.LASF11:
+ 1272 0202 63686172 		.ascii	"char\000"
+ 1272      00
+ 1273              	.LASF0:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccUjhr16.s 			page 27
+
+
+ 1274 0207 7369676E 		.ascii	"signed char\000"
+ 1274      65642063 
+ 1274      68617200 
+ 1275              	.LASF19:
+ 1276 0213 66726F6E 		.ascii	"frontQueue\000"
+ 1276      74517565 
+ 1276      756500
+ 1277              	.LASF39:
+ 1278 021e 6D616C6C 		.ascii	"malloc\000"
+ 1278      6F6300
+ 1279              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

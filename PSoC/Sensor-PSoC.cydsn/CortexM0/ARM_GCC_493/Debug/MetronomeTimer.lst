@@ -1,0 +1,2300 @@
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"MetronomeTimer.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MetronomeTimer_Enable,"ax",%progbits
+  18              		.align	2
+  19              		.global	MetronomeTimer_Enable
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	MetronomeTimer_Enable, %function
+  23              	MetronomeTimer_Enable:
+  24              	.LFB1:
+  25              		.file 1 ".\\Generated_Source\\PSoC4\\MetronomeTimer.c"
+   1:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC4/MetronomeTimer.c **** * File Name: MetronomeTimer.c
+   3:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Version 2.70
+   4:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+   5:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Description:
+   6:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The Timer component consists of a 8, 16, 24 or 32-bit timer with
+   7:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  a selectable period between 2 and 2^Width - 1.  The timer may free run
+   8:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  or be used as a capture timer as well.  The capture can be initiated
+   9:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  by a positive or negative edge signal as well as via software.
+  10:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  A trigger input can be programmed to enable the timer on rising edge
+  11:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  falling edge, either edge or continous run.
+  12:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Interrupts may be generated due to a terminal count condition
+  13:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  or a capture event.
+  14:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+  15:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Note:
+  16:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+  17:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+  18:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+  19:.\Generated_Source\PSoC4/MetronomeTimer.c **** * You may use this file only in accordance with the license, terms, conditions,
+  20:.\Generated_Source\PSoC4/MetronomeTimer.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  21:.\Generated_Source\PSoC4/MetronomeTimer.c **** * the software package with which this file was provided.
+  22:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************/
+  23:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  24:.\Generated_Source\PSoC4/MetronomeTimer.c **** #include "MetronomeTimer.h"
+  25:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  26:.\Generated_Source\PSoC4/MetronomeTimer.c **** uint8 MetronomeTimer_initVar = 0u;
+  27:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  28:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  29:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+  30:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_Init
+  31:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+  32:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 2
+
+
+  33:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+  34:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Initialize to the schematic state
+  35:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+  36:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+  37:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+  38:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+  39:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+  40:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+  41:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+  42:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+  43:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_Init(void) 
+  44:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+  45:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if(!MetronomeTimer_UsingFixedFunction)
+  46:.\Generated_Source\PSoC4/MetronomeTimer.c ****             /* Interrupt State Backup for Critical Region*/
+  47:.\Generated_Source\PSoC4/MetronomeTimer.c ****             uint8 MetronomeTimer_interruptState;
+  48:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Interrupt state back up for Fixed Function only */
+  49:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  50:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (MetronomeTimer_UsingFixedFunction)
+  51:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Clear all bits but the enable bit (if it's already set) for Timer operation */
+  52:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL &= MetronomeTimer_CTRL_ENABLE;
+  53:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  54:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Clear the mode bits for continuous run mode */
+  55:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (CY_PSOC5A)
+  56:.\Generated_Source\PSoC4/MetronomeTimer.c ****             MetronomeTimer_CONTROL2 &= ((uint8)(~MetronomeTimer_CTRL_MODE_MASK));
+  57:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* Clear bits in CONTROL2 only in PSOC5A */
+  58:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  59:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (CY_PSOC3 || CY_PSOC5LP)
+  60:.\Generated_Source\PSoC4/MetronomeTimer.c ****             MetronomeTimer_CONTROL3 &= ((uint8)(~MetronomeTimer_CTRL_MODE_MASK));
+  61:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* CONTROL3 register exists only in PSoC3 OR PSoC5LP */
+  62:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  63:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Check if One Shot mode is enabled i.e. RunMode !=0*/
+  64:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (MetronomeTimer_RunModeUsed != 0x0u)
+  65:.\Generated_Source\PSoC4/MetronomeTimer.c ****             /* Set 3rd bit of Control register to enable one shot mode */
+  66:.\Generated_Source\PSoC4/MetronomeTimer.c ****             MetronomeTimer_CONTROL |= 0x04u;
+  67:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* One Shot enabled only when RunModeUsed is not Continuous*/
+  68:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  69:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (MetronomeTimer_RunModeUsed == 2)
+  70:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #if (CY_PSOC5A)
+  71:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 /* Set last 2 bits of control2 register if one shot(halt on
+  72:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 interrupt) is enabled*/
+  73:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL2 |= 0x03u;
+  74:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #endif /* Set One-Shot Halt on Interrupt bit in CONTROL2 for PSoC5A */
+  75:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  76:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  77:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 /* Set last 2 bits of control3 register if one shot(halt on
+  78:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 interrupt) is enabled*/
+  79:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL3 |= 0x03u;
+  80:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #endif /* Set One-Shot Halt on Interrupt bit in CONTROL3 for PSoC3 or PSoC5LP */
+  81:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  82:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* Remove section if One Shot Halt on Interrupt is not enabled */
+  83:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  84:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (MetronomeTimer_UsingHWEnable != 0)
+  85:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #if (CY_PSOC5A)
+  86:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 /* Set the default Run Mode of the Timer to Continuous */
+  87:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL2 |= MetronomeTimer_CTRL_MODE_PULSEWIDTH;
+  88:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #endif /* Set Continuous Run Mode in CONTROL2 for PSoC5A */
+  89:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 3
+
+
+  90:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  91:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 /* Clear and Set ROD and COD bits of CFG2 register */
+  92:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL3 &= ((uint8)(~MetronomeTimer_CTRL_RCOD_MASK));
+  93:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL3 |= MetronomeTimer_CTRL_RCOD;
+  94:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  95:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 /* Clear and Enable the HW enable bit in CFG2 register */
+  96:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL3 &= ((uint8)(~MetronomeTimer_CTRL_ENBL_MASK));
+  97:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL3 |= MetronomeTimer_CTRL_ENBL;
+  98:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+  99:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 /* Set the default Run Mode of the Timer to Continuous */
+ 100:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 MetronomeTimer_CONTROL3 |= MetronomeTimer_CTRL_MODE_CONTINUOUS;
+ 101:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #endif /* Set Continuous Run Mode in CONTROL3 for PSoC3ES3 or PSoC5A */
+ 102:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 103:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* Configure Run Mode with hardware enable */
+ 104:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 105:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Clear and Set SYNCTC and SYNCCMP bits of RT1 register */
+ 106:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_RT1 &= ((uint8)(~MetronomeTimer_RT1_MASK));
+ 107:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_RT1 |= MetronomeTimer_SYNC;
+ 108:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 109:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /*Enable DSI Sync all all inputs of the Timer*/
+ 110:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_RT1 &= ((uint8)(~MetronomeTimer_SYNCDSI_MASK));
+ 111:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_RT1 |= MetronomeTimer_SYNCDSI_EN;
+ 112:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 113:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Set the IRQ to use the status register interrupts */
+ 114:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL2 |= MetronomeTimer_CTRL2_IRQ_SEL;
+ 115:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Configuring registers of fixed function implementation */
+ 116:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 117:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Set Initial values from Configuration */
+ 118:.\Generated_Source\PSoC4/MetronomeTimer.c ****     MetronomeTimer_WritePeriod(MetronomeTimer_INIT_PERIOD);
+ 119:.\Generated_Source\PSoC4/MetronomeTimer.c ****     MetronomeTimer_WriteCounter(MetronomeTimer_INIT_PERIOD);
+ 120:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 121:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (MetronomeTimer_UsingHWCaptureCounter)/* Capture counter is enabled */
+ 122:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CAPTURE_COUNT_CTRL |= MetronomeTimer_CNTR_ENABLE;
+ 123:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_SetCaptureCount(MetronomeTimer_INIT_CAPTURE_COUNT);
+ 124:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Configure capture counter value */
+ 125:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 126:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UsingFixedFunction)
+ 127:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (MetronomeTimer_SoftwareCaptureMode)
+ 128:.\Generated_Source\PSoC4/MetronomeTimer.c ****             MetronomeTimer_SetCaptureMode(MetronomeTimer_INIT_CAPTURE_MODE);
+ 129:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* Set Capture Mode for UDB implementation if capture mode is software controlled */
+ 130:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 131:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (MetronomeTimer_SoftwareTriggerMode)
+ 132:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED)
+ 133:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 if (0u == (MetronomeTimer_CONTROL & MetronomeTimer__B_TIMER__TM_SOFTWARE))
+ 134:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 {
+ 135:.\Generated_Source\PSoC4/MetronomeTimer.c ****                     MetronomeTimer_SetTriggerMode(MetronomeTimer_INIT_TRIGGER_MODE);
+ 136:.\Generated_Source\PSoC4/MetronomeTimer.c ****                 }
+ 137:.\Generated_Source\PSoC4/MetronomeTimer.c ****             #endif /* (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) */
+ 138:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* Set trigger mode for UDB Implementation if trigger mode is software controlled */
+ 139:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 140:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* CyEnterCriticalRegion and CyExitCriticalRegion are used to mark following region critica
+ 141:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Enter Critical Region*/
+ 142:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_interruptState = CyEnterCriticalSection();
+ 143:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 144:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Use the interrupt output of the status register for IRQ output */
+ 145:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_STATUS_AUX_CTRL |= MetronomeTimer_STATUS_ACTL_INT_EN_MASK;
+ 146:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 4
+
+
+ 147:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Exit Critical Region*/
+ 148:.\Generated_Source\PSoC4/MetronomeTimer.c ****         CyExitCriticalSection(MetronomeTimer_interruptState);
+ 149:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 150:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (MetronomeTimer_EnableTriggerMode)
+ 151:.\Generated_Source\PSoC4/MetronomeTimer.c ****             MetronomeTimer_EnableTrigger();
+ 152:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* Set Trigger enable bit for UDB implementation in the control register*/
+ 153:.\Generated_Source\PSoC4/MetronomeTimer.c **** 		
+ 154:.\Generated_Source\PSoC4/MetronomeTimer.c **** 		
+ 155:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #if (MetronomeTimer_InterruptOnCaptureCount && !MetronomeTimer_UDB_CONTROL_REG_REMOVED)
+ 156:.\Generated_Source\PSoC4/MetronomeTimer.c ****             MetronomeTimer_SetInterruptCount(MetronomeTimer_INIT_INT_CAPTURE_COUNT);
+ 157:.\Generated_Source\PSoC4/MetronomeTimer.c ****         #endif /* Set interrupt count in UDB implementation if interrupt count feature is checked.*
+ 158:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 159:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_ClearFIFO();
+ 160:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Configure additional features of UDB implementation */
+ 161:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 162:.\Generated_Source\PSoC4/MetronomeTimer.c ****     MetronomeTimer_SetInterruptMode(MetronomeTimer_INIT_INTERRUPT_MODE);
+ 163:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 164:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 165:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 166:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 167:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_Enable
+ 168:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 169:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 170:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 171:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Enable the Timer
+ 172:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 173:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 174:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 175:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 176:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 177:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 178:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 179:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 180:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_Enable(void) 
+ 181:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+  26              		.loc 1 181 0
+  27              		.cfi_startproc
+ 182:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Globally Enable the Fixed Function Block chosen */
+ 183:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (MetronomeTimer_UsingFixedFunction)
+ 184:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_GLOBAL_ENABLE |= MetronomeTimer_BLOCK_EN_MASK;
+ 185:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_GLOBAL_STBY_ENABLE |= MetronomeTimer_BLOCK_STBY_EN_MASK;
+ 186:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Set Enable bit for enabling Fixed function timer*/
+ 187:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 188:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Remove assignment if control register is removed */
+ 189:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED || MetronomeTimer_UsingFixedFunction)
+ 190:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL |= MetronomeTimer_CTRL_ENABLE;
+  28              		.loc 1 190 0
+  29 0000 024A     		ldr	r2, .L2
+  30 0002 1178     		ldrb	r1, [r2]
+  31 0004 8023     		mov	r3, #128
+  32 0006 0B43     		orr	r3, r1
+  33 0008 1370     		strb	r3, [r2]
+ 191:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Remove assignment if control register is removed */
+ 192:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+  34              		.loc 1 192 0
+  35              		@ sp needed
+  36 000a 7047     		bx	lr
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 5
+
+
+  37              	.L3:
+  38              		.align	2
+  39              	.L2:
+  40 000c 73000F40 		.word	1074724979
+  41              		.cfi_endproc
+  42              	.LFE1:
+  43              		.size	MetronomeTimer_Enable, .-MetronomeTimer_Enable
+  44              		.section	.text.MetronomeTimer_Stop,"ax",%progbits
+  45              		.align	2
+  46              		.global	MetronomeTimer_Stop
+  47              		.code	16
+  48              		.thumb_func
+  49              		.type	MetronomeTimer_Stop, %function
+  50              	MetronomeTimer_Stop:
+  51              	.LFB3:
+ 193:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 194:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 195:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 196:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_Start
+ 197:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 198:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 199:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 200:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The start function initializes the timer with the default values, the
+ 201:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  enables the timerto begin counting.  It does not enable interrupts,
+ 202:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  the EnableInt command should be called if interrupt generation is required.
+ 203:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 204:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 205:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 206:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 207:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 208:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 209:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 210:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Global variables:
+ 211:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  MetronomeTimer_initVar: Is modified when this function is called for the
+ 212:.\Generated_Source\PSoC4/MetronomeTimer.c **** *   first time. Is used to ensure that initialization happens only once.
+ 213:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 214:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 215:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_Start(void) 
+ 216:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 217:.\Generated_Source\PSoC4/MetronomeTimer.c ****     if(MetronomeTimer_initVar == 0u)
+ 218:.\Generated_Source\PSoC4/MetronomeTimer.c ****     {
+ 219:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_Init();
+ 220:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 221:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_initVar = 1u;   /* Clear this bit for Initialization */
+ 222:.\Generated_Source\PSoC4/MetronomeTimer.c ****     }
+ 223:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 224:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Enable the Timer */
+ 225:.\Generated_Source\PSoC4/MetronomeTimer.c ****     MetronomeTimer_Enable();
+ 226:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 227:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 228:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 229:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 230:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_Stop
+ 231:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 232:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 233:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 234:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The stop function halts the timer, but does not change any modes or disable
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 6
+
+
+ 235:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  interrupts.
+ 236:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 237:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 238:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 239:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 240:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 241:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 242:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 243:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Side Effects: If the Enable mode is set to Hardware only then this function
+ 244:.\Generated_Source\PSoC4/MetronomeTimer.c **** *               has no effect on the operation of the timer.
+ 245:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 246:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 247:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_Stop(void) 
+ 248:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+  52              		.loc 1 248 0
+  53              		.cfi_startproc
+ 249:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Disable Timer */
+ 250:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if(!MetronomeTimer_UDB_CONTROL_REG_REMOVED || MetronomeTimer_UsingFixedFunction)
+ 251:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL &= ((uint8)(~MetronomeTimer_CTRL_ENABLE));
+  54              		.loc 1 251 0
+  55 0000 024A     		ldr	r2, .L5
+  56 0002 1178     		ldrb	r1, [r2]
+  57 0004 7F23     		mov	r3, #127
+  58 0006 0B40     		and	r3, r1
+  59 0008 1370     		strb	r3, [r2]
+ 252:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Remove assignment if control register is removed */
+ 253:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 254:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Globally disable the Fixed Function Block chosen */
+ 255:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (MetronomeTimer_UsingFixedFunction)
+ 256:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_GLOBAL_ENABLE &= ((uint8)(~MetronomeTimer_BLOCK_EN_MASK));
+ 257:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_GLOBAL_STBY_ENABLE &= ((uint8)(~MetronomeTimer_BLOCK_STBY_EN_MASK));
+ 258:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Disable global enable for the Timer Fixed function block to stop the Timer*/
+ 259:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+  60              		.loc 1 259 0
+  61              		@ sp needed
+  62 000a 7047     		bx	lr
+  63              	.L6:
+  64              		.align	2
+  65              	.L5:
+  66 000c 73000F40 		.word	1074724979
+  67              		.cfi_endproc
+  68              	.LFE3:
+  69              		.size	MetronomeTimer_Stop, .-MetronomeTimer_Stop
+  70              		.section	.text.MetronomeTimer_SetInterruptMode,"ax",%progbits
+  71              		.align	2
+  72              		.global	MetronomeTimer_SetInterruptMode
+  73              		.code	16
+  74              		.thumb_func
+  75              		.type	MetronomeTimer_SetInterruptMode, %function
+  76              	MetronomeTimer_SetInterruptMode:
+  77              	.LFB4:
+ 260:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 261:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 262:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 263:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_SetInterruptMode
+ 264:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 265:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 7
+
+
+ 266:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 267:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function selects which of the interrupt inputs may cause an interrupt.
+ 268:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The twosources are caputure and terminal.  One, both or neither may
+ 269:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  be selected.
+ 270:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 271:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 272:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  interruptMode:   This parameter is used to enable interrups on either/or
+ 273:.\Generated_Source\PSoC4/MetronomeTimer.c **** *                   terminal count or capture.
+ 274:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 275:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 276:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 277:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 278:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 279:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_SetInterruptMode(uint8 interruptMode) 
+ 280:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+  78              		.loc 1 280 0
+  79              		.cfi_startproc
+  80              	.LVL0:
+ 281:.\Generated_Source\PSoC4/MetronomeTimer.c ****     MetronomeTimer_STATUS_MASK = interruptMode;
+  81              		.loc 1 281 0
+  82 0000 014B     		ldr	r3, .L8
+  83 0002 1870     		strb	r0, [r3]
+ 282:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+  84              		.loc 1 282 0
+  85              		@ sp needed
+  86 0004 7047     		bx	lr
+  87              	.L9:
+  88 0006 C046     		.align	2
+  89              	.L8:
+  90 0008 83000F40 		.word	1074724995
+  91              		.cfi_endproc
+  92              	.LFE4:
+  93              		.size	MetronomeTimer_SetInterruptMode, .-MetronomeTimer_SetInterruptMode
+  94              		.section	.text.MetronomeTimer_SoftwareCapture,"ax",%progbits
+  95              		.align	2
+  96              		.global	MetronomeTimer_SoftwareCapture
+  97              		.code	16
+  98              		.thumb_func
+  99              		.type	MetronomeTimer_SoftwareCapture, %function
+ 100              	MetronomeTimer_SoftwareCapture:
+ 101              	.LFB5:
+ 283:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 284:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 285:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 286:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_SoftwareCapture
+ 287:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 288:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 289:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 290:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function forces a capture independent of the capture signal.
+ 291:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 292:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 293:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 294:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 295:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 296:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 297:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 298:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Side Effects:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 8
+
+
+ 299:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  An existing hardware capture could be overwritten.
+ 300:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 301:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 302:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_SoftwareCapture(void) 
+ 303:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 102              		.loc 1 303 0
+ 103              		.cfi_startproc
+ 304:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Generate a software capture by reading the counter register */
+ 305:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if(MetronomeTimer_UsingFixedFunction)
+ 306:.\Generated_Source\PSoC4/MetronomeTimer.c ****         (void)CY_GET_REG16(MetronomeTimer_COUNTER_LSB_PTR);
+ 307:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #else
+ 308:.\Generated_Source\PSoC4/MetronomeTimer.c ****         (void)CY_GET_REG8(MetronomeTimer_COUNTER_LSB_PTR_8BIT);
+ 104              		.loc 1 308 0
+ 105 0000 014B     		ldr	r3, .L11
+ 106 0002 1B78     		ldrb	r3, [r3]
+ 309:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif/* (MetronomeTimer_UsingFixedFunction) */
+ 310:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Capture Data is now in the FIFO */
+ 311:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 107              		.loc 1 311 0
+ 108              		@ sp needed
+ 109 0004 7047     		bx	lr
+ 110              	.L12:
+ 111 0006 C046     		.align	2
+ 112              	.L11:
+ 113 0008 03000F40 		.word	1074724867
+ 114              		.cfi_endproc
+ 115              	.LFE5:
+ 116              		.size	MetronomeTimer_SoftwareCapture, .-MetronomeTimer_SoftwareCapture
+ 117              		.section	.text.MetronomeTimer_ReadStatusRegister,"ax",%progbits
+ 118              		.align	2
+ 119              		.global	MetronomeTimer_ReadStatusRegister
+ 120              		.code	16
+ 121              		.thumb_func
+ 122              		.type	MetronomeTimer_ReadStatusRegister, %function
+ 123              	MetronomeTimer_ReadStatusRegister:
+ 124              	.LFB6:
+ 312:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 313:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 314:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 315:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_ReadStatusRegister
+ 316:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 317:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 318:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 319:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Reads the status register and returns it's state. This function should use
+ 320:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  defined types for the bit-field information as the bits in this register may
+ 321:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  be permuteable.
+ 322:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 323:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 324:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 325:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 326:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 327:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The contents of the status register
+ 328:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 329:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Side Effects:
+ 330:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Status register bits may be clear on read.
+ 331:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 332:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 9
+
+
+ 333:.\Generated_Source\PSoC4/MetronomeTimer.c **** uint8   MetronomeTimer_ReadStatusRegister(void) 
+ 334:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 125              		.loc 1 334 0
+ 126              		.cfi_startproc
+ 335:.\Generated_Source\PSoC4/MetronomeTimer.c ****     return (MetronomeTimer_STATUS);
+ 127              		.loc 1 335 0
+ 128 0000 014B     		ldr	r3, .L14
+ 129 0002 1878     		ldrb	r0, [r3]
+ 130 0004 C0B2     		uxtb	r0, r0
+ 336:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 131              		.loc 1 336 0
+ 132              		@ sp needed
+ 133 0006 7047     		bx	lr
+ 134              	.L15:
+ 135              		.align	2
+ 136              	.L14:
+ 137 0008 63000F40 		.word	1074724963
+ 138              		.cfi_endproc
+ 139              	.LFE6:
+ 140              		.size	MetronomeTimer_ReadStatusRegister, .-MetronomeTimer_ReadStatusRegister
+ 141              		.section	.text.MetronomeTimer_ReadControlRegister,"ax",%progbits
+ 142              		.align	2
+ 143              		.global	MetronomeTimer_ReadControlRegister
+ 144              		.code	16
+ 145              		.thumb_func
+ 146              		.type	MetronomeTimer_ReadControlRegister, %function
+ 147              	MetronomeTimer_ReadControlRegister:
+ 148              	.LFB7:
+ 337:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 338:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 339:.\Generated_Source\PSoC4/MetronomeTimer.c **** #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) /* Remove API if control register is unused */
+ 340:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 341:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 342:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 343:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_ReadControlRegister
+ 344:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 345:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 346:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 347:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Reads the control register and returns it's value.
+ 348:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 349:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 350:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 351:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 352:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 353:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The contents of the control register
+ 354:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 355:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 356:.\Generated_Source\PSoC4/MetronomeTimer.c **** uint8 MetronomeTimer_ReadControlRegister(void) 
+ 357:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 149              		.loc 1 357 0
+ 150              		.cfi_startproc
+ 358:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) 
+ 359:.\Generated_Source\PSoC4/MetronomeTimer.c ****         return ((uint8)MetronomeTimer_CONTROL);
+ 151              		.loc 1 359 0
+ 152 0000 014B     		ldr	r3, .L17
+ 153 0002 1878     		ldrb	r0, [r3]
+ 154 0004 C0B2     		uxtb	r0, r0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 10
+
+
+ 360:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #else
+ 361:.\Generated_Source\PSoC4/MetronomeTimer.c ****         return (0);
+ 362:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) */
+ 363:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 155              		.loc 1 363 0
+ 156              		@ sp needed
+ 157 0006 7047     		bx	lr
+ 158              	.L18:
+ 159              		.align	2
+ 160              	.L17:
+ 161 0008 73000F40 		.word	1074724979
+ 162              		.cfi_endproc
+ 163              	.LFE7:
+ 164              		.size	MetronomeTimer_ReadControlRegister, .-MetronomeTimer_ReadControlRegister
+ 165              		.section	.text.MetronomeTimer_WriteControlRegister,"ax",%progbits
+ 166              		.align	2
+ 167              		.global	MetronomeTimer_WriteControlRegister
+ 168              		.code	16
+ 169              		.thumb_func
+ 170              		.type	MetronomeTimer_WriteControlRegister, %function
+ 171              	MetronomeTimer_WriteControlRegister:
+ 172              	.LFB8:
+ 364:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 365:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 366:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 367:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_WriteControlRegister
+ 368:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 369:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 370:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 371:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Sets the bit-field of the control register.
+ 372:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 373:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 374:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  control: The contents of the control register
+ 375:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 376:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 377:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 378:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 379:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_WriteControlRegister(uint8 control) 
+ 380:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 173              		.loc 1 380 0
+ 174              		.cfi_startproc
+ 175              	.LVL1:
+ 381:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) 
+ 382:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL = control;
+ 176              		.loc 1 382 0
+ 177 0000 014B     		ldr	r3, .L20
+ 178 0002 1870     		strb	r0, [r3]
+ 383:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #else
+ 384:.\Generated_Source\PSoC4/MetronomeTimer.c ****         control = 0u;
+ 385:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) */
+ 386:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 179              		.loc 1 386 0
+ 180              		@ sp needed
+ 181 0004 7047     		bx	lr
+ 182              	.L21:
+ 183 0006 C046     		.align	2
+ 184              	.L20:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 11
+
+
+ 185 0008 73000F40 		.word	1074724979
+ 186              		.cfi_endproc
+ 187              	.LFE8:
+ 188              		.size	MetronomeTimer_WriteControlRegister, .-MetronomeTimer_WriteControlRegister
+ 189              		.section	.text.MetronomeTimer_ReadPeriod,"ax",%progbits
+ 190              		.align	2
+ 191              		.global	MetronomeTimer_ReadPeriod
+ 192              		.code	16
+ 193              		.thumb_func
+ 194              		.type	MetronomeTimer_ReadPeriod, %function
+ 195              	MetronomeTimer_ReadPeriod:
+ 196              	.LFB9:
+ 387:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 388:.\Generated_Source\PSoC4/MetronomeTimer.c **** #endif /* Remove API if control register is unused */
+ 389:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 390:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 391:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 392:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_ReadPeriod
+ 393:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 394:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 395:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 396:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function returns the current value of the Period.
+ 397:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 398:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 399:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 400:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 401:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 402:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The present value of the counter.
+ 403:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 404:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 405:.\Generated_Source\PSoC4/MetronomeTimer.c **** uint8 MetronomeTimer_ReadPeriod(void) 
+ 406:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 197              		.loc 1 406 0
+ 198              		.cfi_startproc
+ 407:.\Generated_Source\PSoC4/MetronomeTimer.c ****    #if(MetronomeTimer_UsingFixedFunction)
+ 408:.\Generated_Source\PSoC4/MetronomeTimer.c ****        return ((uint8)CY_GET_REG16(MetronomeTimer_PERIOD_LSB_PTR));
+ 409:.\Generated_Source\PSoC4/MetronomeTimer.c ****    #else
+ 410:.\Generated_Source\PSoC4/MetronomeTimer.c ****        return (CY_GET_REG8(MetronomeTimer_PERIOD_LSB_PTR));
+ 199              		.loc 1 410 0
+ 200 0000 014B     		ldr	r3, .L23
+ 201 0002 1878     		ldrb	r0, [r3]
+ 202 0004 C0B2     		uxtb	r0, r0
+ 411:.\Generated_Source\PSoC4/MetronomeTimer.c ****    #endif /* (MetronomeTimer_UsingFixedFunction) */
+ 412:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 203              		.loc 1 412 0
+ 204              		@ sp needed
+ 205 0006 7047     		bx	lr
+ 206              	.L24:
+ 207              		.align	2
+ 208              	.L23:
+ 209 0008 23000F40 		.word	1074724899
+ 210              		.cfi_endproc
+ 211              	.LFE9:
+ 212              		.size	MetronomeTimer_ReadPeriod, .-MetronomeTimer_ReadPeriod
+ 213              		.section	.text.MetronomeTimer_WritePeriod,"ax",%progbits
+ 214              		.align	2
+ 215              		.global	MetronomeTimer_WritePeriod
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 12
+
+
+ 216              		.code	16
+ 217              		.thumb_func
+ 218              		.type	MetronomeTimer_WritePeriod, %function
+ 219              	MetronomeTimer_WritePeriod:
+ 220              	.LFB10:
+ 413:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 414:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 415:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 416:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_WritePeriod
+ 417:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 418:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 419:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 420:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function is used to change the period of the counter.  The new period
+ 421:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  will be loaded the next time terminal count is detected.
+ 422:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 423:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 424:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  period: This value may be between 1 and (2^Resolution)-1.  A value of 0 will
+ 425:.\Generated_Source\PSoC4/MetronomeTimer.c **** *          result in the counter remaining at zero.
+ 426:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 427:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 428:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 429:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 430:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 431:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_WritePeriod(uint8 period) 
+ 432:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 221              		.loc 1 432 0
+ 222              		.cfi_startproc
+ 223              	.LVL2:
+ 433:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if(MetronomeTimer_UsingFixedFunction)
+ 434:.\Generated_Source\PSoC4/MetronomeTimer.c ****         uint16 period_temp = (uint16)period;
+ 435:.\Generated_Source\PSoC4/MetronomeTimer.c ****         CY_SET_REG16(MetronomeTimer_PERIOD_LSB_PTR, period_temp);
+ 436:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #else
+ 437:.\Generated_Source\PSoC4/MetronomeTimer.c ****         CY_SET_REG8(MetronomeTimer_PERIOD_LSB_PTR, period);
+ 224              		.loc 1 437 0
+ 225 0000 014B     		ldr	r3, .L26
+ 226 0002 1870     		strb	r0, [r3]
+ 438:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /*Write Period value with appropriate resolution suffix depending on UDB or fixed functi
+ 439:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 227              		.loc 1 439 0
+ 228              		@ sp needed
+ 229 0004 7047     		bx	lr
+ 230              	.L27:
+ 231 0006 C046     		.align	2
+ 232              	.L26:
+ 233 0008 23000F40 		.word	1074724899
+ 234              		.cfi_endproc
+ 235              	.LFE10:
+ 236              		.size	MetronomeTimer_WritePeriod, .-MetronomeTimer_WritePeriod
+ 237              		.section	.text.MetronomeTimer_ReadCapture,"ax",%progbits
+ 238              		.align	2
+ 239              		.global	MetronomeTimer_ReadCapture
+ 240              		.code	16
+ 241              		.thumb_func
+ 242              		.type	MetronomeTimer_ReadCapture, %function
+ 243              	MetronomeTimer_ReadCapture:
+ 244              	.LFB11:
+ 440:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 13
+
+
+ 441:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 442:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 443:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_ReadCapture
+ 444:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 445:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 446:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 447:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function returns the last value captured.
+ 448:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 449:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 450:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 451:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 452:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 453:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Present Capture value.
+ 454:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 455:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 456:.\Generated_Source\PSoC4/MetronomeTimer.c **** uint8 MetronomeTimer_ReadCapture(void) 
+ 457:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 245              		.loc 1 457 0
+ 246              		.cfi_startproc
+ 458:.\Generated_Source\PSoC4/MetronomeTimer.c ****    #if(MetronomeTimer_UsingFixedFunction)
+ 459:.\Generated_Source\PSoC4/MetronomeTimer.c ****        return ((uint8)CY_GET_REG16(MetronomeTimer_CAPTURE_LSB_PTR));
+ 460:.\Generated_Source\PSoC4/MetronomeTimer.c ****    #else
+ 461:.\Generated_Source\PSoC4/MetronomeTimer.c ****        return (CY_GET_REG8(MetronomeTimer_CAPTURE_LSB_PTR));
+ 247              		.loc 1 461 0
+ 248 0000 014B     		ldr	r3, .L29
+ 249 0002 1878     		ldrb	r0, [r3]
+ 250 0004 C0B2     		uxtb	r0, r0
+ 462:.\Generated_Source\PSoC4/MetronomeTimer.c ****    #endif /* (MetronomeTimer_UsingFixedFunction) */
+ 463:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 251              		.loc 1 463 0
+ 252              		@ sp needed
+ 253 0006 7047     		bx	lr
+ 254              	.L30:
+ 255              		.align	2
+ 256              	.L29:
+ 257 0008 43000F40 		.word	1074724931
+ 258              		.cfi_endproc
+ 259              	.LFE11:
+ 260              		.size	MetronomeTimer_ReadCapture, .-MetronomeTimer_ReadCapture
+ 261              		.section	.text.MetronomeTimer_WriteCounter,"ax",%progbits
+ 262              		.align	2
+ 263              		.global	MetronomeTimer_WriteCounter
+ 264              		.code	16
+ 265              		.thumb_func
+ 266              		.type	MetronomeTimer_WriteCounter, %function
+ 267              	MetronomeTimer_WriteCounter:
+ 268              	.LFB12:
+ 464:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 465:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 466:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 467:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_WriteCounter
+ 468:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 469:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 470:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 471:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This funtion is used to set the counter to a specific value
+ 472:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 473:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 14
+
+
+ 474:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  counter:  New counter value.
+ 475:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 476:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 477:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 478:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 479:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 480:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_WriteCounter(uint8 counter) 
+ 481:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 269              		.loc 1 481 0
+ 270              		.cfi_startproc
+ 271              	.LVL3:
+ 482:.\Generated_Source\PSoC4/MetronomeTimer.c ****    #if(MetronomeTimer_UsingFixedFunction)
+ 483:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* This functionality is removed until a FixedFunction HW update to
+ 484:.\Generated_Source\PSoC4/MetronomeTimer.c ****          * allow this register to be written
+ 485:.\Generated_Source\PSoC4/MetronomeTimer.c ****          */
+ 486:.\Generated_Source\PSoC4/MetronomeTimer.c ****         CY_SET_REG16(MetronomeTimer_COUNTER_LSB_PTR, (uint16)counter);
+ 487:.\Generated_Source\PSoC4/MetronomeTimer.c ****         
+ 488:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #else
+ 489:.\Generated_Source\PSoC4/MetronomeTimer.c ****         CY_SET_REG8(MetronomeTimer_COUNTER_LSB_PTR, counter);
+ 272              		.loc 1 489 0
+ 273 0000 014B     		ldr	r3, .L32
+ 274 0002 1870     		strb	r0, [r3]
+ 490:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Set Write Counter only for the UDB implementation (Write Counter not available in fix
+ 491:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 275              		.loc 1 491 0
+ 276              		@ sp needed
+ 277 0004 7047     		bx	lr
+ 278              	.L33:
+ 279 0006 C046     		.align	2
+ 280              	.L32:
+ 281 0008 03000F40 		.word	1074724867
+ 282              		.cfi_endproc
+ 283              	.LFE12:
+ 284              		.size	MetronomeTimer_WriteCounter, .-MetronomeTimer_WriteCounter
+ 285              		.section	.text.MetronomeTimer_ReadCounter,"ax",%progbits
+ 286              		.align	2
+ 287              		.global	MetronomeTimer_ReadCounter
+ 288              		.code	16
+ 289              		.thumb_func
+ 290              		.type	MetronomeTimer_ReadCounter, %function
+ 291              	MetronomeTimer_ReadCounter:
+ 292              	.LFB13:
+ 492:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 493:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 494:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 495:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_ReadCounter
+ 496:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 497:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 498:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 499:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function returns the current counter value.
+ 500:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 501:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 502:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 503:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 504:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 505:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Present compare value.
+ 506:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 15
+
+
+ 507:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 508:.\Generated_Source\PSoC4/MetronomeTimer.c **** uint8 MetronomeTimer_ReadCounter(void) 
+ 509:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 293              		.loc 1 509 0
+ 294              		.cfi_startproc
+ 510:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Force capture by reading Accumulator */
+ 511:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Must first do a software capture to be able to read the counter */
+ 512:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* It is up to the user code to make sure there isn't already captured data in the FIFO */
+ 513:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if(MetronomeTimer_UsingFixedFunction)
+ 514:.\Generated_Source\PSoC4/MetronomeTimer.c ****         (void)CY_GET_REG16(MetronomeTimer_COUNTER_LSB_PTR);
+ 515:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #else
+ 516:.\Generated_Source\PSoC4/MetronomeTimer.c ****         (void)CY_GET_REG8(MetronomeTimer_COUNTER_LSB_PTR_8BIT);
+ 295              		.loc 1 516 0
+ 296 0000 024B     		ldr	r3, .L35
+ 297 0002 1B78     		ldrb	r3, [r3]
+ 517:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif/* (MetronomeTimer_UsingFixedFunction) */
+ 518:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 519:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* Read the data from the FIFO (or capture register for Fixed Function)*/
+ 520:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if(MetronomeTimer_UsingFixedFunction)
+ 521:.\Generated_Source\PSoC4/MetronomeTimer.c ****         return ((uint8)CY_GET_REG16(MetronomeTimer_CAPTURE_LSB_PTR));
+ 522:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #else
+ 523:.\Generated_Source\PSoC4/MetronomeTimer.c ****         return (CY_GET_REG8(MetronomeTimer_CAPTURE_LSB_PTR));
+ 298              		.loc 1 523 0
+ 299 0004 024B     		ldr	r3, .L35+4
+ 300 0006 1878     		ldrb	r0, [r3]
+ 301 0008 C0B2     		uxtb	r0, r0
+ 524:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* (MetronomeTimer_UsingFixedFunction) */
+ 525:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 302              		.loc 1 525 0
+ 303              		@ sp needed
+ 304 000a 7047     		bx	lr
+ 305              	.L36:
+ 306              		.align	2
+ 307              	.L35:
+ 308 000c 03000F40 		.word	1074724867
+ 309 0010 43000F40 		.word	1074724931
+ 310              		.cfi_endproc
+ 311              	.LFE13:
+ 312              		.size	MetronomeTimer_ReadCounter, .-MetronomeTimer_ReadCounter
+ 313              		.section	.text.MetronomeTimer_ClearFIFO,"ax",%progbits
+ 314              		.align	2
+ 315              		.global	MetronomeTimer_ClearFIFO
+ 316              		.code	16
+ 317              		.thumb_func
+ 318              		.type	MetronomeTimer_ClearFIFO, %function
+ 319              	MetronomeTimer_ClearFIFO:
+ 320              	.LFB14:
+ 526:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 527:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 528:.\Generated_Source\PSoC4/MetronomeTimer.c **** #if(!MetronomeTimer_UsingFixedFunction) /* UDB Specific Functions */
+ 529:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 530:.\Generated_Source\PSoC4/MetronomeTimer.c ****     
+ 531:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 532:.\Generated_Source\PSoC4/MetronomeTimer.c ****  * The functions below this point are only available using the UDB
+ 533:.\Generated_Source\PSoC4/MetronomeTimer.c ****  * implementation.  If a feature is selected, then the API is enabled.
+ 534:.\Generated_Source\PSoC4/MetronomeTimer.c ****  ******************************************************************************/
+ 535:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 16
+
+
+ 536:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 537:.\Generated_Source\PSoC4/MetronomeTimer.c **** #if (MetronomeTimer_SoftwareCaptureMode)
+ 538:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 539:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 540:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 541:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_SetCaptureMode
+ 542:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 543:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 544:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 545:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function sets the capture mode to either rising or falling edge.
+ 546:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 547:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 548:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  captureMode: This parameter sets the capture mode of the UDB capture feature
+ 549:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The parameter values are defined using the
+ 550:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  #define MetronomeTimer__B_TIMER__CM_NONE 0
+ 551:.\Generated_Source\PSoC4/MetronomeTimer.c **** #define MetronomeTimer__B_TIMER__CM_RISINGEDGE 1
+ 552:.\Generated_Source\PSoC4/MetronomeTimer.c **** #define MetronomeTimer__B_TIMER__CM_FALLINGEDGE 2
+ 553:.\Generated_Source\PSoC4/MetronomeTimer.c **** #define MetronomeTimer__B_TIMER__CM_EITHEREDGE 3
+ 554:.\Generated_Source\PSoC4/MetronomeTimer.c **** #define MetronomeTimer__B_TIMER__CM_SOFTWARE 4
+ 555:.\Generated_Source\PSoC4/MetronomeTimer.c ****  identifiers
+ 556:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  The following are the possible values of the parameter
+ 557:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  MetronomeTimer__B_TIMER__CM_NONE        - Set Capture mode to None
+ 558:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  MetronomeTimer__B_TIMER__CM_RISINGEDGE  - Rising edge of Capture input
+ 559:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  MetronomeTimer__B_TIMER__CM_FALLINGEDGE - Falling edge of Capture input
+ 560:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  MetronomeTimer__B_TIMER__CM_EITHEREDGE  - Either edge of Capture input
+ 561:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 562:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 563:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 564:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 565:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 566:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_SetCaptureMode(uint8 captureMode) 
+ 567:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 568:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* This must only set to two bits of the control register associated */
+ 569:.\Generated_Source\PSoC4/MetronomeTimer.c ****     captureMode = ((uint8)((uint8)captureMode << MetronomeTimer_CTRL_CAP_MODE_SHIFT));
+ 570:.\Generated_Source\PSoC4/MetronomeTimer.c ****     captureMode &= (MetronomeTimer_CTRL_CAP_MODE_MASK);
+ 571:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 572:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED)
+ 573:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Clear the Current Setting */
+ 574:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL &= ((uint8)(~MetronomeTimer_CTRL_CAP_MODE_MASK));
+ 575:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 576:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Write The New Setting */
+ 577:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL |= captureMode;
+ 578:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) */
+ 579:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 580:.\Generated_Source\PSoC4/MetronomeTimer.c **** #endif /* Remove API if Capture Mode is not Software Controlled */
+ 581:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 582:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 583:.\Generated_Source\PSoC4/MetronomeTimer.c **** #if (MetronomeTimer_SoftwareTriggerMode)
+ 584:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 585:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 586:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 587:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_SetTriggerMode
+ 588:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 589:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 590:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 591:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function sets the trigger input mode
+ 592:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 17
+
+
+ 593:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 594:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  triggerMode: Pass one of the pre-defined Trigger Modes (except Software)
+ 595:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #define MetronomeTimer__B_TIMER__TM_NONE 0x00u
+ 596:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #define MetronomeTimer__B_TIMER__TM_RISINGEDGE 0x04u
+ 597:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #define MetronomeTimer__B_TIMER__TM_FALLINGEDGE 0x08u
+ 598:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #define MetronomeTimer__B_TIMER__TM_EITHEREDGE 0x0Cu
+ 599:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #define MetronomeTimer__B_TIMER__TM_SOFTWARE 0x10u
+ 600:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 601:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 602:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 603:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 604:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 605:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_SetTriggerMode(uint8 triggerMode) 
+ 606:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 607:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* This must only set to two bits of the control register associated */
+ 608:.\Generated_Source\PSoC4/MetronomeTimer.c ****     triggerMode &= MetronomeTimer_CTRL_TRIG_MODE_MASK;
+ 609:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 610:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED)   /* Remove assignment if control register is rem
+ 611:.\Generated_Source\PSoC4/MetronomeTimer.c ****     
+ 612:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Clear the Current Setting */
+ 613:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL &= ((uint8)(~MetronomeTimer_CTRL_TRIG_MODE_MASK));
+ 614:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 615:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Write The New Setting */
+ 616:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL |= (triggerMode | MetronomeTimer__B_TIMER__TM_SOFTWARE);
+ 617:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Remove code section if control register is not used */
+ 618:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 619:.\Generated_Source\PSoC4/MetronomeTimer.c **** #endif /* Remove API if Trigger Mode is not Software Controlled */
+ 620:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 621:.\Generated_Source\PSoC4/MetronomeTimer.c **** #if (MetronomeTimer_EnableTriggerMode)
+ 622:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 623:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 624:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 625:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_EnableTrigger
+ 626:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 627:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 628:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 629:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Sets the control bit enabling Hardware Trigger mode
+ 630:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 631:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 632:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 633:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 634:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 635:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 636:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 637:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 638:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_EnableTrigger(void) 
+ 639:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 640:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED)   /* Remove assignment if control register is rem
+ 641:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL |= MetronomeTimer_CTRL_TRIG_EN;
+ 642:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Remove code section if control register is not used */
+ 643:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 644:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 645:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 646:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 647:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_DisableTrigger
+ 648:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 649:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 18
+
+
+ 650:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 651:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Clears the control bit enabling Hardware Trigger mode
+ 652:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 653:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 654:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 655:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 656:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 657:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 658:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 659:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 660:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_DisableTrigger(void) 
+ 661:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 662:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED )   /* Remove assignment if control register is re
+ 663:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL &= ((uint8)(~MetronomeTimer_CTRL_TRIG_EN));
+ 664:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Remove code section if control register is not used */
+ 665:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 666:.\Generated_Source\PSoC4/MetronomeTimer.c **** #endif /* Remove API is Trigger Mode is set to None */
+ 667:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 668:.\Generated_Source\PSoC4/MetronomeTimer.c **** #if(MetronomeTimer_InterruptOnCaptureCount)
+ 669:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 670:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 671:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 672:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_SetInterruptCount
+ 673:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 674:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 675:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 676:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function sets the capture count before an interrupt is triggered.
+ 677:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 678:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 679:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  interruptCount:  A value between 0 and 3 is valid.  If the value is 0, then
+ 680:.\Generated_Source\PSoC4/MetronomeTimer.c **** *                   an interrupt will occur each time a capture occurs.
+ 681:.\Generated_Source\PSoC4/MetronomeTimer.c **** *                   A value of 1 to 3 will cause the interrupt
+ 682:.\Generated_Source\PSoC4/MetronomeTimer.c **** *                   to delay by the same number of captures.
+ 683:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 684:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 685:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 686:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 687:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 688:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_SetInterruptCount(uint8 interruptCount) 
+ 689:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 690:.\Generated_Source\PSoC4/MetronomeTimer.c ****     /* This must only set to two bits of the control register associated */
+ 691:.\Generated_Source\PSoC4/MetronomeTimer.c ****     interruptCount &= MetronomeTimer_CTRL_INTCNT_MASK;
+ 692:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 693:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if (!MetronomeTimer_UDB_CONTROL_REG_REMOVED)
+ 694:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Clear the Current Setting */
+ 695:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL &= ((uint8)(~MetronomeTimer_CTRL_INTCNT_MASK));
+ 696:.\Generated_Source\PSoC4/MetronomeTimer.c ****         /* Write The New Setting */
+ 697:.\Generated_Source\PSoC4/MetronomeTimer.c ****         MetronomeTimer_CONTROL |= interruptCount;
+ 698:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* (!MetronomeTimer_UDB_CONTROL_REG_REMOVED) */
+ 699:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 700:.\Generated_Source\PSoC4/MetronomeTimer.c **** #endif /* MetronomeTimer_InterruptOnCaptureCount */
+ 701:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 702:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 703:.\Generated_Source\PSoC4/MetronomeTimer.c **** #if (MetronomeTimer_UsingHWCaptureCounter)
+ 704:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 705:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 706:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 19
+
+
+ 707:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_SetCaptureCount
+ 708:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 709:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 710:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 711:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function sets the capture count
+ 712:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 713:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 714:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  captureCount: A value between 2 and 127 inclusive is valid.  A value of 1
+ 715:.\Generated_Source\PSoC4/MetronomeTimer.c **** *                to 127 will cause the interrupt to delay by the same number of
+ 716:.\Generated_Source\PSoC4/MetronomeTimer.c **** *                captures.
+ 717:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 718:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 719:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 720:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 721:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 722:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_SetCaptureCount(uint8 captureCount) 
+ 723:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 724:.\Generated_Source\PSoC4/MetronomeTimer.c ****     MetronomeTimer_CAP_COUNT = captureCount;
+ 725:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 726:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 727:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 728:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 729:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_ReadCaptureCount
+ 730:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 731:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 732:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 733:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function reads the capture count setting
+ 734:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 735:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 736:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 737:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 738:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 739:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  Returns the Capture Count Setting
+ 740:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 741:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 742:.\Generated_Source\PSoC4/MetronomeTimer.c **** uint8 MetronomeTimer_ReadCaptureCount(void) 
+ 743:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 744:.\Generated_Source\PSoC4/MetronomeTimer.c ****     return ((uint8)MetronomeTimer_CAP_COUNT);
+ 745:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 746:.\Generated_Source\PSoC4/MetronomeTimer.c **** #endif /* MetronomeTimer_UsingHWCaptureCounter */
+ 747:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 748:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 749:.\Generated_Source\PSoC4/MetronomeTimer.c **** /*******************************************************************************
+ 750:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Function Name: MetronomeTimer_ClearFIFO
+ 751:.\Generated_Source\PSoC4/MetronomeTimer.c **** ********************************************************************************
+ 752:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 753:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Summary:
+ 754:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  This function clears all capture data from the capture FIFO
+ 755:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 756:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Parameters:
+ 757:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 758:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 759:.\Generated_Source\PSoC4/MetronomeTimer.c **** * Return:
+ 760:.\Generated_Source\PSoC4/MetronomeTimer.c **** *  void
+ 761:.\Generated_Source\PSoC4/MetronomeTimer.c **** *
+ 762:.\Generated_Source\PSoC4/MetronomeTimer.c **** *******************************************************************************/
+ 763:.\Generated_Source\PSoC4/MetronomeTimer.c **** void MetronomeTimer_ClearFIFO(void) 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 20
+
+
+ 764:.\Generated_Source\PSoC4/MetronomeTimer.c **** {
+ 321              		.loc 1 764 0
+ 322              		.cfi_startproc
+ 323 0000 08B5     		push	{r3, lr}
+ 324              		.cfi_def_cfa_offset 8
+ 325              		.cfi_offset 3, -8
+ 326              		.cfi_offset 14, -4
+ 765:.\Generated_Source\PSoC4/MetronomeTimer.c ****     while(0u != (MetronomeTimer_ReadStatusRegister() & MetronomeTimer_STATUS_FIFONEMP))
+ 327              		.loc 1 765 0
+ 328 0002 01E0     		b	.L38
+ 329              	.L39:
+ 766:.\Generated_Source\PSoC4/MetronomeTimer.c ****     {
+ 767:.\Generated_Source\PSoC4/MetronomeTimer.c ****         (void)MetronomeTimer_ReadCapture();
+ 330              		.loc 1 767 0
+ 331 0004 FFF7FEFF 		bl	MetronomeTimer_ReadCapture
+ 332              	.LVL4:
+ 333              	.L38:
+ 765:.\Generated_Source\PSoC4/MetronomeTimer.c ****     while(0u != (MetronomeTimer_ReadStatusRegister() & MetronomeTimer_STATUS_FIFONEMP))
+ 334              		.loc 1 765 0
+ 335 0008 FFF7FEFF 		bl	MetronomeTimer_ReadStatusRegister
+ 336              	.LVL5:
+ 337 000c 0307     		lsl	r3, r0, #28
+ 338 000e F9D4     		bmi	.L39
+ 768:.\Generated_Source\PSoC4/MetronomeTimer.c ****     }
+ 769:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 339              		.loc 1 769 0
+ 340              		@ sp needed
+ 341 0010 08BD     		pop	{r3, pc}
+ 342              		.cfi_endproc
+ 343              	.LFE14:
+ 344              		.size	MetronomeTimer_ClearFIFO, .-MetronomeTimer_ClearFIFO
+ 345 0012 C046     		.section	.text.MetronomeTimer_Init,"ax",%progbits
+ 346              		.align	2
+ 347              		.global	MetronomeTimer_Init
+ 348              		.code	16
+ 349              		.thumb_func
+ 350              		.type	MetronomeTimer_Init, %function
+ 351              	MetronomeTimer_Init:
+ 352              	.LFB0:
+  44:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #if(!MetronomeTimer_UsingFixedFunction)
+ 353              		.loc 1 44 0
+ 354              		.cfi_startproc
+ 355 0000 08B5     		push	{r3, lr}
+ 356              		.cfi_def_cfa_offset 8
+ 357              		.cfi_offset 3, -8
+ 358              		.cfi_offset 14, -4
+ 118:.\Generated_Source\PSoC4/MetronomeTimer.c ****     MetronomeTimer_WriteCounter(MetronomeTimer_INIT_PERIOD);
+ 359              		.loc 1 118 0
+ 360 0002 6320     		mov	r0, #99
+ 361 0004 FFF7FEFF 		bl	MetronomeTimer_WritePeriod
+ 362              	.LVL6:
+ 119:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 363              		.loc 1 119 0
+ 364 0008 6320     		mov	r0, #99
+ 365 000a FFF7FEFF 		bl	MetronomeTimer_WriteCounter
+ 366              	.LVL7:
+ 142:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 21
+
+
+ 367              		.loc 1 142 0
+ 368 000e FFF7FEFF 		bl	CyEnterCriticalSection
+ 369              	.LVL8:
+ 145:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 370              		.loc 1 145 0
+ 371 0012 064A     		ldr	r2, .L41
+ 372 0014 1178     		ldrb	r1, [r2]
+ 373 0016 1023     		mov	r3, #16
+ 374 0018 0B43     		orr	r3, r1
+ 375 001a 1370     		strb	r3, [r2]
+ 148:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 376              		.loc 1 148 0
+ 377 001c FFF7FEFF 		bl	CyExitCriticalSection
+ 378              	.LVL9:
+ 159:.\Generated_Source\PSoC4/MetronomeTimer.c ****     #endif /* Configure additional features of UDB implementation */
+ 379              		.loc 1 159 0
+ 380 0020 FFF7FEFF 		bl	MetronomeTimer_ClearFIFO
+ 381              	.LVL10:
+ 162:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 382              		.loc 1 162 0
+ 383 0024 0120     		mov	r0, #1
+ 384 0026 FFF7FEFF 		bl	MetronomeTimer_SetInterruptMode
+ 385              	.LVL11:
+ 163:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 386              		.loc 1 163 0
+ 387              		@ sp needed
+ 388 002a 08BD     		pop	{r3, pc}
+ 389              	.L42:
+ 390              		.align	2
+ 391              	.L41:
+ 392 002c 93000F40 		.word	1074725011
+ 393              		.cfi_endproc
+ 394              	.LFE0:
+ 395              		.size	MetronomeTimer_Init, .-MetronomeTimer_Init
+ 396              		.section	.text.MetronomeTimer_Start,"ax",%progbits
+ 397              		.align	2
+ 398              		.global	MetronomeTimer_Start
+ 399              		.code	16
+ 400              		.thumb_func
+ 401              		.type	MetronomeTimer_Start, %function
+ 402              	MetronomeTimer_Start:
+ 403              	.LFB2:
+ 216:.\Generated_Source\PSoC4/MetronomeTimer.c ****     if(MetronomeTimer_initVar == 0u)
+ 404              		.loc 1 216 0
+ 405              		.cfi_startproc
+ 406 0000 08B5     		push	{r3, lr}
+ 407              		.cfi_def_cfa_offset 8
+ 408              		.cfi_offset 3, -8
+ 409              		.cfi_offset 14, -4
+ 217:.\Generated_Source\PSoC4/MetronomeTimer.c ****     {
+ 410              		.loc 1 217 0
+ 411 0002 064B     		ldr	r3, .L45
+ 412 0004 1B78     		ldrb	r3, [r3]
+ 413 0006 002B     		cmp	r3, #0
+ 414 0008 04D1     		bne	.L44
+ 219:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 415              		.loc 1 219 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 22
+
+
+ 416 000a FFF7FEFF 		bl	MetronomeTimer_Init
+ 417              	.LVL12:
+ 221:.\Generated_Source\PSoC4/MetronomeTimer.c ****     }
+ 418              		.loc 1 221 0
+ 419 000e 0122     		mov	r2, #1
+ 420 0010 024B     		ldr	r3, .L45
+ 421 0012 1A70     		strb	r2, [r3]
+ 422              	.L44:
+ 225:.\Generated_Source\PSoC4/MetronomeTimer.c **** }
+ 423              		.loc 1 225 0
+ 424 0014 FFF7FEFF 		bl	MetronomeTimer_Enable
+ 425              	.LVL13:
+ 226:.\Generated_Source\PSoC4/MetronomeTimer.c **** 
+ 426              		.loc 1 226 0
+ 427              		@ sp needed
+ 428 0018 08BD     		pop	{r3, pc}
+ 429              	.L46:
+ 430 001a C046     		.align	2
+ 431              	.L45:
+ 432 001c 00000000 		.word	.LANCHOR0
+ 433              		.cfi_endproc
+ 434              	.LFE2:
+ 435              		.size	MetronomeTimer_Start, .-MetronomeTimer_Start
+ 436              		.global	MetronomeTimer_initVar
+ 437              		.bss
+ 438              		.set	.LANCHOR0,. + 0
+ 439              		.type	MetronomeTimer_initVar, %object
+ 440              		.size	MetronomeTimer_initVar, 1
+ 441              	MetronomeTimer_initVar:
+ 442 0000 00       		.space	1
+ 443              		.text
+ 444              	.Letext0:
+ 445              		.file 2 ".\\Generated_Source\\PSoC4\\cytypes.h"
+ 446              		.file 3 ".\\Generated_Source\\PSoC4\\CyLib.h"
+ 447              		.section	.debug_info,"",%progbits
+ 448              	.Ldebug_info0:
+ 449 0000 C8020000 		.4byte	0x2c8
+ 450 0004 0400     		.2byte	0x4
+ 451 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 452 000a 04       		.byte	0x4
+ 453 000b 01       		.uleb128 0x1
+ 454 000c 6F020000 		.4byte	.LASF34
+ 455 0010 01       		.byte	0x1
+ 456 0011 9F000000 		.4byte	.LASF35
+ 457 0015 53000000 		.4byte	.LASF36
+ 458 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 459 001d 00000000 		.4byte	0
+ 460 0021 00000000 		.4byte	.Ldebug_line0
+ 461 0025 02       		.uleb128 0x2
+ 462 0026 01       		.byte	0x1
+ 463 0027 06       		.byte	0x6
+ 464 0028 44030000 		.4byte	.LASF0
+ 465 002c 02       		.uleb128 0x2
+ 466 002d 01       		.byte	0x1
+ 467 002e 08       		.byte	0x8
+ 468 002f EE000000 		.4byte	.LASF1
+ 469 0033 02       		.uleb128 0x2
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 23
+
+
+ 470 0034 02       		.byte	0x2
+ 471 0035 05       		.byte	0x5
+ 472 0036 18030000 		.4byte	.LASF2
+ 473 003a 02       		.uleb128 0x2
+ 474 003b 02       		.byte	0x2
+ 475 003c 07       		.byte	0x7
+ 476 003d 40000000 		.4byte	.LASF3
+ 477 0041 02       		.uleb128 0x2
+ 478 0042 04       		.byte	0x4
+ 479 0043 05       		.byte	0x5
+ 480 0044 22030000 		.4byte	.LASF4
+ 481 0048 02       		.uleb128 0x2
+ 482 0049 04       		.byte	0x4
+ 483 004a 07       		.byte	0x7
+ 484 004b 17010000 		.4byte	.LASF5
+ 485 004f 02       		.uleb128 0x2
+ 486 0050 08       		.byte	0x8
+ 487 0051 05       		.byte	0x5
+ 488 0052 53020000 		.4byte	.LASF6
+ 489 0056 02       		.uleb128 0x2
+ 490 0057 08       		.byte	0x8
+ 491 0058 07       		.byte	0x7
+ 492 0059 D7000000 		.4byte	.LASF7
+ 493 005d 03       		.uleb128 0x3
+ 494 005e 04       		.byte	0x4
+ 495 005f 05       		.byte	0x5
+ 496 0060 696E7400 		.ascii	"int\000"
+ 497 0064 02       		.uleb128 0x2
+ 498 0065 04       		.byte	0x4
+ 499 0066 07       		.byte	0x7
+ 500 0067 E8010000 		.4byte	.LASF8
+ 501 006b 04       		.uleb128 0x4
+ 502 006c 29010000 		.4byte	.LASF12
+ 503 0070 02       		.byte	0x2
+ 504 0071 3801     		.2byte	0x138
+ 505 0073 2C000000 		.4byte	0x2c
+ 506 0077 02       		.uleb128 0x2
+ 507 0078 04       		.byte	0x4
+ 508 0079 04       		.byte	0x4
+ 509 007a C9000000 		.4byte	.LASF9
+ 510 007e 02       		.uleb128 0x2
+ 511 007f 08       		.byte	0x8
+ 512 0080 04       		.byte	0x4
+ 513 0081 92010000 		.4byte	.LASF10
+ 514 0085 02       		.uleb128 0x2
+ 515 0086 01       		.byte	0x1
+ 516 0087 08       		.byte	0x8
+ 517 0088 2B030000 		.4byte	.LASF11
+ 518 008c 04       		.uleb128 0x4
+ 519 008d FC000000 		.4byte	.LASF13
+ 520 0091 02       		.byte	0x2
+ 521 0092 E201     		.2byte	0x1e2
+ 522 0094 98000000 		.4byte	0x98
+ 523 0098 05       		.uleb128 0x5
+ 524 0099 6B000000 		.4byte	0x6b
+ 525 009d 02       		.uleb128 0x2
+ 526 009e 04       		.byte	0x4
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 24
+
+
+ 527 009f 07       		.byte	0x7
+ 528 00a0 4A020000 		.4byte	.LASF14
+ 529 00a4 06       		.uleb128 0x6
+ 530 00a5 01010000 		.4byte	.LASF15
+ 531 00a9 01       		.byte	0x1
+ 532 00aa B4       		.byte	0xb4
+ 533 00ab 00000000 		.4byte	.LFB1
+ 534 00af 10000000 		.4byte	.LFE1-.LFB1
+ 535 00b3 01       		.uleb128 0x1
+ 536 00b4 9C       		.byte	0x9c
+ 537 00b5 06       		.uleb128 0x6
+ 538 00b6 30030000 		.4byte	.LASF16
+ 539 00ba 01       		.byte	0x1
+ 540 00bb F7       		.byte	0xf7
+ 541 00bc 00000000 		.4byte	.LFB3
+ 542 00c0 10000000 		.4byte	.LFE3-.LFB3
+ 543 00c4 01       		.uleb128 0x1
+ 544 00c5 9C       		.byte	0x9c
+ 545 00c6 07       		.uleb128 0x7
+ 546 00c7 37010000 		.4byte	.LASF20
+ 547 00cb 01       		.byte	0x1
+ 548 00cc 1701     		.2byte	0x117
+ 549 00ce 00000000 		.4byte	.LFB4
+ 550 00d2 0C000000 		.4byte	.LFE4-.LFB4
+ 551 00d6 01       		.uleb128 0x1
+ 552 00d7 9C       		.byte	0x9c
+ 553 00d8 EB000000 		.4byte	0xeb
+ 554 00dc 08       		.uleb128 0x8
+ 555 00dd 61020000 		.4byte	.LASF22
+ 556 00e1 01       		.byte	0x1
+ 557 00e2 1701     		.2byte	0x117
+ 558 00e4 6B000000 		.4byte	0x6b
+ 559 00e8 01       		.uleb128 0x1
+ 560 00e9 50       		.byte	0x50
+ 561 00ea 00       		.byte	0
+ 562 00eb 09       		.uleb128 0x9
+ 563 00ec 1A000000 		.4byte	.LASF17
+ 564 00f0 01       		.byte	0x1
+ 565 00f1 2E01     		.2byte	0x12e
+ 566 00f3 00000000 		.4byte	.LFB5
+ 567 00f7 0C000000 		.4byte	.LFE5-.LFB5
+ 568 00fb 01       		.uleb128 0x1
+ 569 00fc 9C       		.byte	0x9c
+ 570 00fd 0A       		.uleb128 0xa
+ 571 00fe 70010000 		.4byte	.LASF18
+ 572 0102 01       		.byte	0x1
+ 573 0103 4D01     		.2byte	0x14d
+ 574 0105 6B000000 		.4byte	0x6b
+ 575 0109 00000000 		.4byte	.LFB6
+ 576 010d 0C000000 		.4byte	.LFE6-.LFB6
+ 577 0111 01       		.uleb128 0x1
+ 578 0112 9C       		.byte	0x9c
+ 579 0113 0A       		.uleb128 0xa
+ 580 0114 0B020000 		.4byte	.LASF19
+ 581 0118 01       		.byte	0x1
+ 582 0119 6401     		.2byte	0x164
+ 583 011b 6B000000 		.4byte	0x6b
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 25
+
+
+ 584 011f 00000000 		.4byte	.LFB7
+ 585 0123 0C000000 		.4byte	.LFE7-.LFB7
+ 586 0127 01       		.uleb128 0x1
+ 587 0128 9C       		.byte	0x9c
+ 588 0129 07       		.uleb128 0x7
+ 589 012a 99010000 		.4byte	.LASF21
+ 590 012e 01       		.byte	0x1
+ 591 012f 7B01     		.2byte	0x17b
+ 592 0131 00000000 		.4byte	.LFB8
+ 593 0135 0C000000 		.4byte	.LFE8-.LFB8
+ 594 0139 01       		.uleb128 0x1
+ 595 013a 9C       		.byte	0x9c
+ 596 013b 4E010000 		.4byte	0x14e
+ 597 013f 08       		.uleb128 0x8
+ 598 0140 2F010000 		.4byte	.LASF23
+ 599 0144 01       		.byte	0x1
+ 600 0145 7B01     		.2byte	0x17b
+ 601 0147 6B000000 		.4byte	0x6b
+ 602 014b 01       		.uleb128 0x1
+ 603 014c 50       		.byte	0x50
+ 604 014d 00       		.byte	0
+ 605 014e 0A       		.uleb128 0xa
+ 606 014f 00000000 		.4byte	.LASF24
+ 607 0153 01       		.byte	0x1
+ 608 0154 9501     		.2byte	0x195
+ 609 0156 6B000000 		.4byte	0x6b
+ 610 015a 00000000 		.4byte	.LFB9
+ 611 015e 0C000000 		.4byte	.LFE9-.LFB9
+ 612 0162 01       		.uleb128 0x1
+ 613 0163 9C       		.byte	0x9c
+ 614 0164 07       		.uleb128 0x7
+ 615 0165 6F000000 		.4byte	.LASF25
+ 616 0169 01       		.byte	0x1
+ 617 016a AF01     		.2byte	0x1af
+ 618 016c 00000000 		.4byte	.LFB10
+ 619 0170 0C000000 		.4byte	.LFE10-.LFB10
+ 620 0174 01       		.uleb128 0x1
+ 621 0175 9C       		.byte	0x9c
+ 622 0176 89010000 		.4byte	0x189
+ 623 017a 08       		.uleb128 0x8
+ 624 017b 39000000 		.4byte	.LASF26
+ 625 017f 01       		.byte	0x1
+ 626 0180 AF01     		.2byte	0x1af
+ 627 0182 6B000000 		.4byte	0x6b
+ 628 0186 01       		.uleb128 0x1
+ 629 0187 50       		.byte	0x50
+ 630 0188 00       		.byte	0
+ 631 0189 0A       		.uleb128 0xa
+ 632 018a FD020000 		.4byte	.LASF27
+ 633 018e 01       		.byte	0x1
+ 634 018f C801     		.2byte	0x1c8
+ 635 0191 6B000000 		.4byte	0x6b
+ 636 0195 00000000 		.4byte	.LFB11
+ 637 0199 0C000000 		.4byte	.LFE11-.LFB11
+ 638 019d 01       		.uleb128 0x1
+ 639 019e 9C       		.byte	0x9c
+ 640 019f 07       		.uleb128 0x7
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 26
+
+
+ 641 01a0 2E020000 		.4byte	.LASF28
+ 642 01a4 01       		.byte	0x1
+ 643 01a5 E001     		.2byte	0x1e0
+ 644 01a7 00000000 		.4byte	.LFB12
+ 645 01ab 0C000000 		.4byte	.LFE12-.LFB12
+ 646 01af 01       		.uleb128 0x1
+ 647 01b0 9C       		.byte	0x9c
+ 648 01b1 C4010000 		.4byte	0x1c4
+ 649 01b5 08       		.uleb128 0x8
+ 650 01b6 CF000000 		.4byte	.LASF29
+ 651 01ba 01       		.byte	0x1
+ 652 01bb E001     		.2byte	0x1e0
+ 653 01bd 6B000000 		.4byte	0x6b
+ 654 01c1 01       		.uleb128 0x1
+ 655 01c2 50       		.byte	0x50
+ 656 01c3 00       		.byte	0
+ 657 01c4 0A       		.uleb128 0xa
+ 658 01c5 6E030000 		.4byte	.LASF30
+ 659 01c9 01       		.byte	0x1
+ 660 01ca FC01     		.2byte	0x1fc
+ 661 01cc 6B000000 		.4byte	0x6b
+ 662 01d0 00000000 		.4byte	.LFB13
+ 663 01d4 14000000 		.4byte	.LFE13-.LFB13
+ 664 01d8 01       		.uleb128 0x1
+ 665 01d9 9C       		.byte	0x9c
+ 666 01da 07       		.uleb128 0x7
+ 667 01db 57010000 		.4byte	.LASF31
+ 668 01df 01       		.byte	0x1
+ 669 01e0 FB02     		.2byte	0x2fb
+ 670 01e2 00000000 		.4byte	.LFB14
+ 671 01e6 12000000 		.4byte	.LFE14-.LFB14
+ 672 01ea 01       		.uleb128 0x1
+ 673 01eb 9C       		.byte	0x9c
+ 674 01ec 03020000 		.4byte	0x203
+ 675 01f0 0B       		.uleb128 0xb
+ 676 01f1 08000000 		.4byte	.LVL4
+ 677 01f5 89010000 		.4byte	0x189
+ 678 01f9 0B       		.uleb128 0xb
+ 679 01fa 0C000000 		.4byte	.LVL5
+ 680 01fe FD000000 		.4byte	0xfd
+ 681 0202 00       		.byte	0
+ 682 0203 0C       		.uleb128 0xc
+ 683 0204 D4010000 		.4byte	.LASF32
+ 684 0208 01       		.byte	0x1
+ 685 0209 2B       		.byte	0x2b
+ 686 020a 00000000 		.4byte	.LFB0
+ 687 020e 30000000 		.4byte	.LFE0-.LFB0
+ 688 0212 01       		.uleb128 0x1
+ 689 0213 9C       		.byte	0x9c
+ 690 0214 7A020000 		.4byte	0x27a
+ 691 0218 0D       		.uleb128 0xd
+ 692 0219 50030000 		.4byte	.LASF37
+ 693 021d 01       		.byte	0x1
+ 694 021e 2F       		.byte	0x2f
+ 695 021f 6B000000 		.4byte	0x6b
+ 696 0223 00000000 		.4byte	.LLST0
+ 697 0227 0E       		.uleb128 0xe
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 27
+
+
+ 698 0228 08000000 		.4byte	.LVL6
+ 699 022c 64010000 		.4byte	0x164
+ 700 0230 3B020000 		.4byte	0x23b
+ 701 0234 0F       		.uleb128 0xf
+ 702 0235 01       		.uleb128 0x1
+ 703 0236 50       		.byte	0x50
+ 704 0237 02       		.uleb128 0x2
+ 705 0238 08       		.byte	0x8
+ 706 0239 63       		.byte	0x63
+ 707 023a 00       		.byte	0
+ 708 023b 0E       		.uleb128 0xe
+ 709 023c 0E000000 		.4byte	.LVL7
+ 710 0240 9F010000 		.4byte	0x19f
+ 711 0244 4F020000 		.4byte	0x24f
+ 712 0248 0F       		.uleb128 0xf
+ 713 0249 01       		.uleb128 0x1
+ 714 024a 50       		.byte	0x50
+ 715 024b 02       		.uleb128 0x2
+ 716 024c 08       		.byte	0x8
+ 717 024d 63       		.byte	0x63
+ 718 024e 00       		.byte	0
+ 719 024f 0B       		.uleb128 0xb
+ 720 0250 12000000 		.4byte	.LVL8
+ 721 0254 B3020000 		.4byte	0x2b3
+ 722 0258 0B       		.uleb128 0xb
+ 723 0259 20000000 		.4byte	.LVL9
+ 724 025d BE020000 		.4byte	0x2be
+ 725 0261 0B       		.uleb128 0xb
+ 726 0262 24000000 		.4byte	.LVL10
+ 727 0266 DA010000 		.4byte	0x1da
+ 728 026a 10       		.uleb128 0x10
+ 729 026b 2A000000 		.4byte	.LVL11
+ 730 026f C6000000 		.4byte	0xc6
+ 731 0273 0F       		.uleb128 0xf
+ 732 0274 01       		.uleb128 0x1
+ 733 0275 50       		.byte	0x50
+ 734 0276 01       		.uleb128 0x1
+ 735 0277 31       		.byte	0x31
+ 736 0278 00       		.byte	0
+ 737 0279 00       		.byte	0
+ 738 027a 0C       		.uleb128 0xc
+ 739 027b 8A000000 		.4byte	.LASF33
+ 740 027f 01       		.byte	0x1
+ 741 0280 D7       		.byte	0xd7
+ 742 0281 00000000 		.4byte	.LFB2
+ 743 0285 20000000 		.4byte	.LFE2-.LFB2
+ 744 0289 01       		.uleb128 0x1
+ 745 028a 9C       		.byte	0x9c
+ 746 028b A2020000 		.4byte	0x2a2
+ 747 028f 0B       		.uleb128 0xb
+ 748 0290 0E000000 		.4byte	.LVL12
+ 749 0294 03020000 		.4byte	0x203
+ 750 0298 0B       		.uleb128 0xb
+ 751 0299 18000000 		.4byte	.LVL13
+ 752 029d A4000000 		.4byte	0xa4
+ 753 02a1 00       		.byte	0
+ 754 02a2 11       		.uleb128 0x11
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 28
+
+
+ 755 02a3 89030000 		.4byte	.LASF38
+ 756 02a7 01       		.byte	0x1
+ 757 02a8 1A       		.byte	0x1a
+ 758 02a9 6B000000 		.4byte	0x6b
+ 759 02ad 05       		.uleb128 0x5
+ 760 02ae 03       		.byte	0x3
+ 761 02af 00000000 		.4byte	MetronomeTimer_initVar
+ 762 02b3 12       		.uleb128 0x12
+ 763 02b4 BD010000 		.4byte	.LASF39
+ 764 02b8 03       		.byte	0x3
+ 765 02b9 61       		.byte	0x61
+ 766 02ba 6B000000 		.4byte	0x6b
+ 767 02be 13       		.uleb128 0x13
+ 768 02bf F5010000 		.4byte	.LASF40
+ 769 02c3 03       		.byte	0x3
+ 770 02c4 62       		.byte	0x62
+ 771 02c5 14       		.uleb128 0x14
+ 772 02c6 6B000000 		.4byte	0x6b
+ 773 02ca 00       		.byte	0
+ 774 02cb 00       		.byte	0
+ 775              		.section	.debug_abbrev,"",%progbits
+ 776              	.Ldebug_abbrev0:
+ 777 0000 01       		.uleb128 0x1
+ 778 0001 11       		.uleb128 0x11
+ 779 0002 01       		.byte	0x1
+ 780 0003 25       		.uleb128 0x25
+ 781 0004 0E       		.uleb128 0xe
+ 782 0005 13       		.uleb128 0x13
+ 783 0006 0B       		.uleb128 0xb
+ 784 0007 03       		.uleb128 0x3
+ 785 0008 0E       		.uleb128 0xe
+ 786 0009 1B       		.uleb128 0x1b
+ 787 000a 0E       		.uleb128 0xe
+ 788 000b 55       		.uleb128 0x55
+ 789 000c 17       		.uleb128 0x17
+ 790 000d 11       		.uleb128 0x11
+ 791 000e 01       		.uleb128 0x1
+ 792 000f 10       		.uleb128 0x10
+ 793 0010 17       		.uleb128 0x17
+ 794 0011 00       		.byte	0
+ 795 0012 00       		.byte	0
+ 796 0013 02       		.uleb128 0x2
+ 797 0014 24       		.uleb128 0x24
+ 798 0015 00       		.byte	0
+ 799 0016 0B       		.uleb128 0xb
+ 800 0017 0B       		.uleb128 0xb
+ 801 0018 3E       		.uleb128 0x3e
+ 802 0019 0B       		.uleb128 0xb
+ 803 001a 03       		.uleb128 0x3
+ 804 001b 0E       		.uleb128 0xe
+ 805 001c 00       		.byte	0
+ 806 001d 00       		.byte	0
+ 807 001e 03       		.uleb128 0x3
+ 808 001f 24       		.uleb128 0x24
+ 809 0020 00       		.byte	0
+ 810 0021 0B       		.uleb128 0xb
+ 811 0022 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 29
+
+
+ 812 0023 3E       		.uleb128 0x3e
+ 813 0024 0B       		.uleb128 0xb
+ 814 0025 03       		.uleb128 0x3
+ 815 0026 08       		.uleb128 0x8
+ 816 0027 00       		.byte	0
+ 817 0028 00       		.byte	0
+ 818 0029 04       		.uleb128 0x4
+ 819 002a 16       		.uleb128 0x16
+ 820 002b 00       		.byte	0
+ 821 002c 03       		.uleb128 0x3
+ 822 002d 0E       		.uleb128 0xe
+ 823 002e 3A       		.uleb128 0x3a
+ 824 002f 0B       		.uleb128 0xb
+ 825 0030 3B       		.uleb128 0x3b
+ 826 0031 05       		.uleb128 0x5
+ 827 0032 49       		.uleb128 0x49
+ 828 0033 13       		.uleb128 0x13
+ 829 0034 00       		.byte	0
+ 830 0035 00       		.byte	0
+ 831 0036 05       		.uleb128 0x5
+ 832 0037 35       		.uleb128 0x35
+ 833 0038 00       		.byte	0
+ 834 0039 49       		.uleb128 0x49
+ 835 003a 13       		.uleb128 0x13
+ 836 003b 00       		.byte	0
+ 837 003c 00       		.byte	0
+ 838 003d 06       		.uleb128 0x6
+ 839 003e 2E       		.uleb128 0x2e
+ 840 003f 00       		.byte	0
+ 841 0040 3F       		.uleb128 0x3f
+ 842 0041 19       		.uleb128 0x19
+ 843 0042 03       		.uleb128 0x3
+ 844 0043 0E       		.uleb128 0xe
+ 845 0044 3A       		.uleb128 0x3a
+ 846 0045 0B       		.uleb128 0xb
+ 847 0046 3B       		.uleb128 0x3b
+ 848 0047 0B       		.uleb128 0xb
+ 849 0048 27       		.uleb128 0x27
+ 850 0049 19       		.uleb128 0x19
+ 851 004a 11       		.uleb128 0x11
+ 852 004b 01       		.uleb128 0x1
+ 853 004c 12       		.uleb128 0x12
+ 854 004d 06       		.uleb128 0x6
+ 855 004e 40       		.uleb128 0x40
+ 856 004f 18       		.uleb128 0x18
+ 857 0050 9742     		.uleb128 0x2117
+ 858 0052 19       		.uleb128 0x19
+ 859 0053 00       		.byte	0
+ 860 0054 00       		.byte	0
+ 861 0055 07       		.uleb128 0x7
+ 862 0056 2E       		.uleb128 0x2e
+ 863 0057 01       		.byte	0x1
+ 864 0058 3F       		.uleb128 0x3f
+ 865 0059 19       		.uleb128 0x19
+ 866 005a 03       		.uleb128 0x3
+ 867 005b 0E       		.uleb128 0xe
+ 868 005c 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 30
+
+
+ 869 005d 0B       		.uleb128 0xb
+ 870 005e 3B       		.uleb128 0x3b
+ 871 005f 05       		.uleb128 0x5
+ 872 0060 27       		.uleb128 0x27
+ 873 0061 19       		.uleb128 0x19
+ 874 0062 11       		.uleb128 0x11
+ 875 0063 01       		.uleb128 0x1
+ 876 0064 12       		.uleb128 0x12
+ 877 0065 06       		.uleb128 0x6
+ 878 0066 40       		.uleb128 0x40
+ 879 0067 18       		.uleb128 0x18
+ 880 0068 9742     		.uleb128 0x2117
+ 881 006a 19       		.uleb128 0x19
+ 882 006b 01       		.uleb128 0x1
+ 883 006c 13       		.uleb128 0x13
+ 884 006d 00       		.byte	0
+ 885 006e 00       		.byte	0
+ 886 006f 08       		.uleb128 0x8
+ 887 0070 05       		.uleb128 0x5
+ 888 0071 00       		.byte	0
+ 889 0072 03       		.uleb128 0x3
+ 890 0073 0E       		.uleb128 0xe
+ 891 0074 3A       		.uleb128 0x3a
+ 892 0075 0B       		.uleb128 0xb
+ 893 0076 3B       		.uleb128 0x3b
+ 894 0077 05       		.uleb128 0x5
+ 895 0078 49       		.uleb128 0x49
+ 896 0079 13       		.uleb128 0x13
+ 897 007a 02       		.uleb128 0x2
+ 898 007b 18       		.uleb128 0x18
+ 899 007c 00       		.byte	0
+ 900 007d 00       		.byte	0
+ 901 007e 09       		.uleb128 0x9
+ 902 007f 2E       		.uleb128 0x2e
+ 903 0080 00       		.byte	0
+ 904 0081 3F       		.uleb128 0x3f
+ 905 0082 19       		.uleb128 0x19
+ 906 0083 03       		.uleb128 0x3
+ 907 0084 0E       		.uleb128 0xe
+ 908 0085 3A       		.uleb128 0x3a
+ 909 0086 0B       		.uleb128 0xb
+ 910 0087 3B       		.uleb128 0x3b
+ 911 0088 05       		.uleb128 0x5
+ 912 0089 27       		.uleb128 0x27
+ 913 008a 19       		.uleb128 0x19
+ 914 008b 11       		.uleb128 0x11
+ 915 008c 01       		.uleb128 0x1
+ 916 008d 12       		.uleb128 0x12
+ 917 008e 06       		.uleb128 0x6
+ 918 008f 40       		.uleb128 0x40
+ 919 0090 18       		.uleb128 0x18
+ 920 0091 9742     		.uleb128 0x2117
+ 921 0093 19       		.uleb128 0x19
+ 922 0094 00       		.byte	0
+ 923 0095 00       		.byte	0
+ 924 0096 0A       		.uleb128 0xa
+ 925 0097 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 31
+
+
+ 926 0098 00       		.byte	0
+ 927 0099 3F       		.uleb128 0x3f
+ 928 009a 19       		.uleb128 0x19
+ 929 009b 03       		.uleb128 0x3
+ 930 009c 0E       		.uleb128 0xe
+ 931 009d 3A       		.uleb128 0x3a
+ 932 009e 0B       		.uleb128 0xb
+ 933 009f 3B       		.uleb128 0x3b
+ 934 00a0 05       		.uleb128 0x5
+ 935 00a1 27       		.uleb128 0x27
+ 936 00a2 19       		.uleb128 0x19
+ 937 00a3 49       		.uleb128 0x49
+ 938 00a4 13       		.uleb128 0x13
+ 939 00a5 11       		.uleb128 0x11
+ 940 00a6 01       		.uleb128 0x1
+ 941 00a7 12       		.uleb128 0x12
+ 942 00a8 06       		.uleb128 0x6
+ 943 00a9 40       		.uleb128 0x40
+ 944 00aa 18       		.uleb128 0x18
+ 945 00ab 9742     		.uleb128 0x2117
+ 946 00ad 19       		.uleb128 0x19
+ 947 00ae 00       		.byte	0
+ 948 00af 00       		.byte	0
+ 949 00b0 0B       		.uleb128 0xb
+ 950 00b1 898201   		.uleb128 0x4109
+ 951 00b4 00       		.byte	0
+ 952 00b5 11       		.uleb128 0x11
+ 953 00b6 01       		.uleb128 0x1
+ 954 00b7 31       		.uleb128 0x31
+ 955 00b8 13       		.uleb128 0x13
+ 956 00b9 00       		.byte	0
+ 957 00ba 00       		.byte	0
+ 958 00bb 0C       		.uleb128 0xc
+ 959 00bc 2E       		.uleb128 0x2e
+ 960 00bd 01       		.byte	0x1
+ 961 00be 3F       		.uleb128 0x3f
+ 962 00bf 19       		.uleb128 0x19
+ 963 00c0 03       		.uleb128 0x3
+ 964 00c1 0E       		.uleb128 0xe
+ 965 00c2 3A       		.uleb128 0x3a
+ 966 00c3 0B       		.uleb128 0xb
+ 967 00c4 3B       		.uleb128 0x3b
+ 968 00c5 0B       		.uleb128 0xb
+ 969 00c6 27       		.uleb128 0x27
+ 970 00c7 19       		.uleb128 0x19
+ 971 00c8 11       		.uleb128 0x11
+ 972 00c9 01       		.uleb128 0x1
+ 973 00ca 12       		.uleb128 0x12
+ 974 00cb 06       		.uleb128 0x6
+ 975 00cc 40       		.uleb128 0x40
+ 976 00cd 18       		.uleb128 0x18
+ 977 00ce 9742     		.uleb128 0x2117
+ 978 00d0 19       		.uleb128 0x19
+ 979 00d1 01       		.uleb128 0x1
+ 980 00d2 13       		.uleb128 0x13
+ 981 00d3 00       		.byte	0
+ 982 00d4 00       		.byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 32
+
+
+ 983 00d5 0D       		.uleb128 0xd
+ 984 00d6 34       		.uleb128 0x34
+ 985 00d7 00       		.byte	0
+ 986 00d8 03       		.uleb128 0x3
+ 987 00d9 0E       		.uleb128 0xe
+ 988 00da 3A       		.uleb128 0x3a
+ 989 00db 0B       		.uleb128 0xb
+ 990 00dc 3B       		.uleb128 0x3b
+ 991 00dd 0B       		.uleb128 0xb
+ 992 00de 49       		.uleb128 0x49
+ 993 00df 13       		.uleb128 0x13
+ 994 00e0 02       		.uleb128 0x2
+ 995 00e1 17       		.uleb128 0x17
+ 996 00e2 00       		.byte	0
+ 997 00e3 00       		.byte	0
+ 998 00e4 0E       		.uleb128 0xe
+ 999 00e5 898201   		.uleb128 0x4109
+ 1000 00e8 01       		.byte	0x1
+ 1001 00e9 11       		.uleb128 0x11
+ 1002 00ea 01       		.uleb128 0x1
+ 1003 00eb 31       		.uleb128 0x31
+ 1004 00ec 13       		.uleb128 0x13
+ 1005 00ed 01       		.uleb128 0x1
+ 1006 00ee 13       		.uleb128 0x13
+ 1007 00ef 00       		.byte	0
+ 1008 00f0 00       		.byte	0
+ 1009 00f1 0F       		.uleb128 0xf
+ 1010 00f2 8A8201   		.uleb128 0x410a
+ 1011 00f5 00       		.byte	0
+ 1012 00f6 02       		.uleb128 0x2
+ 1013 00f7 18       		.uleb128 0x18
+ 1014 00f8 9142     		.uleb128 0x2111
+ 1015 00fa 18       		.uleb128 0x18
+ 1016 00fb 00       		.byte	0
+ 1017 00fc 00       		.byte	0
+ 1018 00fd 10       		.uleb128 0x10
+ 1019 00fe 898201   		.uleb128 0x4109
+ 1020 0101 01       		.byte	0x1
+ 1021 0102 11       		.uleb128 0x11
+ 1022 0103 01       		.uleb128 0x1
+ 1023 0104 31       		.uleb128 0x31
+ 1024 0105 13       		.uleb128 0x13
+ 1025 0106 00       		.byte	0
+ 1026 0107 00       		.byte	0
+ 1027 0108 11       		.uleb128 0x11
+ 1028 0109 34       		.uleb128 0x34
+ 1029 010a 00       		.byte	0
+ 1030 010b 03       		.uleb128 0x3
+ 1031 010c 0E       		.uleb128 0xe
+ 1032 010d 3A       		.uleb128 0x3a
+ 1033 010e 0B       		.uleb128 0xb
+ 1034 010f 3B       		.uleb128 0x3b
+ 1035 0110 0B       		.uleb128 0xb
+ 1036 0111 49       		.uleb128 0x49
+ 1037 0112 13       		.uleb128 0x13
+ 1038 0113 3F       		.uleb128 0x3f
+ 1039 0114 19       		.uleb128 0x19
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 33
+
+
+ 1040 0115 02       		.uleb128 0x2
+ 1041 0116 18       		.uleb128 0x18
+ 1042 0117 00       		.byte	0
+ 1043 0118 00       		.byte	0
+ 1044 0119 12       		.uleb128 0x12
+ 1045 011a 2E       		.uleb128 0x2e
+ 1046 011b 00       		.byte	0
+ 1047 011c 3F       		.uleb128 0x3f
+ 1048 011d 19       		.uleb128 0x19
+ 1049 011e 03       		.uleb128 0x3
+ 1050 011f 0E       		.uleb128 0xe
+ 1051 0120 3A       		.uleb128 0x3a
+ 1052 0121 0B       		.uleb128 0xb
+ 1053 0122 3B       		.uleb128 0x3b
+ 1054 0123 0B       		.uleb128 0xb
+ 1055 0124 27       		.uleb128 0x27
+ 1056 0125 19       		.uleb128 0x19
+ 1057 0126 49       		.uleb128 0x49
+ 1058 0127 13       		.uleb128 0x13
+ 1059 0128 3C       		.uleb128 0x3c
+ 1060 0129 19       		.uleb128 0x19
+ 1061 012a 00       		.byte	0
+ 1062 012b 00       		.byte	0
+ 1063 012c 13       		.uleb128 0x13
+ 1064 012d 2E       		.uleb128 0x2e
+ 1065 012e 01       		.byte	0x1
+ 1066 012f 3F       		.uleb128 0x3f
+ 1067 0130 19       		.uleb128 0x19
+ 1068 0131 03       		.uleb128 0x3
+ 1069 0132 0E       		.uleb128 0xe
+ 1070 0133 3A       		.uleb128 0x3a
+ 1071 0134 0B       		.uleb128 0xb
+ 1072 0135 3B       		.uleb128 0x3b
+ 1073 0136 0B       		.uleb128 0xb
+ 1074 0137 27       		.uleb128 0x27
+ 1075 0138 19       		.uleb128 0x19
+ 1076 0139 3C       		.uleb128 0x3c
+ 1077 013a 19       		.uleb128 0x19
+ 1078 013b 00       		.byte	0
+ 1079 013c 00       		.byte	0
+ 1080 013d 14       		.uleb128 0x14
+ 1081 013e 05       		.uleb128 0x5
+ 1082 013f 00       		.byte	0
+ 1083 0140 49       		.uleb128 0x49
+ 1084 0141 13       		.uleb128 0x13
+ 1085 0142 00       		.byte	0
+ 1086 0143 00       		.byte	0
+ 1087 0144 00       		.byte	0
+ 1088              		.section	.debug_loc,"",%progbits
+ 1089              	.Ldebug_loc0:
+ 1090              	.LLST0:
+ 1091 0000 12000000 		.4byte	.LVL8
+ 1092 0004 1F000000 		.4byte	.LVL9-1
+ 1093 0008 0100     		.2byte	0x1
+ 1094 000a 50       		.byte	0x50
+ 1095 000b 00000000 		.4byte	0
+ 1096 000f 00000000 		.4byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 34
+
+
+ 1097              		.section	.debug_aranges,"",%progbits
+ 1098 0000 8C000000 		.4byte	0x8c
+ 1099 0004 0200     		.2byte	0x2
+ 1100 0006 00000000 		.4byte	.Ldebug_info0
+ 1101 000a 04       		.byte	0x4
+ 1102 000b 00       		.byte	0
+ 1103 000c 0000     		.2byte	0
+ 1104 000e 0000     		.2byte	0
+ 1105 0010 00000000 		.4byte	.LFB1
+ 1106 0014 10000000 		.4byte	.LFE1-.LFB1
+ 1107 0018 00000000 		.4byte	.LFB3
+ 1108 001c 10000000 		.4byte	.LFE3-.LFB3
+ 1109 0020 00000000 		.4byte	.LFB4
+ 1110 0024 0C000000 		.4byte	.LFE4-.LFB4
+ 1111 0028 00000000 		.4byte	.LFB5
+ 1112 002c 0C000000 		.4byte	.LFE5-.LFB5
+ 1113 0030 00000000 		.4byte	.LFB6
+ 1114 0034 0C000000 		.4byte	.LFE6-.LFB6
+ 1115 0038 00000000 		.4byte	.LFB7
+ 1116 003c 0C000000 		.4byte	.LFE7-.LFB7
+ 1117 0040 00000000 		.4byte	.LFB8
+ 1118 0044 0C000000 		.4byte	.LFE8-.LFB8
+ 1119 0048 00000000 		.4byte	.LFB9
+ 1120 004c 0C000000 		.4byte	.LFE9-.LFB9
+ 1121 0050 00000000 		.4byte	.LFB10
+ 1122 0054 0C000000 		.4byte	.LFE10-.LFB10
+ 1123 0058 00000000 		.4byte	.LFB11
+ 1124 005c 0C000000 		.4byte	.LFE11-.LFB11
+ 1125 0060 00000000 		.4byte	.LFB12
+ 1126 0064 0C000000 		.4byte	.LFE12-.LFB12
+ 1127 0068 00000000 		.4byte	.LFB13
+ 1128 006c 14000000 		.4byte	.LFE13-.LFB13
+ 1129 0070 00000000 		.4byte	.LFB14
+ 1130 0074 12000000 		.4byte	.LFE14-.LFB14
+ 1131 0078 00000000 		.4byte	.LFB0
+ 1132 007c 30000000 		.4byte	.LFE0-.LFB0
+ 1133 0080 00000000 		.4byte	.LFB2
+ 1134 0084 20000000 		.4byte	.LFE2-.LFB2
+ 1135 0088 00000000 		.4byte	0
+ 1136 008c 00000000 		.4byte	0
+ 1137              		.section	.debug_ranges,"",%progbits
+ 1138              	.Ldebug_ranges0:
+ 1139 0000 00000000 		.4byte	.LFB1
+ 1140 0004 10000000 		.4byte	.LFE1
+ 1141 0008 00000000 		.4byte	.LFB3
+ 1142 000c 10000000 		.4byte	.LFE3
+ 1143 0010 00000000 		.4byte	.LFB4
+ 1144 0014 0C000000 		.4byte	.LFE4
+ 1145 0018 00000000 		.4byte	.LFB5
+ 1146 001c 0C000000 		.4byte	.LFE5
+ 1147 0020 00000000 		.4byte	.LFB6
+ 1148 0024 0C000000 		.4byte	.LFE6
+ 1149 0028 00000000 		.4byte	.LFB7
+ 1150 002c 0C000000 		.4byte	.LFE7
+ 1151 0030 00000000 		.4byte	.LFB8
+ 1152 0034 0C000000 		.4byte	.LFE8
+ 1153 0038 00000000 		.4byte	.LFB9
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 35
+
+
+ 1154 003c 0C000000 		.4byte	.LFE9
+ 1155 0040 00000000 		.4byte	.LFB10
+ 1156 0044 0C000000 		.4byte	.LFE10
+ 1157 0048 00000000 		.4byte	.LFB11
+ 1158 004c 0C000000 		.4byte	.LFE11
+ 1159 0050 00000000 		.4byte	.LFB12
+ 1160 0054 0C000000 		.4byte	.LFE12
+ 1161 0058 00000000 		.4byte	.LFB13
+ 1162 005c 14000000 		.4byte	.LFE13
+ 1163 0060 00000000 		.4byte	.LFB14
+ 1164 0064 12000000 		.4byte	.LFE14
+ 1165 0068 00000000 		.4byte	.LFB0
+ 1166 006c 30000000 		.4byte	.LFE0
+ 1167 0070 00000000 		.4byte	.LFB2
+ 1168 0074 20000000 		.4byte	.LFE2
+ 1169 0078 00000000 		.4byte	0
+ 1170 007c 00000000 		.4byte	0
+ 1171              		.section	.debug_line,"",%progbits
+ 1172              	.Ldebug_line0:
+ 1173 0000 80010000 		.section	.debug_str,"MS",%progbits,1
+ 1173      02005800 
+ 1173      00000201 
+ 1173      FB0E0D00 
+ 1173      01010101 
+ 1174              	.LASF24:
+ 1175 0000 4D657472 		.ascii	"MetronomeTimer_ReadPeriod\000"
+ 1175      6F6E6F6D 
+ 1175      6554696D 
+ 1175      65725F52 
+ 1175      65616450 
+ 1176              	.LASF17:
+ 1177 001a 4D657472 		.ascii	"MetronomeTimer_SoftwareCapture\000"
+ 1177      6F6E6F6D 
+ 1177      6554696D 
+ 1177      65725F53 
+ 1177      6F667477 
+ 1178              	.LASF26:
+ 1179 0039 70657269 		.ascii	"period\000"
+ 1179      6F6400
+ 1180              	.LASF3:
+ 1181 0040 73686F72 		.ascii	"short unsigned int\000"
+ 1181      7420756E 
+ 1181      7369676E 
+ 1181      65642069 
+ 1181      6E7400
+ 1182              	.LASF36:
+ 1183 0053 433A5C45 		.ascii	"C:\\E3PRJ3\\Sensor-PSoC.cydsn\000"
+ 1183      3350524A 
+ 1183      335C5365 
+ 1183      6E736F72 
+ 1183      2D50536F 
+ 1184              	.LASF25:
+ 1185 006f 4D657472 		.ascii	"MetronomeTimer_WritePeriod\000"
+ 1185      6F6E6F6D 
+ 1185      6554696D 
+ 1185      65725F57 
+ 1185      72697465 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 36
+
+
+ 1186              	.LASF33:
+ 1187 008a 4D657472 		.ascii	"MetronomeTimer_Start\000"
+ 1187      6F6E6F6D 
+ 1187      6554696D 
+ 1187      65725F53 
+ 1187      74617274 
+ 1188              	.LASF35:
+ 1189 009f 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\MetronomeTimer.c\000"
+ 1189      6E657261 
+ 1189      7465645F 
+ 1189      536F7572 
+ 1189      63655C50 
+ 1190              	.LASF9:
+ 1191 00c9 666C6F61 		.ascii	"float\000"
+ 1191      7400
+ 1192              	.LASF29:
+ 1193 00cf 636F756E 		.ascii	"counter\000"
+ 1193      74657200 
+ 1194              	.LASF7:
+ 1195 00d7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1195      206C6F6E 
+ 1195      6720756E 
+ 1195      7369676E 
+ 1195      65642069 
+ 1196              	.LASF1:
+ 1197 00ee 756E7369 		.ascii	"unsigned char\000"
+ 1197      676E6564 
+ 1197      20636861 
+ 1197      7200
+ 1198              	.LASF13:
+ 1199 00fc 72656738 		.ascii	"reg8\000"
+ 1199      00
+ 1200              	.LASF15:
+ 1201 0101 4D657472 		.ascii	"MetronomeTimer_Enable\000"
+ 1201      6F6E6F6D 
+ 1201      6554696D 
+ 1201      65725F45 
+ 1201      6E61626C 
+ 1202              	.LASF5:
+ 1203 0117 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1203      20756E73 
+ 1203      69676E65 
+ 1203      6420696E 
+ 1203      7400
+ 1204              	.LASF12:
+ 1205 0129 75696E74 		.ascii	"uint8\000"
+ 1205      3800
+ 1206              	.LASF23:
+ 1207 012f 636F6E74 		.ascii	"control\000"
+ 1207      726F6C00 
+ 1208              	.LASF20:
+ 1209 0137 4D657472 		.ascii	"MetronomeTimer_SetInterruptMode\000"
+ 1209      6F6E6F6D 
+ 1209      6554696D 
+ 1209      65725F53 
+ 1209      6574496E 
+ 1210              	.LASF31:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 37
+
+
+ 1211 0157 4D657472 		.ascii	"MetronomeTimer_ClearFIFO\000"
+ 1211      6F6E6F6D 
+ 1211      6554696D 
+ 1211      65725F43 
+ 1211      6C656172 
+ 1212              	.LASF18:
+ 1213 0170 4D657472 		.ascii	"MetronomeTimer_ReadStatusRegister\000"
+ 1213      6F6E6F6D 
+ 1213      6554696D 
+ 1213      65725F52 
+ 1213      65616453 
+ 1214              	.LASF10:
+ 1215 0192 646F7562 		.ascii	"double\000"
+ 1215      6C6500
+ 1216              	.LASF21:
+ 1217 0199 4D657472 		.ascii	"MetronomeTimer_WriteControlRegister\000"
+ 1217      6F6E6F6D 
+ 1217      6554696D 
+ 1217      65725F57 
+ 1217      72697465 
+ 1218              	.LASF39:
+ 1219 01bd 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 1219      74657243 
+ 1219      72697469 
+ 1219      63616C53 
+ 1219      65637469 
+ 1220              	.LASF32:
+ 1221 01d4 4D657472 		.ascii	"MetronomeTimer_Init\000"
+ 1221      6F6E6F6D 
+ 1221      6554696D 
+ 1221      65725F49 
+ 1221      6E697400 
+ 1222              	.LASF8:
+ 1223 01e8 756E7369 		.ascii	"unsigned int\000"
+ 1223      676E6564 
+ 1223      20696E74 
+ 1223      00
+ 1224              	.LASF40:
+ 1225 01f5 43794578 		.ascii	"CyExitCriticalSection\000"
+ 1225      69744372 
+ 1225      69746963 
+ 1225      616C5365 
+ 1225      6374696F 
+ 1226              	.LASF19:
+ 1227 020b 4D657472 		.ascii	"MetronomeTimer_ReadControlRegister\000"
+ 1227      6F6E6F6D 
+ 1227      6554696D 
+ 1227      65725F52 
+ 1227      65616443 
+ 1228              	.LASF28:
+ 1229 022e 4D657472 		.ascii	"MetronomeTimer_WriteCounter\000"
+ 1229      6F6E6F6D 
+ 1229      6554696D 
+ 1229      65725F57 
+ 1229      72697465 
+ 1230              	.LASF14:
+ 1231 024a 73697A65 		.ascii	"sizetype\000"
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 38
+
+
+ 1231      74797065 
+ 1231      00
+ 1232              	.LASF6:
+ 1233 0253 6C6F6E67 		.ascii	"long long int\000"
+ 1233      206C6F6E 
+ 1233      6720696E 
+ 1233      7400
+ 1234              	.LASF22:
+ 1235 0261 696E7465 		.ascii	"interruptMode\000"
+ 1235      72727570 
+ 1235      744D6F64 
+ 1235      6500
+ 1236              	.LASF34:
+ 1237 026f 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1237      4320342E 
+ 1237      392E3320 
+ 1237      32303135 
+ 1237      30333033 
+ 1238 02a2 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1238      20726576 
+ 1238      6973696F 
+ 1238      6E203232 
+ 1238      31323230 
+ 1239 02d5 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1239      66756E63 
+ 1239      74696F6E 
+ 1239      2D736563 
+ 1239      74696F6E 
+ 1240              	.LASF27:
+ 1241 02fd 4D657472 		.ascii	"MetronomeTimer_ReadCapture\000"
+ 1241      6F6E6F6D 
+ 1241      6554696D 
+ 1241      65725F52 
+ 1241      65616443 
+ 1242              	.LASF2:
+ 1243 0318 73686F72 		.ascii	"short int\000"
+ 1243      7420696E 
+ 1243      7400
+ 1244              	.LASF4:
+ 1245 0322 6C6F6E67 		.ascii	"long int\000"
+ 1245      20696E74 
+ 1245      00
+ 1246              	.LASF11:
+ 1247 032b 63686172 		.ascii	"char\000"
+ 1247      00
+ 1248              	.LASF16:
+ 1249 0330 4D657472 		.ascii	"MetronomeTimer_Stop\000"
+ 1249      6F6E6F6D 
+ 1249      6554696D 
+ 1249      65725F53 
+ 1249      746F7000 
+ 1250              	.LASF0:
+ 1251 0344 7369676E 		.ascii	"signed char\000"
+ 1251      65642063 
+ 1251      68617200 
+ 1252              	.LASF37:
+ 1253 0350 4D657472 		.ascii	"MetronomeTimer_interruptState\000"
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccb7taRC.s 			page 39
+
+
+ 1253      6F6E6F6D 
+ 1253      6554696D 
+ 1253      65725F69 
+ 1253      6E746572 
+ 1254              	.LASF30:
+ 1255 036e 4D657472 		.ascii	"MetronomeTimer_ReadCounter\000"
+ 1255      6F6E6F6D 
+ 1255      6554696D 
+ 1255      65725F52 
+ 1255      65616443 
+ 1256              	.LASF38:
+ 1257 0389 4D657472 		.ascii	"MetronomeTimer_initVar\000"
+ 1257      6F6E6F6D 
+ 1257      6554696D 
+ 1257      65725F69 
+ 1257      6E697456 
+ 1258              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

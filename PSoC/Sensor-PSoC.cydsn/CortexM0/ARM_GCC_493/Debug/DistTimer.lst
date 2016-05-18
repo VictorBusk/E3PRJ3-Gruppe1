@@ -1,0 +1,2343 @@
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"DistTimer.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.DistTimer_Enable,"ax",%progbits
+  18              		.align	2
+  19              		.global	DistTimer_Enable
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	DistTimer_Enable, %function
+  23              	DistTimer_Enable:
+  24              	.LFB1:
+  25              		.file 1 ".\\Generated_Source\\PSoC4\\DistTimer.c"
+   1:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+   2:.\Generated_Source\PSoC4/DistTimer.c **** * File Name: DistTimer.c
+   3:.\Generated_Source\PSoC4/DistTimer.c **** * Version 2.70
+   4:.\Generated_Source\PSoC4/DistTimer.c **** *
+   5:.\Generated_Source\PSoC4/DistTimer.c **** * Description:
+   6:.\Generated_Source\PSoC4/DistTimer.c **** *  The Timer component consists of a 8, 16, 24 or 32-bit timer with
+   7:.\Generated_Source\PSoC4/DistTimer.c **** *  a selectable period between 2 and 2^Width - 1.  The timer may free run
+   8:.\Generated_Source\PSoC4/DistTimer.c **** *  or be used as a capture timer as well.  The capture can be initiated
+   9:.\Generated_Source\PSoC4/DistTimer.c **** *  by a positive or negative edge signal as well as via software.
+  10:.\Generated_Source\PSoC4/DistTimer.c **** *  A trigger input can be programmed to enable the timer on rising edge
+  11:.\Generated_Source\PSoC4/DistTimer.c **** *  falling edge, either edge or continous run.
+  12:.\Generated_Source\PSoC4/DistTimer.c **** *  Interrupts may be generated due to a terminal count condition
+  13:.\Generated_Source\PSoC4/DistTimer.c **** *  or a capture event.
+  14:.\Generated_Source\PSoC4/DistTimer.c **** *
+  15:.\Generated_Source\PSoC4/DistTimer.c **** * Note:
+  16:.\Generated_Source\PSoC4/DistTimer.c **** *
+  17:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+  18:.\Generated_Source\PSoC4/DistTimer.c **** * Copyright 2008-2014, Cypress Semiconductor Corporation.  All rights reserved.
+  19:.\Generated_Source\PSoC4/DistTimer.c **** * You may use this file only in accordance with the license, terms, conditions,
+  20:.\Generated_Source\PSoC4/DistTimer.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  21:.\Generated_Source\PSoC4/DistTimer.c **** * the software package with which this file was provided.
+  22:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************/
+  23:.\Generated_Source\PSoC4/DistTimer.c **** 
+  24:.\Generated_Source\PSoC4/DistTimer.c **** #include "DistTimer.h"
+  25:.\Generated_Source\PSoC4/DistTimer.c **** 
+  26:.\Generated_Source\PSoC4/DistTimer.c **** uint8 DistTimer_initVar = 0u;
+  27:.\Generated_Source\PSoC4/DistTimer.c **** 
+  28:.\Generated_Source\PSoC4/DistTimer.c **** 
+  29:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+  30:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_Init
+  31:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+  32:.\Generated_Source\PSoC4/DistTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 2
+
+
+  33:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+  34:.\Generated_Source\PSoC4/DistTimer.c **** *  Initialize to the schematic state
+  35:.\Generated_Source\PSoC4/DistTimer.c **** *
+  36:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+  37:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+  38:.\Generated_Source\PSoC4/DistTimer.c **** *
+  39:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+  40:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+  41:.\Generated_Source\PSoC4/DistTimer.c **** *
+  42:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+  43:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_Init(void) 
+  44:.\Generated_Source\PSoC4/DistTimer.c **** {
+  45:.\Generated_Source\PSoC4/DistTimer.c ****     #if(!DistTimer_UsingFixedFunction)
+  46:.\Generated_Source\PSoC4/DistTimer.c ****             /* Interrupt State Backup for Critical Region*/
+  47:.\Generated_Source\PSoC4/DistTimer.c ****             uint8 DistTimer_interruptState;
+  48:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Interrupt state back up for Fixed Function only */
+  49:.\Generated_Source\PSoC4/DistTimer.c **** 
+  50:.\Generated_Source\PSoC4/DistTimer.c ****     #if (DistTimer_UsingFixedFunction)
+  51:.\Generated_Source\PSoC4/DistTimer.c ****         /* Clear all bits but the enable bit (if it's already set) for Timer operation */
+  52:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL &= DistTimer_CTRL_ENABLE;
+  53:.\Generated_Source\PSoC4/DistTimer.c **** 
+  54:.\Generated_Source\PSoC4/DistTimer.c ****         /* Clear the mode bits for continuous run mode */
+  55:.\Generated_Source\PSoC4/DistTimer.c ****         #if (CY_PSOC5A)
+  56:.\Generated_Source\PSoC4/DistTimer.c ****             DistTimer_CONTROL2 &= ((uint8)(~DistTimer_CTRL_MODE_MASK));
+  57:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* Clear bits in CONTROL2 only in PSOC5A */
+  58:.\Generated_Source\PSoC4/DistTimer.c **** 
+  59:.\Generated_Source\PSoC4/DistTimer.c ****         #if (CY_PSOC3 || CY_PSOC5LP)
+  60:.\Generated_Source\PSoC4/DistTimer.c ****             DistTimer_CONTROL3 &= ((uint8)(~DistTimer_CTRL_MODE_MASK));
+  61:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* CONTROL3 register exists only in PSoC3 OR PSoC5LP */
+  62:.\Generated_Source\PSoC4/DistTimer.c **** 
+  63:.\Generated_Source\PSoC4/DistTimer.c ****         /* Check if One Shot mode is enabled i.e. RunMode !=0*/
+  64:.\Generated_Source\PSoC4/DistTimer.c ****         #if (DistTimer_RunModeUsed != 0x0u)
+  65:.\Generated_Source\PSoC4/DistTimer.c ****             /* Set 3rd bit of Control register to enable one shot mode */
+  66:.\Generated_Source\PSoC4/DistTimer.c ****             DistTimer_CONTROL |= 0x04u;
+  67:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* One Shot enabled only when RunModeUsed is not Continuous*/
+  68:.\Generated_Source\PSoC4/DistTimer.c **** 
+  69:.\Generated_Source\PSoC4/DistTimer.c ****         #if (DistTimer_RunModeUsed == 2)
+  70:.\Generated_Source\PSoC4/DistTimer.c ****             #if (CY_PSOC5A)
+  71:.\Generated_Source\PSoC4/DistTimer.c ****                 /* Set last 2 bits of control2 register if one shot(halt on
+  72:.\Generated_Source\PSoC4/DistTimer.c ****                 interrupt) is enabled*/
+  73:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL2 |= 0x03u;
+  74:.\Generated_Source\PSoC4/DistTimer.c ****             #endif /* Set One-Shot Halt on Interrupt bit in CONTROL2 for PSoC5A */
+  75:.\Generated_Source\PSoC4/DistTimer.c **** 
+  76:.\Generated_Source\PSoC4/DistTimer.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  77:.\Generated_Source\PSoC4/DistTimer.c ****                 /* Set last 2 bits of control3 register if one shot(halt on
+  78:.\Generated_Source\PSoC4/DistTimer.c ****                 interrupt) is enabled*/
+  79:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL3 |= 0x03u;
+  80:.\Generated_Source\PSoC4/DistTimer.c ****             #endif /* Set One-Shot Halt on Interrupt bit in CONTROL3 for PSoC3 or PSoC5LP */
+  81:.\Generated_Source\PSoC4/DistTimer.c **** 
+  82:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* Remove section if One Shot Halt on Interrupt is not enabled */
+  83:.\Generated_Source\PSoC4/DistTimer.c **** 
+  84:.\Generated_Source\PSoC4/DistTimer.c ****         #if (DistTimer_UsingHWEnable != 0)
+  85:.\Generated_Source\PSoC4/DistTimer.c ****             #if (CY_PSOC5A)
+  86:.\Generated_Source\PSoC4/DistTimer.c ****                 /* Set the default Run Mode of the Timer to Continuous */
+  87:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL2 |= DistTimer_CTRL_MODE_PULSEWIDTH;
+  88:.\Generated_Source\PSoC4/DistTimer.c ****             #endif /* Set Continuous Run Mode in CONTROL2 for PSoC5A */
+  89:.\Generated_Source\PSoC4/DistTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 3
+
+
+  90:.\Generated_Source\PSoC4/DistTimer.c ****             #if (CY_PSOC3 || CY_PSOC5LP)
+  91:.\Generated_Source\PSoC4/DistTimer.c ****                 /* Clear and Set ROD and COD bits of CFG2 register */
+  92:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL3 &= ((uint8)(~DistTimer_CTRL_RCOD_MASK));
+  93:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL3 |= DistTimer_CTRL_RCOD;
+  94:.\Generated_Source\PSoC4/DistTimer.c **** 
+  95:.\Generated_Source\PSoC4/DistTimer.c ****                 /* Clear and Enable the HW enable bit in CFG2 register */
+  96:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL3 &= ((uint8)(~DistTimer_CTRL_ENBL_MASK));
+  97:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL3 |= DistTimer_CTRL_ENBL;
+  98:.\Generated_Source\PSoC4/DistTimer.c **** 
+  99:.\Generated_Source\PSoC4/DistTimer.c ****                 /* Set the default Run Mode of the Timer to Continuous */
+ 100:.\Generated_Source\PSoC4/DistTimer.c ****                 DistTimer_CONTROL3 |= DistTimer_CTRL_MODE_CONTINUOUS;
+ 101:.\Generated_Source\PSoC4/DistTimer.c ****             #endif /* Set Continuous Run Mode in CONTROL3 for PSoC3ES3 or PSoC5A */
+ 102:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 103:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* Configure Run Mode with hardware enable */
+ 104:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 105:.\Generated_Source\PSoC4/DistTimer.c ****         /* Clear and Set SYNCTC and SYNCCMP bits of RT1 register */
+ 106:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_RT1 &= ((uint8)(~DistTimer_RT1_MASK));
+ 107:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_RT1 |= DistTimer_SYNC;
+ 108:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 109:.\Generated_Source\PSoC4/DistTimer.c ****         /*Enable DSI Sync all all inputs of the Timer*/
+ 110:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_RT1 &= ((uint8)(~DistTimer_SYNCDSI_MASK));
+ 111:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_RT1 |= DistTimer_SYNCDSI_EN;
+ 112:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 113:.\Generated_Source\PSoC4/DistTimer.c ****         /* Set the IRQ to use the status register interrupts */
+ 114:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL2 |= DistTimer_CTRL2_IRQ_SEL;
+ 115:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Configuring registers of fixed function implementation */
+ 116:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 117:.\Generated_Source\PSoC4/DistTimer.c ****     /* Set Initial values from Configuration */
+ 118:.\Generated_Source\PSoC4/DistTimer.c ****     DistTimer_WritePeriod(DistTimer_INIT_PERIOD);
+ 119:.\Generated_Source\PSoC4/DistTimer.c ****     DistTimer_WriteCounter(DistTimer_INIT_PERIOD);
+ 120:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 121:.\Generated_Source\PSoC4/DistTimer.c ****     #if (DistTimer_UsingHWCaptureCounter)/* Capture counter is enabled */
+ 122:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CAPTURE_COUNT_CTRL |= DistTimer_CNTR_ENABLE;
+ 123:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_SetCaptureCount(DistTimer_INIT_CAPTURE_COUNT);
+ 124:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Configure capture counter value */
+ 125:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 126:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UsingFixedFunction)
+ 127:.\Generated_Source\PSoC4/DistTimer.c ****         #if (DistTimer_SoftwareCaptureMode)
+ 128:.\Generated_Source\PSoC4/DistTimer.c ****             DistTimer_SetCaptureMode(DistTimer_INIT_CAPTURE_MODE);
+ 129:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* Set Capture Mode for UDB implementation if capture mode is software controlled */
+ 130:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 131:.\Generated_Source\PSoC4/DistTimer.c ****         #if (DistTimer_SoftwareTriggerMode)
+ 132:.\Generated_Source\PSoC4/DistTimer.c ****             #if (!DistTimer_UDB_CONTROL_REG_REMOVED)
+ 133:.\Generated_Source\PSoC4/DistTimer.c ****                 if (0u == (DistTimer_CONTROL & DistTimer__B_TIMER__TM_SOFTWARE))
+ 134:.\Generated_Source\PSoC4/DistTimer.c ****                 {
+ 135:.\Generated_Source\PSoC4/DistTimer.c ****                     DistTimer_SetTriggerMode(DistTimer_INIT_TRIGGER_MODE);
+ 136:.\Generated_Source\PSoC4/DistTimer.c ****                 }
+ 137:.\Generated_Source\PSoC4/DistTimer.c ****             #endif /* (!DistTimer_UDB_CONTROL_REG_REMOVED) */
+ 138:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* Set trigger mode for UDB Implementation if trigger mode is software controlled */
+ 139:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 140:.\Generated_Source\PSoC4/DistTimer.c ****         /* CyEnterCriticalRegion and CyExitCriticalRegion are used to mark following region critica
+ 141:.\Generated_Source\PSoC4/DistTimer.c ****         /* Enter Critical Region*/
+ 142:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_interruptState = CyEnterCriticalSection();
+ 143:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 144:.\Generated_Source\PSoC4/DistTimer.c ****         /* Use the interrupt output of the status register for IRQ output */
+ 145:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_STATUS_AUX_CTRL |= DistTimer_STATUS_ACTL_INT_EN_MASK;
+ 146:.\Generated_Source\PSoC4/DistTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 4
+
+
+ 147:.\Generated_Source\PSoC4/DistTimer.c ****         /* Exit Critical Region*/
+ 148:.\Generated_Source\PSoC4/DistTimer.c ****         CyExitCriticalSection(DistTimer_interruptState);
+ 149:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 150:.\Generated_Source\PSoC4/DistTimer.c ****         #if (DistTimer_EnableTriggerMode)
+ 151:.\Generated_Source\PSoC4/DistTimer.c ****             DistTimer_EnableTrigger();
+ 152:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* Set Trigger enable bit for UDB implementation in the control register*/
+ 153:.\Generated_Source\PSoC4/DistTimer.c **** 		
+ 154:.\Generated_Source\PSoC4/DistTimer.c **** 		
+ 155:.\Generated_Source\PSoC4/DistTimer.c ****         #if (DistTimer_InterruptOnCaptureCount && !DistTimer_UDB_CONTROL_REG_REMOVED)
+ 156:.\Generated_Source\PSoC4/DistTimer.c ****             DistTimer_SetInterruptCount(DistTimer_INIT_INT_CAPTURE_COUNT);
+ 157:.\Generated_Source\PSoC4/DistTimer.c ****         #endif /* Set interrupt count in UDB implementation if interrupt count feature is checked.*
+ 158:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 159:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_ClearFIFO();
+ 160:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Configure additional features of UDB implementation */
+ 161:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 162:.\Generated_Source\PSoC4/DistTimer.c ****     DistTimer_SetInterruptMode(DistTimer_INIT_INTERRUPT_MODE);
+ 163:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 164:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 165:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 166:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 167:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_Enable
+ 168:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 169:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 170:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 171:.\Generated_Source\PSoC4/DistTimer.c **** *  Enable the Timer
+ 172:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 173:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 174:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 175:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 176:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 177:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 178:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 179:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 180:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_Enable(void) 
+ 181:.\Generated_Source\PSoC4/DistTimer.c **** {
+  26              		.loc 1 181 0
+  27              		.cfi_startproc
+ 182:.\Generated_Source\PSoC4/DistTimer.c ****     /* Globally Enable the Fixed Function Block chosen */
+ 183:.\Generated_Source\PSoC4/DistTimer.c ****     #if (DistTimer_UsingFixedFunction)
+ 184:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_GLOBAL_ENABLE |= DistTimer_BLOCK_EN_MASK;
+ 185:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_GLOBAL_STBY_ENABLE |= DistTimer_BLOCK_STBY_EN_MASK;
+ 186:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Set Enable bit for enabling Fixed function timer*/
+ 187:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 188:.\Generated_Source\PSoC4/DistTimer.c ****     /* Remove assignment if control register is removed */
+ 189:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED || DistTimer_UsingFixedFunction)
+ 190:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL |= DistTimer_CTRL_ENABLE;
+ 191:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Remove assignment if control register is removed */
+ 192:.\Generated_Source\PSoC4/DistTimer.c **** }
+  28              		.loc 1 192 0
+  29              		@ sp needed
+  30 0000 7047     		bx	lr
+  31              		.cfi_endproc
+  32              	.LFE1:
+  33              		.size	DistTimer_Enable, .-DistTimer_Enable
+  34 0002 C046     		.section	.text.DistTimer_Stop,"ax",%progbits
+  35              		.align	2
+  36              		.global	DistTimer_Stop
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 5
+
+
+  37              		.code	16
+  38              		.thumb_func
+  39              		.type	DistTimer_Stop, %function
+  40              	DistTimer_Stop:
+  41              	.LFB3:
+ 193:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 194:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 195:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 196:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_Start
+ 197:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 198:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 199:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 200:.\Generated_Source\PSoC4/DistTimer.c **** *  The start function initializes the timer with the default values, the
+ 201:.\Generated_Source\PSoC4/DistTimer.c **** *  enables the timerto begin counting.  It does not enable interrupts,
+ 202:.\Generated_Source\PSoC4/DistTimer.c **** *  the EnableInt command should be called if interrupt generation is required.
+ 203:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 204:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 205:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 206:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 207:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 208:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 209:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 210:.\Generated_Source\PSoC4/DistTimer.c **** * Global variables:
+ 211:.\Generated_Source\PSoC4/DistTimer.c **** *  DistTimer_initVar: Is modified when this function is called for the
+ 212:.\Generated_Source\PSoC4/DistTimer.c **** *   first time. Is used to ensure that initialization happens only once.
+ 213:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 214:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 215:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_Start(void) 
+ 216:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 217:.\Generated_Source\PSoC4/DistTimer.c ****     if(DistTimer_initVar == 0u)
+ 218:.\Generated_Source\PSoC4/DistTimer.c ****     {
+ 219:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_Init();
+ 220:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 221:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_initVar = 1u;   /* Clear this bit for Initialization */
+ 222:.\Generated_Source\PSoC4/DistTimer.c ****     }
+ 223:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 224:.\Generated_Source\PSoC4/DistTimer.c ****     /* Enable the Timer */
+ 225:.\Generated_Source\PSoC4/DistTimer.c ****     DistTimer_Enable();
+ 226:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 227:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 228:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 229:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 230:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_Stop
+ 231:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 232:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 233:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 234:.\Generated_Source\PSoC4/DistTimer.c **** *  The stop function halts the timer, but does not change any modes or disable
+ 235:.\Generated_Source\PSoC4/DistTimer.c **** *  interrupts.
+ 236:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 237:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 238:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 239:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 240:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 241:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 242:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 243:.\Generated_Source\PSoC4/DistTimer.c **** * Side Effects: If the Enable mode is set to Hardware only then this function
+ 244:.\Generated_Source\PSoC4/DistTimer.c **** *               has no effect on the operation of the timer.
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 6
+
+
+ 245:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 246:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 247:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_Stop(void) 
+ 248:.\Generated_Source\PSoC4/DistTimer.c **** {
+  42              		.loc 1 248 0
+  43              		.cfi_startproc
+ 249:.\Generated_Source\PSoC4/DistTimer.c ****     /* Disable Timer */
+ 250:.\Generated_Source\PSoC4/DistTimer.c ****     #if(!DistTimer_UDB_CONTROL_REG_REMOVED || DistTimer_UsingFixedFunction)
+ 251:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL &= ((uint8)(~DistTimer_CTRL_ENABLE));
+ 252:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Remove assignment if control register is removed */
+ 253:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 254:.\Generated_Source\PSoC4/DistTimer.c ****     /* Globally disable the Fixed Function Block chosen */
+ 255:.\Generated_Source\PSoC4/DistTimer.c ****     #if (DistTimer_UsingFixedFunction)
+ 256:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_GLOBAL_ENABLE &= ((uint8)(~DistTimer_BLOCK_EN_MASK));
+ 257:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_GLOBAL_STBY_ENABLE &= ((uint8)(~DistTimer_BLOCK_STBY_EN_MASK));
+ 258:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Disable global enable for the Timer Fixed function block to stop the Timer*/
+ 259:.\Generated_Source\PSoC4/DistTimer.c **** }
+  44              		.loc 1 259 0
+  45              		@ sp needed
+  46 0000 7047     		bx	lr
+  47              		.cfi_endproc
+  48              	.LFE3:
+  49              		.size	DistTimer_Stop, .-DistTimer_Stop
+  50 0002 C046     		.section	.text.DistTimer_SetInterruptMode,"ax",%progbits
+  51              		.align	2
+  52              		.global	DistTimer_SetInterruptMode
+  53              		.code	16
+  54              		.thumb_func
+  55              		.type	DistTimer_SetInterruptMode, %function
+  56              	DistTimer_SetInterruptMode:
+  57              	.LFB4:
+ 260:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 261:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 262:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 263:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_SetInterruptMode
+ 264:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 265:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 266:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 267:.\Generated_Source\PSoC4/DistTimer.c **** *  This function selects which of the interrupt inputs may cause an interrupt.
+ 268:.\Generated_Source\PSoC4/DistTimer.c **** *  The twosources are caputure and terminal.  One, both or neither may
+ 269:.\Generated_Source\PSoC4/DistTimer.c **** *  be selected.
+ 270:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 271:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 272:.\Generated_Source\PSoC4/DistTimer.c **** *  interruptMode:   This parameter is used to enable interrups on either/or
+ 273:.\Generated_Source\PSoC4/DistTimer.c **** *                   terminal count or capture.
+ 274:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 275:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 276:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 277:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 278:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 279:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_SetInterruptMode(uint8 interruptMode) 
+ 280:.\Generated_Source\PSoC4/DistTimer.c **** {
+  58              		.loc 1 280 0
+  59              		.cfi_startproc
+  60              	.LVL0:
+ 281:.\Generated_Source\PSoC4/DistTimer.c ****     DistTimer_STATUS_MASK = interruptMode;
+  61              		.loc 1 281 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 7
+
+
+  62 0000 014B     		ldr	r3, .L4
+  63 0002 1870     		strb	r0, [r3]
+ 282:.\Generated_Source\PSoC4/DistTimer.c **** }
+  64              		.loc 1 282 0
+  65              		@ sp needed
+  66 0004 7047     		bx	lr
+  67              	.L5:
+  68 0006 C046     		.align	2
+  69              	.L4:
+  70 0008 81000F40 		.word	1074724993
+  71              		.cfi_endproc
+  72              	.LFE4:
+  73              		.size	DistTimer_SetInterruptMode, .-DistTimer_SetInterruptMode
+  74              		.section	.text.DistTimer_SoftwareCapture,"ax",%progbits
+  75              		.align	2
+  76              		.global	DistTimer_SoftwareCapture
+  77              		.code	16
+  78              		.thumb_func
+  79              		.type	DistTimer_SoftwareCapture, %function
+  80              	DistTimer_SoftwareCapture:
+  81              	.LFB5:
+ 283:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 284:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 285:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 286:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_SoftwareCapture
+ 287:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 288:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 289:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 290:.\Generated_Source\PSoC4/DistTimer.c **** *  This function forces a capture independent of the capture signal.
+ 291:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 292:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 293:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 294:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 295:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 296:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 297:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 298:.\Generated_Source\PSoC4/DistTimer.c **** * Side Effects:
+ 299:.\Generated_Source\PSoC4/DistTimer.c **** *  An existing hardware capture could be overwritten.
+ 300:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 301:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 302:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_SoftwareCapture(void) 
+ 303:.\Generated_Source\PSoC4/DistTimer.c **** {
+  82              		.loc 1 303 0
+  83              		.cfi_startproc
+ 304:.\Generated_Source\PSoC4/DistTimer.c ****     /* Generate a software capture by reading the counter register */
+ 305:.\Generated_Source\PSoC4/DistTimer.c ****     #if(DistTimer_UsingFixedFunction)
+ 306:.\Generated_Source\PSoC4/DistTimer.c ****         (void)CY_GET_REG16(DistTimer_COUNTER_LSB_PTR);
+ 307:.\Generated_Source\PSoC4/DistTimer.c ****     #else
+ 308:.\Generated_Source\PSoC4/DistTimer.c ****         (void)CY_GET_REG8(DistTimer_COUNTER_LSB_PTR_8BIT);
+  84              		.loc 1 308 0
+  85 0000 014B     		ldr	r3, .L7
+  86 0002 1B78     		ldrb	r3, [r3]
+ 309:.\Generated_Source\PSoC4/DistTimer.c ****     #endif/* (DistTimer_UsingFixedFunction) */
+ 310:.\Generated_Source\PSoC4/DistTimer.c ****     /* Capture Data is now in the FIFO */
+ 311:.\Generated_Source\PSoC4/DistTimer.c **** }
+  87              		.loc 1 311 0
+  88              		@ sp needed
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 8
+
+
+  89 0004 7047     		bx	lr
+  90              	.L8:
+  91 0006 C046     		.align	2
+  92              	.L7:
+  93 0008 00000F40 		.word	1074724864
+  94              		.cfi_endproc
+  95              	.LFE5:
+  96              		.size	DistTimer_SoftwareCapture, .-DistTimer_SoftwareCapture
+  97              		.section	.text.DistTimer_ReadStatusRegister,"ax",%progbits
+  98              		.align	2
+  99              		.global	DistTimer_ReadStatusRegister
+ 100              		.code	16
+ 101              		.thumb_func
+ 102              		.type	DistTimer_ReadStatusRegister, %function
+ 103              	DistTimer_ReadStatusRegister:
+ 104              	.LFB6:
+ 312:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 313:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 314:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 315:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_ReadStatusRegister
+ 316:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 317:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 318:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 319:.\Generated_Source\PSoC4/DistTimer.c **** *  Reads the status register and returns it's state. This function should use
+ 320:.\Generated_Source\PSoC4/DistTimer.c **** *  defined types for the bit-field information as the bits in this register may
+ 321:.\Generated_Source\PSoC4/DistTimer.c **** *  be permuteable.
+ 322:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 323:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 324:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 325:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 326:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 327:.\Generated_Source\PSoC4/DistTimer.c **** *  The contents of the status register
+ 328:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 329:.\Generated_Source\PSoC4/DistTimer.c **** * Side Effects:
+ 330:.\Generated_Source\PSoC4/DistTimer.c **** *  Status register bits may be clear on read.
+ 331:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 332:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 333:.\Generated_Source\PSoC4/DistTimer.c **** uint8   DistTimer_ReadStatusRegister(void) 
+ 334:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 105              		.loc 1 334 0
+ 106              		.cfi_startproc
+ 335:.\Generated_Source\PSoC4/DistTimer.c ****     return (DistTimer_STATUS);
+ 107              		.loc 1 335 0
+ 108 0000 014B     		ldr	r3, .L10
+ 109 0002 1878     		ldrb	r0, [r3]
+ 110 0004 C0B2     		uxtb	r0, r0
+ 336:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 111              		.loc 1 336 0
+ 112              		@ sp needed
+ 113 0006 7047     		bx	lr
+ 114              	.L11:
+ 115              		.align	2
+ 116              	.L10:
+ 117 0008 61000F40 		.word	1074724961
+ 118              		.cfi_endproc
+ 119              	.LFE6:
+ 120              		.size	DistTimer_ReadStatusRegister, .-DistTimer_ReadStatusRegister
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 9
+
+
+ 121              		.section	.text.DistTimer_ReadPeriod,"ax",%progbits
+ 122              		.align	2
+ 123              		.global	DistTimer_ReadPeriod
+ 124              		.code	16
+ 125              		.thumb_func
+ 126              		.type	DistTimer_ReadPeriod, %function
+ 127              	DistTimer_ReadPeriod:
+ 128              	.LFB7:
+ 337:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 338:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 339:.\Generated_Source\PSoC4/DistTimer.c **** #if (!DistTimer_UDB_CONTROL_REG_REMOVED) /* Remove API if control register is unused */
+ 340:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 341:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 342:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 343:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_ReadControlRegister
+ 344:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 345:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 346:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 347:.\Generated_Source\PSoC4/DistTimer.c **** *  Reads the control register and returns it's value.
+ 348:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 349:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 350:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 351:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 352:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 353:.\Generated_Source\PSoC4/DistTimer.c **** *  The contents of the control register
+ 354:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 355:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 356:.\Generated_Source\PSoC4/DistTimer.c **** uint8 DistTimer_ReadControlRegister(void) 
+ 357:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 358:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED) 
+ 359:.\Generated_Source\PSoC4/DistTimer.c ****         return ((uint8)DistTimer_CONTROL);
+ 360:.\Generated_Source\PSoC4/DistTimer.c ****     #else
+ 361:.\Generated_Source\PSoC4/DistTimer.c ****         return (0);
+ 362:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* (!DistTimer_UDB_CONTROL_REG_REMOVED) */
+ 363:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 364:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 365:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 366:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 367:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_WriteControlRegister
+ 368:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 369:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 370:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 371:.\Generated_Source\PSoC4/DistTimer.c **** *  Sets the bit-field of the control register.
+ 372:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 373:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 374:.\Generated_Source\PSoC4/DistTimer.c **** *  control: The contents of the control register
+ 375:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 376:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 377:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 378:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 379:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_WriteControlRegister(uint8 control) 
+ 380:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 381:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED) 
+ 382:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL = control;
+ 383:.\Generated_Source\PSoC4/DistTimer.c ****     #else
+ 384:.\Generated_Source\PSoC4/DistTimer.c ****         control = 0u;
+ 385:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* (!DistTimer_UDB_CONTROL_REG_REMOVED) */
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 10
+
+
+ 386:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 387:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 388:.\Generated_Source\PSoC4/DistTimer.c **** #endif /* Remove API if control register is unused */
+ 389:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 390:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 391:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 392:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_ReadPeriod
+ 393:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 394:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 395:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 396:.\Generated_Source\PSoC4/DistTimer.c **** *  This function returns the current value of the Period.
+ 397:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 398:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 399:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 400:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 401:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 402:.\Generated_Source\PSoC4/DistTimer.c **** *  The present value of the counter.
+ 403:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 404:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 405:.\Generated_Source\PSoC4/DistTimer.c **** uint16 DistTimer_ReadPeriod(void) 
+ 406:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 129              		.loc 1 406 0
+ 130              		.cfi_startproc
+ 407:.\Generated_Source\PSoC4/DistTimer.c ****    #if(DistTimer_UsingFixedFunction)
+ 408:.\Generated_Source\PSoC4/DistTimer.c ****        return ((uint16)CY_GET_REG16(DistTimer_PERIOD_LSB_PTR));
+ 409:.\Generated_Source\PSoC4/DistTimer.c ****    #else
+ 410:.\Generated_Source\PSoC4/DistTimer.c ****        return (CY_GET_REG16(DistTimer_PERIOD_LSB_PTR));
+ 131              		.loc 1 410 0
+ 132 0000 014B     		ldr	r3, .L13
+ 133 0002 1888     		ldrh	r0, [r3]
+ 134 0004 80B2     		uxth	r0, r0
+ 411:.\Generated_Source\PSoC4/DistTimer.c ****    #endif /* (DistTimer_UsingFixedFunction) */
+ 412:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 135              		.loc 1 412 0
+ 136              		@ sp needed
+ 137 0006 7047     		bx	lr
+ 138              	.L14:
+ 139              		.align	2
+ 140              	.L13:
+ 141 0008 40100F40 		.word	1074729024
+ 142              		.cfi_endproc
+ 143              	.LFE7:
+ 144              		.size	DistTimer_ReadPeriod, .-DistTimer_ReadPeriod
+ 145              		.section	.text.DistTimer_WritePeriod,"ax",%progbits
+ 146              		.align	2
+ 147              		.global	DistTimer_WritePeriod
+ 148              		.code	16
+ 149              		.thumb_func
+ 150              		.type	DistTimer_WritePeriod, %function
+ 151              	DistTimer_WritePeriod:
+ 152              	.LFB8:
+ 413:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 414:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 415:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 416:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_WritePeriod
+ 417:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 418:.\Generated_Source\PSoC4/DistTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 11
+
+
+ 419:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 420:.\Generated_Source\PSoC4/DistTimer.c **** *  This function is used to change the period of the counter.  The new period
+ 421:.\Generated_Source\PSoC4/DistTimer.c **** *  will be loaded the next time terminal count is detected.
+ 422:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 423:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 424:.\Generated_Source\PSoC4/DistTimer.c **** *  period: This value may be between 1 and (2^Resolution)-1.  A value of 0 will
+ 425:.\Generated_Source\PSoC4/DistTimer.c **** *          result in the counter remaining at zero.
+ 426:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 427:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 428:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 429:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 430:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 431:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_WritePeriod(uint16 period) 
+ 432:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 153              		.loc 1 432 0
+ 154              		.cfi_startproc
+ 155              	.LVL1:
+ 433:.\Generated_Source\PSoC4/DistTimer.c ****     #if(DistTimer_UsingFixedFunction)
+ 434:.\Generated_Source\PSoC4/DistTimer.c ****         uint16 period_temp = (uint16)period;
+ 435:.\Generated_Source\PSoC4/DistTimer.c ****         CY_SET_REG16(DistTimer_PERIOD_LSB_PTR, period_temp);
+ 436:.\Generated_Source\PSoC4/DistTimer.c ****     #else
+ 437:.\Generated_Source\PSoC4/DistTimer.c ****         CY_SET_REG16(DistTimer_PERIOD_LSB_PTR, period);
+ 156              		.loc 1 437 0
+ 157 0000 014B     		ldr	r3, .L16
+ 158 0002 1880     		strh	r0, [r3]
+ 438:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /*Write Period value with appropriate resolution suffix depending on UDB or fixed functi
+ 439:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 159              		.loc 1 439 0
+ 160              		@ sp needed
+ 161 0004 7047     		bx	lr
+ 162              	.L17:
+ 163 0006 C046     		.align	2
+ 164              	.L16:
+ 165 0008 40100F40 		.word	1074729024
+ 166              		.cfi_endproc
+ 167              	.LFE8:
+ 168              		.size	DistTimer_WritePeriod, .-DistTimer_WritePeriod
+ 169              		.section	.text.DistTimer_ReadCapture,"ax",%progbits
+ 170              		.align	2
+ 171              		.global	DistTimer_ReadCapture
+ 172              		.code	16
+ 173              		.thumb_func
+ 174              		.type	DistTimer_ReadCapture, %function
+ 175              	DistTimer_ReadCapture:
+ 176              	.LFB9:
+ 440:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 441:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 442:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 443:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_ReadCapture
+ 444:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 445:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 446:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 447:.\Generated_Source\PSoC4/DistTimer.c **** *  This function returns the last value captured.
+ 448:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 449:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 450:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 451:.\Generated_Source\PSoC4/DistTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 12
+
+
+ 452:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 453:.\Generated_Source\PSoC4/DistTimer.c **** *  Present Capture value.
+ 454:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 455:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 456:.\Generated_Source\PSoC4/DistTimer.c **** uint16 DistTimer_ReadCapture(void) 
+ 457:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 177              		.loc 1 457 0
+ 178              		.cfi_startproc
+ 458:.\Generated_Source\PSoC4/DistTimer.c ****    #if(DistTimer_UsingFixedFunction)
+ 459:.\Generated_Source\PSoC4/DistTimer.c ****        return ((uint16)CY_GET_REG16(DistTimer_CAPTURE_LSB_PTR));
+ 460:.\Generated_Source\PSoC4/DistTimer.c ****    #else
+ 461:.\Generated_Source\PSoC4/DistTimer.c ****        return (CY_GET_REG16(DistTimer_CAPTURE_LSB_PTR));
+ 179              		.loc 1 461 0
+ 180 0000 014B     		ldr	r3, .L19
+ 181 0002 1888     		ldrh	r0, [r3]
+ 182 0004 80B2     		uxth	r0, r0
+ 462:.\Generated_Source\PSoC4/DistTimer.c ****    #endif /* (DistTimer_UsingFixedFunction) */
+ 463:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 183              		.loc 1 463 0
+ 184              		@ sp needed
+ 185 0006 7047     		bx	lr
+ 186              	.L20:
+ 187              		.align	2
+ 188              	.L19:
+ 189 0008 80100F40 		.word	1074729088
+ 190              		.cfi_endproc
+ 191              	.LFE9:
+ 192              		.size	DistTimer_ReadCapture, .-DistTimer_ReadCapture
+ 193              		.section	.text.DistTimer_WriteCounter,"ax",%progbits
+ 194              		.align	2
+ 195              		.global	DistTimer_WriteCounter
+ 196              		.code	16
+ 197              		.thumb_func
+ 198              		.type	DistTimer_WriteCounter, %function
+ 199              	DistTimer_WriteCounter:
+ 200              	.LFB10:
+ 464:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 465:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 466:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 467:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_WriteCounter
+ 468:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 469:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 470:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 471:.\Generated_Source\PSoC4/DistTimer.c **** *  This funtion is used to set the counter to a specific value
+ 472:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 473:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 474:.\Generated_Source\PSoC4/DistTimer.c **** *  counter:  New counter value.
+ 475:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 476:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 477:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 478:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 479:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 480:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_WriteCounter(uint16 counter) 
+ 481:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 201              		.loc 1 481 0
+ 202              		.cfi_startproc
+ 203              	.LVL2:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 13
+
+
+ 482:.\Generated_Source\PSoC4/DistTimer.c ****    #if(DistTimer_UsingFixedFunction)
+ 483:.\Generated_Source\PSoC4/DistTimer.c ****         /* This functionality is removed until a FixedFunction HW update to
+ 484:.\Generated_Source\PSoC4/DistTimer.c ****          * allow this register to be written
+ 485:.\Generated_Source\PSoC4/DistTimer.c ****          */
+ 486:.\Generated_Source\PSoC4/DistTimer.c ****         CY_SET_REG16(DistTimer_COUNTER_LSB_PTR, (uint16)counter);
+ 487:.\Generated_Source\PSoC4/DistTimer.c ****         
+ 488:.\Generated_Source\PSoC4/DistTimer.c ****     #else
+ 489:.\Generated_Source\PSoC4/DistTimer.c ****         CY_SET_REG16(DistTimer_COUNTER_LSB_PTR, counter);
+ 204              		.loc 1 489 0
+ 205 0000 014B     		ldr	r3, .L22
+ 206 0002 1880     		strh	r0, [r3]
+ 490:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Set Write Counter only for the UDB implementation (Write Counter not available in fix
+ 491:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 207              		.loc 1 491 0
+ 208              		@ sp needed
+ 209 0004 7047     		bx	lr
+ 210              	.L23:
+ 211 0006 C046     		.align	2
+ 212              	.L22:
+ 213 0008 00100F40 		.word	1074728960
+ 214              		.cfi_endproc
+ 215              	.LFE10:
+ 216              		.size	DistTimer_WriteCounter, .-DistTimer_WriteCounter
+ 217              		.section	.text.DistTimer_ReadCounter,"ax",%progbits
+ 218              		.align	2
+ 219              		.global	DistTimer_ReadCounter
+ 220              		.code	16
+ 221              		.thumb_func
+ 222              		.type	DistTimer_ReadCounter, %function
+ 223              	DistTimer_ReadCounter:
+ 224              	.LFB11:
+ 492:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 493:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 494:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 495:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_ReadCounter
+ 496:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 497:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 498:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 499:.\Generated_Source\PSoC4/DistTimer.c **** *  This function returns the current counter value.
+ 500:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 501:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 502:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 503:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 504:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 505:.\Generated_Source\PSoC4/DistTimer.c **** *  Present compare value.
+ 506:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 507:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 508:.\Generated_Source\PSoC4/DistTimer.c **** uint16 DistTimer_ReadCounter(void) 
+ 509:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 225              		.loc 1 509 0
+ 226              		.cfi_startproc
+ 510:.\Generated_Source\PSoC4/DistTimer.c ****     /* Force capture by reading Accumulator */
+ 511:.\Generated_Source\PSoC4/DistTimer.c ****     /* Must first do a software capture to be able to read the counter */
+ 512:.\Generated_Source\PSoC4/DistTimer.c ****     /* It is up to the user code to make sure there isn't already captured data in the FIFO */
+ 513:.\Generated_Source\PSoC4/DistTimer.c ****     #if(DistTimer_UsingFixedFunction)
+ 514:.\Generated_Source\PSoC4/DistTimer.c ****         (void)CY_GET_REG16(DistTimer_COUNTER_LSB_PTR);
+ 515:.\Generated_Source\PSoC4/DistTimer.c ****     #else
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 14
+
+
+ 516:.\Generated_Source\PSoC4/DistTimer.c ****         (void)CY_GET_REG8(DistTimer_COUNTER_LSB_PTR_8BIT);
+ 227              		.loc 1 516 0
+ 228 0000 024B     		ldr	r3, .L25
+ 229 0002 1B78     		ldrb	r3, [r3]
+ 517:.\Generated_Source\PSoC4/DistTimer.c ****     #endif/* (DistTimer_UsingFixedFunction) */
+ 518:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 519:.\Generated_Source\PSoC4/DistTimer.c ****     /* Read the data from the FIFO (or capture register for Fixed Function)*/
+ 520:.\Generated_Source\PSoC4/DistTimer.c ****     #if(DistTimer_UsingFixedFunction)
+ 521:.\Generated_Source\PSoC4/DistTimer.c ****         return ((uint16)CY_GET_REG16(DistTimer_CAPTURE_LSB_PTR));
+ 522:.\Generated_Source\PSoC4/DistTimer.c ****     #else
+ 523:.\Generated_Source\PSoC4/DistTimer.c ****         return (CY_GET_REG16(DistTimer_CAPTURE_LSB_PTR));
+ 230              		.loc 1 523 0
+ 231 0004 024B     		ldr	r3, .L25+4
+ 232 0006 1888     		ldrh	r0, [r3]
+ 233 0008 80B2     		uxth	r0, r0
+ 524:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* (DistTimer_UsingFixedFunction) */
+ 525:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 234              		.loc 1 525 0
+ 235              		@ sp needed
+ 236 000a 7047     		bx	lr
+ 237              	.L26:
+ 238              		.align	2
+ 239              	.L25:
+ 240 000c 00000F40 		.word	1074724864
+ 241 0010 80100F40 		.word	1074729088
+ 242              		.cfi_endproc
+ 243              	.LFE11:
+ 244              		.size	DistTimer_ReadCounter, .-DistTimer_ReadCounter
+ 245              		.section	.text.DistTimer_EnableTrigger,"ax",%progbits
+ 246              		.align	2
+ 247              		.global	DistTimer_EnableTrigger
+ 248              		.code	16
+ 249              		.thumb_func
+ 250              		.type	DistTimer_EnableTrigger, %function
+ 251              	DistTimer_EnableTrigger:
+ 252              	.LFB12:
+ 526:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 527:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 528:.\Generated_Source\PSoC4/DistTimer.c **** #if(!DistTimer_UsingFixedFunction) /* UDB Specific Functions */
+ 529:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 530:.\Generated_Source\PSoC4/DistTimer.c ****     
+ 531:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 532:.\Generated_Source\PSoC4/DistTimer.c ****  * The functions below this point are only available using the UDB
+ 533:.\Generated_Source\PSoC4/DistTimer.c ****  * implementation.  If a feature is selected, then the API is enabled.
+ 534:.\Generated_Source\PSoC4/DistTimer.c ****  ******************************************************************************/
+ 535:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 536:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 537:.\Generated_Source\PSoC4/DistTimer.c **** #if (DistTimer_SoftwareCaptureMode)
+ 538:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 539:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 540:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 541:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_SetCaptureMode
+ 542:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 543:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 544:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 545:.\Generated_Source\PSoC4/DistTimer.c **** *  This function sets the capture mode to either rising or falling edge.
+ 546:.\Generated_Source\PSoC4/DistTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 15
+
+
+ 547:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 548:.\Generated_Source\PSoC4/DistTimer.c **** *  captureMode: This parameter sets the capture mode of the UDB capture feature
+ 549:.\Generated_Source\PSoC4/DistTimer.c **** *  The parameter values are defined using the
+ 550:.\Generated_Source\PSoC4/DistTimer.c **** *  #define DistTimer__B_TIMER__CM_NONE 0
+ 551:.\Generated_Source\PSoC4/DistTimer.c **** #define DistTimer__B_TIMER__CM_RISINGEDGE 1
+ 552:.\Generated_Source\PSoC4/DistTimer.c **** #define DistTimer__B_TIMER__CM_FALLINGEDGE 2
+ 553:.\Generated_Source\PSoC4/DistTimer.c **** #define DistTimer__B_TIMER__CM_EITHEREDGE 3
+ 554:.\Generated_Source\PSoC4/DistTimer.c **** #define DistTimer__B_TIMER__CM_SOFTWARE 4
+ 555:.\Generated_Source\PSoC4/DistTimer.c ****  identifiers
+ 556:.\Generated_Source\PSoC4/DistTimer.c **** *  The following are the possible values of the parameter
+ 557:.\Generated_Source\PSoC4/DistTimer.c **** *  DistTimer__B_TIMER__CM_NONE        - Set Capture mode to None
+ 558:.\Generated_Source\PSoC4/DistTimer.c **** *  DistTimer__B_TIMER__CM_RISINGEDGE  - Rising edge of Capture input
+ 559:.\Generated_Source\PSoC4/DistTimer.c **** *  DistTimer__B_TIMER__CM_FALLINGEDGE - Falling edge of Capture input
+ 560:.\Generated_Source\PSoC4/DistTimer.c **** *  DistTimer__B_TIMER__CM_EITHEREDGE  - Either edge of Capture input
+ 561:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 562:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 563:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 564:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 565:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 566:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_SetCaptureMode(uint8 captureMode) 
+ 567:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 568:.\Generated_Source\PSoC4/DistTimer.c ****     /* This must only set to two bits of the control register associated */
+ 569:.\Generated_Source\PSoC4/DistTimer.c ****     captureMode = ((uint8)((uint8)captureMode << DistTimer_CTRL_CAP_MODE_SHIFT));
+ 570:.\Generated_Source\PSoC4/DistTimer.c ****     captureMode &= (DistTimer_CTRL_CAP_MODE_MASK);
+ 571:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 572:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED)
+ 573:.\Generated_Source\PSoC4/DistTimer.c ****         /* Clear the Current Setting */
+ 574:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL &= ((uint8)(~DistTimer_CTRL_CAP_MODE_MASK));
+ 575:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 576:.\Generated_Source\PSoC4/DistTimer.c ****         /* Write The New Setting */
+ 577:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL |= captureMode;
+ 578:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* (!DistTimer_UDB_CONTROL_REG_REMOVED) */
+ 579:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 580:.\Generated_Source\PSoC4/DistTimer.c **** #endif /* Remove API if Capture Mode is not Software Controlled */
+ 581:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 582:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 583:.\Generated_Source\PSoC4/DistTimer.c **** #if (DistTimer_SoftwareTriggerMode)
+ 584:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 585:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 586:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 587:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_SetTriggerMode
+ 588:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 589:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 590:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 591:.\Generated_Source\PSoC4/DistTimer.c **** *  This function sets the trigger input mode
+ 592:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 593:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 594:.\Generated_Source\PSoC4/DistTimer.c **** *  triggerMode: Pass one of the pre-defined Trigger Modes (except Software)
+ 595:.\Generated_Source\PSoC4/DistTimer.c ****     #define DistTimer__B_TIMER__TM_NONE 0x00u
+ 596:.\Generated_Source\PSoC4/DistTimer.c ****     #define DistTimer__B_TIMER__TM_RISINGEDGE 0x04u
+ 597:.\Generated_Source\PSoC4/DistTimer.c ****     #define DistTimer__B_TIMER__TM_FALLINGEDGE 0x08u
+ 598:.\Generated_Source\PSoC4/DistTimer.c ****     #define DistTimer__B_TIMER__TM_EITHEREDGE 0x0Cu
+ 599:.\Generated_Source\PSoC4/DistTimer.c ****     #define DistTimer__B_TIMER__TM_SOFTWARE 0x10u
+ 600:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 601:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 602:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 603:.\Generated_Source\PSoC4/DistTimer.c **** *
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 16
+
+
+ 604:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 605:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_SetTriggerMode(uint8 triggerMode) 
+ 606:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 607:.\Generated_Source\PSoC4/DistTimer.c ****     /* This must only set to two bits of the control register associated */
+ 608:.\Generated_Source\PSoC4/DistTimer.c ****     triggerMode &= DistTimer_CTRL_TRIG_MODE_MASK;
+ 609:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 610:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED)   /* Remove assignment if control register is removed 
+ 611:.\Generated_Source\PSoC4/DistTimer.c ****     
+ 612:.\Generated_Source\PSoC4/DistTimer.c ****         /* Clear the Current Setting */
+ 613:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL &= ((uint8)(~DistTimer_CTRL_TRIG_MODE_MASK));
+ 614:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 615:.\Generated_Source\PSoC4/DistTimer.c ****         /* Write The New Setting */
+ 616:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL |= (triggerMode | DistTimer__B_TIMER__TM_SOFTWARE);
+ 617:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Remove code section if control register is not used */
+ 618:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 619:.\Generated_Source\PSoC4/DistTimer.c **** #endif /* Remove API if Trigger Mode is not Software Controlled */
+ 620:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 621:.\Generated_Source\PSoC4/DistTimer.c **** #if (DistTimer_EnableTriggerMode)
+ 622:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 623:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 624:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 625:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_EnableTrigger
+ 626:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 627:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 628:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 629:.\Generated_Source\PSoC4/DistTimer.c **** *  Sets the control bit enabling Hardware Trigger mode
+ 630:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 631:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 632:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 633:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 634:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 635:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 636:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 637:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 638:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_EnableTrigger(void) 
+ 639:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 253              		.loc 1 639 0
+ 254              		.cfi_startproc
+ 640:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED)   /* Remove assignment if control register is removed 
+ 641:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL |= DistTimer_CTRL_TRIG_EN;
+ 642:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Remove code section if control register is not used */
+ 643:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 255              		.loc 1 643 0
+ 256              		@ sp needed
+ 257 0000 7047     		bx	lr
+ 258              		.cfi_endproc
+ 259              	.LFE12:
+ 260              		.size	DistTimer_EnableTrigger, .-DistTimer_EnableTrigger
+ 261 0002 C046     		.section	.text.DistTimer_DisableTrigger,"ax",%progbits
+ 262              		.align	2
+ 263              		.global	DistTimer_DisableTrigger
+ 264              		.code	16
+ 265              		.thumb_func
+ 266              		.type	DistTimer_DisableTrigger, %function
+ 267              	DistTimer_DisableTrigger:
+ 268              	.LFB13:
+ 644:.\Generated_Source\PSoC4/DistTimer.c **** 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 17
+
+
+ 645:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 646:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 647:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_DisableTrigger
+ 648:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 649:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 650:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 651:.\Generated_Source\PSoC4/DistTimer.c **** *  Clears the control bit enabling Hardware Trigger mode
+ 652:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 653:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 654:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 655:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 656:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 657:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 658:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 659:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 660:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_DisableTrigger(void) 
+ 661:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 269              		.loc 1 661 0
+ 270              		.cfi_startproc
+ 662:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED )   /* Remove assignment if control register is removed
+ 663:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL &= ((uint8)(~DistTimer_CTRL_TRIG_EN));
+ 664:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Remove code section if control register is not used */
+ 665:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 271              		.loc 1 665 0
+ 272              		@ sp needed
+ 273 0000 7047     		bx	lr
+ 274              		.cfi_endproc
+ 275              	.LFE13:
+ 276              		.size	DistTimer_DisableTrigger, .-DistTimer_DisableTrigger
+ 277 0002 C046     		.section	.text.DistTimer_SetInterruptCount,"ax",%progbits
+ 278              		.align	2
+ 279              		.global	DistTimer_SetInterruptCount
+ 280              		.code	16
+ 281              		.thumb_func
+ 282              		.type	DistTimer_SetInterruptCount, %function
+ 283              	DistTimer_SetInterruptCount:
+ 284              	.LFB14:
+ 666:.\Generated_Source\PSoC4/DistTimer.c **** #endif /* Remove API is Trigger Mode is set to None */
+ 667:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 668:.\Generated_Source\PSoC4/DistTimer.c **** #if(DistTimer_InterruptOnCaptureCount)
+ 669:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 670:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 671:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 672:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_SetInterruptCount
+ 673:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 674:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 675:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 676:.\Generated_Source\PSoC4/DistTimer.c **** *  This function sets the capture count before an interrupt is triggered.
+ 677:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 678:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 679:.\Generated_Source\PSoC4/DistTimer.c **** *  interruptCount:  A value between 0 and 3 is valid.  If the value is 0, then
+ 680:.\Generated_Source\PSoC4/DistTimer.c **** *                   an interrupt will occur each time a capture occurs.
+ 681:.\Generated_Source\PSoC4/DistTimer.c **** *                   A value of 1 to 3 will cause the interrupt
+ 682:.\Generated_Source\PSoC4/DistTimer.c **** *                   to delay by the same number of captures.
+ 683:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 684:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 685:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 18
+
+
+ 686:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 687:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 688:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_SetInterruptCount(uint8 interruptCount) 
+ 689:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 285              		.loc 1 689 0
+ 286              		.cfi_startproc
+ 287              	.LVL3:
+ 690:.\Generated_Source\PSoC4/DistTimer.c ****     /* This must only set to two bits of the control register associated */
+ 691:.\Generated_Source\PSoC4/DistTimer.c ****     interruptCount &= DistTimer_CTRL_INTCNT_MASK;
+ 692:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 693:.\Generated_Source\PSoC4/DistTimer.c ****     #if (!DistTimer_UDB_CONTROL_REG_REMOVED)
+ 694:.\Generated_Source\PSoC4/DistTimer.c ****         /* Clear the Current Setting */
+ 695:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL &= ((uint8)(~DistTimer_CTRL_INTCNT_MASK));
+ 696:.\Generated_Source\PSoC4/DistTimer.c ****         /* Write The New Setting */
+ 697:.\Generated_Source\PSoC4/DistTimer.c ****         DistTimer_CONTROL |= interruptCount;
+ 698:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* (!DistTimer_UDB_CONTROL_REG_REMOVED) */
+ 699:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 288              		.loc 1 699 0
+ 289              		@ sp needed
+ 290 0000 7047     		bx	lr
+ 291              		.cfi_endproc
+ 292              	.LFE14:
+ 293              		.size	DistTimer_SetInterruptCount, .-DistTimer_SetInterruptCount
+ 294 0002 C046     		.section	.text.DistTimer_ClearFIFO,"ax",%progbits
+ 295              		.align	2
+ 296              		.global	DistTimer_ClearFIFO
+ 297              		.code	16
+ 298              		.thumb_func
+ 299              		.type	DistTimer_ClearFIFO, %function
+ 300              	DistTimer_ClearFIFO:
+ 301              	.LFB15:
+ 700:.\Generated_Source\PSoC4/DistTimer.c **** #endif /* DistTimer_InterruptOnCaptureCount */
+ 701:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 702:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 703:.\Generated_Source\PSoC4/DistTimer.c **** #if (DistTimer_UsingHWCaptureCounter)
+ 704:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 705:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 706:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 707:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_SetCaptureCount
+ 708:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 709:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 710:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 711:.\Generated_Source\PSoC4/DistTimer.c **** *  This function sets the capture count
+ 712:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 713:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 714:.\Generated_Source\PSoC4/DistTimer.c **** *  captureCount: A value between 2 and 127 inclusive is valid.  A value of 1
+ 715:.\Generated_Source\PSoC4/DistTimer.c **** *                to 127 will cause the interrupt to delay by the same number of
+ 716:.\Generated_Source\PSoC4/DistTimer.c **** *                captures.
+ 717:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 718:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 719:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 720:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 721:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 722:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_SetCaptureCount(uint8 captureCount) 
+ 723:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 724:.\Generated_Source\PSoC4/DistTimer.c ****     DistTimer_CAP_COUNT = captureCount;
+ 725:.\Generated_Source\PSoC4/DistTimer.c **** }
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 19
+
+
+ 726:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 727:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 728:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 729:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_ReadCaptureCount
+ 730:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 731:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 732:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 733:.\Generated_Source\PSoC4/DistTimer.c **** *  This function reads the capture count setting
+ 734:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 735:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 736:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 737:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 738:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 739:.\Generated_Source\PSoC4/DistTimer.c **** *  Returns the Capture Count Setting
+ 740:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 741:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 742:.\Generated_Source\PSoC4/DistTimer.c **** uint8 DistTimer_ReadCaptureCount(void) 
+ 743:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 744:.\Generated_Source\PSoC4/DistTimer.c ****     return ((uint8)DistTimer_CAP_COUNT);
+ 745:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 746:.\Generated_Source\PSoC4/DistTimer.c **** #endif /* DistTimer_UsingHWCaptureCounter */
+ 747:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 748:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 749:.\Generated_Source\PSoC4/DistTimer.c **** /*******************************************************************************
+ 750:.\Generated_Source\PSoC4/DistTimer.c **** * Function Name: DistTimer_ClearFIFO
+ 751:.\Generated_Source\PSoC4/DistTimer.c **** ********************************************************************************
+ 752:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 753:.\Generated_Source\PSoC4/DistTimer.c **** * Summary:
+ 754:.\Generated_Source\PSoC4/DistTimer.c **** *  This function clears all capture data from the capture FIFO
+ 755:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 756:.\Generated_Source\PSoC4/DistTimer.c **** * Parameters:
+ 757:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 758:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 759:.\Generated_Source\PSoC4/DistTimer.c **** * Return:
+ 760:.\Generated_Source\PSoC4/DistTimer.c **** *  void
+ 761:.\Generated_Source\PSoC4/DistTimer.c **** *
+ 762:.\Generated_Source\PSoC4/DistTimer.c **** *******************************************************************************/
+ 763:.\Generated_Source\PSoC4/DistTimer.c **** void DistTimer_ClearFIFO(void) 
+ 764:.\Generated_Source\PSoC4/DistTimer.c **** {
+ 302              		.loc 1 764 0
+ 303              		.cfi_startproc
+ 304 0000 08B5     		push	{r3, lr}
+ 305              		.cfi_def_cfa_offset 8
+ 306              		.cfi_offset 3, -8
+ 307              		.cfi_offset 14, -4
+ 765:.\Generated_Source\PSoC4/DistTimer.c ****     while(0u != (DistTimer_ReadStatusRegister() & DistTimer_STATUS_FIFONEMP))
+ 308              		.loc 1 765 0
+ 309 0002 01E0     		b	.L31
+ 310              	.L32:
+ 766:.\Generated_Source\PSoC4/DistTimer.c ****     {
+ 767:.\Generated_Source\PSoC4/DistTimer.c ****         (void)DistTimer_ReadCapture();
+ 311              		.loc 1 767 0
+ 312 0004 FFF7FEFF 		bl	DistTimer_ReadCapture
+ 313              	.LVL4:
+ 314              	.L31:
+ 765:.\Generated_Source\PSoC4/DistTimer.c ****     while(0u != (DistTimer_ReadStatusRegister() & DistTimer_STATUS_FIFONEMP))
+ 315              		.loc 1 765 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 20
+
+
+ 316 0008 FFF7FEFF 		bl	DistTimer_ReadStatusRegister
+ 317              	.LVL5:
+ 318 000c 0307     		lsl	r3, r0, #28
+ 319 000e F9D4     		bmi	.L32
+ 768:.\Generated_Source\PSoC4/DistTimer.c ****     }
+ 769:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 320              		.loc 1 769 0
+ 321              		@ sp needed
+ 322 0010 08BD     		pop	{r3, pc}
+ 323              		.cfi_endproc
+ 324              	.LFE15:
+ 325              		.size	DistTimer_ClearFIFO, .-DistTimer_ClearFIFO
+ 326 0012 C046     		.section	.text.DistTimer_Init,"ax",%progbits
+ 327              		.align	2
+ 328              		.global	DistTimer_Init
+ 329              		.code	16
+ 330              		.thumb_func
+ 331              		.type	DistTimer_Init, %function
+ 332              	DistTimer_Init:
+ 333              	.LFB0:
+  44:.\Generated_Source\PSoC4/DistTimer.c ****     #if(!DistTimer_UsingFixedFunction)
+ 334              		.loc 1 44 0
+ 335              		.cfi_startproc
+ 336 0000 10B5     		push	{r4, lr}
+ 337              		.cfi_def_cfa_offset 8
+ 338              		.cfi_offset 4, -8
+ 339              		.cfi_offset 14, -4
+ 118:.\Generated_Source\PSoC4/DistTimer.c ****     DistTimer_WriteCounter(DistTimer_INIT_PERIOD);
+ 340              		.loc 1 118 0
+ 341 0002 0B4C     		ldr	r4, .L34
+ 342 0004 201C     		mov	r0, r4
+ 343 0006 FFF7FEFF 		bl	DistTimer_WritePeriod
+ 344              	.LVL6:
+ 119:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 345              		.loc 1 119 0
+ 346 000a 201C     		mov	r0, r4
+ 347 000c FFF7FEFF 		bl	DistTimer_WriteCounter
+ 348              	.LVL7:
+ 142:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 349              		.loc 1 142 0
+ 350 0010 FFF7FEFF 		bl	CyEnterCriticalSection
+ 351              	.LVL8:
+ 145:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 352              		.loc 1 145 0
+ 353 0014 074A     		ldr	r2, .L34+4
+ 354 0016 1178     		ldrb	r1, [r2]
+ 355 0018 1023     		mov	r3, #16
+ 356 001a 0B43     		orr	r3, r1
+ 357 001c 1370     		strb	r3, [r2]
+ 148:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 358              		.loc 1 148 0
+ 359 001e FFF7FEFF 		bl	CyExitCriticalSection
+ 360              	.LVL9:
+ 159:.\Generated_Source\PSoC4/DistTimer.c ****     #endif /* Configure additional features of UDB implementation */
+ 361              		.loc 1 159 0
+ 362 0022 FFF7FEFF 		bl	DistTimer_ClearFIFO
+ 363              	.LVL10:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 21
+
+
+ 162:.\Generated_Source\PSoC4/DistTimer.c **** }
+ 364              		.loc 1 162 0
+ 365 0026 0220     		mov	r0, #2
+ 366 0028 FFF7FEFF 		bl	DistTimer_SetInterruptMode
+ 367              	.LVL11:
+ 163:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 368              		.loc 1 163 0
+ 369              		@ sp needed
+ 370 002c 10BD     		pop	{r4, pc}
+ 371              	.L35:
+ 372 002e C046     		.align	2
+ 373              	.L34:
+ 374 0030 FFFF0000 		.word	65535
+ 375 0034 91000F40 		.word	1074725009
+ 376              		.cfi_endproc
+ 377              	.LFE0:
+ 378              		.size	DistTimer_Init, .-DistTimer_Init
+ 379              		.section	.text.DistTimer_Start,"ax",%progbits
+ 380              		.align	2
+ 381              		.global	DistTimer_Start
+ 382              		.code	16
+ 383              		.thumb_func
+ 384              		.type	DistTimer_Start, %function
+ 385              	DistTimer_Start:
+ 386              	.LFB2:
+ 216:.\Generated_Source\PSoC4/DistTimer.c ****     if(DistTimer_initVar == 0u)
+ 387              		.loc 1 216 0
+ 388              		.cfi_startproc
+ 389 0000 08B5     		push	{r3, lr}
+ 390              		.cfi_def_cfa_offset 8
+ 391              		.cfi_offset 3, -8
+ 392              		.cfi_offset 14, -4
+ 217:.\Generated_Source\PSoC4/DistTimer.c ****     {
+ 393              		.loc 1 217 0
+ 394 0002 054B     		ldr	r3, .L38
+ 395 0004 1B78     		ldrb	r3, [r3]
+ 396 0006 002B     		cmp	r3, #0
+ 397 0008 04D1     		bne	.L36
+ 219:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 398              		.loc 1 219 0
+ 399 000a FFF7FEFF 		bl	DistTimer_Init
+ 400              	.LVL12:
+ 221:.\Generated_Source\PSoC4/DistTimer.c ****     }
+ 401              		.loc 1 221 0
+ 402 000e 0122     		mov	r2, #1
+ 403 0010 014B     		ldr	r3, .L38
+ 404 0012 1A70     		strb	r2, [r3]
+ 405              	.L36:
+ 226:.\Generated_Source\PSoC4/DistTimer.c **** 
+ 406              		.loc 1 226 0
+ 407              		@ sp needed
+ 408 0014 08BD     		pop	{r3, pc}
+ 409              	.L39:
+ 410 0016 C046     		.align	2
+ 411              	.L38:
+ 412 0018 00000000 		.word	.LANCHOR0
+ 413              		.cfi_endproc
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 22
+
+
+ 414              	.LFE2:
+ 415              		.size	DistTimer_Start, .-DistTimer_Start
+ 416              		.global	DistTimer_initVar
+ 417              		.bss
+ 418              		.set	.LANCHOR0,. + 0
+ 419              		.type	DistTimer_initVar, %object
+ 420              		.size	DistTimer_initVar, 1
+ 421              	DistTimer_initVar:
+ 422 0000 00       		.space	1
+ 423              		.text
+ 424              	.Letext0:
+ 425              		.file 2 ".\\Generated_Source\\PSoC4\\cytypes.h"
+ 426              		.file 3 ".\\Generated_Source\\PSoC4\\CyLib.h"
+ 427              		.section	.debug_info,"",%progbits
+ 428              	.Ldebug_info0:
+ 429 0000 EC020000 		.4byte	0x2ec
+ 430 0004 0400     		.2byte	0x4
+ 431 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 432 000a 04       		.byte	0x4
+ 433 000b 01       		.uleb128 0x1
+ 434 000c 5C020000 		.4byte	.LASF37
+ 435 0010 01       		.byte	0x1
+ 436 0011 C8010000 		.4byte	.LASF38
+ 437 0015 4E030000 		.4byte	.LASF39
+ 438 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 439 001d 00000000 		.4byte	0
+ 440 0021 00000000 		.4byte	.Ldebug_line0
+ 441 0025 02       		.uleb128 0x2
+ 442 0026 01       		.byte	0x1
+ 443 0027 06       		.byte	0x6
+ 444 0028 12030000 		.4byte	.LASF0
+ 445 002c 02       		.uleb128 0x2
+ 446 002d 01       		.byte	0x1
+ 447 002e 08       		.byte	0x8
+ 448 002f D6000000 		.4byte	.LASF1
+ 449 0033 02       		.uleb128 0x2
+ 450 0034 02       		.byte	0x2
+ 451 0035 05       		.byte	0x5
+ 452 0036 EA020000 		.4byte	.LASF2
+ 453 003a 02       		.uleb128 0x2
+ 454 003b 02       		.byte	0x2
+ 455 003c 07       		.byte	0x7
+ 456 003d 3D000000 		.4byte	.LASF3
+ 457 0041 02       		.uleb128 0x2
+ 458 0042 04       		.byte	0x4
+ 459 0043 05       		.byte	0x5
+ 460 0044 04030000 		.4byte	.LASF4
+ 461 0048 02       		.uleb128 0x2
+ 462 0049 04       		.byte	0x4
+ 463 004a 07       		.byte	0x7
+ 464 004b 09010000 		.4byte	.LASF5
+ 465 004f 02       		.uleb128 0x2
+ 466 0050 08       		.byte	0x8
+ 467 0051 05       		.byte	0x5
+ 468 0052 40020000 		.4byte	.LASF6
+ 469 0056 02       		.uleb128 0x2
+ 470 0057 08       		.byte	0x8
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 23
+
+
+ 471 0058 07       		.byte	0x7
+ 472 0059 BF000000 		.4byte	.LASF7
+ 473 005d 03       		.uleb128 0x3
+ 474 005e 04       		.byte	0x4
+ 475 005f 05       		.byte	0x5
+ 476 0060 696E7400 		.ascii	"int\000"
+ 477 0064 02       		.uleb128 0x2
+ 478 0065 04       		.byte	0x4
+ 479 0066 07       		.byte	0x7
+ 480 0067 BB010000 		.4byte	.LASF8
+ 481 006b 04       		.uleb128 0x4
+ 482 006c 1B010000 		.4byte	.LASF9
+ 483 0070 02       		.byte	0x2
+ 484 0071 3801     		.2byte	0x138
+ 485 0073 2C000000 		.4byte	0x2c
+ 486 0077 04       		.uleb128 0x4
+ 487 0078 76010000 		.4byte	.LASF10
+ 488 007c 02       		.byte	0x2
+ 489 007d 3901     		.2byte	0x139
+ 490 007f 3A000000 		.4byte	0x3a
+ 491 0083 02       		.uleb128 0x2
+ 492 0084 04       		.byte	0x4
+ 493 0085 04       		.byte	0x4
+ 494 0086 1C000000 		.4byte	.LASF11
+ 495 008a 02       		.uleb128 0x2
+ 496 008b 08       		.byte	0x8
+ 497 008c 04       		.byte	0x4
+ 498 008d 53010000 		.4byte	.LASF12
+ 499 0091 02       		.uleb128 0x2
+ 500 0092 01       		.byte	0x1
+ 501 0093 08       		.byte	0x8
+ 502 0094 0D030000 		.4byte	.LASF13
+ 503 0098 04       		.uleb128 0x4
+ 504 0099 32020000 		.4byte	.LASF14
+ 505 009d 02       		.byte	0x2
+ 506 009e E201     		.2byte	0x1e2
+ 507 00a0 A4000000 		.4byte	0xa4
+ 508 00a4 05       		.uleb128 0x5
+ 509 00a5 6B000000 		.4byte	0x6b
+ 510 00a9 04       		.uleb128 0x4
+ 511 00aa 00000000 		.4byte	.LASF15
+ 512 00ae 02       		.byte	0x2
+ 513 00af E301     		.2byte	0x1e3
+ 514 00b1 B5000000 		.4byte	0xb5
+ 515 00b5 05       		.uleb128 0x5
+ 516 00b6 77000000 		.4byte	0x77
+ 517 00ba 02       		.uleb128 0x2
+ 518 00bb 04       		.byte	0x4
+ 519 00bc 07       		.byte	0x7
+ 520 00bd 37020000 		.4byte	.LASF16
+ 521 00c1 06       		.uleb128 0x6
+ 522 00c2 93010000 		.4byte	.LASF17
+ 523 00c6 01       		.byte	0x1
+ 524 00c7 B4       		.byte	0xb4
+ 525 00c8 00000000 		.4byte	.LFB1
+ 526 00cc 02000000 		.4byte	.LFE1-.LFB1
+ 527 00d0 01       		.uleb128 0x1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 24
+
+
+ 528 00d1 9C       		.byte	0x9c
+ 529 00d2 06       		.uleb128 0x6
+ 530 00d3 E4000000 		.4byte	.LASF18
+ 531 00d7 01       		.byte	0x1
+ 532 00d8 F7       		.byte	0xf7
+ 533 00d9 00000000 		.4byte	.LFB3
+ 534 00dd 02000000 		.4byte	.LFE3-.LFB3
+ 535 00e1 01       		.uleb128 0x1
+ 536 00e2 9C       		.byte	0x9c
+ 537 00e3 07       		.uleb128 0x7
+ 538 00e4 33030000 		.4byte	.LASF22
+ 539 00e8 01       		.byte	0x1
+ 540 00e9 1701     		.2byte	0x117
+ 541 00eb 00000000 		.4byte	.LFB4
+ 542 00ef 0C000000 		.4byte	.LFE4-.LFB4
+ 543 00f3 01       		.uleb128 0x1
+ 544 00f4 9C       		.byte	0x9c
+ 545 00f5 08010000 		.4byte	0x108
+ 546 00f9 08       		.uleb128 0x8
+ 547 00fa 4E020000 		.4byte	.LASF24
+ 548 00fe 01       		.byte	0x1
+ 549 00ff 1701     		.2byte	0x117
+ 550 0101 6B000000 		.4byte	0x6b
+ 551 0105 01       		.uleb128 0x1
+ 552 0106 50       		.byte	0x50
+ 553 0107 00       		.byte	0
+ 554 0108 09       		.uleb128 0x9
+ 555 0109 9D000000 		.4byte	.LASF19
+ 556 010d 01       		.byte	0x1
+ 557 010e 2E01     		.2byte	0x12e
+ 558 0110 00000000 		.4byte	.LFB5
+ 559 0114 0C000000 		.4byte	.LFE5-.LFB5
+ 560 0118 01       		.uleb128 0x1
+ 561 0119 9C       		.byte	0x9c
+ 562 011a 0A       		.uleb128 0xa
+ 563 011b 15020000 		.4byte	.LASF20
+ 564 011f 01       		.byte	0x1
+ 565 0120 4D01     		.2byte	0x14d
+ 566 0122 6B000000 		.4byte	0x6b
+ 567 0126 00000000 		.4byte	.LFB6
+ 568 012a 0C000000 		.4byte	.LFE6-.LFB6
+ 569 012e 01       		.uleb128 0x1
+ 570 012f 9C       		.byte	0x9c
+ 571 0130 0A       		.uleb128 0xa
+ 572 0131 1E030000 		.4byte	.LASF21
+ 573 0135 01       		.byte	0x1
+ 574 0136 9501     		.2byte	0x195
+ 575 0138 77000000 		.4byte	0x77
+ 576 013c 00000000 		.4byte	.LFB7
+ 577 0140 0C000000 		.4byte	.LFE7-.LFB7
+ 578 0144 01       		.uleb128 0x1
+ 579 0145 9C       		.byte	0x9c
+ 580 0146 07       		.uleb128 0x7
+ 581 0147 7D010000 		.4byte	.LASF23
+ 582 014b 01       		.byte	0x1
+ 583 014c AF01     		.2byte	0x1af
+ 584 014e 00000000 		.4byte	.LFB8
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 25
+
+
+ 585 0152 0C000000 		.4byte	.LFE8-.LFB8
+ 586 0156 01       		.uleb128 0x1
+ 587 0157 9C       		.byte	0x9c
+ 588 0158 6B010000 		.4byte	0x16b
+ 589 015c 08       		.uleb128 0x8
+ 590 015d 36000000 		.4byte	.LASF25
+ 591 0161 01       		.byte	0x1
+ 592 0162 AF01     		.2byte	0x1af
+ 593 0164 77000000 		.4byte	0x77
+ 594 0168 01       		.uleb128 0x1
+ 595 0169 50       		.byte	0x50
+ 596 016a 00       		.byte	0
+ 597 016b 0A       		.uleb128 0xa
+ 598 016c 06000000 		.4byte	.LASF26
+ 599 0170 01       		.byte	0x1
+ 600 0171 C801     		.2byte	0x1c8
+ 601 0173 77000000 		.4byte	0x77
+ 602 0177 00000000 		.4byte	.LFB9
+ 603 017b 0C000000 		.4byte	.LFE9-.LFB9
+ 604 017f 01       		.uleb128 0x1
+ 605 0180 9C       		.byte	0x9c
+ 606 0181 07       		.uleb128 0x7
+ 607 0182 50000000 		.4byte	.LASF27
+ 608 0186 01       		.byte	0x1
+ 609 0187 E001     		.2byte	0x1e0
+ 610 0189 00000000 		.4byte	.LFB10
+ 611 018d 0C000000 		.4byte	.LFE10-.LFB10
+ 612 0191 01       		.uleb128 0x1
+ 613 0192 9C       		.byte	0x9c
+ 614 0193 A6010000 		.4byte	0x1a6
+ 615 0197 08       		.uleb128 0x8
+ 616 0198 B7000000 		.4byte	.LASF28
+ 617 019c 01       		.byte	0x1
+ 618 019d E001     		.2byte	0x1e0
+ 619 019f 77000000 		.4byte	0x77
+ 620 01a3 01       		.uleb128 0x1
+ 621 01a4 50       		.byte	0x50
+ 622 01a5 00       		.byte	0
+ 623 01a6 0A       		.uleb128 0xa
+ 624 01a7 F3000000 		.4byte	.LASF29
+ 625 01ab 01       		.byte	0x1
+ 626 01ac FC01     		.2byte	0x1fc
+ 627 01ae 77000000 		.4byte	0x77
+ 628 01b2 00000000 		.4byte	.LFB11
+ 629 01b6 14000000 		.4byte	.LFE11-.LFB11
+ 630 01ba 01       		.uleb128 0x1
+ 631 01bb 9C       		.byte	0x9c
+ 632 01bc 09       		.uleb128 0x9
+ 633 01bd 67000000 		.4byte	.LASF30
+ 634 01c1 01       		.byte	0x1
+ 635 01c2 7E02     		.2byte	0x27e
+ 636 01c4 00000000 		.4byte	.LFB12
+ 637 01c8 02000000 		.4byte	.LFE12-.LFB12
+ 638 01cc 01       		.uleb128 0x1
+ 639 01cd 9C       		.byte	0x9c
+ 640 01ce 09       		.uleb128 0x9
+ 641 01cf 3A010000 		.4byte	.LASF31
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 26
+
+
+ 642 01d3 01       		.byte	0x1
+ 643 01d4 9402     		.2byte	0x294
+ 644 01d6 00000000 		.4byte	.LFB13
+ 645 01da 02000000 		.4byte	.LFE13-.LFB13
+ 646 01de 01       		.uleb128 0x1
+ 647 01df 9C       		.byte	0x9c
+ 648 01e0 07       		.uleb128 0x7
+ 649 01e1 5A010000 		.4byte	.LASF32
+ 650 01e5 01       		.byte	0x1
+ 651 01e6 B002     		.2byte	0x2b0
+ 652 01e8 00000000 		.4byte	.LFB14
+ 653 01ec 02000000 		.4byte	.LFE14-.LFB14
+ 654 01f0 01       		.uleb128 0x1
+ 655 01f1 9C       		.byte	0x9c
+ 656 01f2 07020000 		.4byte	0x207
+ 657 01f6 0B       		.uleb128 0xb
+ 658 01f7 8E000000 		.4byte	.LASF33
+ 659 01fb 01       		.byte	0x1
+ 660 01fc B002     		.2byte	0x2b0
+ 661 01fe 6B000000 		.4byte	0x6b
+ 662 0202 00000000 		.4byte	.LLST0
+ 663 0206 00       		.byte	0
+ 664 0207 07       		.uleb128 0x7
+ 665 0208 22000000 		.4byte	.LASF34
+ 666 020c 01       		.byte	0x1
+ 667 020d FB02     		.2byte	0x2fb
+ 668 020f 00000000 		.4byte	.LFB15
+ 669 0213 12000000 		.4byte	.LFE15-.LFB15
+ 670 0217 01       		.uleb128 0x1
+ 671 0218 9C       		.byte	0x9c
+ 672 0219 30020000 		.4byte	0x230
+ 673 021d 0C       		.uleb128 0xc
+ 674 021e 08000000 		.4byte	.LVL4
+ 675 0222 6B010000 		.4byte	0x16b
+ 676 0226 0C       		.uleb128 0xc
+ 677 0227 0C000000 		.4byte	.LVL5
+ 678 022b 1A010000 		.4byte	0x11a
+ 679 022f 00       		.byte	0
+ 680 0230 0D       		.uleb128 0xd
+ 681 0231 7F000000 		.4byte	.LASF35
+ 682 0235 01       		.byte	0x1
+ 683 0236 2B       		.byte	0x2b
+ 684 0237 00000000 		.4byte	.LFB0
+ 685 023b 38000000 		.4byte	.LFE0-.LFB0
+ 686 023f 01       		.uleb128 0x1
+ 687 0240 9C       		.byte	0x9c
+ 688 0241 A7020000 		.4byte	0x2a7
+ 689 0245 0E       		.uleb128 0xe
+ 690 0246 21010000 		.4byte	.LASF40
+ 691 024a 01       		.byte	0x1
+ 692 024b 2F       		.byte	0x2f
+ 693 024c 6B000000 		.4byte	0x6b
+ 694 0250 23000000 		.4byte	.LLST1
+ 695 0254 0F       		.uleb128 0xf
+ 696 0255 0A000000 		.4byte	.LVL6
+ 697 0259 46010000 		.4byte	0x146
+ 698 025d 68020000 		.4byte	0x268
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 27
+
+
+ 699 0261 10       		.uleb128 0x10
+ 700 0262 01       		.uleb128 0x1
+ 701 0263 50       		.byte	0x50
+ 702 0264 02       		.uleb128 0x2
+ 703 0265 74       		.byte	0x74
+ 704 0266 00       		.sleb128 0
+ 705 0267 00       		.byte	0
+ 706 0268 0F       		.uleb128 0xf
+ 707 0269 10000000 		.4byte	.LVL7
+ 708 026d 81010000 		.4byte	0x181
+ 709 0271 7C020000 		.4byte	0x27c
+ 710 0275 10       		.uleb128 0x10
+ 711 0276 01       		.uleb128 0x1
+ 712 0277 50       		.byte	0x50
+ 713 0278 02       		.uleb128 0x2
+ 714 0279 74       		.byte	0x74
+ 715 027a 00       		.sleb128 0
+ 716 027b 00       		.byte	0
+ 717 027c 0C       		.uleb128 0xc
+ 718 027d 14000000 		.4byte	.LVL8
+ 719 0281 D7020000 		.4byte	0x2d7
+ 720 0285 0C       		.uleb128 0xc
+ 721 0286 22000000 		.4byte	.LVL9
+ 722 028a E2020000 		.4byte	0x2e2
+ 723 028e 0C       		.uleb128 0xc
+ 724 028f 26000000 		.4byte	.LVL10
+ 725 0293 07020000 		.4byte	0x207
+ 726 0297 11       		.uleb128 0x11
+ 727 0298 2C000000 		.4byte	.LVL11
+ 728 029c E3000000 		.4byte	0xe3
+ 729 02a0 10       		.uleb128 0x10
+ 730 02a1 01       		.uleb128 0x1
+ 731 02a2 50       		.byte	0x50
+ 732 02a3 01       		.uleb128 0x1
+ 733 02a4 32       		.byte	0x32
+ 734 02a5 00       		.byte	0
+ 735 02a6 00       		.byte	0
+ 736 02a7 0D       		.uleb128 0xd
+ 737 02a8 F4020000 		.4byte	.LASF36
+ 738 02ac 01       		.byte	0x1
+ 739 02ad D7       		.byte	0xd7
+ 740 02ae 00000000 		.4byte	.LFB2
+ 741 02b2 1C000000 		.4byte	.LFE2-.LFB2
+ 742 02b6 01       		.uleb128 0x1
+ 743 02b7 9C       		.byte	0x9c
+ 744 02b8 C6020000 		.4byte	0x2c6
+ 745 02bc 0C       		.uleb128 0xc
+ 746 02bd 0E000000 		.4byte	.LVL12
+ 747 02c1 30020000 		.4byte	0x230
+ 748 02c5 00       		.byte	0
+ 749 02c6 12       		.uleb128 0x12
+ 750 02c7 03020000 		.4byte	.LASF41
+ 751 02cb 01       		.byte	0x1
+ 752 02cc 1A       		.byte	0x1a
+ 753 02cd 6B000000 		.4byte	0x6b
+ 754 02d1 05       		.uleb128 0x5
+ 755 02d2 03       		.byte	0x3
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 28
+
+
+ 756 02d3 00000000 		.4byte	DistTimer_initVar
+ 757 02d7 13       		.uleb128 0x13
+ 758 02d8 A4010000 		.4byte	.LASF42
+ 759 02dc 03       		.byte	0x3
+ 760 02dd 61       		.byte	0x61
+ 761 02de 6B000000 		.4byte	0x6b
+ 762 02e2 14       		.uleb128 0x14
+ 763 02e3 ED010000 		.4byte	.LASF43
+ 764 02e7 03       		.byte	0x3
+ 765 02e8 62       		.byte	0x62
+ 766 02e9 15       		.uleb128 0x15
+ 767 02ea 6B000000 		.4byte	0x6b
+ 768 02ee 00       		.byte	0
+ 769 02ef 00       		.byte	0
+ 770              		.section	.debug_abbrev,"",%progbits
+ 771              	.Ldebug_abbrev0:
+ 772 0000 01       		.uleb128 0x1
+ 773 0001 11       		.uleb128 0x11
+ 774 0002 01       		.byte	0x1
+ 775 0003 25       		.uleb128 0x25
+ 776 0004 0E       		.uleb128 0xe
+ 777 0005 13       		.uleb128 0x13
+ 778 0006 0B       		.uleb128 0xb
+ 779 0007 03       		.uleb128 0x3
+ 780 0008 0E       		.uleb128 0xe
+ 781 0009 1B       		.uleb128 0x1b
+ 782 000a 0E       		.uleb128 0xe
+ 783 000b 55       		.uleb128 0x55
+ 784 000c 17       		.uleb128 0x17
+ 785 000d 11       		.uleb128 0x11
+ 786 000e 01       		.uleb128 0x1
+ 787 000f 10       		.uleb128 0x10
+ 788 0010 17       		.uleb128 0x17
+ 789 0011 00       		.byte	0
+ 790 0012 00       		.byte	0
+ 791 0013 02       		.uleb128 0x2
+ 792 0014 24       		.uleb128 0x24
+ 793 0015 00       		.byte	0
+ 794 0016 0B       		.uleb128 0xb
+ 795 0017 0B       		.uleb128 0xb
+ 796 0018 3E       		.uleb128 0x3e
+ 797 0019 0B       		.uleb128 0xb
+ 798 001a 03       		.uleb128 0x3
+ 799 001b 0E       		.uleb128 0xe
+ 800 001c 00       		.byte	0
+ 801 001d 00       		.byte	0
+ 802 001e 03       		.uleb128 0x3
+ 803 001f 24       		.uleb128 0x24
+ 804 0020 00       		.byte	0
+ 805 0021 0B       		.uleb128 0xb
+ 806 0022 0B       		.uleb128 0xb
+ 807 0023 3E       		.uleb128 0x3e
+ 808 0024 0B       		.uleb128 0xb
+ 809 0025 03       		.uleb128 0x3
+ 810 0026 08       		.uleb128 0x8
+ 811 0027 00       		.byte	0
+ 812 0028 00       		.byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 29
+
+
+ 813 0029 04       		.uleb128 0x4
+ 814 002a 16       		.uleb128 0x16
+ 815 002b 00       		.byte	0
+ 816 002c 03       		.uleb128 0x3
+ 817 002d 0E       		.uleb128 0xe
+ 818 002e 3A       		.uleb128 0x3a
+ 819 002f 0B       		.uleb128 0xb
+ 820 0030 3B       		.uleb128 0x3b
+ 821 0031 05       		.uleb128 0x5
+ 822 0032 49       		.uleb128 0x49
+ 823 0033 13       		.uleb128 0x13
+ 824 0034 00       		.byte	0
+ 825 0035 00       		.byte	0
+ 826 0036 05       		.uleb128 0x5
+ 827 0037 35       		.uleb128 0x35
+ 828 0038 00       		.byte	0
+ 829 0039 49       		.uleb128 0x49
+ 830 003a 13       		.uleb128 0x13
+ 831 003b 00       		.byte	0
+ 832 003c 00       		.byte	0
+ 833 003d 06       		.uleb128 0x6
+ 834 003e 2E       		.uleb128 0x2e
+ 835 003f 00       		.byte	0
+ 836 0040 3F       		.uleb128 0x3f
+ 837 0041 19       		.uleb128 0x19
+ 838 0042 03       		.uleb128 0x3
+ 839 0043 0E       		.uleb128 0xe
+ 840 0044 3A       		.uleb128 0x3a
+ 841 0045 0B       		.uleb128 0xb
+ 842 0046 3B       		.uleb128 0x3b
+ 843 0047 0B       		.uleb128 0xb
+ 844 0048 27       		.uleb128 0x27
+ 845 0049 19       		.uleb128 0x19
+ 846 004a 11       		.uleb128 0x11
+ 847 004b 01       		.uleb128 0x1
+ 848 004c 12       		.uleb128 0x12
+ 849 004d 06       		.uleb128 0x6
+ 850 004e 40       		.uleb128 0x40
+ 851 004f 18       		.uleb128 0x18
+ 852 0050 9742     		.uleb128 0x2117
+ 853 0052 19       		.uleb128 0x19
+ 854 0053 00       		.byte	0
+ 855 0054 00       		.byte	0
+ 856 0055 07       		.uleb128 0x7
+ 857 0056 2E       		.uleb128 0x2e
+ 858 0057 01       		.byte	0x1
+ 859 0058 3F       		.uleb128 0x3f
+ 860 0059 19       		.uleb128 0x19
+ 861 005a 03       		.uleb128 0x3
+ 862 005b 0E       		.uleb128 0xe
+ 863 005c 3A       		.uleb128 0x3a
+ 864 005d 0B       		.uleb128 0xb
+ 865 005e 3B       		.uleb128 0x3b
+ 866 005f 05       		.uleb128 0x5
+ 867 0060 27       		.uleb128 0x27
+ 868 0061 19       		.uleb128 0x19
+ 869 0062 11       		.uleb128 0x11
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 30
+
+
+ 870 0063 01       		.uleb128 0x1
+ 871 0064 12       		.uleb128 0x12
+ 872 0065 06       		.uleb128 0x6
+ 873 0066 40       		.uleb128 0x40
+ 874 0067 18       		.uleb128 0x18
+ 875 0068 9742     		.uleb128 0x2117
+ 876 006a 19       		.uleb128 0x19
+ 877 006b 01       		.uleb128 0x1
+ 878 006c 13       		.uleb128 0x13
+ 879 006d 00       		.byte	0
+ 880 006e 00       		.byte	0
+ 881 006f 08       		.uleb128 0x8
+ 882 0070 05       		.uleb128 0x5
+ 883 0071 00       		.byte	0
+ 884 0072 03       		.uleb128 0x3
+ 885 0073 0E       		.uleb128 0xe
+ 886 0074 3A       		.uleb128 0x3a
+ 887 0075 0B       		.uleb128 0xb
+ 888 0076 3B       		.uleb128 0x3b
+ 889 0077 05       		.uleb128 0x5
+ 890 0078 49       		.uleb128 0x49
+ 891 0079 13       		.uleb128 0x13
+ 892 007a 02       		.uleb128 0x2
+ 893 007b 18       		.uleb128 0x18
+ 894 007c 00       		.byte	0
+ 895 007d 00       		.byte	0
+ 896 007e 09       		.uleb128 0x9
+ 897 007f 2E       		.uleb128 0x2e
+ 898 0080 00       		.byte	0
+ 899 0081 3F       		.uleb128 0x3f
+ 900 0082 19       		.uleb128 0x19
+ 901 0083 03       		.uleb128 0x3
+ 902 0084 0E       		.uleb128 0xe
+ 903 0085 3A       		.uleb128 0x3a
+ 904 0086 0B       		.uleb128 0xb
+ 905 0087 3B       		.uleb128 0x3b
+ 906 0088 05       		.uleb128 0x5
+ 907 0089 27       		.uleb128 0x27
+ 908 008a 19       		.uleb128 0x19
+ 909 008b 11       		.uleb128 0x11
+ 910 008c 01       		.uleb128 0x1
+ 911 008d 12       		.uleb128 0x12
+ 912 008e 06       		.uleb128 0x6
+ 913 008f 40       		.uleb128 0x40
+ 914 0090 18       		.uleb128 0x18
+ 915 0091 9742     		.uleb128 0x2117
+ 916 0093 19       		.uleb128 0x19
+ 917 0094 00       		.byte	0
+ 918 0095 00       		.byte	0
+ 919 0096 0A       		.uleb128 0xa
+ 920 0097 2E       		.uleb128 0x2e
+ 921 0098 00       		.byte	0
+ 922 0099 3F       		.uleb128 0x3f
+ 923 009a 19       		.uleb128 0x19
+ 924 009b 03       		.uleb128 0x3
+ 925 009c 0E       		.uleb128 0xe
+ 926 009d 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 31
+
+
+ 927 009e 0B       		.uleb128 0xb
+ 928 009f 3B       		.uleb128 0x3b
+ 929 00a0 05       		.uleb128 0x5
+ 930 00a1 27       		.uleb128 0x27
+ 931 00a2 19       		.uleb128 0x19
+ 932 00a3 49       		.uleb128 0x49
+ 933 00a4 13       		.uleb128 0x13
+ 934 00a5 11       		.uleb128 0x11
+ 935 00a6 01       		.uleb128 0x1
+ 936 00a7 12       		.uleb128 0x12
+ 937 00a8 06       		.uleb128 0x6
+ 938 00a9 40       		.uleb128 0x40
+ 939 00aa 18       		.uleb128 0x18
+ 940 00ab 9742     		.uleb128 0x2117
+ 941 00ad 19       		.uleb128 0x19
+ 942 00ae 00       		.byte	0
+ 943 00af 00       		.byte	0
+ 944 00b0 0B       		.uleb128 0xb
+ 945 00b1 05       		.uleb128 0x5
+ 946 00b2 00       		.byte	0
+ 947 00b3 03       		.uleb128 0x3
+ 948 00b4 0E       		.uleb128 0xe
+ 949 00b5 3A       		.uleb128 0x3a
+ 950 00b6 0B       		.uleb128 0xb
+ 951 00b7 3B       		.uleb128 0x3b
+ 952 00b8 05       		.uleb128 0x5
+ 953 00b9 49       		.uleb128 0x49
+ 954 00ba 13       		.uleb128 0x13
+ 955 00bb 02       		.uleb128 0x2
+ 956 00bc 17       		.uleb128 0x17
+ 957 00bd 00       		.byte	0
+ 958 00be 00       		.byte	0
+ 959 00bf 0C       		.uleb128 0xc
+ 960 00c0 898201   		.uleb128 0x4109
+ 961 00c3 00       		.byte	0
+ 962 00c4 11       		.uleb128 0x11
+ 963 00c5 01       		.uleb128 0x1
+ 964 00c6 31       		.uleb128 0x31
+ 965 00c7 13       		.uleb128 0x13
+ 966 00c8 00       		.byte	0
+ 967 00c9 00       		.byte	0
+ 968 00ca 0D       		.uleb128 0xd
+ 969 00cb 2E       		.uleb128 0x2e
+ 970 00cc 01       		.byte	0x1
+ 971 00cd 3F       		.uleb128 0x3f
+ 972 00ce 19       		.uleb128 0x19
+ 973 00cf 03       		.uleb128 0x3
+ 974 00d0 0E       		.uleb128 0xe
+ 975 00d1 3A       		.uleb128 0x3a
+ 976 00d2 0B       		.uleb128 0xb
+ 977 00d3 3B       		.uleb128 0x3b
+ 978 00d4 0B       		.uleb128 0xb
+ 979 00d5 27       		.uleb128 0x27
+ 980 00d6 19       		.uleb128 0x19
+ 981 00d7 11       		.uleb128 0x11
+ 982 00d8 01       		.uleb128 0x1
+ 983 00d9 12       		.uleb128 0x12
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 32
+
+
+ 984 00da 06       		.uleb128 0x6
+ 985 00db 40       		.uleb128 0x40
+ 986 00dc 18       		.uleb128 0x18
+ 987 00dd 9742     		.uleb128 0x2117
+ 988 00df 19       		.uleb128 0x19
+ 989 00e0 01       		.uleb128 0x1
+ 990 00e1 13       		.uleb128 0x13
+ 991 00e2 00       		.byte	0
+ 992 00e3 00       		.byte	0
+ 993 00e4 0E       		.uleb128 0xe
+ 994 00e5 34       		.uleb128 0x34
+ 995 00e6 00       		.byte	0
+ 996 00e7 03       		.uleb128 0x3
+ 997 00e8 0E       		.uleb128 0xe
+ 998 00e9 3A       		.uleb128 0x3a
+ 999 00ea 0B       		.uleb128 0xb
+ 1000 00eb 3B       		.uleb128 0x3b
+ 1001 00ec 0B       		.uleb128 0xb
+ 1002 00ed 49       		.uleb128 0x49
+ 1003 00ee 13       		.uleb128 0x13
+ 1004 00ef 02       		.uleb128 0x2
+ 1005 00f0 17       		.uleb128 0x17
+ 1006 00f1 00       		.byte	0
+ 1007 00f2 00       		.byte	0
+ 1008 00f3 0F       		.uleb128 0xf
+ 1009 00f4 898201   		.uleb128 0x4109
+ 1010 00f7 01       		.byte	0x1
+ 1011 00f8 11       		.uleb128 0x11
+ 1012 00f9 01       		.uleb128 0x1
+ 1013 00fa 31       		.uleb128 0x31
+ 1014 00fb 13       		.uleb128 0x13
+ 1015 00fc 01       		.uleb128 0x1
+ 1016 00fd 13       		.uleb128 0x13
+ 1017 00fe 00       		.byte	0
+ 1018 00ff 00       		.byte	0
+ 1019 0100 10       		.uleb128 0x10
+ 1020 0101 8A8201   		.uleb128 0x410a
+ 1021 0104 00       		.byte	0
+ 1022 0105 02       		.uleb128 0x2
+ 1023 0106 18       		.uleb128 0x18
+ 1024 0107 9142     		.uleb128 0x2111
+ 1025 0109 18       		.uleb128 0x18
+ 1026 010a 00       		.byte	0
+ 1027 010b 00       		.byte	0
+ 1028 010c 11       		.uleb128 0x11
+ 1029 010d 898201   		.uleb128 0x4109
+ 1030 0110 01       		.byte	0x1
+ 1031 0111 11       		.uleb128 0x11
+ 1032 0112 01       		.uleb128 0x1
+ 1033 0113 31       		.uleb128 0x31
+ 1034 0114 13       		.uleb128 0x13
+ 1035 0115 00       		.byte	0
+ 1036 0116 00       		.byte	0
+ 1037 0117 12       		.uleb128 0x12
+ 1038 0118 34       		.uleb128 0x34
+ 1039 0119 00       		.byte	0
+ 1040 011a 03       		.uleb128 0x3
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 33
+
+
+ 1041 011b 0E       		.uleb128 0xe
+ 1042 011c 3A       		.uleb128 0x3a
+ 1043 011d 0B       		.uleb128 0xb
+ 1044 011e 3B       		.uleb128 0x3b
+ 1045 011f 0B       		.uleb128 0xb
+ 1046 0120 49       		.uleb128 0x49
+ 1047 0121 13       		.uleb128 0x13
+ 1048 0122 3F       		.uleb128 0x3f
+ 1049 0123 19       		.uleb128 0x19
+ 1050 0124 02       		.uleb128 0x2
+ 1051 0125 18       		.uleb128 0x18
+ 1052 0126 00       		.byte	0
+ 1053 0127 00       		.byte	0
+ 1054 0128 13       		.uleb128 0x13
+ 1055 0129 2E       		.uleb128 0x2e
+ 1056 012a 00       		.byte	0
+ 1057 012b 3F       		.uleb128 0x3f
+ 1058 012c 19       		.uleb128 0x19
+ 1059 012d 03       		.uleb128 0x3
+ 1060 012e 0E       		.uleb128 0xe
+ 1061 012f 3A       		.uleb128 0x3a
+ 1062 0130 0B       		.uleb128 0xb
+ 1063 0131 3B       		.uleb128 0x3b
+ 1064 0132 0B       		.uleb128 0xb
+ 1065 0133 27       		.uleb128 0x27
+ 1066 0134 19       		.uleb128 0x19
+ 1067 0135 49       		.uleb128 0x49
+ 1068 0136 13       		.uleb128 0x13
+ 1069 0137 3C       		.uleb128 0x3c
+ 1070 0138 19       		.uleb128 0x19
+ 1071 0139 00       		.byte	0
+ 1072 013a 00       		.byte	0
+ 1073 013b 14       		.uleb128 0x14
+ 1074 013c 2E       		.uleb128 0x2e
+ 1075 013d 01       		.byte	0x1
+ 1076 013e 3F       		.uleb128 0x3f
+ 1077 013f 19       		.uleb128 0x19
+ 1078 0140 03       		.uleb128 0x3
+ 1079 0141 0E       		.uleb128 0xe
+ 1080 0142 3A       		.uleb128 0x3a
+ 1081 0143 0B       		.uleb128 0xb
+ 1082 0144 3B       		.uleb128 0x3b
+ 1083 0145 0B       		.uleb128 0xb
+ 1084 0146 27       		.uleb128 0x27
+ 1085 0147 19       		.uleb128 0x19
+ 1086 0148 3C       		.uleb128 0x3c
+ 1087 0149 19       		.uleb128 0x19
+ 1088 014a 00       		.byte	0
+ 1089 014b 00       		.byte	0
+ 1090 014c 15       		.uleb128 0x15
+ 1091 014d 05       		.uleb128 0x5
+ 1092 014e 00       		.byte	0
+ 1093 014f 49       		.uleb128 0x49
+ 1094 0150 13       		.uleb128 0x13
+ 1095 0151 00       		.byte	0
+ 1096 0152 00       		.byte	0
+ 1097 0153 00       		.byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 34
+
+
+ 1098              		.section	.debug_loc,"",%progbits
+ 1099              	.Ldebug_loc0:
+ 1100              	.LLST0:
+ 1101 0000 00000000 		.4byte	.LVL3
+ 1102 0004 00000000 		.4byte	.LVL3
+ 1103 0008 0100     		.2byte	0x1
+ 1104 000a 50       		.byte	0x50
+ 1105 000b 00000000 		.4byte	.LVL3
+ 1106 000f 02000000 		.4byte	.LFE14
+ 1107 0013 0600     		.2byte	0x6
+ 1108 0015 F3       		.byte	0xf3
+ 1109 0016 01       		.uleb128 0x1
+ 1110 0017 50       		.byte	0x50
+ 1111 0018 33       		.byte	0x33
+ 1112 0019 1A       		.byte	0x1a
+ 1113 001a 9F       		.byte	0x9f
+ 1114 001b 00000000 		.4byte	0
+ 1115 001f 00000000 		.4byte	0
+ 1116              	.LLST1:
+ 1117 0023 14000000 		.4byte	.LVL8
+ 1118 0027 21000000 		.4byte	.LVL9-1
+ 1119 002b 0100     		.2byte	0x1
+ 1120 002d 50       		.byte	0x50
+ 1121 002e 00000000 		.4byte	0
+ 1122 0032 00000000 		.4byte	0
+ 1123              		.section	.debug_aranges,"",%progbits
+ 1124 0000 94000000 		.4byte	0x94
+ 1125 0004 0200     		.2byte	0x2
+ 1126 0006 00000000 		.4byte	.Ldebug_info0
+ 1127 000a 04       		.byte	0x4
+ 1128 000b 00       		.byte	0
+ 1129 000c 0000     		.2byte	0
+ 1130 000e 0000     		.2byte	0
+ 1131 0010 00000000 		.4byte	.LFB1
+ 1132 0014 02000000 		.4byte	.LFE1-.LFB1
+ 1133 0018 00000000 		.4byte	.LFB3
+ 1134 001c 02000000 		.4byte	.LFE3-.LFB3
+ 1135 0020 00000000 		.4byte	.LFB4
+ 1136 0024 0C000000 		.4byte	.LFE4-.LFB4
+ 1137 0028 00000000 		.4byte	.LFB5
+ 1138 002c 0C000000 		.4byte	.LFE5-.LFB5
+ 1139 0030 00000000 		.4byte	.LFB6
+ 1140 0034 0C000000 		.4byte	.LFE6-.LFB6
+ 1141 0038 00000000 		.4byte	.LFB7
+ 1142 003c 0C000000 		.4byte	.LFE7-.LFB7
+ 1143 0040 00000000 		.4byte	.LFB8
+ 1144 0044 0C000000 		.4byte	.LFE8-.LFB8
+ 1145 0048 00000000 		.4byte	.LFB9
+ 1146 004c 0C000000 		.4byte	.LFE9-.LFB9
+ 1147 0050 00000000 		.4byte	.LFB10
+ 1148 0054 0C000000 		.4byte	.LFE10-.LFB10
+ 1149 0058 00000000 		.4byte	.LFB11
+ 1150 005c 14000000 		.4byte	.LFE11-.LFB11
+ 1151 0060 00000000 		.4byte	.LFB12
+ 1152 0064 02000000 		.4byte	.LFE12-.LFB12
+ 1153 0068 00000000 		.4byte	.LFB13
+ 1154 006c 02000000 		.4byte	.LFE13-.LFB13
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 35
+
+
+ 1155 0070 00000000 		.4byte	.LFB14
+ 1156 0074 02000000 		.4byte	.LFE14-.LFB14
+ 1157 0078 00000000 		.4byte	.LFB15
+ 1158 007c 12000000 		.4byte	.LFE15-.LFB15
+ 1159 0080 00000000 		.4byte	.LFB0
+ 1160 0084 38000000 		.4byte	.LFE0-.LFB0
+ 1161 0088 00000000 		.4byte	.LFB2
+ 1162 008c 1C000000 		.4byte	.LFE2-.LFB2
+ 1163 0090 00000000 		.4byte	0
+ 1164 0094 00000000 		.4byte	0
+ 1165              		.section	.debug_ranges,"",%progbits
+ 1166              	.Ldebug_ranges0:
+ 1167 0000 00000000 		.4byte	.LFB1
+ 1168 0004 02000000 		.4byte	.LFE1
+ 1169 0008 00000000 		.4byte	.LFB3
+ 1170 000c 02000000 		.4byte	.LFE3
+ 1171 0010 00000000 		.4byte	.LFB4
+ 1172 0014 0C000000 		.4byte	.LFE4
+ 1173 0018 00000000 		.4byte	.LFB5
+ 1174 001c 0C000000 		.4byte	.LFE5
+ 1175 0020 00000000 		.4byte	.LFB6
+ 1176 0024 0C000000 		.4byte	.LFE6
+ 1177 0028 00000000 		.4byte	.LFB7
+ 1178 002c 0C000000 		.4byte	.LFE7
+ 1179 0030 00000000 		.4byte	.LFB8
+ 1180 0034 0C000000 		.4byte	.LFE8
+ 1181 0038 00000000 		.4byte	.LFB9
+ 1182 003c 0C000000 		.4byte	.LFE9
+ 1183 0040 00000000 		.4byte	.LFB10
+ 1184 0044 0C000000 		.4byte	.LFE10
+ 1185 0048 00000000 		.4byte	.LFB11
+ 1186 004c 14000000 		.4byte	.LFE11
+ 1187 0050 00000000 		.4byte	.LFB12
+ 1188 0054 02000000 		.4byte	.LFE12
+ 1189 0058 00000000 		.4byte	.LFB13
+ 1190 005c 02000000 		.4byte	.LFE13
+ 1191 0060 00000000 		.4byte	.LFB14
+ 1192 0064 02000000 		.4byte	.LFE14
+ 1193 0068 00000000 		.4byte	.LFB15
+ 1194 006c 12000000 		.4byte	.LFE15
+ 1195 0070 00000000 		.4byte	.LFB0
+ 1196 0074 38000000 		.4byte	.LFE0
+ 1197 0078 00000000 		.4byte	.LFB2
+ 1198 007c 1C000000 		.4byte	.LFE2
+ 1199 0080 00000000 		.4byte	0
+ 1200 0084 00000000 		.4byte	0
+ 1201              		.section	.debug_line,"",%progbits
+ 1202              	.Ldebug_line0:
+ 1203 0000 8B010000 		.section	.debug_str,"MS",%progbits,1
+ 1203      02005300 
+ 1203      00000201 
+ 1203      FB0E0D00 
+ 1203      01010101 
+ 1204              	.LASF15:
+ 1205 0000 72656731 		.ascii	"reg16\000"
+ 1205      3600
+ 1206              	.LASF26:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 36
+
+
+ 1207 0006 44697374 		.ascii	"DistTimer_ReadCapture\000"
+ 1207      54696D65 
+ 1207      725F5265 
+ 1207      61644361 
+ 1207      70747572 
+ 1208              	.LASF11:
+ 1209 001c 666C6F61 		.ascii	"float\000"
+ 1209      7400
+ 1210              	.LASF34:
+ 1211 0022 44697374 		.ascii	"DistTimer_ClearFIFO\000"
+ 1211      54696D65 
+ 1211      725F436C 
+ 1211      65617246 
+ 1211      49464F00 
+ 1212              	.LASF25:
+ 1213 0036 70657269 		.ascii	"period\000"
+ 1213      6F6400
+ 1214              	.LASF3:
+ 1215 003d 73686F72 		.ascii	"short unsigned int\000"
+ 1215      7420756E 
+ 1215      7369676E 
+ 1215      65642069 
+ 1215      6E7400
+ 1216              	.LASF27:
+ 1217 0050 44697374 		.ascii	"DistTimer_WriteCounter\000"
+ 1217      54696D65 
+ 1217      725F5772 
+ 1217      69746543 
+ 1217      6F756E74 
+ 1218              	.LASF30:
+ 1219 0067 44697374 		.ascii	"DistTimer_EnableTrigger\000"
+ 1219      54696D65 
+ 1219      725F456E 
+ 1219      61626C65 
+ 1219      54726967 
+ 1220              	.LASF35:
+ 1221 007f 44697374 		.ascii	"DistTimer_Init\000"
+ 1221      54696D65 
+ 1221      725F496E 
+ 1221      697400
+ 1222              	.LASF33:
+ 1223 008e 696E7465 		.ascii	"interruptCount\000"
+ 1223      72727570 
+ 1223      74436F75 
+ 1223      6E7400
+ 1224              	.LASF19:
+ 1225 009d 44697374 		.ascii	"DistTimer_SoftwareCapture\000"
+ 1225      54696D65 
+ 1225      725F536F 
+ 1225      66747761 
+ 1225      72654361 
+ 1226              	.LASF28:
+ 1227 00b7 636F756E 		.ascii	"counter\000"
+ 1227      74657200 
+ 1228              	.LASF7:
+ 1229 00bf 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1229      206C6F6E 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 37
+
+
+ 1229      6720756E 
+ 1229      7369676E 
+ 1229      65642069 
+ 1230              	.LASF1:
+ 1231 00d6 756E7369 		.ascii	"unsigned char\000"
+ 1231      676E6564 
+ 1231      20636861 
+ 1231      7200
+ 1232              	.LASF18:
+ 1233 00e4 44697374 		.ascii	"DistTimer_Stop\000"
+ 1233      54696D65 
+ 1233      725F5374 
+ 1233      6F7000
+ 1234              	.LASF29:
+ 1235 00f3 44697374 		.ascii	"DistTimer_ReadCounter\000"
+ 1235      54696D65 
+ 1235      725F5265 
+ 1235      6164436F 
+ 1235      756E7465 
+ 1236              	.LASF5:
+ 1237 0109 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1237      20756E73 
+ 1237      69676E65 
+ 1237      6420696E 
+ 1237      7400
+ 1238              	.LASF9:
+ 1239 011b 75696E74 		.ascii	"uint8\000"
+ 1239      3800
+ 1240              	.LASF40:
+ 1241 0121 44697374 		.ascii	"DistTimer_interruptState\000"
+ 1241      54696D65 
+ 1241      725F696E 
+ 1241      74657272 
+ 1241      75707453 
+ 1242              	.LASF31:
+ 1243 013a 44697374 		.ascii	"DistTimer_DisableTrigger\000"
+ 1243      54696D65 
+ 1243      725F4469 
+ 1243      7361626C 
+ 1243      65547269 
+ 1244              	.LASF12:
+ 1245 0153 646F7562 		.ascii	"double\000"
+ 1245      6C6500
+ 1246              	.LASF32:
+ 1247 015a 44697374 		.ascii	"DistTimer_SetInterruptCount\000"
+ 1247      54696D65 
+ 1247      725F5365 
+ 1247      74496E74 
+ 1247      65727275 
+ 1248              	.LASF10:
+ 1249 0176 75696E74 		.ascii	"uint16\000"
+ 1249      313600
+ 1250              	.LASF23:
+ 1251 017d 44697374 		.ascii	"DistTimer_WritePeriod\000"
+ 1251      54696D65 
+ 1251      725F5772 
+ 1251      69746550 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 38
+
+
+ 1251      6572696F 
+ 1252              	.LASF17:
+ 1253 0193 44697374 		.ascii	"DistTimer_Enable\000"
+ 1253      54696D65 
+ 1253      725F456E 
+ 1253      61626C65 
+ 1253      00
+ 1254              	.LASF42:
+ 1255 01a4 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 1255      74657243 
+ 1255      72697469 
+ 1255      63616C53 
+ 1255      65637469 
+ 1256              	.LASF8:
+ 1257 01bb 756E7369 		.ascii	"unsigned int\000"
+ 1257      676E6564 
+ 1257      20696E74 
+ 1257      00
+ 1258              	.LASF38:
+ 1259 01c8 2E5C4765 		.ascii	".\\Generated_Source\\PSoC4\\DistTimer.c\000"
+ 1259      6E657261 
+ 1259      7465645F 
+ 1259      536F7572 
+ 1259      63655C50 
+ 1260              	.LASF43:
+ 1261 01ed 43794578 		.ascii	"CyExitCriticalSection\000"
+ 1261      69744372 
+ 1261      69746963 
+ 1261      616C5365 
+ 1261      6374696F 
+ 1262              	.LASF41:
+ 1263 0203 44697374 		.ascii	"DistTimer_initVar\000"
+ 1263      54696D65 
+ 1263      725F696E 
+ 1263      69745661 
+ 1263      7200
+ 1264              	.LASF20:
+ 1265 0215 44697374 		.ascii	"DistTimer_ReadStatusRegister\000"
+ 1265      54696D65 
+ 1265      725F5265 
+ 1265      61645374 
+ 1265      61747573 
+ 1266              	.LASF14:
+ 1267 0232 72656738 		.ascii	"reg8\000"
+ 1267      00
+ 1268              	.LASF16:
+ 1269 0237 73697A65 		.ascii	"sizetype\000"
+ 1269      74797065 
+ 1269      00
+ 1270              	.LASF6:
+ 1271 0240 6C6F6E67 		.ascii	"long long int\000"
+ 1271      206C6F6E 
+ 1271      6720696E 
+ 1271      7400
+ 1272              	.LASF24:
+ 1273 024e 696E7465 		.ascii	"interruptMode\000"
+ 1273      72727570 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 39
+
+
+ 1273      744D6F64 
+ 1273      6500
+ 1274              	.LASF37:
+ 1275 025c 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1275      4320342E 
+ 1275      392E3320 
+ 1275      32303135 
+ 1275      30333033 
+ 1276 028f 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1276      20726576 
+ 1276      6973696F 
+ 1276      6E203232 
+ 1276      31323230 
+ 1277 02c2 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1277      66756E63 
+ 1277      74696F6E 
+ 1277      2D736563 
+ 1277      74696F6E 
+ 1278              	.LASF2:
+ 1279 02ea 73686F72 		.ascii	"short int\000"
+ 1279      7420696E 
+ 1279      7400
+ 1280              	.LASF36:
+ 1281 02f4 44697374 		.ascii	"DistTimer_Start\000"
+ 1281      54696D65 
+ 1281      725F5374 
+ 1281      61727400 
+ 1282              	.LASF4:
+ 1283 0304 6C6F6E67 		.ascii	"long int\000"
+ 1283      20696E74 
+ 1283      00
+ 1284              	.LASF13:
+ 1285 030d 63686172 		.ascii	"char\000"
+ 1285      00
+ 1286              	.LASF0:
+ 1287 0312 7369676E 		.ascii	"signed char\000"
+ 1287      65642063 
+ 1287      68617200 
+ 1288              	.LASF21:
+ 1289 031e 44697374 		.ascii	"DistTimer_ReadPeriod\000"
+ 1289      54696D65 
+ 1289      725F5265 
+ 1289      61645065 
+ 1289      72696F64 
+ 1290              	.LASF22:
+ 1291 0333 44697374 		.ascii	"DistTimer_SetInterruptMode\000"
+ 1291      54696D65 
+ 1291      725F5365 
+ 1291      74496E74 
+ 1291      65727275 
+ 1292              	.LASF39:
+ 1293 034e 433A5C45 		.ascii	"C:\\E3PRJ3\\Sensor-PSoC.cydsn\000"
+ 1293      3350524A 
+ 1293      335C5365 
+ 1293      6E736F72 
+ 1293      2D50536F 
+ 1294              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cc8700MU.s 			page 40
+
+

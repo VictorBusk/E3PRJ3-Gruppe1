@@ -1,0 +1,726 @@
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 1
+
+
+   1              		.cpu cortex-m0
+   2              		.fpu softvfp
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 1
+  10              		.eabi_attribute 34, 0
+  11              		.eabi_attribute 18, 4
+  12              		.code	16
+  13              		.file	"rgb.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.RGB,"ax",%progbits
+  18              		.align	2
+  19              		.global	RGB
+  20              		.code	16
+  21              		.thumb_func
+  22              		.type	RGB, %function
+  23              	RGB:
+  24              	.LFB34:
+  25              		.file 1 ".\\rgb.c"
+   1:.\rgb.c       **** /* ========================================
+   2:.\rgb.c       ****  *
+   3:.\rgb.c       ****  * Copyright YOUR COMPANY, THE YEAR
+   4:.\rgb.c       ****  * All Rights Reserved
+   5:.\rgb.c       ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:.\rgb.c       ****  *
+   7:.\rgb.c       ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:.\rgb.c       ****  * WHICH IS THE PROPERTY OF your company.
+   9:.\rgb.c       ****  *
+  10:.\rgb.c       ****  * ========================================
+  11:.\rgb.c       **** */
+  12:.\rgb.c       **** 
+  13:.\rgb.c       **** #include "rgb.h"
+  14:.\rgb.c       **** 
+  15:.\rgb.c       **** void RGB(uint8 colorCmd)
+  16:.\rgb.c       **** {
+  26              		.loc 1 16 0
+  27              		.cfi_startproc
+  28              	.LVL0:
+  29 0000 08B5     		push	{r3, lr}
+  30              		.cfi_def_cfa_offset 8
+  31              		.cfi_offset 3, -8
+  32              		.cfi_offset 14, -4
+  17:.\rgb.c       ****     switch(colorCmd) {
+  33              		.loc 1 17 0
+  34 0002 0628     		cmp	r0, #6
+  35 0004 24D8     		bhi	.L1
+  36 0006 8000     		lsl	r0, r0, #2
+  37              	.LVL1:
+  38 0008 124B     		ldr	r3, .L11
+  39 000a 1B58     		ldr	r3, [r3, r0]
+  40 000c 9F46     		mov	pc, r3
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 2
+
+
+  41              		.section	.rodata
+  42              		.align	2
+  43              	.L4:
+  44 0000 0E000000 		.word	.L3
+  45 0004 22000000 		.word	.L5
+  46 0008 2A000000 		.word	.L6
+  47 000c 32000000 		.word	.L7
+  48 0010 3A000000 		.word	.L8
+  49 0014 42000000 		.word	.L9
+  50 0018 4A000000 		.word	.L10
+  51              		.section	.text.RGB
+  52              	.L3:
+  18:.\rgb.c       ****         case 0x0:
+  19:.\rgb.c       ****             LED_RED_Write(1u);
+  53              		.loc 1 19 0
+  54 000e 0120     		mov	r0, #1
+  55 0010 FFF7FEFF 		bl	LED_RED_Write
+  56              	.LVL2:
+  20:.\rgb.c       ****             LED_GREEN_Write(1u);
+  57              		.loc 1 20 0
+  58 0014 0120     		mov	r0, #1
+  59 0016 FFF7FEFF 		bl	LED_GREEN_Write
+  60              	.LVL3:
+  21:.\rgb.c       ****             LED_BLUE_Write(1u);
+  61              		.loc 1 21 0
+  62 001a 0120     		mov	r0, #1
+  63 001c FFF7FEFF 		bl	LED_BLUE_Write
+  64              	.LVL4:
+  22:.\rgb.c       ****             break;
+  65              		.loc 1 22 0
+  66 0020 16E0     		b	.L1
+  67              	.L5:
+  23:.\rgb.c       ****         case 0x1:
+  24:.\rgb.c       ****             LED_RED_Write(0u);
+  68              		.loc 1 24 0
+  69 0022 0020     		mov	r0, #0
+  70 0024 FFF7FEFF 		bl	LED_RED_Write
+  71              	.LVL5:
+  25:.\rgb.c       ****             break;
+  72              		.loc 1 25 0
+  73 0028 12E0     		b	.L1
+  74              	.L6:
+  26:.\rgb.c       ****         case 0x2:
+  27:.\rgb.c       ****             LED_RED_Write(1u);
+  75              		.loc 1 27 0
+  76 002a 0120     		mov	r0, #1
+  77 002c FFF7FEFF 		bl	LED_RED_Write
+  78              	.LVL6:
+  28:.\rgb.c       ****             break;
+  79              		.loc 1 28 0
+  80 0030 0EE0     		b	.L1
+  81              	.L7:
+  29:.\rgb.c       ****         case 0x3:
+  30:.\rgb.c       ****             LED_GREEN_Write(0u);
+  82              		.loc 1 30 0
+  83 0032 0020     		mov	r0, #0
+  84 0034 FFF7FEFF 		bl	LED_GREEN_Write
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 3
+
+
+  85              	.LVL7:
+  31:.\rgb.c       ****             break;
+  86              		.loc 1 31 0
+  87 0038 0AE0     		b	.L1
+  88              	.L8:
+  32:.\rgb.c       ****         case 0x4:
+  33:.\rgb.c       ****             LED_GREEN_Write(1u);
+  89              		.loc 1 33 0
+  90 003a 0120     		mov	r0, #1
+  91 003c FFF7FEFF 		bl	LED_GREEN_Write
+  92              	.LVL8:
+  34:.\rgb.c       ****             break;
+  93              		.loc 1 34 0
+  94 0040 06E0     		b	.L1
+  95              	.L9:
+  35:.\rgb.c       ****         case 0x5:
+  36:.\rgb.c       ****             LED_BLUE_Write(0u);
+  96              		.loc 1 36 0
+  97 0042 0020     		mov	r0, #0
+  98 0044 FFF7FEFF 		bl	LED_BLUE_Write
+  99              	.LVL9:
+  37:.\rgb.c       ****             break;
+ 100              		.loc 1 37 0
+ 101 0048 02E0     		b	.L1
+ 102              	.L10:
+  38:.\rgb.c       ****         case 0x6:
+  39:.\rgb.c       ****             LED_BLUE_Write(1u);
+ 103              		.loc 1 39 0
+ 104 004a 0120     		mov	r0, #1
+ 105 004c FFF7FEFF 		bl	LED_BLUE_Write
+ 106              	.LVL10:
+ 107              	.L1:
+  40:.\rgb.c       ****             break;
+  41:.\rgb.c       ****         default:
+  42:.\rgb.c       ****             break;
+  43:.\rgb.c       ****     }
+  44:.\rgb.c       **** }
+ 108              		.loc 1 44 0
+ 109              		@ sp needed
+ 110 0050 08BD     		pop	{r3, pc}
+ 111              	.L12:
+ 112 0052 C046     		.align	2
+ 113              	.L11:
+ 114 0054 00000000 		.word	.L4
+ 115              		.cfi_endproc
+ 116              	.LFE34:
+ 117              		.size	RGB, .-RGB
+ 118              		.text
+ 119              	.Letext0:
+ 120              		.file 2 "Generated_Source\\PSoC4/LED_RED.h"
+ 121              		.file 3 "Generated_Source\\PSoC4/LED_GREEN.h"
+ 122              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 123              		.file 5 "Generated_Source\\PSoC4/LED_BLUE.h"
+ 124              		.section	.debug_info,"",%progbits
+ 125              	.Ldebug_info0:
+ 126 0000 8B010000 		.4byte	0x18b
+ 127 0004 0400     		.2byte	0x4
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 4
+
+
+ 128 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 129 000a 04       		.byte	0x4
+ 130 000b 01       		.uleb128 0x1
+ 131 000c DD000000 		.4byte	.LASF15
+ 132 0010 01       		.byte	0x1
+ 133 0011 1B000000 		.4byte	.LASF16
+ 134 0015 44000000 		.4byte	.LASF17
+ 135 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 136 001d 00000000 		.4byte	0
+ 137 0021 00000000 		.4byte	.Ldebug_line0
+ 138 0025 02       		.uleb128 0x2
+ 139 0026 01       		.byte	0x1
+ 140 0027 06       		.byte	0x6
+ 141 0028 D1000000 		.4byte	.LASF0
+ 142 002c 02       		.uleb128 0x2
+ 143 002d 01       		.byte	0x1
+ 144 002e 08       		.byte	0x8
+ 145 002f 7D000000 		.4byte	.LASF1
+ 146 0033 02       		.uleb128 0x2
+ 147 0034 02       		.byte	0x2
+ 148 0035 05       		.byte	0x5
+ 149 0036 6B010000 		.4byte	.LASF2
+ 150 003a 02       		.uleb128 0x2
+ 151 003b 02       		.byte	0x2
+ 152 003c 07       		.byte	0x7
+ 153 003d BE000000 		.4byte	.LASF3
+ 154 0041 02       		.uleb128 0x2
+ 155 0042 04       		.byte	0x4
+ 156 0043 05       		.byte	0x5
+ 157 0044 90000000 		.4byte	.LASF4
+ 158 0048 02       		.uleb128 0x2
+ 159 0049 04       		.byte	0x4
+ 160 004a 07       		.byte	0x7
+ 161 004b 32000000 		.4byte	.LASF5
+ 162 004f 02       		.uleb128 0x2
+ 163 0050 08       		.byte	0x8
+ 164 0051 05       		.byte	0x5
+ 165 0052 00000000 		.4byte	.LASF6
+ 166 0056 02       		.uleb128 0x2
+ 167 0057 08       		.byte	0x8
+ 168 0058 07       		.byte	0x7
+ 169 0059 60000000 		.4byte	.LASF7
+ 170 005d 03       		.uleb128 0x3
+ 171 005e 04       		.byte	0x4
+ 172 005f 05       		.byte	0x5
+ 173 0060 696E7400 		.ascii	"int\000"
+ 174 0064 02       		.uleb128 0x2
+ 175 0065 04       		.byte	0x4
+ 176 0066 07       		.byte	0x7
+ 177 0067 0E000000 		.4byte	.LASF8
+ 178 006b 04       		.uleb128 0x4
+ 179 006c 2C000000 		.4byte	.LASF18
+ 180 0070 04       		.byte	0x4
+ 181 0071 3801     		.2byte	0x138
+ 182 0073 2C000000 		.4byte	0x2c
+ 183 0077 02       		.uleb128 0x2
+ 184 0078 04       		.byte	0x4
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 5
+
+
+ 185 0079 04       		.byte	0x4
+ 186 007a 77000000 		.4byte	.LASF9
+ 187 007e 02       		.uleb128 0x2
+ 188 007f 08       		.byte	0x8
+ 189 0080 04       		.byte	0x4
+ 190 0081 B7000000 		.4byte	.LASF10
+ 191 0085 02       		.uleb128 0x2
+ 192 0086 01       		.byte	0x1
+ 193 0087 08       		.byte	0x8
+ 194 0088 8B000000 		.4byte	.LASF11
+ 195 008c 02       		.uleb128 0x2
+ 196 008d 04       		.byte	0x4
+ 197 008e 07       		.byte	0x7
+ 198 008f 84010000 		.4byte	.LASF12
+ 199 0093 05       		.uleb128 0x5
+ 200 0094 52474200 		.ascii	"RGB\000"
+ 201 0098 01       		.byte	0x1
+ 202 0099 0F       		.byte	0xf
+ 203 009a 00000000 		.4byte	.LFB34
+ 204 009e 58000000 		.4byte	.LFE34-.LFB34
+ 205 00a2 01       		.uleb128 0x1
+ 206 00a3 9C       		.byte	0x9c
+ 207 00a4 5F010000 		.4byte	0x15f
+ 208 00a8 06       		.uleb128 0x6
+ 209 00a9 23000000 		.4byte	.LASF19
+ 210 00ad 01       		.byte	0x1
+ 211 00ae 0F       		.byte	0xf
+ 212 00af 6B000000 		.4byte	0x6b
+ 213 00b3 00000000 		.4byte	.LLST0
+ 214 00b7 07       		.uleb128 0x7
+ 215 00b8 14000000 		.4byte	.LVL2
+ 216 00bc 5F010000 		.4byte	0x15f
+ 217 00c0 CA000000 		.4byte	0xca
+ 218 00c4 08       		.uleb128 0x8
+ 219 00c5 01       		.uleb128 0x1
+ 220 00c6 50       		.byte	0x50
+ 221 00c7 01       		.uleb128 0x1
+ 222 00c8 31       		.byte	0x31
+ 223 00c9 00       		.byte	0
+ 224 00ca 07       		.uleb128 0x7
+ 225 00cb 1A000000 		.4byte	.LVL3
+ 226 00cf 70010000 		.4byte	0x170
+ 227 00d3 DD000000 		.4byte	0xdd
+ 228 00d7 08       		.uleb128 0x8
+ 229 00d8 01       		.uleb128 0x1
+ 230 00d9 50       		.byte	0x50
+ 231 00da 01       		.uleb128 0x1
+ 232 00db 31       		.byte	0x31
+ 233 00dc 00       		.byte	0
+ 234 00dd 07       		.uleb128 0x7
+ 235 00de 20000000 		.4byte	.LVL4
+ 236 00e2 81010000 		.4byte	0x181
+ 237 00e6 F0000000 		.4byte	0xf0
+ 238 00ea 08       		.uleb128 0x8
+ 239 00eb 01       		.uleb128 0x1
+ 240 00ec 50       		.byte	0x50
+ 241 00ed 01       		.uleb128 0x1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 6
+
+
+ 242 00ee 31       		.byte	0x31
+ 243 00ef 00       		.byte	0
+ 244 00f0 07       		.uleb128 0x7
+ 245 00f1 28000000 		.4byte	.LVL5
+ 246 00f5 5F010000 		.4byte	0x15f
+ 247 00f9 03010000 		.4byte	0x103
+ 248 00fd 08       		.uleb128 0x8
+ 249 00fe 01       		.uleb128 0x1
+ 250 00ff 50       		.byte	0x50
+ 251 0100 01       		.uleb128 0x1
+ 252 0101 30       		.byte	0x30
+ 253 0102 00       		.byte	0
+ 254 0103 07       		.uleb128 0x7
+ 255 0104 30000000 		.4byte	.LVL6
+ 256 0108 5F010000 		.4byte	0x15f
+ 257 010c 16010000 		.4byte	0x116
+ 258 0110 08       		.uleb128 0x8
+ 259 0111 01       		.uleb128 0x1
+ 260 0112 50       		.byte	0x50
+ 261 0113 01       		.uleb128 0x1
+ 262 0114 31       		.byte	0x31
+ 263 0115 00       		.byte	0
+ 264 0116 07       		.uleb128 0x7
+ 265 0117 38000000 		.4byte	.LVL7
+ 266 011b 70010000 		.4byte	0x170
+ 267 011f 29010000 		.4byte	0x129
+ 268 0123 08       		.uleb128 0x8
+ 269 0124 01       		.uleb128 0x1
+ 270 0125 50       		.byte	0x50
+ 271 0126 01       		.uleb128 0x1
+ 272 0127 30       		.byte	0x30
+ 273 0128 00       		.byte	0
+ 274 0129 07       		.uleb128 0x7
+ 275 012a 40000000 		.4byte	.LVL8
+ 276 012e 70010000 		.4byte	0x170
+ 277 0132 3C010000 		.4byte	0x13c
+ 278 0136 08       		.uleb128 0x8
+ 279 0137 01       		.uleb128 0x1
+ 280 0138 50       		.byte	0x50
+ 281 0139 01       		.uleb128 0x1
+ 282 013a 31       		.byte	0x31
+ 283 013b 00       		.byte	0
+ 284 013c 07       		.uleb128 0x7
+ 285 013d 48000000 		.4byte	.LVL9
+ 286 0141 81010000 		.4byte	0x181
+ 287 0145 4F010000 		.4byte	0x14f
+ 288 0149 08       		.uleb128 0x8
+ 289 014a 01       		.uleb128 0x1
+ 290 014b 50       		.byte	0x50
+ 291 014c 01       		.uleb128 0x1
+ 292 014d 30       		.byte	0x30
+ 293 014e 00       		.byte	0
+ 294 014f 09       		.uleb128 0x9
+ 295 0150 50000000 		.4byte	.LVL10
+ 296 0154 81010000 		.4byte	0x181
+ 297 0158 08       		.uleb128 0x8
+ 298 0159 01       		.uleb128 0x1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 7
+
+
+ 299 015a 50       		.byte	0x50
+ 300 015b 01       		.uleb128 0x1
+ 301 015c 31       		.byte	0x31
+ 302 015d 00       		.byte	0
+ 303 015e 00       		.byte	0
+ 304 015f 0A       		.uleb128 0xa
+ 305 0160 99000000 		.4byte	.LASF13
+ 306 0164 02       		.byte	0x2
+ 307 0165 33       		.byte	0x33
+ 308 0166 70010000 		.4byte	0x170
+ 309 016a 0B       		.uleb128 0xb
+ 310 016b 6B000000 		.4byte	0x6b
+ 311 016f 00       		.byte	0
+ 312 0170 0A       		.uleb128 0xa
+ 313 0171 A7000000 		.4byte	.LASF14
+ 314 0175 03       		.byte	0x3
+ 315 0176 33       		.byte	0x33
+ 316 0177 81010000 		.4byte	0x181
+ 317 017b 0B       		.uleb128 0xb
+ 318 017c 6B000000 		.4byte	0x6b
+ 319 0180 00       		.byte	0
+ 320 0181 0C       		.uleb128 0xc
+ 321 0182 75010000 		.4byte	.LASF20
+ 322 0186 05       		.byte	0x5
+ 323 0187 33       		.byte	0x33
+ 324 0188 0B       		.uleb128 0xb
+ 325 0189 6B000000 		.4byte	0x6b
+ 326 018d 00       		.byte	0
+ 327 018e 00       		.byte	0
+ 328              		.section	.debug_abbrev,"",%progbits
+ 329              	.Ldebug_abbrev0:
+ 330 0000 01       		.uleb128 0x1
+ 331 0001 11       		.uleb128 0x11
+ 332 0002 01       		.byte	0x1
+ 333 0003 25       		.uleb128 0x25
+ 334 0004 0E       		.uleb128 0xe
+ 335 0005 13       		.uleb128 0x13
+ 336 0006 0B       		.uleb128 0xb
+ 337 0007 03       		.uleb128 0x3
+ 338 0008 0E       		.uleb128 0xe
+ 339 0009 1B       		.uleb128 0x1b
+ 340 000a 0E       		.uleb128 0xe
+ 341 000b 55       		.uleb128 0x55
+ 342 000c 17       		.uleb128 0x17
+ 343 000d 11       		.uleb128 0x11
+ 344 000e 01       		.uleb128 0x1
+ 345 000f 10       		.uleb128 0x10
+ 346 0010 17       		.uleb128 0x17
+ 347 0011 00       		.byte	0
+ 348 0012 00       		.byte	0
+ 349 0013 02       		.uleb128 0x2
+ 350 0014 24       		.uleb128 0x24
+ 351 0015 00       		.byte	0
+ 352 0016 0B       		.uleb128 0xb
+ 353 0017 0B       		.uleb128 0xb
+ 354 0018 3E       		.uleb128 0x3e
+ 355 0019 0B       		.uleb128 0xb
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 8
+
+
+ 356 001a 03       		.uleb128 0x3
+ 357 001b 0E       		.uleb128 0xe
+ 358 001c 00       		.byte	0
+ 359 001d 00       		.byte	0
+ 360 001e 03       		.uleb128 0x3
+ 361 001f 24       		.uleb128 0x24
+ 362 0020 00       		.byte	0
+ 363 0021 0B       		.uleb128 0xb
+ 364 0022 0B       		.uleb128 0xb
+ 365 0023 3E       		.uleb128 0x3e
+ 366 0024 0B       		.uleb128 0xb
+ 367 0025 03       		.uleb128 0x3
+ 368 0026 08       		.uleb128 0x8
+ 369 0027 00       		.byte	0
+ 370 0028 00       		.byte	0
+ 371 0029 04       		.uleb128 0x4
+ 372 002a 16       		.uleb128 0x16
+ 373 002b 00       		.byte	0
+ 374 002c 03       		.uleb128 0x3
+ 375 002d 0E       		.uleb128 0xe
+ 376 002e 3A       		.uleb128 0x3a
+ 377 002f 0B       		.uleb128 0xb
+ 378 0030 3B       		.uleb128 0x3b
+ 379 0031 05       		.uleb128 0x5
+ 380 0032 49       		.uleb128 0x49
+ 381 0033 13       		.uleb128 0x13
+ 382 0034 00       		.byte	0
+ 383 0035 00       		.byte	0
+ 384 0036 05       		.uleb128 0x5
+ 385 0037 2E       		.uleb128 0x2e
+ 386 0038 01       		.byte	0x1
+ 387 0039 3F       		.uleb128 0x3f
+ 388 003a 19       		.uleb128 0x19
+ 389 003b 03       		.uleb128 0x3
+ 390 003c 08       		.uleb128 0x8
+ 391 003d 3A       		.uleb128 0x3a
+ 392 003e 0B       		.uleb128 0xb
+ 393 003f 3B       		.uleb128 0x3b
+ 394 0040 0B       		.uleb128 0xb
+ 395 0041 27       		.uleb128 0x27
+ 396 0042 19       		.uleb128 0x19
+ 397 0043 11       		.uleb128 0x11
+ 398 0044 01       		.uleb128 0x1
+ 399 0045 12       		.uleb128 0x12
+ 400 0046 06       		.uleb128 0x6
+ 401 0047 40       		.uleb128 0x40
+ 402 0048 18       		.uleb128 0x18
+ 403 0049 9742     		.uleb128 0x2117
+ 404 004b 19       		.uleb128 0x19
+ 405 004c 01       		.uleb128 0x1
+ 406 004d 13       		.uleb128 0x13
+ 407 004e 00       		.byte	0
+ 408 004f 00       		.byte	0
+ 409 0050 06       		.uleb128 0x6
+ 410 0051 05       		.uleb128 0x5
+ 411 0052 00       		.byte	0
+ 412 0053 03       		.uleb128 0x3
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 9
+
+
+ 413 0054 0E       		.uleb128 0xe
+ 414 0055 3A       		.uleb128 0x3a
+ 415 0056 0B       		.uleb128 0xb
+ 416 0057 3B       		.uleb128 0x3b
+ 417 0058 0B       		.uleb128 0xb
+ 418 0059 49       		.uleb128 0x49
+ 419 005a 13       		.uleb128 0x13
+ 420 005b 02       		.uleb128 0x2
+ 421 005c 17       		.uleb128 0x17
+ 422 005d 00       		.byte	0
+ 423 005e 00       		.byte	0
+ 424 005f 07       		.uleb128 0x7
+ 425 0060 898201   		.uleb128 0x4109
+ 426 0063 01       		.byte	0x1
+ 427 0064 11       		.uleb128 0x11
+ 428 0065 01       		.uleb128 0x1
+ 429 0066 31       		.uleb128 0x31
+ 430 0067 13       		.uleb128 0x13
+ 431 0068 01       		.uleb128 0x1
+ 432 0069 13       		.uleb128 0x13
+ 433 006a 00       		.byte	0
+ 434 006b 00       		.byte	0
+ 435 006c 08       		.uleb128 0x8
+ 436 006d 8A8201   		.uleb128 0x410a
+ 437 0070 00       		.byte	0
+ 438 0071 02       		.uleb128 0x2
+ 439 0072 18       		.uleb128 0x18
+ 440 0073 9142     		.uleb128 0x2111
+ 441 0075 18       		.uleb128 0x18
+ 442 0076 00       		.byte	0
+ 443 0077 00       		.byte	0
+ 444 0078 09       		.uleb128 0x9
+ 445 0079 898201   		.uleb128 0x4109
+ 446 007c 01       		.byte	0x1
+ 447 007d 11       		.uleb128 0x11
+ 448 007e 01       		.uleb128 0x1
+ 449 007f 31       		.uleb128 0x31
+ 450 0080 13       		.uleb128 0x13
+ 451 0081 00       		.byte	0
+ 452 0082 00       		.byte	0
+ 453 0083 0A       		.uleb128 0xa
+ 454 0084 2E       		.uleb128 0x2e
+ 455 0085 01       		.byte	0x1
+ 456 0086 3F       		.uleb128 0x3f
+ 457 0087 19       		.uleb128 0x19
+ 458 0088 03       		.uleb128 0x3
+ 459 0089 0E       		.uleb128 0xe
+ 460 008a 3A       		.uleb128 0x3a
+ 461 008b 0B       		.uleb128 0xb
+ 462 008c 3B       		.uleb128 0x3b
+ 463 008d 0B       		.uleb128 0xb
+ 464 008e 27       		.uleb128 0x27
+ 465 008f 19       		.uleb128 0x19
+ 466 0090 3C       		.uleb128 0x3c
+ 467 0091 19       		.uleb128 0x19
+ 468 0092 01       		.uleb128 0x1
+ 469 0093 13       		.uleb128 0x13
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 10
+
+
+ 470 0094 00       		.byte	0
+ 471 0095 00       		.byte	0
+ 472 0096 0B       		.uleb128 0xb
+ 473 0097 05       		.uleb128 0x5
+ 474 0098 00       		.byte	0
+ 475 0099 49       		.uleb128 0x49
+ 476 009a 13       		.uleb128 0x13
+ 477 009b 00       		.byte	0
+ 478 009c 00       		.byte	0
+ 479 009d 0C       		.uleb128 0xc
+ 480 009e 2E       		.uleb128 0x2e
+ 481 009f 01       		.byte	0x1
+ 482 00a0 3F       		.uleb128 0x3f
+ 483 00a1 19       		.uleb128 0x19
+ 484 00a2 03       		.uleb128 0x3
+ 485 00a3 0E       		.uleb128 0xe
+ 486 00a4 3A       		.uleb128 0x3a
+ 487 00a5 0B       		.uleb128 0xb
+ 488 00a6 3B       		.uleb128 0x3b
+ 489 00a7 0B       		.uleb128 0xb
+ 490 00a8 27       		.uleb128 0x27
+ 491 00a9 19       		.uleb128 0x19
+ 492 00aa 3C       		.uleb128 0x3c
+ 493 00ab 19       		.uleb128 0x19
+ 494 00ac 00       		.byte	0
+ 495 00ad 00       		.byte	0
+ 496 00ae 00       		.byte	0
+ 497              		.section	.debug_loc,"",%progbits
+ 498              	.Ldebug_loc0:
+ 499              	.LLST0:
+ 500 0000 00000000 		.4byte	.LVL0
+ 501 0004 08000000 		.4byte	.LVL1
+ 502 0008 0100     		.2byte	0x1
+ 503 000a 50       		.byte	0x50
+ 504 000b 08000000 		.4byte	.LVL1
+ 505 000f 58000000 		.4byte	.LFE34
+ 506 0013 0400     		.2byte	0x4
+ 507 0015 F3       		.byte	0xf3
+ 508 0016 01       		.uleb128 0x1
+ 509 0017 50       		.byte	0x50
+ 510 0018 9F       		.byte	0x9f
+ 511 0019 00000000 		.4byte	0
+ 512 001d 00000000 		.4byte	0
+ 513              		.section	.debug_aranges,"",%progbits
+ 514 0000 1C000000 		.4byte	0x1c
+ 515 0004 0200     		.2byte	0x2
+ 516 0006 00000000 		.4byte	.Ldebug_info0
+ 517 000a 04       		.byte	0x4
+ 518 000b 00       		.byte	0
+ 519 000c 0000     		.2byte	0
+ 520 000e 0000     		.2byte	0
+ 521 0010 00000000 		.4byte	.LFB34
+ 522 0014 58000000 		.4byte	.LFE34-.LFB34
+ 523 0018 00000000 		.4byte	0
+ 524 001c 00000000 		.4byte	0
+ 525              		.section	.debug_ranges,"",%progbits
+ 526              	.Ldebug_ranges0:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 11
+
+
+ 527 0000 00000000 		.4byte	.LFB34
+ 528 0004 58000000 		.4byte	.LFE34
+ 529 0008 00000000 		.4byte	0
+ 530 000c 00000000 		.4byte	0
+ 531              		.section	.debug_line,"",%progbits
+ 532              	.Ldebug_line0:
+ 533 0000 92000000 		.section	.debug_str,"MS",%progbits,1
+ 533      02006C00 
+ 533      00000201 
+ 533      FB0E0D00 
+ 533      01010101 
+ 534              	.LASF6:
+ 535 0000 6C6F6E67 		.ascii	"long long int\000"
+ 535      206C6F6E 
+ 535      6720696E 
+ 535      7400
+ 536              	.LASF8:
+ 537 000e 756E7369 		.ascii	"unsigned int\000"
+ 537      676E6564 
+ 537      20696E74 
+ 537      00
+ 538              	.LASF16:
+ 539 001b 2E5C7267 		.ascii	".\\rgb.c\000"
+ 539      622E6300 
+ 540              	.LASF19:
+ 541 0023 636F6C6F 		.ascii	"colorCmd\000"
+ 541      72436D64 
+ 541      00
+ 542              	.LASF18:
+ 543 002c 75696E74 		.ascii	"uint8\000"
+ 543      3800
+ 544              	.LASF5:
+ 545 0032 6C6F6E67 		.ascii	"long unsigned int\000"
+ 545      20756E73 
+ 545      69676E65 
+ 545      6420696E 
+ 545      7400
+ 546              	.LASF17:
+ 547 0044 433A5C45 		.ascii	"C:\\E3PRJ3\\PSoC4Master.cydsn\000"
+ 547      3350524A 
+ 547      335C5053 
+ 547      6F43344D 
+ 547      61737465 
+ 548              	.LASF7:
+ 549 0060 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 549      206C6F6E 
+ 549      6720756E 
+ 549      7369676E 
+ 549      65642069 
+ 550              	.LASF9:
+ 551 0077 666C6F61 		.ascii	"float\000"
+ 551      7400
+ 552              	.LASF1:
+ 553 007d 756E7369 		.ascii	"unsigned char\000"
+ 553      676E6564 
+ 553      20636861 
+ 553      7200
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 12
+
+
+ 554              	.LASF11:
+ 555 008b 63686172 		.ascii	"char\000"
+ 555      00
+ 556              	.LASF4:
+ 557 0090 6C6F6E67 		.ascii	"long int\000"
+ 557      20696E74 
+ 557      00
+ 558              	.LASF13:
+ 559 0099 4C45445F 		.ascii	"LED_RED_Write\000"
+ 559      5245445F 
+ 559      57726974 
+ 559      6500
+ 560              	.LASF14:
+ 561 00a7 4C45445F 		.ascii	"LED_GREEN_Write\000"
+ 561      47524545 
+ 561      4E5F5772 
+ 561      69746500 
+ 562              	.LASF10:
+ 563 00b7 646F7562 		.ascii	"double\000"
+ 563      6C6500
+ 564              	.LASF3:
+ 565 00be 73686F72 		.ascii	"short unsigned int\000"
+ 565      7420756E 
+ 565      7369676E 
+ 565      65642069 
+ 565      6E7400
+ 566              	.LASF0:
+ 567 00d1 7369676E 		.ascii	"signed char\000"
+ 567      65642063 
+ 567      68617200 
+ 568              	.LASF15:
+ 569 00dd 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 569      4320342E 
+ 569      392E3320 
+ 569      32303135 
+ 569      30333033 
+ 570 0110 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 570      20726576 
+ 570      6973696F 
+ 570      6E203232 
+ 570      31323230 
+ 571 0143 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 571      66756E63 
+ 571      74696F6E 
+ 571      2D736563 
+ 571      74696F6E 
+ 572              	.LASF2:
+ 573 016b 73686F72 		.ascii	"short int\000"
+ 573      7420696E 
+ 573      7400
+ 574              	.LASF20:
+ 575 0175 4C45445F 		.ascii	"LED_BLUE_Write\000"
+ 575      424C5545 
+ 575      5F577269 
+ 575      746500
+ 576              	.LASF12:
+ 577 0184 73697A65 		.ascii	"sizetype\000"
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccgrrP07.s 			page 13
+
+
+ 577      74797065 
+ 577      00
+ 578              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
