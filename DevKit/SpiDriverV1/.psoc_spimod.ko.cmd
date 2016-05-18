@@ -1,1 +1,0 @@
-cmd_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spimod.ko := arm-poky-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spimod.ko /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spimod.o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spimod.mod.o

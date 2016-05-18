@@ -1,5 +1,7 @@
- [Unit]
+[Unit]
  Description=QT Application
+ #Require script
+ Requires=spi_init.service
  # Let this service start as the last thing after multi-user boot
  After=multi-user.target
  [Service]
@@ -10,7 +12,7 @@
  #WorkingDirectory=/home/root
  #To get touchscreen to work, we have to source /etc/profile to get the right
  # env variables. ExecStart only takes one parameter, therefore the call to sh
- ExecStart=/bin/sh -c 'source /home/root/insmodSpiPSoC.sh'
+ ExecStart=/bin/sh -c 'source /etc/profile ; /home/root/SpiTestProgram -qws &'
  #Restart only on error
  Restart=on-abort
  [Install]

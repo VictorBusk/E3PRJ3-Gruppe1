@@ -25,4 +25,5 @@ FORMS    += spitestprogram.ui \
     e3pjr.ui
 
 DISTFILES += \
-    SpiTestProgramApp.service
+    SpiTestProgramApp.service \
+    copySpiTestProgramToDevKit.sh
