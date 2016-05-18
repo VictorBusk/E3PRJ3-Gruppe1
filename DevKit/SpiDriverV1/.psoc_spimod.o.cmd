@@ -1,0 +1,1 @@
+cmd_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spimod.o := arm-poky-linux-gnueabi-ld -EL    -r -o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spimod.o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_cdrv.o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.o 

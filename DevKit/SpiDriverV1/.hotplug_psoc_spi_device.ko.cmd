@@ -1,0 +1,1 @@
+cmd_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/hotplug_psoc_spi_device.ko := arm-poky-linux-gnueabi-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/hotplug_psoc_spi_device.ko /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/hotplug_psoc_spi_device.o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/hotplug_psoc_spi_device.mod.o

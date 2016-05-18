@@ -22,11 +22,13 @@ struct spi_device* psoc4_get_device(void){
  * Reads 16-bit content of register at 
  * the provided psoc4 address
  */
-int psoc4_spi_read(struct spi_device *spi, u16 txData, u16* rxData)
+int psoc4_spi_read(struct spi_device *spi, u16* rxData)
 {
-    struct spi_transfer t[2];
+    struct spi_transfer t[3];
     struct spi_message m;
     u16 rxBuffer = 0;
+    u16 SOP = 0;
+    u16 EOP = 0;
     
     /* Check for valid spi device */
     if(!spi)
@@ -37,16 +39,21 @@ int psoc4_spi_read(struct spi_device *spi, u16 txData, u16* rxData)
     spi_message_init(&m);
     m.spi = spi;
     
-    t[0].tx_buf = &txData;
-    t[0].rx_buf = NULL;
+    t[0].delay_usecs = 60;
+    t[0].tx_buf = NULL;
+    t[0].rx_buf = &SOP;
     t[0].len = 2;
-    t[0].delay_usecs = 150;
     spi_message_add_tail(&t[0], &m);
     
     t[1].tx_buf = NULL;
     t[1].rx_buf = &rxBuffer;
     t[1].len = 2;
     spi_message_add_tail(&t[1], &m);
+    
+    t[2].tx_buf = NULL;
+    t[2].rx_buf = &EOP;
+    t[2].len = 2;
+    spi_message_add_tail(&t[2], &m);
     
     /* Transmit SPI Data (blocking) */
     spi_sync(m.spi, &m);
@@ -65,8 +72,10 @@ int psoc4_spi_read(struct spi_device *spi, u16 txData, u16* rxData)
  */
 int psoc4_spi_write(struct spi_device *spi, u16 txData)
 {
-    struct spi_transfer t[1];
+    struct spi_transfer t[3];
     struct spi_message m;
+    u16 SOP = 0x01;
+    u16 EOP = 0x17;
         
     /* Check for valid spi device */
     if(!spi)
@@ -81,12 +90,21 @@ int psoc4_spi_write(struct spi_device *spi, u16 txData)
         printk(KERN_DEBUG "dev_write: Write data 0x%x\n", txData);
 
     /* Configure tx/rx buffers */
-    t[0].tx_buf = &txData;
+    t[0].tx_buf = &SOP;
     t[0].rx_buf = NULL;
     t[0].len = 2;
-//    t[0].delay_usecs = 60;
     spi_message_add_tail(&t[0], &m);
+    
+    t[1].tx_buf = &txData;
+    t[1].rx_buf = NULL;
+    t[1].len = 2;
+    spi_message_add_tail(&t[1], &m);
 
+    t[2].tx_buf = &EOP;
+    t[2].rx_buf = NULL;
+    t[2].len = 2;
+    spi_message_add_tail(&t[2], &m);
+    
     /* Transmit SPI Data (blocking) */
     spi_sync(m.spi, &m);
     

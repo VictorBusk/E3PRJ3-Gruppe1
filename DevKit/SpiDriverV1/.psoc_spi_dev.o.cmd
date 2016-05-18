@@ -1,8 +1,8 @@
-cmd_/home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.o := arm-poky-linux-gnueabi-gcc -Wp,-MD,/home/stud/F16E3PRJG1/SpiDriver/.psoc_spi_dev.o.d  -nostdinc -isystem /opt/poky/1.8/sysroots/i686-pokysdk-linux/usr/lib/arm-poky-linux-gnueabi/gcc/arm-poky-linux-gnueabi/4.9.2/include -I./arch/arm/include -Iarch/arm/include/generated/uapi -Iarch/arm/include/generated  -Iinclude -I./arch/arm/include/uapi -Iarch/arm/include/generated/uapi -I./include/uapi -Iinclude/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-dwarf2-cfi-asm -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=6 -march=armv6k -mtune=arm1136j-s -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fomit-frame-pointer -fno-var-tracking-assignments -g -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -DCC_HAVE_ASM_GOTO  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(psoc_spi_dev)"  -D"KBUILD_MODNAME=KBUILD_STR(psoc_spimod)" -c -o /home/stud/F16E3PRJG1/SpiDriver/.tmp_psoc_spi_dev.o /home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.c
+cmd_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.o := arm-poky-linux-gnueabi-gcc -Wp,-MD,/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/.psoc_spi_dev.o.d  -nostdinc -isystem /opt/poky/1.8/sysroots/i686-pokysdk-linux/usr/lib/arm-poky-linux-gnueabi/gcc/arm-poky-linux-gnueabi/4.9.2/include -I./arch/arm/include -Iarch/arm/include/generated/uapi -Iarch/arm/include/generated  -Iinclude -I./arch/arm/include/uapi -Iarch/arm/include/generated/uapi -I./include/uapi -Iinclude/generated/uapi -include ./include/linux/kconfig.h -D__KERNEL__ -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -std=gnu89 -fno-dwarf2-cfi-asm -mabi=aapcs-linux -mno-thumb-interwork -mfpu=vfp -funwind-tables -marm -D__LINUX_ARM_ARCH__=6 -march=armv6k -mtune=arm1136j-s -msoft-float -Uarm -fno-delete-null-pointer-checks -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fno-stack-protector -Wno-unused-but-set-variable -fomit-frame-pointer -fno-var-tracking-assignments -g -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack -Werror=implicit-int -Werror=strict-prototypes -Werror=date-time -DCC_HAVE_ASM_GOTO  -DMODULE  -D"KBUILD_STR(s)=\#s" -D"KBUILD_BASENAME=KBUILD_STR(psoc_spi_dev)"  -D"KBUILD_MODNAME=KBUILD_STR(psoc_spimod)" -c -o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/.tmp_psoc_spi_dev.o /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.c
 
-source_/home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.o := /home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.c
+source_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.o := /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.c
 
-deps_/home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.o := \
+deps_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.o := \
   include/linux/err.h \
   include/linux/compiler.h \
     $(wildcard include/config/sparse/rcu/pointer.h) \
@@ -711,8 +711,8 @@ deps_/home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.o := \
     $(wildcard include/config/have/mod/arch/specific.h) \
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
-  /home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.h \
+  /home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.h \
 
-/home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.o: $(deps_/home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.o)
+/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.o: $(deps_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.o)
 
-$(deps_/home/stud/F16E3PRJG1/SpiDriver/psoc_spi_dev.o):
+$(deps_/home/stud/E3PRJ3-Gruppe1/DevKit/SpiDriver/psoc_spi_dev.o):
