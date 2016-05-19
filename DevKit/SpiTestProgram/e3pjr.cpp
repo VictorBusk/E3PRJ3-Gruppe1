@@ -218,10 +218,10 @@ void E3PJR::on_pushGetXYZMax_clicked()
 
     SPIapi spi;
 
-    unsigned char GetMax = 0x01;
-    unsigned char cmdXMax = 0x12;
-    unsigned char cmdYMax = 0x13;
-    unsigned char cmdZMax = 0x21;
+    unsigned char GetMax = 0x02;
+    unsigned char cmdXMax = 0x14;
+    unsigned char cmdYMax = 0x15;
+    unsigned char cmdZMax = 0x22;
 
     unsigned char val = 0;
     unsigned int valXMax = 0;
@@ -240,7 +240,6 @@ void E3PJR::on_pushGetXYZMax_clicked()
     {
         ui->plainTextX->appendPlainText("..getXMax err!");
         ui->lineGetXMax->clear();
-
     }
     else
     {
@@ -253,8 +252,7 @@ void E3PJR::on_pushGetXYZMax_clicked()
     if(err != 0)
     {
         ui->plainTextY->appendPlainText("..getYMax err!");
-        ui->lineGetYMax->clear();
-
+        ui->lineGetXMax->clear();
     }
     else
     {
