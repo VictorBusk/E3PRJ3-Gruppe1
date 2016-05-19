@@ -290,11 +290,11 @@ void cyfitter_cfg(void)
 			0x400F305Bu, /* Base address: 0x400F3000 Count: 91 */
 			0x400F313Bu, /* Base address: 0x400F3100 Count: 59 */
 			0x400F323Du, /* Base address: 0x400F3200 Count: 61 */
-			0x400F3334u, /* Base address: 0x400F3300 Count: 52 */
-			0x400F4004u, /* Base address: 0x400F4000 Count: 4 */
+			0x400F3337u, /* Base address: 0x400F3300 Count: 55 */
+			0x400F4006u, /* Base address: 0x400F4000 Count: 6 */
 			0x400F4105u, /* Base address: 0x400F4100 Count: 5 */
-			0x400F4203u, /* Base address: 0x400F4200 Count: 3 */
-			0x400F430Bu, /* Base address: 0x400F4300 Count: 11 */
+			0x400F4206u, /* Base address: 0x400F4200 Count: 6 */
+			0x400F4308u, /* Base address: 0x400F4300 Count: 8 */
 			0x400F6002u, /* Base address: 0x400F6000 Count: 2 */
 		};
 
@@ -456,9 +456,9 @@ void cyfitter_cfg(void)
 			{0x06u, 0x03u},
 			{0x0Au, 0x01u},
 			{0x0Bu, 0x01u},
-			{0x12u, 0x08u},
 			{0x15u, 0x01u},
 			{0x16u, 0x06u},
+			{0x1Au, 0x08u},
 			{0x1Bu, 0x02u},
 			{0x22u, 0x03u},
 			{0x24u, 0x03u},
@@ -473,10 +473,10 @@ void cyfitter_cfg(void)
 			{0x3Au, 0x08u},
 			{0x3Bu, 0x20u},
 			{0x3Eu, 0x01u},
-			{0x40u, 0x15u},
+			{0x40u, 0x16u},
 			{0x45u, 0xECu},
-			{0x46u, 0x02u},
-			{0x48u, 0x07u},
+			{0x47u, 0x02u},
+			{0x48u, 0x13u},
 			{0x49u, 0xFFu},
 			{0x4Au, 0xFFu},
 			{0x4Bu, 0xFFu},
@@ -517,7 +517,7 @@ void cyfitter_cfg(void)
 			{0x05u, 0x08u},
 			{0x07u, 0x48u},
 			{0x0Eu, 0x10u},
-			{0x0Fu, 0x80u},
+			{0x0Fu, 0x08u},
 			{0x14u, 0x44u},
 			{0x15u, 0x01u},
 			{0x17u, 0x04u},
@@ -536,57 +536,62 @@ void cyfitter_cfg(void)
 			{0x3Du, 0x01u},
 			{0x3Eu, 0x10u},
 			{0x47u, 0x40u},
+			{0x4Cu, 0x08u},
 			{0x4Du, 0x04u},
-			{0x4Fu, 0x81u},
-			{0x57u, 0x40u},
+			{0x4Fu, 0x01u},
+			{0x54u, 0x08u},
+			{0x57u, 0x04u},
 			{0x5Du, 0x04u},
 			{0x5Eu, 0x40u},
 			{0x5Fu, 0x01u},
-			{0x67u, 0x80u},
+			{0x65u, 0x01u},
 			{0x77u, 0x40u},
-			{0x87u, 0x40u},
 			{0x96u, 0x10u},
 			{0x98u, 0x44u},
-			{0x9Du, 0x08u},
+			{0x9Du, 0x09u},
 			{0x9Fu, 0x08u},
 			{0xA3u, 0x08u},
 			{0xAAu, 0x10u},
 			{0xABu, 0x04u},
 			{0xAEu, 0x02u},
+			{0xB5u, 0x01u},
 			{0xC0u, 0x72u},
-			{0xC2u, 0x30u},
+			{0xC2u, 0x60u},
 			{0xC4u, 0x70u},
 			{0xCAu, 0x66u},
 			{0xCCu, 0x63u},
 			{0xCEu, 0xA0u},
 			{0xD0u, 0x10u},
-			{0xD2u, 0x10u},
+			{0xD2u, 0x20u},
 			{0xD6u, 0xD0u},
 			{0xD8u, 0x80u},
-			{0xEEu, 0x04u},
+			{0xE2u, 0x80u},
+			{0xEEu, 0x44u},
+			{0x53u, 0x04u},
 			{0x6Fu, 0x20u},
-			{0x71u, 0x20u},
+			{0x73u, 0x08u},
+			{0xD4u, 0x20u},
 			{0xDAu, 0x80u},
 			{0xDCu, 0x20u},
-			{0x85u, 0x20u},
-			{0xA5u, 0x20u},
+			{0x8Bu, 0x04u},
+			{0x97u, 0x08u},
 			{0xAFu, 0x20u},
-			{0xE2u, 0x10u},
+			{0xB7u, 0x08u},
 			{0xEEu, 0x10u},
 			{0x00u, 0x48u},
+			{0x60u, 0x11u},
 			{0x84u, 0x04u},
 			{0xC0u, 0x0Au},
-			{0x18u, 0x08u},
-			{0x19u, 0x04u},
-			{0x1Fu, 0x04u},
-			{0x50u, 0x04u},
-			{0x59u, 0x04u},
-			{0x67u, 0x08u},
+			{0xD6u, 0x02u},
+			{0xD8u, 0x02u},
+			{0x18u, 0x01u},
+			{0x19u, 0x08u},
+			{0x1Cu, 0x10u},
+			{0x89u, 0x08u},
+			{0x94u, 0x11u},
 			{0xA8u, 0x40u},
 			{0xC6u, 0x0Eu},
-			{0xD4u, 0x04u},
-			{0xD6u, 0x02u},
-			{0xD8u, 0x01u},
+			{0xE2u, 0x01u},
 			{0x01u, 0x0Au},
 			{0x10u, 0x0Au},
 		};
@@ -616,19 +621,21 @@ void cyfitter_cfg(void)
 		cfg_write_bytes32(cy_cfg_addr_table, cy_cfg_data_table);
 
 		/* HSIOM Starting address: CYDEV_HSIOM_BASE */
-		CY_SET_XTND_REG32((void CYFAR *)(CYDEV_HSIOM_BASE), 0x00EE0000u);
-		CY_SET_XTND_REG32((void CYFAR *)(CYREG_HSIOM_PORT_SEL3), 0x0303EE03u);
+		CY_SET_XTND_REG32((void CYFAR *)(CYDEV_HSIOM_BASE), 0x00000003u);
+		CY_SET_XTND_REG32((void CYFAR *)(CYREG_HSIOM_PORT_SEL2), 0x00330000u);
+		CY_SET_XTND_REG32((void CYFAR *)(CYREG_HSIOM_PORT_SEL3), 0x0000EEEEu);
 		CY_SET_XTND_REG32((void CYFAR *)(CYREG_HSIOM_PORT_SEL4), 0x000000EEu);
 
 		/* UDB_PA_0 Starting address: CYDEV_UDB_PA0_BASE */
 		CY_SET_XTND_REG32((void CYFAR *)(CYDEV_UDB_PA0_BASE), 0x00990000u);
+		CY_SET_XTND_REG32((void CYFAR *)(CYREG_UDB_PA0_CFG8), 0x00540000u);
 
 		/* UDB_PA_2 Starting address: CYDEV_UDB_PA2_BASE */
 		CY_SET_XTND_REG32((void CYFAR *)(CYDEV_UDB_PA2_BASE), 0x00990000u);
+		CY_SET_XTND_REG32((void CYFAR *)(CYREG_UDB_PA2_CFG8), 0x58000000u);
 
 		/* UDB_PA_3 Starting address: CYDEV_UDB_PA3_BASE */
 		CY_SET_XTND_REG32((void CYFAR *)(CYDEV_UDB_PA3_BASE), 0x00990000u);
-		CY_SET_XTND_REG32((void CYFAR *)(CYREG_UDB_PA3_CFG8), 0x47540000u);
 
 		/* INT_SELECT Starting address: CYDEV_CPUSS_INTR_SELECT */
 		CY_SET_XTND_REG32((void CYFAR *)(CYREG_CPUSS_INTR_SELECT), 0x00000005u);
@@ -648,15 +655,16 @@ void cyfitter_cfg(void)
 	/* Perform second pass device configuration. These items must be configured in specific order after the regular configuration is done. */
 	CY_SET_XTND_REG8((void CYFAR *)(CYREG_UDB_P0_U1_CFG27), 0x84u);
 	/* IOPINS0_0 Starting address: CYDEV_PRT0_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT0_BASE), 0x00000030u);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x02024000u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT0_BASE), 0x00000001u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x00000006u);
 
 	/* IOPINS0_2 Starting address: CYDEV_PRT2_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT2_PC), 0x000002F1u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT2_BASE), 0x00000030u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT2_PC), 0x000362F1u);
 
 	/* IOPINS0_3 Starting address: CYDEV_PRT3_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT3_BASE), 0x00000051u);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT3_PC), 0x00186D86u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT3_BASE), 0x00000003u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT3_PC), 0x02000DA4u);
 
 	/* IOPINS0_4 Starting address: CYDEV_PRT4_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT4_BASE), 0x00000003u);

@@ -33,7 +33,7 @@ Clock: I2CS_SCBCLK           | N/A                   | Target: 1.60 MHz   |
 Clock: I2CS_SCBCLK(FFB)      | N/A                   | Target: 1.60 MHz   | 
 Clock: LumenCom_SCBCLK       | N/A                   | Target: 1.60 MHz   | 
 Clock: LumenCom_SCBCLK(FFB)  | N/A                   | Target: 1.60 MHz   | 
-Clock: metronome_clock       | Frequency: 55.91 MHz  | Target: 0.00 MHz   | 
+Clock: metronome_clock       | Frequency: 55.34 MHz  | Target: 0.00 MHz   | 
 Clock: timer_clock           | Frequency: 37.36 MHz  | Target: 1.00 MHz   | 
 Clock: timer_clock(FFB)      | N/A                   | Target: 1.00 MHz   | 
 
@@ -77,9 +77,9 @@ DistReset(0)_PAD  39470         timer_clock:R
 
 Port Name        Clock to Out  Clock Name:Phase    
 ---------------  ------------  ------------------  
-BluePin(0)_PAD   17519         timer_clock(FFB):R  
-GreenPin(0)_PAD  20237         timer_clock(FFB):R  
-RedPin(0)_PAD    18354         timer_clock(FFB):R  
+BluePin(0)_PAD   22220         timer_clock(FFB):R  
+GreenPin(0)_PAD  22258         timer_clock(FFB):R  
+RedPin(0)_PAD    22010         timer_clock(FFB):R  
 
 
                          3.3::Pad to Pad
@@ -146,14 +146,14 @@ ClockGenBlock/gen_clk_out_0                               m0s8clockgenblockcell 
 4.2::Critical Path Report for metronome_clock
 *********************************************
 Clock: metronome_clock
-Frequency: 55.91 MHz | Target: 0.00 MHz
+Frequency: 55.34 MHz | Target: 0.00 MHz
 
 ++++ Path 1 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
 
 Path Begin     : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb
 Path End       : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0
 Capture Clock  : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/clock
-Path slack     : 4999982113p
+Path slack     : 4999981929p
 
 Capture Clock Arrival Time                                              0
 + Clock path delay                                                      0
@@ -164,9 +164,9 @@ End-of-path required time (ps)                                 4999988480
 
 Launch Clock Arrival Time                      0
 + Clock path delay                         0
-+ Data path delay                       6367
++ Data path delay                       6551
 -------------------------------------   ---- 
-End-of-path arrival time (ps)           6367
+End-of-path arrival time (ps)           6551
  
 Launch Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout
@@ -179,8 +179,8 @@ ClockGenBlock/gen_clk_out_1                               m0s8clockgenblockcell 
 Data path
 pin name                                            model name     delay     AT       slack  edge  Fanout
 --------------------------------------------------  -------------  -----  -----  ----------  ----  ------
-\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb    datapathcell3   3850   3850  4999982113  RISE       1
-\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0  datapathcell3   2517   6367  4999982113  RISE       1
+\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb    datapathcell3   3850   3850  4999981929  RISE       1
+\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0  datapathcell3   2701   6551  4999981929  RISE       1
 
 Capture Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout
@@ -358,7 +358,7 @@ ClockGenBlock/gen_clk_out_0                               m0s8clockgenblockcell 
 Path Begin     : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb
 Path End       : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0
 Capture Clock  : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/clock
-Path slack     : 4999982113p
+Path slack     : 4999981929p
 
 Capture Clock Arrival Time                                              0
 + Clock path delay                                                      0
@@ -369,9 +369,9 @@ End-of-path required time (ps)                                 4999988480
 
 Launch Clock Arrival Time                      0
 + Clock path delay                         0
-+ Data path delay                       6367
++ Data path delay                       6551
 -------------------------------------   ---- 
-End-of-path arrival time (ps)           6367
+End-of-path arrival time (ps)           6551
  
 Launch Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout
@@ -384,8 +384,8 @@ ClockGenBlock/gen_clk_out_1                               m0s8clockgenblockcell 
 Data path
 pin name                                            model name     delay     AT       slack  edge  Fanout
 --------------------------------------------------  -------------  -----  -----  ----------  ----  ------
-\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb    datapathcell3   3850   3850  4999982113  RISE       1
-\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0  datapathcell3   2517   6367  4999982113  RISE       1
+\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb    datapathcell3   3850   3850  4999981929  RISE       1
+\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0  datapathcell3   2701   6551  4999981929  RISE       1
 
 Capture Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout
@@ -2062,7 +2062,7 @@ ClockGenBlock/gen_clk_out_0                               m0s8clockgenblockcell 
 Path Begin     : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb
 Path End       : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0
 Capture Clock  : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/clock
-Path slack     : 4999982113p
+Path slack     : 4999981929p
 
 Capture Clock Arrival Time                                              0
 + Clock path delay                                                      0
@@ -2073,9 +2073,9 @@ End-of-path required time (ps)                                 4999988480
 
 Launch Clock Arrival Time                      0
 + Clock path delay                         0
-+ Data path delay                       6367
++ Data path delay                       6551
 -------------------------------------   ---- 
-End-of-path arrival time (ps)           6367
+End-of-path arrival time (ps)           6551
  
 Launch Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout
@@ -2088,8 +2088,8 @@ ClockGenBlock/gen_clk_out_1                               m0s8clockgenblockcell 
 Data path
 pin name                                            model name     delay     AT       slack  edge  Fanout
 --------------------------------------------------  -------------  -----  -----  ----------  ----  ------
-\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb    datapathcell3   3850   3850  4999982113  RISE       1
-\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0  datapathcell3   2517   6367  4999982113  RISE       1
+\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb    datapathcell3   3850   3850  4999981929  RISE       1
+\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/cs_addr_0  datapathcell3   2701   6551  4999981929  RISE       1
 
 Capture Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout
@@ -2150,7 +2150,7 @@ ClockGenBlock/gen_clk_out_1                               m0s8clockgenblockcell 
 Path Begin     : \MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb
 Path End       : \MetronomeTimer:TimerUDB:rstSts:stsreg\/status_0
 Capture Clock  : \MetronomeTimer:TimerUDB:rstSts:stsreg\/clock
-Path slack     : 4999986445p
+Path slack     : 4999986285p
 
 Capture Clock Arrival Time                                              0
 + Clock path delay                                                      0
@@ -2161,9 +2161,9 @@ End-of-path required time (ps)                                 4999998430
 
 Launch Clock Arrival Time                       0
 + Clock path delay                          0
-+ Data path delay                       11985
++ Data path delay                       12145
 -------------------------------------   ----- 
-End-of-path arrival time (ps)           11985
+End-of-path arrival time (ps)           12145
  
 Launch Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout
@@ -2176,10 +2176,10 @@ ClockGenBlock/gen_clk_out_1                               m0s8clockgenblockcell 
 Data path
 pin name                                          model name     delay     AT       slack  edge  Fanout
 ------------------------------------------------  -------------  -----  -----  ----------  ----  ------
-\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb  datapathcell3   3850   3850  4999982113  RISE       1
-\MetronomeTimer:TimerUDB:status_tc\/main_1        macrocell4      2533   6383  4999986445  RISE       1
-\MetronomeTimer:TimerUDB:status_tc\/q             macrocell4      3350   9733  4999986445  RISE       1
-\MetronomeTimer:TimerUDB:rstSts:stsreg\/status_0  statusicell2    2252  11985  4999986445  RISE       1
+\MetronomeTimer:TimerUDB:sT8:timerdp:u0\/z0_comb  datapathcell3   3850   3850  4999981929  RISE       1
+\MetronomeTimer:TimerUDB:status_tc\/main_1        macrocell4      2693   6543  4999986285  RISE       1
+\MetronomeTimer:TimerUDB:status_tc\/q             macrocell4      3350   9893  4999986285  RISE       1
+\MetronomeTimer:TimerUDB:rstSts:stsreg\/status_0  statusicell2    2252  12145  4999986285  RISE       1
 
 Capture Clock Path
 pin name                                                  model name             delay     AT  edge  Fanout

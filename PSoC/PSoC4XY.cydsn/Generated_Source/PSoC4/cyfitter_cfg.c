@@ -123,7 +123,7 @@ static void CyClockStartupError(uint8 errorCode)
 }
 #endif
 
-#define CY_CFG_BASE_ADDR_COUNT 6u
+#define CY_CFG_BASE_ADDR_COUNT 7u
 CYPACKED typedef struct
 {
 	uint8 offset;
@@ -321,7 +321,8 @@ void cyfitter_cfg(void)
 			0x400F3004u, /* Base address: 0x400F3000 Count: 4 */
 			0x400F3101u, /* Base address: 0x400F3100 Count: 1 */
 			0x400F3301u, /* Base address: 0x400F3300 Count: 1 */
-			0x400F4007u, /* Base address: 0x400F4000 Count: 7 */
+			0x400F4004u, /* Base address: 0x400F4000 Count: 4 */
+			0x400F4105u, /* Base address: 0x400F4100 Count: 5 */
 			0x400F4203u, /* Base address: 0x400F4200 Count: 3 */
 			0x400F4306u, /* Base address: 0x400F4300 Count: 6 */
 		};
@@ -333,13 +334,15 @@ void cyfitter_cfg(void)
 			{0x5Fu, 0x01u},
 			{0x18u, 0x01u},
 			{0xB4u, 0x01u},
-			{0x0Au, 0x40u},
-			{0x0Du, 0x01u},
-			{0x69u, 0x02u},
-			{0x6Eu, 0x40u},
-			{0xC2u, 0x30u},
+			{0x6Bu, 0x80u},
+			{0x6Fu, 0x20u},
 			{0xDAu, 0x80u},
 			{0xDCu, 0x20u},
+			{0x03u, 0x20u},
+			{0x07u, 0x80u},
+			{0x9Fu, 0x80u},
+			{0xA7u, 0x20u},
+			{0xC0u, 0x30u},
 			{0x6Cu, 0x40u},
 			{0x70u, 0x08u},
 			{0xDCu, 0x03u},
@@ -408,21 +411,22 @@ void cyfitter_cfg(void)
 
 	/* Perform second pass device configuration. These items must be configured in specific order after the regular configuration is done. */
 	/* IOPINS0_0 Starting address: CYDEV_PRT0_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT0_BASE), 0x0000008Cu);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x00412DB6u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT0_BASE), 0x000000CCu);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x00400DB6u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC2), 0x00000040u);
 
 	/* IOPINS0_1 Starting address: CYDEV_PRT1_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT1_BASE), 0x00000064u);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT1_PC), 0x00180000u);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT1_PC2), 0x00000024u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT1_BASE), 0x000000D0u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT1_PC), 0x00180012u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT1_PC2), 0x00000090u);
 
 	/* IOPINS0_2 Starting address: CYDEV_PRT2_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT2_PC), 0x00036DB6u);
 
 	/* IOPINS0_3 Starting address: CYDEV_PRT3_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT3_BASE), 0x00000030u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT3_BASE), 0x00000080u);
 	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT3_PC), 0x00000D80u);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT3_PC2), 0x00000030u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT3_PC2), 0x00000080u);
 
 	/* IOPINS0_4 Starting address: CYDEV_PRT4_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT4_BASE), 0x0000000Fu);
