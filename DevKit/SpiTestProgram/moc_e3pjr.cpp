@@ -22,7 +22,7 @@ static const uint qt_meta_data_E3PJR[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,24 +32,17 @@ static const uint qt_meta_data_E3PJR[] = {
  // slots: signature, parameters, type, tag, flags
        7,    6,    6,    6, 0x08,
       37,    6,    6,    6, 0x08,
-      67,    6,    6,    6, 0x08,
-      91,    6,    6,    6, 0x08,
-     115,    6,    6,    6, 0x08,
-     142,    6,    6,    6, 0x08,
-     169,    6,    6,    6, 0x08,
-     196,    6,    6,    6, 0x08,
+      61,    6,    6,    6, 0x08,
+      88,    6,    6,    6, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_E3PJR[] = {
     "E3PJR\0\0on_pushCalibrateXYZ_pressed()\0"
-    "on_pushCalibrateXYZ_clicked()\0"
-    "on_pushSetXYZ_pressed()\0on_pushSetXYZ_clicked()\0"
+    "on_pushSetXYZ_pressed()\0"
     "on_pushGetXYZPos_pressed()\0"
-    "on_pushGetXYZPos_clicked()\0"
     "on_pushGetXYZMax_pressed()\0"
-    "on_pushGetXYZMax_clicked()\0"
 };
 
 void E3PJR::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -59,13 +52,9 @@ void E3PJR::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         E3PJR *_t = static_cast<E3PJR *>(_o);
         switch (_id) {
         case 0: _t->on_pushCalibrateXYZ_pressed(); break;
-        case 1: _t->on_pushCalibrateXYZ_clicked(); break;
-        case 2: _t->on_pushSetXYZ_pressed(); break;
-        case 3: _t->on_pushSetXYZ_clicked(); break;
-        case 4: _t->on_pushGetXYZPos_pressed(); break;
-        case 5: _t->on_pushGetXYZPos_clicked(); break;
-        case 6: _t->on_pushGetXYZMax_pressed(); break;
-        case 7: _t->on_pushGetXYZMax_clicked(); break;
+        case 1: _t->on_pushSetXYZ_pressed(); break;
+        case 2: _t->on_pushGetXYZPos_pressed(); break;
+        case 3: _t->on_pushGetXYZMax_pressed(); break;
         default: ;
         }
     }
@@ -104,9 +93,9 @@ int E3PJR::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 4;
     }
     return _id;
 }
