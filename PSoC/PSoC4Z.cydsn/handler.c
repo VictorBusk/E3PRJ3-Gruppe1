@@ -26,12 +26,12 @@ void handler(uint8 cmd, uint8 val)
             break;
         case cmdGetZPos :
             i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = getZPos();
+            i2c_txBuffer[2] = (zPos > 0) ? (zPos / resolution) : 0xee;
             i2c_tx();
             break;
         case cmdGetZMax : 
             i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = getZMax();
+            i2c_txBuffer[2] = (zMax > 0) ? (zMax / resolution) : 0xee;
             i2c_tx();
             break;
         case cmdStopZ : 

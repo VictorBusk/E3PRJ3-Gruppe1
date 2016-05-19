@@ -29,22 +29,22 @@ void handler(uint8 cmd, uint8 val)
             break;
         case cmdGetXPos :
             i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = xPos > 0 ? xPos : 0xba;
+            i2c_txBuffer[2] = (xPos > 0) ? (xPos / resolution) : 0xee;
             i2c_tx();
             break;
         case cmdGetYPos : 
             i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = xPos > 0 ? xPos : 0xaf;
+            i2c_txBuffer[2] = (yPos > 0) ? (yPos / resolution) : 0xee;
             i2c_tx();
             break;
         case cmdGetXMax : 
             i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = getXMax();
+            i2c_txBuffer[2] = (xMax > 0) ? (xMax / resolution) : 0xee;
             i2c_tx();
             break;
         case cmdGetYMax : 
             i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = getYMax();
+            i2c_txBuffer[2] = (yMax > 0) ? (yMax / resolution) : 0xee;
             i2c_tx();
             break;
         case cmdStopX : 

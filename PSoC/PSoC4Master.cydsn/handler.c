@@ -18,9 +18,13 @@
 
 #include "handler.h"
 
-uint8 rxValX = 0x12;
-uint8 rxValY = 0x13;
-uint8 rxValZ = 0x21;
+uint8 xPos = 0;
+uint8 xMax = 0;
+uint8 yPos = 0;
+uint8 yMax = 0;
+uint8 zPos = 0;
+uint8 zMax = 0;
+
 
 void handler(uint8 cmd, uint8 txVal)
 {
@@ -29,9 +33,14 @@ void handler(uint8 cmd, uint8 txVal)
     switch (cmd)
     {
         case 0x01 :
-            i2c_rx(PSoC_XY, getXPos, &rxValX);
-            i2c_rx(PSoC_XY, getYPos, &rxValY);
-//            i2c_rx(PSoC_Z, getZPos, &rxValZ);
+            i2c_rx(PSoC_XY, getXPos, &xPos);
+            i2c_rx(PSoC_XY, getYPos, &yPos);
+            i2c_rx(PSoC_Z, getZPos, &zPos);
+            break;
+        case 0x02 :
+            i2c_rx(PSoC_XY, getXMax, &xMax);
+            i2c_rx(PSoC_XY, getYMax, &yMax);
+            i2c_rx(PSoC_Z, getZMax, &zMax);
             break;
         case setXPos : 
             i2c_tx(PSoC_XY, cmd, txVal);
@@ -40,18 +49,16 @@ void handler(uint8 cmd, uint8 txVal)
             i2c_tx(PSoC_XY, cmd, txVal);
             break;
         case getXPos : 
-//            i2c_rx(PSoC_XY, cmd, &rxVal);
-            spi_tx(rxValX);
+            spi_tx(xPos);
             break;
         case getYPos : 
-//            i2c_rx(PSoC_XY, cmd, &rxVal);
-            spi_tx(rxValY);
+            spi_tx(yPos);
             break;
         case getXMax : 
-            i2c_rx(PSoC_XY, cmd, &rxVal);
+            spi_tx(xMax);
             break;
         case getYMax : 
-            i2c_rx(PSoC_XY, cmd, &rxVal);
+            spi_tx(yMax);
             break;
         case cmdStopX : 
             i2c_tx(PSoC_XY, cmd, txVal);
@@ -69,11 +76,10 @@ void handler(uint8 cmd, uint8 txVal)
             i2c_tx(PSoC_Z, cmd, txVal);
             break;
         case getZPos : 
-//            i2c_rx(PSoC_Z, cmd, &rxVal);
-            spi_tx(rxValZ);
+            spi_tx(zPos);
             break;
         case getZMax : 
-            i2c_rx(PSoC_Z, cmd, &rxVal);
+            spi_tx(zMax);
             break;
         case cmdStopZ : 
             i2c_tx(PSoC_Z, cmd, txVal);

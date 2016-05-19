@@ -24,9 +24,12 @@
 #include "spi.h"
 #include "test.h"
 
-uint8 rxValX;
-uint8 rxValY;
-uint8 rxValZ;
+uint8 xPos;
+uint8 xMax;
+uint8 yPos;
+uint8 yMax;
+uint8 zPos;
+uint8 zMax;
     
 /***************************************
 *         Function Prototypes

@@ -41,7 +41,6 @@ void i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal)
     i2cTxData[I2C_PACKET_VAL_POS] = i2cTxVal;
     i2cTxData[I2C_PACKET_EOP_POS] = I2C_PACKET_EOP;
     
-//    queueLed(0,0,1, 250);
     (void) I2CM_I2CMasterWriteBuf(i2cTxAddr, i2cTxData, I2C_PACKET_SIZE, I2CM_I2C_MODE_COMPLETE_XFER);
     while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
     {

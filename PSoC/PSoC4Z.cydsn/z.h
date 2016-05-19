@@ -28,6 +28,9 @@
 #define stepDelay (3u)
 #define interruptSteps (50u)
 #define resolution (255u) 
+
+extern uint32 zPos;
+extern uint32 zMax;
     
 void z_init(void);
 CY_ISR_PROTO(isr_Z);
