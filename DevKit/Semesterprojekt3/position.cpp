@@ -9,10 +9,6 @@ unsigned char valX=0;
 unsigned char valY=0;
 unsigned char valZ=0;
 
-unsigned char cmdX = 0x10;
-unsigned char cmdY = 0x11;
-unsigned char cmdZ = 0x12;
-
 MainDisplay::MainDisplay(QWidget *parent) : QWidget(parent),
     ui(new Ui::MainDisplay)
 {
@@ -59,9 +55,9 @@ void MainDisplay::on_calButton_pressed()
 {
 
     //Set x,y,z to the maximum value
-    quint8 xMax = 99;
-    quint8 yMax = 99;
-    quint8 zMax = 99;
+    quint8 xMax = 255;
+    quint8 yMax = 255;
+    quint8 zMax = 255;
 
     setSendPos.setPacket(&cmdX, &xMax);
     setSendPos.setPacket(&cmdY, &yMax);

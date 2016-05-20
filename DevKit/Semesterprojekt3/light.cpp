@@ -31,9 +31,9 @@ void MainDisplay::on_upButton_pressed()
     // disables moving all sliders up when one reaches maximum
     // checks if individual sliders have reached maximum
 
-    ui->redSlider->setSliderPosition(ui->redSlider->value() == 99 ? ui->redSlider->value() : ui->redSlider->value() + 1);
-    ui->greenSlider->setSliderPosition(ui->greenSlider->value() == 99 ? ui->greenSlider->value() : ui->greenSlider->value() + 1);
-    ui->blueSlider->setSliderPosition(ui->blueSlider->value() == 99 ? ui->blueSlider->value() : ui->blueSlider->value() + 1);
+    ui->redSlider->setSliderPosition(ui->redSlider->value() == 255 ? ui->redSlider->value() : ui->redSlider->value() + 1);
+    ui->greenSlider->setSliderPosition(ui->greenSlider->value() == 255 ? ui->greenSlider->value() : ui->greenSlider->value() + 1);
+    ui->blueSlider->setSliderPosition(ui->blueSlider->value() == 255 ? ui->blueSlider->value() : ui->blueSlider->value() + 1);
 
     on_ColorChanged();
 }
@@ -53,10 +53,6 @@ void MainDisplay::on_goLightButton_pressed()
 {
     SPIapi setLight;
 
-    unsigned char cmdR = 0x21;
-    unsigned char cmdG = 0x22;
-    unsigned char cmdB = 0x23;
-
     unsigned char valR = ui->redSlider->value();
     unsigned char valG = ui->greenSlider->value();
     unsigned char valB = ui->blueSlider->value();
@@ -75,10 +71,6 @@ void MainDisplay::on_onButton_pressed()
     SPIapi greenOn;
     SPIapi blueOn;
 
-    unsigned char cmdR = 0x21;
-    unsigned char cmdG = 0x22;
-    unsigned char cmdB = 0x23;
-
     unsigned char On = 0xff;
 
     redOn.setPacket(&cmdR, &On);
@@ -96,9 +88,6 @@ void MainDisplay::on_offButton_pressed()
     SPIapi greenOff;
     SPIapi blueOff;
 
-    unsigned char cmdR = 0x21;
-    unsigned char cmdG = 0x22;
-    unsigned char cmdB = 0x23;
 
     unsigned char Off = 0x00;
 

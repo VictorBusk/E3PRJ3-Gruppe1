@@ -69,6 +69,14 @@ private:
     QColor rgbColor;
     SPIapi setSendPos;
 
+    unsigned char cmdX = 0x10u;
+    unsigned char cmdY = 0x11u;
+    unsigned char cmdZ = 0x20u;
+
+    unsigned char cmdR = 0x30u;
+    unsigned char cmdG = 0x31u;
+    unsigned char cmdB = 0x32u;
+
 };
 
 #endif // POSITION_H
