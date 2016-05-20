@@ -35,13 +35,13 @@ QVirtualKeyboard::QVirtualKeyboard(QWidget*parent) : QWidget(parent)
     createButtons();            // Méthode qui génère et organise l'affiche des boutons
 
 
-// Initialise le signalMapper pour les boutons B0 à B25 : Signal clicked()
+// Initialise le signalMapper pour les boutons B0 à B25 : Signal pressed()
      signalMapper = new QSignalMapper(this);
 
      for (int i=0; i<26; i++)
      {
          signalMapper->setMapping(button[i], i);
-         connect(button[i], SIGNAL(clicked()), signalMapper, SLOT(map()));
+         connect(button[i], SIGNAL(pressed()), signalMapper, SLOT(map()));
      }
 
      connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(sendChar(int))); // Envoi le numéro du bouton au slot sendChar
@@ -61,13 +61,13 @@ QVirtualKeyboard::QVirtualKeyboard(QWidget*parent) : QWidget(parent)
 
 
 
-// Initialise le signalMapper pour les boutons des caractères accentués : Signal clicked()
+// Initialise le signalMapper pour les boutons des caractères accentués : Signal pressed()
     AccentedCharSignalMapper = new QSignalMapper(this);
 
      for (int i=0; i<10; i++)
      {
          AccentedCharSignalMapper->setMapping(AccentedCharButton[i], i);
-         connect(AccentedCharButton[i], SIGNAL(clicked()), AccentedCharSignalMapper, SLOT(map()));
+         connect(AccentedCharButton[i], SIGNAL(pressed()), AccentedCharSignalMapper, SLOT(map()));
      }
 
      connect(AccentedCharSignalMapper, SIGNAL(mapped(int)), this, SLOT(sendAccentedChar(int))); // Envoi le numéro du bouton au slot sendAccentedChar
@@ -76,12 +76,12 @@ QVirtualKeyboard::QVirtualKeyboard(QWidget*parent) : QWidget(parent)
 
 
 // Connexion des boutons de contrôle C1 à C6
-    connect(buttonC1, SIGNAL(clicked()), this, SLOT(buttonC1Function()));
-    connect(buttonC2, SIGNAL(clicked()), this, SLOT(buttonC2Function()));
-    connect(buttonC3, SIGNAL(clicked()), this, SLOT(buttonC3Function()));
-    connect(buttonC4, SIGNAL(clicked()), this, SLOT(buttonC4Function()));
-    connect(buttonC5, SIGNAL(clicked()), this, SLOT(buttonC5Function()));
-    connect(buttonC6, SIGNAL(clicked()), this, SLOT(buttonC6Function()));
+    connect(buttonC1, SIGNAL(pressed()), this, SLOT(buttonC1Function()));
+    connect(buttonC2, SIGNAL(pressed()), this, SLOT(buttonC2Function()));
+    connect(buttonC3, SIGNAL(pressed()), this, SLOT(buttonC3Function()));
+    connect(buttonC4, SIGNAL(pressed()), this, SLOT(buttonC4Function()));
+    connect(buttonC5, SIGNAL(pressed()), this, SLOT(buttonC5Function()));
+    connect(buttonC6, SIGNAL(pressed()), this, SLOT(buttonC6Function()));
 
 
 

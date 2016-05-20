@@ -13,13 +13,13 @@ MainDisplay::MainDisplay(QWidget *parent) : QWidget(parent),
     ui(new Ui::MainDisplay)
 {
     ui->setupUi(this);
-    connect(ui->xSlider, SIGNAL(sliderReleased()), SLOT(on_PosChanged()));
-    connect(ui->ySlider, SIGNAL(sliderReleased()), SLOT(on_PosChanged()));
-    connect(ui->zSlider, SIGNAL(sliderReleased()), SLOT(on_PosChanged()));
+    connect(ui->xSlider, SIGNAL(valueChanged(int)), SLOT(on_PosChanged()));
+    connect(ui->ySlider, SIGNAL(valueChanged(int)), SLOT(on_PosChanged()));
+    connect(ui->zSlider, SIGNAL(valueChanged(int)), SLOT(on_PosChanged()));
 
-    connect(ui->redSlider, SIGNAL(sliderReleased()), SLOT(on_ColorChanged()));
-    connect(ui->greenSlider, SIGNAL(sliderReleased()), SLOT(on_ColorChanged()));
-    connect(ui->blueSlider, SIGNAL(sliderReleased()), SLOT(on_ColorChanged()));
+    connect(ui->redSlider, SIGNAL(valueChanged(int)), SLOT(on_ColorChanged()));
+    connect(ui->greenSlider, SIGNAL(valueChanged(int)), SLOT(on_ColorChanged()));
+    connect(ui->blueSlider, SIGNAL(valueChanged(int)), SLOT(on_ColorChanged()));
 
     ui->redLine->setReadOnly(true);
     ui->greenLine->setReadOnly(true);
