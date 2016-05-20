@@ -23,6 +23,9 @@ public:
 private slots:
     void on_pushCalibrateXYZ_pressed();
 //    void on_pushCalibrateXYZ_clicked();
+//    void on_sliderSetX_valueChanged();
+//    void on_sliderSetY_valueChanged();
+//    void on_sliderSetZ_valueChanged();
     void on_pushSetXYZ_pressed();
 //    void on_pushSetXYZ_clicked();
     void on_pushGetXYZPos_pressed();
