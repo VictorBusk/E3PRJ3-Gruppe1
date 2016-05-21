@@ -48,9 +48,9 @@ int main()
             }
         }
         
-        i2c_rx();
-        
-        if(isEmptyQueue() != 1)
+//        i2c_rx();
+      
+        if((isEmptyQueue() != 1) && (interruptX == 0) && (interruptY == 0))
         {
             struct Data action;
             action = frontQueue();
@@ -61,6 +61,8 @@ int main()
         CyDelay(50);
         
         i2c_tx();
+        interruptX = 0;
+        interruptY = 0;
     }
 }
 

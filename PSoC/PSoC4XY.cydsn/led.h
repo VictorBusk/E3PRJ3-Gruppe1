@@ -27,8 +27,6 @@
 #include "xy.h"
     
 void setLed(uint8 red, uint8 green, uint8 blue);
-void toggelLed(uint8 red, uint8 green, uint8 blue);
-
     
 #endif  // ifndef LED_H
 /* [] END OF FILE */

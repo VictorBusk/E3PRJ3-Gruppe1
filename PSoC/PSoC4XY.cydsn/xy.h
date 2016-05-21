@@ -34,6 +34,8 @@ extern uint32 xMax;
 extern uint32 xPos;
 extern uint32 yMax;
 extern uint32 yPos;
+extern uint8 interruptX;
+extern uint8 interruptY;
     
 void xy_init(void);
 CY_ISR_PROTO(isr_X);
