@@ -14,10 +14,10 @@
 ***************************************/
 
 extern void i2c_init(void);
-extern void i2c_setPacket(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal);
-extern void i2c_getPacket(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal);
+extern void i2c_setPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal);
+extern void i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8* i2cVal);
 uint8 i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal);
-uint8 i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal);
+uint8 i2c_rx(uint8 i2cRxAddr, uint8* i2cRxCmd, uint8* i2cRxVal);
 extern void i2c_slave(void);
 
 

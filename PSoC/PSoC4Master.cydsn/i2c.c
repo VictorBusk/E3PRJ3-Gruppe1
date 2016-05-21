@@ -28,9 +28,22 @@ void i2c_init()
     I2CM_Start();
 }
 
-void i2c_getPacket(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8* i2cTxVal)
+void i2c_setPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
 {
-  if(i2c_tx(i2cTxAddr, i2cTxCmd, *i2cTxVal) == I2C_STS_CMD_DONE)
+  if(i2c_tx(i2cAddr, i2cCmd, i2cVal) == I2C_STS_CMD_DONE)
+  {
+    setLed(0,0,1,50);
+  }
+  else
+  {
+    setLed(1,0,0,255);
+  }
+}
+
+void i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8* i2cVal)
+{
+    uint8 i2cRxCmd;
+  if(i2c_tx(i2cAddr, i2cCmd, *i2cVal) == I2C_STS_CMD_DONE)
   {
     setLed(0,0,1,50);
   }
@@ -39,7 +52,7 @@ void i2c_getPacket(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8* i2cTxVal)
     setLed(1,0,0,255);
   }
   
-  if(i2c_rx(i2cTxAddr, i2cTxCmd, *i2cTxVal) == i2cTxCmd)
+  if(i2c_rx(i2cAddr, &i2cRxCmd, i2cVal) == i2cCmd)
   {
     setLed(0,1,0,50);
   }
@@ -58,17 +71,17 @@ void i2c_getPacket(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8* i2cTxVal)
  *  @memberof   I2c
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
-uint8 i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal)
+uint8 i2c_tx(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
 {
   uint8 i2cTxStatus = I2C_STS_CMD_FAIL;
   uint8 i2cTxData[I2C_PACKET_SIZE];
   
   i2cTxData[I2C_PACKET_SOP_POS] = I2C_PACKET_SOP;
-  i2cTxData[I2C_PACKET_CMD_POS] = i2cTxCmd;
-  i2cTxData[I2C_PACKET_VAL_POS] = i2cTxVal;
+  i2cTxData[I2C_PACKET_CMD_POS] = i2cCmd;
+  i2cTxData[I2C_PACKET_VAL_POS] = i2cVal;
   i2cTxData[I2C_PACKET_EOP_POS] = I2C_PACKET_EOP;
   
-  (void) I2CM_I2CMasterWriteBuf(i2cTxAddr, i2cTxData, I2C_PACKET_SIZE, I2CM_I2C_MODE_COMPLETE_XFER);
+  (void) I2CM_I2CMasterWriteBuf(i2cAddr, i2cTxData, I2C_PACKET_SIZE, I2CM_I2C_MODE_COMPLETE_XFER);
   while (0u == (I2CM_I2CMasterStatus() & I2CM_I2C_MSTAT_WR_CMPLT))
   {
   }
@@ -76,7 +89,7 @@ uint8 i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal)
   {
     if (I2CM_I2CMasterGetWriteBufSize() == I2C_BUFFER_SIZE)
     {
-      i2cTxStatus = I2C_STS_CMD_DONE
+      i2cTxStatus = I2C_STS_CMD_DONE;
     }
     
   }
@@ -94,7 +107,6 @@ uint8 i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal)
  *  @public
  *  @memberof   I2c
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
- *  @todo       Ændre i2cRxCmd til en pointer og modtager variable
  */
 uint8 i2c_rx(uint8 i2cRxAddr, uint8* i2cRxCmd, uint8* i2cRxVal)
 {

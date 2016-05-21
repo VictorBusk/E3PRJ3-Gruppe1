@@ -31,10 +31,12 @@ void i2c_init()
     I2CS_I2CSlaveClearWriteBuf();
     I2CS_I2CSlaveClearWriteStatus();
     
+    I2CS_SetCustomInterruptHandler(isr_i2c_rx);
+    
     I2CS_Start();
 }
 
-CY_ISR(isr_spi_rx)
+CY_ISR(isr_i2c_rx)
 {
   if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_WR_CMPLT))
   {

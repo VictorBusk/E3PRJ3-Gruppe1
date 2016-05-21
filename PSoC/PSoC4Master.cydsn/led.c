@@ -25,7 +25,7 @@ void setLed(uint8 red, uint8 green, uint8 blue, uint8 delay)
     green ? LED_GREEN_Write(LED_ON) : LED_GREEN_Write(LED_OFF);
     blue ? LED_BLUE_Write(LED_ON) : LED_BLUE_Write(LED_OFF);
     
-    CyDelay(time);
+    CyDelay(delay);
 }
 
     

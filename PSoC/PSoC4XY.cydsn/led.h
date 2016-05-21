@@ -20,7 +20,6 @@
 #define LED_H
     
 #include <project.h>
-#include "capsense.h"
 #include "handler.h"
 #include "i2c.h"
 #include "queue.h"

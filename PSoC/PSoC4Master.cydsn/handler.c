@@ -79,14 +79,14 @@ void handler(uint8 cmd, uint8 val)
     switch (cmd)
     {
         case 0x01 :
-            i2c_getPacket(PSoC_XY, getXPos, &xPos);
-            i2c_getPacket(PSoC_XY, getYPos, &yPos);
-            i2c_getPacket(PSoC_Z, getZPos, &zPos);
+            i2c_getPacket(PSoC_XY, CMD_GET_X_POS, &xPos);
+            i2c_getPacket(PSoC_XY, CMD_GET_Y_POS, &yPos);
+            i2c_getPacket(PSoC_Z, CMD_GET_Z_POS, &zPos);
             break;
         case 0x02 :
-            i2c_getPacket(PSoC_XY, getXMax, &xMax);
-            i2c_getPacket(PSoC_XY, getYMax, &yMax);
-            i2c_getPacket(PSoC_Z, getZMax, &zMax);
+            i2c_getPacket(PSoC_XY, CMD_GET_X_MAX, &xMax);
+            i2c_getPacket(PSoC_XY, CMD_GET_Y_MAX, &yMax);
+            i2c_getPacket(PSoC_Z, CMD_GET_Z_MAX, &zMax);
             break;
         case CMD_SET_X_POS :
             i2c_setPacket(PSoC_XY, cmd, val);
@@ -122,10 +122,10 @@ void handler(uint8 cmd, uint8 val)
             i2c_setPacket(PSoC_Z, cmd, val);
             break;
         case CMD_GET_Z_POS :
-            i2c_setPacket(zPos);
+            spi_tx(zPos);
             break;
         case CMD_GET_Z_MAX :
-            i2c_setPacket(zMax);
+            spi_tx(zMax);
             break;
         case CMD_Z_STP :
             i2c_setPacket(PSoC_Z, cmd, val);
@@ -160,14 +160,14 @@ void handler(uint8 cmd, uint8 val)
         case CMD_GET_LUMEN_VAL :
             i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case CMD_SET_POWER_STS :
+        case CMD_GET_POWER_STS :
             i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
         case CMD_SET_DISTANCE_STS :
-            i2c_setPacket(PSoC_Sensor, cmd, txVal);
+            i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
         case CMD_SET_MOVEMENT_STS :
-            i2c_setPacket(PSoC_Sensor, cmd, txVal);
+            i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
         case CMD_GET_DISTANCE_STS :
             i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
@@ -176,12 +176,12 @@ void handler(uint8 cmd, uint8 val)
             i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
         case CMD_DISTANCE_ALRT :
-            handler(cmdStopX, val);
-            handler(cmdStopY, val);
-            handler(cmdStopZ, val);
+            handler(CMD_X_STP, val);
+            handler(CMD_Y_STP, val);
+            handler(CMD_Z_STP, val);
             break;
         case CMD_MOVEMENT_ALRT : 
-            handler(setPower, val);
+            handler(CMD_SET_POWER_STS, val);
             break;
         default :
             break;
