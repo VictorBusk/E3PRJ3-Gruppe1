@@ -44,8 +44,14 @@ CY_ISR(isr_i2c_rx)
     {
       if((i2cRxBuffer[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxBuffer[I2C_PACKET_EOP_POS] == I2C_PACKET_EOP))
       {
-        interruptX = 1;
-        interruptY = 1;
+        if(i2cRxBuffer[I2C_PACKET_CMD_POS] == CMD_SET_X_POS)
+        {
+            interruptX = 1;   
+        }
+        else if(i2cRxBuffer[I2C_PACKET_CMD_POS] == CMD_SET_Y_POS)
+        {
+            interruptY = 1;   
+        }
         
         struct Data action;
         action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
