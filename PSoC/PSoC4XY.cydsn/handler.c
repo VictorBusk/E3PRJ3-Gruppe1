@@ -20,6 +20,8 @@
 
 void handler(uint8 cmd, uint8 val)
 {
+    uint8 txVal;
+    
     switch (cmd) {
         case cmdSetXPos : 
             setXPos(val);
@@ -28,23 +30,23 @@ void handler(uint8 cmd, uint8 val)
             setYPos(val);
             break;
         case cmdGetXPos :
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (xPos > 0) ? (xPos / resolution) : 0xee;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = txVal = getXPos();
             i2c_tx();
             break;
         case cmdGetYPos : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (yPos > 0) ? (yPos / resolution) : 0xee;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = (uint8)(resolution / yMax * yPos);
             i2c_tx();
             break;
         case cmdGetXMax : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (xMax > 0) ? (xMax / resolution) : 0xee;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = (xMax > 0) ? (255u) : 0xee;
             i2c_tx();
             break;
         case cmdGetYMax : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (yMax > 0) ? (yMax / resolution) : 0xee;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = (yMax > 0) ? (255u) : 0xee;
             i2c_tx();
             break;
         case cmdStopX : 

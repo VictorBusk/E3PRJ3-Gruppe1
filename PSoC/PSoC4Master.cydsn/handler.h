@@ -1,20 +1,8 @@
-/* ========================================
- *
- * File: handler.h
- * Description: 
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- * 
- * Author: Jeppe Stærk
- * Matriculation number: 201271201
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
-*/
+/*!
+ * @file        handler.h
+ * @brief       Handels incoming commands
+ * @author      Jeppe Stærk (201271201@uni.au.dk)
+ */
 
 #ifndef HANDLER_H
 #define HANDLER_H
@@ -22,7 +10,6 @@
 #include <project.h>
 #include "i2c.h"
 #include "spi.h"
-#include "test.h"
 
 uint8 xPos;
 uint8 xMax;
@@ -40,10 +27,6 @@ extern void handler(uint8 cmd, uint8 val);
 /***************************************
 *            Constants
 ****************************************/
-/* I2C slave address to communicate with */
-#define PSoC_XY (0x08u)
-#define PSoC_Z (0x09u)
-#define PSoC_Sensor (0x10u)
 
 /* Commands set */
 #define setXPos (0x10u)

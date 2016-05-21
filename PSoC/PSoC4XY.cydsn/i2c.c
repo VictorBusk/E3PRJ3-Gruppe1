@@ -18,16 +18,16 @@
 
 #include "i2c.h"
 
-uint8 i2c_txBuffer[I2C_BUFFER_SIZE] = {I2C_PACKET_SOP, I2C_STS_CMD_FAIL, I2C_STS_CMD_FAIL, I2C_PACKET_EOP};
-uint8 i2c_rxBuffer[I2C_BUFFER_SIZE];
+uint8 i2cTxBuffer[I2C_BUFFER_SIZE] = {I2C_PACKET_SOP, I2C_STS_CMD_FAIL, I2C_STS_CMD_FAIL, I2C_PACKET_EOP};
+uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
 
 void i2c_init()
 {
-    I2CS_I2CSlaveInitReadBuf(i2c_txBuffer, I2C_BUFFER_SIZE);
+    I2CS_I2CSlaveInitReadBuf(i2cTxBuffer, I2C_BUFFER_SIZE);
     I2CS_I2CSlaveClearReadBuf();
     I2CS_I2CSlaveClearReadStatus();
     
-    I2CS_I2CSlaveInitWriteBuf(i2c_rxBuffer, I2C_BUFFER_SIZE);
+    I2CS_I2CSlaveInitWriteBuf(i2cRxBuffer, I2C_BUFFER_SIZE);
     I2CS_I2CSlaveClearWriteBuf();
     I2CS_I2CSlaveClearWriteStatus();
     
@@ -40,11 +40,11 @@ void i2c_rx()
     {
         if(I2C_BUFFER_SIZE == I2CS_I2CSlaveGetWriteBufSize())
         {
-            if((i2c_rxBuffer[0] == I2C_PACKET_SOP) && (i2c_rxBuffer[3] == I2C_PACKET_EOP))
+            if((i2cRxBuffer[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxBuffer[I2C_PACKET_EOP_POS] == I2C_PACKET_EOP))
             {
                 struct Data action;
-                action.cmd_ = i2c_rxBuffer[1];
-                action.val_ = i2c_rxBuffer[2];
+                action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
+                action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
                 
                 pushQueue(action);
             }

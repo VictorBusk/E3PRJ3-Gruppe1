@@ -17,6 +17,8 @@
 */
 
 #include "i2c.h"
+#include "led.h"
+#include "queue.h"
 
 uint8 i2c_slaveBuffer[I2C_BUFFER_SIZE];
 
@@ -75,8 +77,8 @@ void i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal)
         {
             if((i2cRxData[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxData[I2C_PACKET_EOP_POS] == I2C_PACKET_EOP))
             {
-                i2cRxCmd = i2cRxData[1];
-                *i2cRxVal = i2cRxData[2];
+                i2cRxCmd = i2cRxData[I2C_PACKET_CMD_POS];
+                *i2cRxVal = i2cRxData[I2C_PACKET_VAL_POS];
                 setLed(0,1,0,25);
             }
         }

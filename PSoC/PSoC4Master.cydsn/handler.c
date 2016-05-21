@@ -148,12 +148,7 @@ void handler(uint8 cmd, uint8 txVal)
             break;
         case setMasterLedBlue :
             setLed(0,0,1,txVal);
-            break;
-        case 0x90 :
-            i2c_tx(PSoC_XY, cmd, txVal);
-        case 0x99 : 
-            test(txVal);
-            
+            break;            
     }
 }
 

@@ -25,15 +25,15 @@
 
 int main()
 {
-    queue_init();
+    queue_init(6u);
     spi_init();
-    i2c_init();   
+    i2c_init();
+    
+    setLed(1,0,0,150);
+    setLed(0,1,0,150);
+    setLed(0,0,1,150);
     
     CyGlobalIntEnable; /* Enable global interrupts. */
-    
-    queueLed(1,0,0,150);
-    queueLed(0,1,0,150);
-    queueLed(0,0,1,150);
 
     for(;;)
     {
@@ -46,7 +46,6 @@ int main()
             handler(action.cmd_, action.val_);
             popQueue();
         }
-        
     }
 }
 

@@ -1,58 +1,77 @@
-/* ========================================
- *
- * File: i2c.h
- * Description: 
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- * 
- * Author: Jeppe Stærk
- * Matriculation number: 201271201
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
-*/
+/*!
+ * @file        i2c.h
+ * @brief       I2C comunication
+ * @author      Jeppe Stærk (201271201@uni.au.dk)
+ */
 
 #ifndef I2C_H
 #define I2C_H
     
 #include <project.h>
-#include "led.h"
-#include "queue.h"
 
 /***************************************
-*         Function Prototypes
-****************************************/
-    
-void i2c_init();
+*       Public methods            
+***************************************/
+
+/*!
+ *  @brief      Initialize I2C master.
+ */
+extern void i2c_init(void);
+
+/*!
+ *  @brief      Transmit I2C packet.
+ *  @param[in]  i2cTxAddr I2C address on reciver.
+ *  @param[in]  i2cTxCmd I2C command to reciver.
+ *  @param[in]  i2cTxVal I2C value to reciver.
+ */
 extern void i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal);
+
+/*!
+ *  @brief      Recive I2C packet.
+ *  @param[in]  i2cTxAddr I2C address on sender.
+ *  @param[in]  i2cTxCmd I2C command from sender.
+ *  @param[out] i2cTxVal I2C value from sender.
+ *  @todo       Ændre i2cTxCmd til en pointer og modtager variable
+ */
 extern void i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal);
+
+/*!
+ *  @todo Dokumenter extern void i2c_slave();
+ */
 extern void i2c_slave();
 
+
 /***************************************
-*            Constants
+*       Public constants
 ****************************************/
 
+/*!
+ *  @defgroup I2C I2C constants
+ */
+
+/* I2C slave address to communicate with */
+#define PSoC_XY             (0x08u) /*!< I2C address on PSoC XY. @ingroup I2C */
+#define PSoC_Z              (0x09u) /*!< I2C address on PSoC Z. @ingroup I2C */
+#define PSoC_Sensor         (0x10u) /*!< I2C address on PSoC Sensor. @ingroup I2C */
+
 /* Buffer and packet size */
-#define I2C_BUFFER_SIZE         (4u)
-#define I2C_PACKET_SIZE         (I2C_BUFFER_SIZE)
+#define I2C_BUFFER_SIZE     (4u)    /*!< I2C buffer size. @ingroup I2C */
+#define I2C_PACKET_SIZE     (4u)    /*!< I2C packet size. @ingroup I2C */
 
 /* Packet positions */
-#define I2C_PACKET_SOP_POS      (0u)
-#define I2C_PACKET_CMD_POS      (1u)
-#define I2C_PACKET_VAL_POS      (2u)
-#define I2C_PACKET_EOP_POS      (3u)
+#define I2C_PACKET_SOP_POS  (0u)    /*!< I2C start of packet position. @ingroup I2C */
+#define I2C_PACKET_CMD_POS  (1u)    /*!< I2C comand position. @ingroup I2C */
+#define I2C_PACKET_VAL_POS  (2u)    /*!< I2C value position. @ingroup I2C */
+#define I2C_PACKET_EOP_POS  (3u)    /*!< I2C end of packet position. @ingroup I2C */
 
 /* Start and end of packet markers */
-#define I2C_PACKET_SOP          (0x01u)
-#define I2C_PACKET_EOP          (0x17u)
+#define I2C_PACKET_SOP      (0x01u) /*!< I2C start of packet value. @ingroup I2C */
+#define I2C_PACKET_EOP      (0x17u) /*!< I2C end of packet value. @ingroup I2C */
 
 /* Command valid status */
-#define I2C_STS_CMD_DONE        (0xAAu)
-#define I2C_STS_CMD_FAIL        (0xEEu)
+#define I2C_STS_CMD_DONE    (0xAAu) /*!< I2C status command done. @ingroup I2C */
+#define I2C_STS_CMD_FAIL    (0xEEu) /*!< I2C status command fail. @ingroup I2C */
+
 
 #endif  // ifndef I2C_H
 /* [] END OF FILE */

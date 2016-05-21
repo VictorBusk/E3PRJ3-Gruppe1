@@ -48,8 +48,8 @@ extern void i2c_tx(void);
 #define I2C_STS_CMD_DONE        (0xAAu)
 #define I2C_STS_CMD_FAIL        (0xEEu)
 
-uint8 i2c_txBuffer[I2C_BUFFER_SIZE];
-uint8 i2c_rxBuffer[I2C_BUFFER_SIZE];
+uint8 i2cTxBuffer[I2C_BUFFER_SIZE];
+uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
     
 #endif  // ifndef I2C_H
 /* [] END OF FILE */
