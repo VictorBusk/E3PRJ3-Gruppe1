@@ -1,154 +1,190 @@
-/* ========================================
- *
- * File: handler.c
- * Description: 
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- * 
- * Author: Jeppe Stærk
- * Matriculation number: 201271201
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
-*/
-
+/*!
+ * @file        handler.c
+ * @brief       Handels incoming commands
+ * @author      Jeppe Stærk (201271201@uni.au.dk)
+ */
 #include "handler.h"
+#include "i2c.h"
+#include "spi.h"
 
-uint8 xPos = 0;
-uint8 xMax = 0;
-uint8 yPos = 0;
-uint8 yMax = 0;
-uint8 zPos = 0;
-uint8 zMax = 0;
+/***************************************
+ *       Private attributes
+ ***************************************/
+
+/*!
+ *  @brief      Value of the X position.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 xPos = 0;
+
+/*!
+ *  @brief      Value of the X maximum.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 xMax = 0;
+
+/*!
+ *  @brief      Value of the Y position.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 yPos = 0;
+
+/*!
+ *  @brief      Value of the Y maximum.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 yMax = 0;
+
+/*!
+ *  @brief      Value of the Z position.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 zPos = 0;
+
+/*!
+ *  @brief      Value of the Z maximum.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 zMax = 0;
 
 
-void handler(uint8 cmd, uint8 txVal)
+/***************************************
+ *       Public methods
+ ***************************************/
+
+/*!
+ *  @brief      Handels incoming commands
+ *  @param[in]  cmd   Command to be handled.
+ *  @param[in]  val   Value to pass along with the command.
+ *  @public
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+void handler(uint8 cmd, uint8 val)
 {
     uint8 rxVal = 0;
     
     switch (cmd)
     {
         case 0x01 :
-            i2c_rx(PSoC_XY, getXPos, &xPos);
-            i2c_rx(PSoC_XY, getYPos, &yPos);
-            i2c_rx(PSoC_Z, getZPos, &zPos);
+            i2c_getPacket(PSoC_XY, getXPos, &xPos);
+            i2c_getPacket(PSoC_XY, getYPos, &yPos);
+            i2c_getPacket(PSoC_Z, getZPos, &zPos);
             break;
         case 0x02 :
-            i2c_rx(PSoC_XY, getXMax, &xMax);
-            i2c_rx(PSoC_XY, getYMax, &yMax);
-            i2c_rx(PSoC_Z, getZMax, &zMax);
+            i2c_getPacket(PSoC_XY, getXMax, &xMax);
+            i2c_getPacket(PSoC_XY, getYMax, &yMax);
+            i2c_getPacket(PSoC_Z, getZMax, &zMax);
             break;
-        case setXPos : 
-            i2c_tx(PSoC_XY, cmd, txVal);
+        case CMD_SET_X_POS :
+            i2c_setPacket(PSoC_XY, cmd, val);
             break;
-        case setYPos : 
-            i2c_tx(PSoC_XY, cmd, txVal);
+        case CMD_SET_Y_POS :
+            i2c_setPacket(PSoC_XY, cmd, val);
             break;
-        case getXPos : 
+        case CMD_GET_X_POS :
             spi_tx(xPos);
             break;
-        case getYPos : 
+        case CMD_GET_Y_POS :
             spi_tx(yPos);
             break;
-        case getXMax : 
+        case CMD_GET_X_MAX :
             spi_tx(xMax);
             break;
-        case getYMax : 
+        case CMD_GET_Y_MAX :
             spi_tx(yMax);
             break;
-        case cmdStopX : 
-            i2c_tx(PSoC_XY, cmd, txVal);
+        case CMD_X_STP :
+            i2c_setPacket(PSoC_XY, cmd, val);
             break;
-        case cmdStopY : 
-            i2c_tx(PSoC_XY, cmd, txVal);
+        case CMD_Y_STP :
+            i2c_setPacket(PSoC_XY, cmd, val);
             break;
-        case cmdCalibrateX : 
-            i2c_tx(PSoC_XY, cmd, txVal);
+        case CMD_X_CAL :
+            i2c_setPacket(PSoC_XY, cmd, val);
             break;
-        case cmdCalibrateY : 
-            i2c_tx(PSoC_XY, cmd, txVal);
+        case CMD_Y_CAL :
+            i2c_setPacket(PSoC_XY, cmd, val);
             break;
-        case setZPos : 
-            i2c_tx(PSoC_Z, cmd, txVal);
+        case CMD_SET_Z_POS :
+            i2c_setPacket(PSoC_Z, cmd, val);
             break;
-        case getZPos : 
-            spi_tx(zPos);
+        case CMD_GET_Z_POS :
+            i2c_setPacket(zPos);
             break;
-        case getZMax : 
-            spi_tx(zMax);
+        case CMD_GET_Z_MAX :
+            i2c_setPacket(zMax);
             break;
-        case cmdStopZ : 
-            i2c_tx(PSoC_Z, cmd, txVal);
+        case CMD_Z_STP :
+            i2c_setPacket(PSoC_Z, cmd, val);
             break;
-        case cmdCalibrateZ : 
-            i2c_tx(PSoC_Z, cmd, txVal);
+        case CMD_Z_CAL :
+            i2c_setPacket(PSoC_Z, cmd, val);
             break;
-        case setRed : 
-            i2c_tx(PSoC_Sensor, cmd, txVal);
+        case CMD_SET_RED_VAL :
+            i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
-        case setGreen : 
-            i2c_tx(PSoC_Sensor, cmd, txVal);
+        case CMD_SET_GREEN_VAL :
+            i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
-        case setBlue : 
-            i2c_tx(PSoC_Sensor, cmd, txVal);
+        case CMD_SET_BLUE_VAL :
+            i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
-        case setLumen : 
-            i2c_tx(PSoC_Sensor, cmd, txVal);
+        case CMD_SET_LUMEN_VAL :
+            i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
-        case setPower : 
-            i2c_tx(PSoC_Sensor, cmd, txVal);
+        case CMD_SET_POWER_STS :
+            i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
-        case getRed : 
-            i2c_rx(PSoC_Sensor, cmd, &rxVal);
+        case CMD_GET_RED_VAL :
+            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case getGreen : 
-            i2c_rx(PSoC_Sensor, cmd, &rxVal);
+        case CMD_GET_GREEN_VAL :
+            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case getBlue : 
-            i2c_rx(PSoC_Sensor, cmd, &rxVal);
+        case CMD_GET_BLUE_VAL :
+            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case getLumen : 
-            i2c_rx(PSoC_Sensor, cmd, &rxVal);
+        case CMD_GET_LUMEN_VAL :
+            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case getPower : 
-            i2c_rx(PSoC_Sensor, cmd, &rxVal);
+        case CMD_SET_POWER_STS :
+            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case setDistance : 
-            i2c_tx(PSoC_Sensor, cmd, txVal);
+        case CMD_SET_DISTANCE_STS :
+            i2c_setPacket(PSoC_Sensor, cmd, txVal);
             break;
-        case setMovement : 
-            i2c_tx(PSoC_Sensor, cmd, txVal);
+        case CMD_SET_MOVEMENT_STS :
+            i2c_setPacket(PSoC_Sensor, cmd, txVal);
             break;
-        case getDistance : 
-            i2c_rx(PSoC_Sensor, cmd, &rxVal);
+        case CMD_GET_DISTANCE_STS :
+            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case getMovement : 
-            i2c_rx(PSoC_Sensor, cmd, &rxVal);
+        case CMD_GET_MOVEMENT_STS :
+            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
             break;
-        case cmdDistanceAlert : 
-            handler(cmdStopX, txVal);
-            handler(cmdStopY, txVal);
-            handler(cmdStopZ, txVal);
+        case CMD_DISTANCE_ALRT :
+            handler(cmdStopX, val);
+            handler(cmdStopY, val);
+            handler(cmdStopZ, val);
             break;
-        case cmdMovementAlert : 
-            handler(setPower, txVal);
+        case CMD_MOVEMENT_ALRT : 
+            handler(setPower, val);
             break;
-        case setMasterLedOff :
-            setLed(0,0,0,0);
+        default :
             break;
-        case setMasterLedRed :
-            setLed(1,0,0,txVal);
-            break;
-        case setMasterLedGreen :
-            setLed(0,1,0,txVal);
-            break;
-        case setMasterLedBlue :
-            setLed(0,0,1,txVal);
-            break;            
     }
 }
 

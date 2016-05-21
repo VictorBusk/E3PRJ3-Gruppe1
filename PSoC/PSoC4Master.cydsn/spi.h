@@ -1,45 +1,31 @@
 /*!
- * @file        spi.h
- * @brief       SPI comunication
- * @author      Jeppe Stærk (201271201@uni.au.dk)
+ *  @file        spi.h
+ *  @brief       SPI comunication
+ *  @class       Spi
+ *  @author      Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #ifndef SPI_H
 #define SPI_H
     
 #include <project.h>
-#include "led.h"
-#include "queue.h"
     
 /***************************************
-*         Function Prototypes
-****************************************/
+ *       Public methods
+ ***************************************/
 
-/*!
- *  @brief      Initialize SPI slave
- */
 extern void spi_init(void);
-
-/*!
- *  @brief      ISR for SPI slave rx
- */
 CY_ISR_PROTO(isr_spi_rx);
-
-/*!
- *  @brief      Update tx buffer for SPI slave.
- *  @param      data Data to bre sent.
- */
 extern void spi_tx(uint8 data);
 
 
 /***************************************
-*            Constants
-****************************************/
+ *       Public constants
+ ***************************************/
 
 /*!
- *  @defgroup SPI SPI constants
+ *  @defgroup   SPI SPI constants
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #define SPI_BUFFER_SIZE     (1u)    /*!< SPI buffer size. @ingroup SPI */      
 #define SPI_PACKET_SIZE     (1u)    /*!< SPI packet size. @ingroup SPI */ 
 #define SPI_PACKET_SOP_POS  (0u)    /*!< SPI start of packet position. @ingroup SPI */ 

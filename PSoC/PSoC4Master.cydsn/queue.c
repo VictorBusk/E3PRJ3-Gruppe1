@@ -1,9 +1,9 @@
 /*!
  * @file        queue.c
  * @brief       A queue for incoming commands
+ * @class       Queue
  * @author      Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,7 +15,7 @@
 /*!
  *  @brief      Struct to contain a element in the queue
  *  @private
- *  @implements Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 struct Node
 {
@@ -31,6 +31,7 @@ struct Node
  *  @brief      Pointer to front element in queue
  *  @private
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 static struct Node* frontOfQueuePtr_;
 
@@ -38,6 +39,7 @@ static struct Node* frontOfQueuePtr_;
  *  @brief      Pointer to back element in queue
  *  @private
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 static struct Node* backOfQueuePtr_;
 
@@ -45,6 +47,7 @@ static struct Node* backOfQueuePtr_;
  *  @brief      Conuter for elements in the queue
  *  @private
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 static uint8 queueCount_;
 
@@ -52,6 +55,7 @@ static uint8 queueCount_;
  *  @brief      Maximum elements in queue
  *  @private
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 static uint8 queueMax_;
 
@@ -64,11 +68,16 @@ static void headRemove(struct Node** headPtr);
 static void backInsert(struct Node** backPtr, const struct Data data);
 
 
+/***************************************
+ *       Public methods
+ ***************************************/
+
 /**
  *  @brief      Initialize queue.
  *  @param[in]  queueSize   Size of queue.
  *  @public
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void queue_init(uint8 queueSize)
 {
@@ -85,6 +94,7 @@ void queue_init(uint8 queueSize)
  *  @param[in]  data    Struct of data to be placed in the queue
  *  @public
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void pushQueue(const struct Data data)
 {
@@ -109,6 +119,7 @@ void pushQueue(const struct Data data)
  *  @brief      Remove front element of the queue  
  *  @public
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void popQueue()
 {
@@ -125,6 +136,7 @@ void popQueue()
  *  @return     Data
  *  @public
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 struct Data frontQueue()
 {
@@ -136,6 +148,7 @@ struct Data frontQueue()
  *  @return     int
  *  @public
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 int isEmptyQueue()
 {
@@ -155,6 +168,7 @@ int isEmptyQueue()
  *  @param[in]  data        Struct of data to be placed in the queue
  *  @private
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void headInsert(struct Node** headPtr, const struct Data data)
 {
@@ -175,6 +189,7 @@ void headInsert(struct Node** headPtr, const struct Data data)
  *  @param[in]  headPtr     Pointer to front of queue
  *  @private
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void headRemove(struct Node** headPtr)
 {
@@ -189,10 +204,11 @@ struct Node* condemned;
 
 /*!
  *  @brief      Insert element in the back of the queue
- *  @param[in]  headPtr     Pointer to back of queue
+ *  @param[in]  backPtr     Pointer to back of queue
  *  @param[in]  data        Struct of data to be placed in the queue
  *  @private
  *  @memberof   Queue
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void backInsert(struct Node** backPtr, const struct Data data)
 {

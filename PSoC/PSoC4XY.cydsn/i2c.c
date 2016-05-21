@@ -49,9 +49,9 @@ void i2c_rx()
                 pushQueue(action);
             }
         }
-        
-        I2CS_I2CSlaveClearWriteBuf();
-        I2CS_I2CSlaveClearWriteStatus();
+
+      I2CS_I2CSlaveClearWriteBuf();
+      I2CS_I2CSlaveClearWriteStatus();
     }
 }
 

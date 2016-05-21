@@ -1,33 +1,30 @@
-/* ========================================
- *
- * File: led.h
- * Description: 
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- * 
- * Author: Jeppe Stærk
- * Matriculation number: 201271201
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
-*/
-
+/*!
+ * @file        led.h
+ * @brief       Controls the LED on PSoC Master
+ * @class       Led
+ * @author      Jeppe Stærk (201271201@uni.au.dk)
+ */
 #ifndef LED_H
 #define LED_H
 
 #include <project.h>
-#include "handler.h"
-#include "queue.h"
 
-extern void setLed(uint8 red, uint8 green, uint8 blue, uint8 time);
-extern void queueLed(uint8 red, uint8 green, uint8 blue, uint8 time);
+/***************************************
+ *       Public methods
+ ***************************************/
 
-#define LED_ON       (0u)
-#define LED_OFF      (1u)
+extern void setLed(uint8 red, uint8 green, uint8 blue, uint8 delay);
+
+/***************************************
+ *       Public constants
+ ***************************************/
+
+/*!
+ *  @defgroup   LED LED constants
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+#define LED_ON       (0u) /*!< LED on value. @ingroup LED */
+#define LED_OFF      (1u) /*!< SPI off value. @ingroup LED */
     
 #endif  // ifndef LED_H
 /* [] END OF FILE */

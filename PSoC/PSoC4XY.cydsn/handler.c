@@ -20,49 +20,39 @@
 
 void handler(uint8 cmd, uint8 val)
 {
-    uint8 txVal;
-    
     switch (cmd) {
-        case cmdSetXPos : 
+        case CMD_SET_X_POS :
             setXPos(val);
             break;
-        case cmdSetYPos :
+        case CMD_SET_Y_POS:
             setYPos(val);
             break;
-        case cmdGetXPos :
-            i2cTxBuffer[1] = cmd;
-            i2cTxBuffer[2] = txVal = getXPos();
-            i2c_tx();
+        case CMD_GET_X_POS :
+            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = getXPos();
             break;
-        case cmdGetYPos : 
-            i2cTxBuffer[1] = cmd;
-            i2cTxBuffer[2] = (uint8)(resolution / yMax * yPos);
-            i2c_tx();
+        case CMD_GET_Y_POS :
+            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = getYPos();
             break;
-        case cmdGetXMax : 
-            i2cTxBuffer[1] = cmd;
-            i2cTxBuffer[2] = (xMax > 0) ? (255u) : 0xee;
-            i2c_tx();
+        case CMD_GET_X_MAX:
+            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = getXMax();
             break;
-        case cmdGetYMax : 
-            i2cTxBuffer[1] = cmd;
-            i2cTxBuffer[2] = (yMax > 0) ? (255u) : 0xee;
-            i2c_tx();
+        case CMD_GET_Y_MAX :
+            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = getYMax();
             break;
-        case cmdStopX : 
+        case CMD_X_STP:
             stopX();
             break;
-        case cmdStopY : 
+        case CMD_Y_STP:
             stopY();
             break;
-        case cmdCalibrateX : 
+        case CMD_X_CAL:
             calibrateX();
             break;
-        case cmdCalibrateY : 
-            calibrateY();
-            break;
-        case 0x90 :
-            calibrateX();
+        case CMD_Y_CAL: 
             calibrateY();
             break;
         default :

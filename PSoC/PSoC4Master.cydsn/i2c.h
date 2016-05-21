@@ -1,9 +1,9 @@
 /*!
  * @file        i2c.h
  * @brief       I2C comunication
+ * @class       I2c
  * @author      Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #ifndef I2C_H
 #define I2C_H
     
@@ -13,32 +13,12 @@
 *       Public methods            
 ***************************************/
 
-/*!
- *  @brief      Initialize I2C master.
- */
 extern void i2c_init(void);
-
-/*!
- *  @brief      Transmit I2C packet.
- *  @param[in]  i2cTxAddr I2C address on reciver.
- *  @param[in]  i2cTxCmd I2C command to reciver.
- *  @param[in]  i2cTxVal I2C value to reciver.
- */
-extern void i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal);
-
-/*!
- *  @brief      Recive I2C packet.
- *  @param[in]  i2cTxAddr I2C address on sender.
- *  @param[in]  i2cTxCmd I2C command from sender.
- *  @param[out] i2cTxVal I2C value from sender.
- *  @todo       Ændre i2cTxCmd til en pointer og modtager variable
- */
-extern void i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal);
-
-/*!
- *  @todo Dokumenter extern void i2c_slave();
- */
-extern void i2c_slave();
+extern void i2c_setPacket(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal);
+extern void i2c_getPacket(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal);
+uint8 i2c_tx(uint8 i2cTxAddr, uint8 i2cTxCmd, uint8 i2cTxVal);
+uint8 i2c_rx(uint8 i2cRxAddr, uint8 i2cRxCmd, uint8* i2cRxVal);
+extern void i2c_slave(void);
 
 
 /***************************************

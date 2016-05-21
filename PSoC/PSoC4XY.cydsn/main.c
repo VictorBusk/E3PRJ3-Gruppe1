@@ -31,7 +31,6 @@ int main()
     queue_init();
     xy_init();
     i2c_init();
-//    capsense_init();
     
     for(;;)
     {
@@ -49,11 +48,9 @@ int main()
             }
         }
         
-//        capsense();
-        
         i2c_rx();
         
-        while(isEmptyQueue() != 1)
+        if(isEmptyQueue() != 1)
         {
             struct Data action;
             action = frontQueue();

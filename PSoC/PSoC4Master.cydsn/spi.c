@@ -1,31 +1,33 @@
-/* ========================================
- *
- * File: spi.c
- * Description: 
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- * 
- * Author: Jeppe Stærk
- * Matriculation number: 201271201
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
-*/
-
+/*!
+ *  @file        spi.c
+ *  @brief       SPI comunication
+ *  @author      Jeppe Stærk (201271201@uni.au.dk)
+ */
 #include "spi.h"
+#include "led.h"
+#include "queue.h"
 
+/*!
+ *  @brief      Initialize SPI slave
+ *  @public
+ *  @memberof   Spi
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 void spi_init()
 {
-    SPIS_Start();
     SPIS_SpiUartClearTxBuffer();
     SPIS_SpiUartClearRxBuffer();
     SPIS_SetCustomInterruptHandler(isr_spi_rx);
+  
+    SPIS_Start();
 }
 
+/*!
+ *  @brief      ISR for SPI slave rx
+ *  @public
+ *  @memberof   Spi
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 CY_ISR(isr_spi_rx)
 {
     uint16 spiRxBuffer[SPI_PACKET_SIZE];
@@ -53,6 +55,13 @@ CY_ISR(isr_spi_rx)
     SPIS_ClearRxInterruptSource(SPIS_GetRxInterruptSource());
 }
 
+/*!
+ *  @brief      Update tx buffer for SPI slave.
+ *  @param      data Data to bre sent.
+ *  @public
+ *  @memberof   Spi
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 void spi_tx(uint8 data)
 {
     SPIS_SpiUartClearTxBuffer();

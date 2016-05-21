@@ -3,7 +3,6 @@
  * @brief       A queue for incoming commands
  * @author      Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #ifndef QUEUE_H
 #define QUEUE_H
     
@@ -20,18 +19,13 @@
 /*!
  *  @brief      Struct to contain a command and value
  *  @public
- *  @extends    Node
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 struct Data
 {
   int cmd_;         /**< Command stored in queue */
   int val_;         /**< Value stored in queue */
 };
-
-/***************************************
-*       Public attributes
-***************************************/
-
 
 /***************************************
 *       Public methods            
