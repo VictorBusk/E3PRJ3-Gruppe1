@@ -25,11 +25,8 @@ void E3PJR::on_pushCalibrateXYZ_pressed()
     ui->plainTextX->appendPlainText("Sender xCal..");
     ui->plainTextY->appendPlainText("Sender yCal..");
     ui->plainTextZ->appendPlainText("Sender zCal..");
-}
 
-void E3PJR::on_pushCalibrateXYZ_clicked()
-{
-    int err;
+    int errX, errY, errZ;
 
     SPIapi spi;
 
@@ -39,9 +36,9 @@ void E3PJR::on_pushCalibrateXYZ_clicked()
     unsigned char val = 0xAA;
 
     qDebug() << "***** SPI tx: " << spiCount_ << " *****";
-    err = spi.setPacket(&cmdX, &val);
-    qDebug() << "cmd: 0x" << QString::number(cmdX, 16) << " val: 0x" << QString::number(val, 16) << " (" << val << ") status: " << err;
-    if(err != 0)
+    errX = spi.setPacket(&cmdX, &val);
+    qDebug() << "cmd: 0x" << QString::number(cmdX, 16) << " val: 0x" << QString::number(val, 16) << " (" << val << ") status: " << errX;
+    if(errX != 0)
     {
         ui->plainTextX->appendPlainText("..calX err!");
     }
@@ -50,9 +47,9 @@ void E3PJR::on_pushCalibrateXYZ_clicked()
         ui->plainTextX->appendPlainText("..calX sent");
     }
 
-    err = spi.setPacket(&cmdY, &val);
-    qDebug() << "cmd: 0x" << QString::number(cmdY, 16) << " val: 0x" << QString::number(val, 16) << " (" << val << ") status: " << err;
-    if(err != 0)
+    errY = spi.setPacket(&cmdY, &val);
+    qDebug() << "cmd: 0x" << QString::number(cmdY, 16) << " val: 0x" << QString::number(val, 16) << " (" << val << ") status: " << errY;
+    if(errY != 0)
     {
         ui->plainTextY->appendPlainText("..calY err!");
     }
@@ -61,9 +58,9 @@ void E3PJR::on_pushCalibrateXYZ_clicked()
         ui->plainTextY->appendPlainText("..calY sent");
     }
 
-    err = spi.setPacket(&cmdZ, &val);
-    qDebug() << "cmd: 0x" << QString::number(cmdZ, 16) << " val: 0x" << QString::number(val, 16) << " (" << val << ") status: " << err;
-    if(err != 0)
+    errZ = spi.setPacket(&cmdZ, &val);
+    qDebug() << "cmd: 0x" << QString::number(cmdZ, 16) << " val: 0x" << QString::number(val, 16) << " (" << val << ") status: " << errZ;
+    if(errZ != 0)
     {
         ui->plainTextZ->appendPlainText("..calZ err!");
     }
@@ -72,16 +69,89 @@ void E3PJR::on_pushCalibrateXYZ_clicked()
         ui->plainTextZ->appendPlainText("..calZ sent");
     }
 }
+
+//void E3PJR::on_sliderSetX_valueChanged()
+//{
+//    ui->plainTextX->appendPlainText("Opdater xPos..");
+
+//    int errX;
+
+//    SPIapi spi;
+
+//    unsigned char cmdX = 0x10;
+
+//    unsigned char valX = ui->sliderSetX->value();
+
+//    qDebug() << "***** SPI tx: " << spiCount_ << " *****";
+//    errX = spi.setPacket(&cmdX, &valX);
+//    qDebug() << "cmd: 0x" << QString::number(cmdX, 16) << " val: 0x" << QString::number(valX, 16) << " (" << valX << ") status: " << errX;
+//    if(errX != 0)
+//    {
+//        ui->plainTextX->appendPlainText("..setX err!");
+//    }
+//    else
+//    {
+//        ui->plainTextX->appendPlainText("..setX sent");
+//    }
+//}
+
+//void E3PJR::on_sliderSetY_valueChanged()
+//{
+//    ui->plainTextY->appendPlainText("Opdater yPos..");
+
+//    int errY;
+
+//    SPIapi spi;
+
+//    unsigned char cmdY = 0x11;
+
+//    unsigned char valY = ui->sliderSetY->value();
+
+//    qDebug() << "***** SPI tx: " << spiCount_ << " *****";
+//    errY = spi.setPacket(&cmdY, &valY);
+//    qDebug() << "cmd: 0x" << QString::number(cmdY, 16) << " val: 0x" << QString::number(valY, 16) << " (" << valY << ") status: " << errY;
+//    if(errY != 0)
+//    {
+//        ui->plainTextY->appendPlainText("..setY err!");
+//    }
+//    else
+//    {
+//        ui->plainTextY->appendPlainText("..setY sent");
+//    }
+//}
+
+//void E3PJR::on_sliderSetZ_valueChanged()
+//{
+//    ui->plainTextZ->appendPlainText("Opdater zPos..");
+
+//    int errZ;
+
+//    SPIapi spi;
+
+//    unsigned char cmdZ = 0x11;
+
+//    unsigned char valZ = ui->sliderSetY->value();
+
+//    qDebug() << "***** SPI tx: " << spiCount_ << " *****";
+//    errZ = spi.setPacket(&cmdZ, &valZ);
+//    qDebug() << "cmd: 0x" << QString::number(cmdZ, 16) << " val: 0x" << QString::number(valZ, 16) << " (" << valZ << ") status: " << errZ;
+//    if(errZ != 0)
+//    {
+//        ui->plainTextY->appendPlainText("..setZ err!");
+//    }
+//    else
+//    {
+//        ui->plainTextZ->appendPlainText("..setZ sent");
+//    }
+//}
+
 void E3PJR::on_pushSetXYZ_pressed()
 {
     ui->plainTextX->appendPlainText("Sender xPos..");
     ui->plainTextY->appendPlainText("Sender yPos..");
     ui->plainTextZ->appendPlainText("Sender zPos..");
-}
 
-void E3PJR::on_pushSetXYZ_clicked()
-{
-    int err;
+    int errX, errY, errZ;
 
     SPIapi spi;
 
@@ -94,9 +164,9 @@ void E3PJR::on_pushSetXYZ_clicked()
     unsigned char valZ = ui->spinSetZ->value();
 
     qDebug() << "***** SPI tx: " << spiCount_ << " *****";
-    err = spi.setPacket(&cmdX, &valX);
-    qDebug() << "cmd: 0x" << QString::number(cmdX, 16) << " val: 0x" << QString::number(valX, 16) << " (" << valX << ") status: " << err;
-    if(err != 0)
+    errX = spi.setPacket(&cmdX, &valX);
+    qDebug() << "cmd: 0x" << QString::number(cmdX, 16) << " val: 0x" << QString::number(valX, 16) << " (" << valX << ") status: " << errX;
+    if(errX != 0)
     {
         ui->plainTextX->appendPlainText("..setX err!");
     }
@@ -104,9 +174,9 @@ void E3PJR::on_pushSetXYZ_clicked()
     {
         ui->plainTextX->appendPlainText("..setX sent");
     }
-    err = spi.setPacket(&cmdY, &valY);
-    qDebug() << "cmd: 0x" << QString::number(cmdY, 16) << " val: 0x" << QString::number(valY, 16) << " (" << valY << ") status: " << err;
-    if(err != 0)
+    errY = spi.setPacket(&cmdY, &valY);
+    qDebug() << "cmd: 0x" << QString::number(cmdY, 16) << " val: 0x" << QString::number(valY, 16) << " (" << valY << ") status: " << errY;
+    if(errY != 0)
     {
         ui->plainTextY->appendPlainText("..setY err!");
     }
@@ -114,9 +184,9 @@ void E3PJR::on_pushSetXYZ_clicked()
     {
         ui->plainTextY->appendPlainText("..setY sent");
     }
-    err = spi.setPacket(&cmdZ, &valZ);
-    qDebug() << "cmd: 0x" << QString::number(cmdZ, 16) << " val: 0x" << QString::number(valZ, 16) << " (" << valZ << ") status: " << err;
-    if(err != 0)
+    errZ = spi.setPacket(&cmdZ, &valZ);
+    qDebug() << "cmd: 0x" << QString::number(cmdZ, 16) << " val: 0x" << QString::number(valZ, 16) << " (" << valZ << ") status: " << errZ;
+    if(errZ != 0)
     {
         ui->plainTextZ->appendPlainText("..setZ err!");
     }
@@ -136,11 +206,8 @@ void E3PJR::on_pushGetXYZPos_pressed()
     ui->plainTextX->appendPlainText("Henter xPos...");
     ui->plainTextY->appendPlainText("Henter yPos...");
     ui->plainTextZ->appendPlainText("Henter zPos...");
-}
 
-void E3PJR::on_pushGetXYZPos_clicked()
-{
-    int err;
+    int err, errX, errY, errZ;
 
     SPIapi spi;
 
@@ -160,9 +227,9 @@ void E3PJR::on_pushGetXYZPos_clicked()
 
     sleep(1);
 
-    err = spi.getPacket(&cmdXPos, &valXPos);
-    qDebug() << "cmd: 0x" << QString::number(cmdXPos, 16) << " val: 0x" << QString::number(valXPos, 16) << " (" << valXPos << ") status: " << err;
-    if(err != 0)
+    errX = spi.getPacket(&cmdXPos, &valXPos);
+    qDebug() << "cmd: 0x" << QString::number(cmdXPos, 16) << " val: 0x" << QString::number(valXPos, 16) << " (" << valXPos << ") status: " << errX;
+    if(errX != 0)
     {
         ui->plainTextX->appendPlainText("..getXPos err!");
         ui->lineGetXPos->clear();
@@ -173,9 +240,9 @@ void E3PJR::on_pushGetXYZPos_clicked()
         ui->lineGetXPos->setText(QString::number(valXPos, 10));
     }
 
-    err = spi.getPacket(&cmdYPos, &valYPos);
-    qDebug() << "cmd: 0x" << QString::number(cmdYPos, 16) << " val: 0x" << QString::number(valYPos, 16) << " (" << valYPos << ") status: " << err;
-    if(err != 0)
+    errY = spi.getPacket(&cmdYPos, &valYPos);
+    qDebug() << "cmd: 0x" << QString::number(cmdYPos, 16) << " val: 0x" << QString::number(valYPos, 16) << " (" << valYPos << ") status: " << errY;
+    if(errY != 0)
     {
         ui->plainTextY->appendPlainText("..getYPos err!");
         ui->lineGetXPos->clear();
@@ -186,9 +253,9 @@ void E3PJR::on_pushGetXYZPos_clicked()
         ui->lineGetYPos->setText(QString::number(valYPos, 10));
     }
 
-    err = spi.getPacket(&cmdZPos, &valZPos);
-    qDebug() << "cmd: 0x" << QString::number(cmdZPos, 16) << " val: 0x" << QString::number(valZPos, 16) << " (" << valZPos << ") status: " << err;
-    if(err != 0)
+    errZ = spi.getPacket(&cmdZPos, &valZPos);
+    qDebug() << "cmd: 0x" << QString::number(cmdZPos, 16) << " val: 0x" << QString::number(valZPos, 16) << " (" << valZPos << ") status: " << errZ;
+    if(errZ != 0)
     {
         ui->plainTextZ->appendPlainText("..getZPos err!");
         ui->lineGetZPos->clear();
@@ -210,11 +277,8 @@ void E3PJR::on_pushGetXYZMax_pressed()
     ui->plainTextX->appendPlainText("Henter xMax...");
     ui->plainTextY->appendPlainText("Henter yMax...");
     ui->plainTextZ->appendPlainText("Henter zMax...");
-}
 
-void E3PJR::on_pushGetXYZMax_clicked()
-{
-    int err;
+    int err, errX, errY, errZ;
 
     SPIapi spi;
 
@@ -234,9 +298,9 @@ void E3PJR::on_pushGetXYZMax_clicked()
 
     sleep(1);
 
-    err = spi.getPacket(&cmdXMax, &valXMax);
-    qDebug() << "cmd: 0x" << QString::number(cmdXMax, 16) << " val: 0x" << QString::number(valXMax, 16) << " (" << valXMax << ") status: " << err;
-    if(err != 0)
+    errX = spi.getPacket(&cmdXMax, &valXMax);
+    qDebug() << "cmd: 0x" << QString::number(cmdXMax, 16) << " val: 0x" << QString::number(valXMax, 16) << " (" << valXMax << ") status: " << errX;
+    if(errX != 0)
     {
         ui->plainTextX->appendPlainText("..getXMax err!");
         ui->lineGetXMax->clear();
@@ -247,9 +311,9 @@ void E3PJR::on_pushGetXYZMax_clicked()
         ui->lineGetXMax->setText(QString::number(valXMax, 10));
     }
 
-    err = spi.getPacket(&cmdYMax, &valYMax);
-    qDebug() << "cmd: 0x" << QString::number(cmdYMax, 16) << " val: 0x" << QString::number(valYMax, 16) << " (" << valYMax << ") status: " << err;
-    if(err != 0)
+    errY = spi.getPacket(&cmdYMax, &valYMax);
+    qDebug() << "cmd: 0x" << QString::number(cmdYMax, 16) << " val: 0x" << QString::number(valYMax, 16) << " (" << valYMax << ") status: " << errY;
+    if(errY != 0)
     {
         ui->plainTextY->appendPlainText("..getYMax err!");
         ui->lineGetXMax->clear();
@@ -260,9 +324,9 @@ void E3PJR::on_pushGetXYZMax_clicked()
         ui->lineGetYMax->setText(QString::number(valYMax, 10));
     }
 
-    err = spi.getPacket(&cmdZMax, &valZMax);
-    qDebug() << "cmd: 0x" << QString::number(cmdZMax, 16) << " val: 0x" << QString::number(valZMax, 16) << " (" << valZMax << ") status: " << err;
-    if(err != 0)
+    errZ = spi.getPacket(&cmdZMax, &valZMax);
+    qDebug() << "cmd: 0x" << QString::number(cmdZMax, 16) << " val: 0x" << QString::number(valZMax, 16) << " (" << valZMax << ") status: " << errZ;
+    if(errZ != 0)
     {
         ui->plainTextZ->appendPlainText("..getZMax err!");
         ui->lineGetZMax->clear();

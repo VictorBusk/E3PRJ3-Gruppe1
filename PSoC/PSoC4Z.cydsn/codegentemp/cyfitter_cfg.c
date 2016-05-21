@@ -123,7 +123,7 @@ static void CyClockStartupError(uint8 errorCode)
 }
 #endif
 
-#define CY_CFG_BASE_ADDR_COUNT 1u
+#define CY_CFG_BASE_ADDR_COUNT 5u
 CYPACKED typedef struct
 {
 	uint8 offset;
@@ -268,14 +268,22 @@ void cyfitter_cfg(void)
 	CY_SET_REG8((void *)CYREG_UDB_UDBIF_INT_CLK_CTL, 0x01u);
 	{
 		static const uint32 CYCODE cy_cfg_addr_table[] = {
-			0x400F4004u, /* Base address: 0x400F4000 Count: 4 */
+			0x400F3301u, /* Base address: 0x400F3300 Count: 1 */
+			0x400F4002u, /* Base address: 0x400F4000 Count: 2 */
+			0x400F4102u, /* Base address: 0x400F4100 Count: 2 */
+			0x400F4202u, /* Base address: 0x400F4200 Count: 2 */
+			0x400F4301u, /* Base address: 0x400F4300 Count: 1 */
 		};
 
 		static const cy_cfg_addrvalue_t CYCODE cy_cfg_data_table[] = {
-			{0x0Au, 0x40u},
-			{0x6Eu, 0x40u},
-			{0xC2u, 0x10u},
+			{0xEEu, 0x02u},
+			{0x6Fu, 0x08u},
 			{0xDAu, 0x80u},
+			{0xAFu, 0x08u},
+			{0xEEu, 0x40u},
+			{0x0Fu, 0x40u},
+			{0xC2u, 0x04u},
+			{0xAFu, 0x40u},
 		};
 
 
@@ -335,14 +343,14 @@ void cyfitter_cfg(void)
 	/* Perform second pass device configuration. These items must be configured in specific order after the regular configuration is done. */
 	/* IOPINS0_0 Starting address: CYDEV_PRT0_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT0_BASE), 0x0000008Cu);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x00402D80u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x00400D80u);
 
 	/* IOPINS0_1 Starting address: CYDEV_PRT1_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT1_BASE), 0x00000040u);
 	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT1_PC), 0x00180000u);
 
 	/* IOPINS0_2 Starting address: CYDEV_PRT2_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT2_PC), 0x00000DB6u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT2_PC), 0x00010DB6u);
 
 	/* IOPINS0_3 Starting address: CYDEV_PRT3_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT3_PC), 0x00000D80u);

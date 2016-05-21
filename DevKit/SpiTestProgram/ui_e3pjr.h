@@ -32,25 +32,25 @@ public:
     QWidget *XYZ;
     QVBoxLayout *verticalLayout_9;
     QHBoxLayout *horizontalLayout_3;
+    QSlider *sliderSetX;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_4;
-    QSlider *sliderSetX;
     QVBoxLayout *verticalLayout_6;
     QSpinBox *spinSetX;
     QLineEdit *lineGetXPos;
     QLineEdit *lineGetXMax;
     QPlainTextEdit *plainTextX;
+    QSlider *sliderSetY;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_5;
-    QSlider *sliderSetY;
     QVBoxLayout *verticalLayout_7;
     QSpinBox *spinSetY;
     QLineEdit *lineGetYPos;
     QLineEdit *lineGetYMax;
     QPlainTextEdit *plainTextY;
+    QSlider *sliderSetZ;
     QVBoxLayout *verticalLayout_5;
     QHBoxLayout *horizontalLayout_6;
-    QSlider *sliderSetZ;
     QVBoxLayout *verticalLayout_8;
     QSpinBox *spinSetZ;
     QLineEdit *lineGetZPos;
@@ -73,10 +73,6 @@ public:
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         sliderSetX = new QSlider(XYZ);
         sliderSetX->setObjectName(QString::fromUtf8("sliderSetX"));
         sliderSetX->setMaximum(255);
@@ -84,8 +80,12 @@ public:
         sliderSetX->setPageStep(15);
         sliderSetX->setOrientation(Qt::Vertical);
 
-        horizontalLayout_4->addWidget(sliderSetX);
+        horizontalLayout_3->addWidget(sliderSetX);
 
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         verticalLayout_6 = new QVBoxLayout();
         verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
         spinSetX = new QSpinBox(XYZ);
@@ -127,10 +127,6 @@ public:
 
         horizontalLayout_3->addLayout(verticalLayout);
 
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         sliderSetY = new QSlider(XYZ);
         sliderSetY->setObjectName(QString::fromUtf8("sliderSetY"));
         sliderSetY->setMaximum(255);
@@ -138,8 +134,12 @@ public:
         sliderSetY->setPageStep(15);
         sliderSetY->setOrientation(Qt::Vertical);
 
-        horizontalLayout_5->addWidget(sliderSetY);
+        horizontalLayout_3->addWidget(sliderSetY);
 
+        verticalLayout_2 = new QVBoxLayout();
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         verticalLayout_7 = new QVBoxLayout();
         verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
         spinSetY = new QSpinBox(XYZ);
@@ -180,10 +180,6 @@ public:
 
         horizontalLayout_3->addLayout(verticalLayout_2);
 
-        verticalLayout_5 = new QVBoxLayout();
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        horizontalLayout_6 = new QHBoxLayout();
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         sliderSetZ = new QSlider(XYZ);
         sliderSetZ->setObjectName(QString::fromUtf8("sliderSetZ"));
         sliderSetZ->setMaximum(255);
@@ -191,8 +187,12 @@ public:
         sliderSetZ->setPageStep(15);
         sliderSetZ->setOrientation(Qt::Vertical);
 
-        horizontalLayout_6->addWidget(sliderSetZ);
+        horizontalLayout_3->addWidget(sliderSetZ);
 
+        verticalLayout_5 = new QVBoxLayout();
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         verticalLayout_8 = new QVBoxLayout();
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         spinSetZ = new QSpinBox(XYZ);
