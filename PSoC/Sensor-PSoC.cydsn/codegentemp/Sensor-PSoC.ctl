@@ -1,6 +1,6 @@
 -- ======================================================================
 -- Sensor-PSoC.ctl generated from Sensor-PSoC
--- 05/22/2016 at 09:33
+-- 05/22/2016 at 13:30
 -- This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 -- ======================================================================
 

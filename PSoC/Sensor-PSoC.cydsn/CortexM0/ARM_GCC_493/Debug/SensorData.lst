@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -39,43 +39,56 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
   11:.\SensorData.c **** */
   12:.\SensorData.c **** #include "SensorData.h"
   13:.\SensorData.c **** 
-  14:.\SensorData.c **** void initSensorData()
-  15:.\SensorData.c **** {
-  26              		.loc 1 15 0
+  14:.\SensorData.c **** //#define DEBUG_ON
+  15:.\SensorData.c **** 
+  16:.\SensorData.c **** void initSensorData()
+  17:.\SensorData.c **** {
+  26              		.loc 1 17 0
   27              		.cfi_startproc
   28 0000 08B5     		push	{r3, lr}
   29              		.cfi_def_cfa_offset 8
   30              		.cfi_offset 3, -8
   31              		.cfi_offset 14, -4
-  16:.\SensorData.c ****     sensorData.desiredLux = 0;
-  32              		.loc 1 16 0
+  18:.\SensorData.c ****     sensorData.desiredLux = 0;
+  32              		.loc 1 18 0
   33 0002 0748     		ldr	r0, .L2
   34 0004 0023     		mov	r3, #0
   35 0006 4360     		str	r3, [r0, #4]
-  17:.\SensorData.c ****     sensorData.desiredTimeDistance = 0;
-  36              		.loc 1 17 0
+  19:.\SensorData.c ****     sensorData.desiredTimeDistance = 0;
+  36              		.loc 1 19 0
   37 0008 9022     		mov	r2, #144
   38 000a 8350     		str	r3, [r0, r2]
-  18:.\SensorData.c ****     sensorData.ledPower = 1;
-  39              		.loc 1 18 0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 2
 
 
+  20:.\SensorData.c ****     sensorData.ledPower = 1;
+  39              		.loc 1 20 0
   40 000c 0121     		mov	r1, #1
   41 000e 0732     		add	r2, r2, #7
   42 0010 8154     		strb	r1, [r0, r2]
-  19:.\SensorData.c ****     sensorData.movementAlertOn = 0;
-  43              		.loc 1 19 0
+  21:.\SensorData.c ****     sensorData.movementAlertOn = 0;
+  43              		.loc 1 21 0
   44 0012 123A     		sub	r2, r2, #18
   45 0014 8354     		strb	r3, [r0, r2]
-  20:.\SensorData.c **** 
-  21:.\SensorData.c ****     initCircularMean(&sensorData.LumenMean);
-  46              		.loc 1 21 0
+  22:.\SensorData.c **** 
+  23:.\SensorData.c ****     
+  24:.\SensorData.c ****     // debug
+  25:.\SensorData.c **** #ifdef DEBUG_ON
+  26:.\SensorData.c ****     sensorData.desiredTimeDistance = 580;
+  27:.\SensorData.c ****     sensorData.movementAlertOn = 1;
+  28:.\SensorData.c ****     sensorData.ledPower = 1;
+  29:.\SensorData.c ****     sensorData.redPWMPct = 255;
+  30:.\SensorData.c ****     sensorData.greenPWMPct = 255;
+  31:.\SensorData.c ****     sensorData.bluePWMPct = 255;
+  32:.\SensorData.c **** #endif
+  33:.\SensorData.c ****     
+  34:.\SensorData.c ****     initCircularMean(&sensorData.LumenMean);
+  46              		.loc 1 34 0
   47 0016 0830     		add	r0, r0, #8
   48 0018 FFF7FEFF 		bl	initCircularMean
   49              	.LVL0:
-  22:.\SensorData.c **** }
-  50              		.loc 1 22 0
+  35:.\SensorData.c **** }
+  50              		.loc 1 35 0
   51              		@ sp needed
   52 001c 08BD     		pop	{r3, pc}
   53              	.L3:
@@ -105,6 +118,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
   77 0019 00000000 		.4byte	.Ldebug_ranges0+0
   78 001d 00000000 		.4byte	0
   79 0021 00000000 		.4byte	.Ldebug_line0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 3
+
+
   80 0025 02       		.uleb128 0x2
   81 0026 01       		.byte	0x1
   82 0027 06       		.byte	0x6
@@ -118,9 +134,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
   90 0035 05       		.byte	0x5
   91 0036 09020000 		.4byte	.LASF2
   92 003a 02       		.uleb128 0x2
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 3
-
-
   93 003b 02       		.byte	0x2
   94 003c 07       		.byte	0x7
   95 003d 11000000 		.4byte	.LASF3
@@ -165,6 +178,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  134 0086 01       		.byte	0x1
  135 0087 08       		.byte	0x8
  136 0088 6D010000 		.4byte	.LASF11
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 4
+
+
  137 008c 02       		.uleb128 0x2
  138 008d 04       		.byte	0x4
  139 008e 07       		.byte	0x7
@@ -178,9 +194,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  147 009f 06       		.uleb128 0x6
  148 00a0 59010000 		.4byte	.LASF13
  149 00a4 02       		.byte	0x2
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 4
-
-
  150 00a5 0F       		.byte	0xf
  151 00a6 C4000000 		.4byte	0xc4
  152 00aa 00       		.byte	0
@@ -225,6 +238,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  191 00f8 06       		.uleb128 0x6
  192 00f9 2C020000 		.4byte	.LASF18
  193 00fd 03       		.byte	0x3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 5
+
+
  194 00fe 17       		.byte	0x17
  195 00ff 93000000 		.4byte	0x93
  196 0103 08       		.byte	0x8
@@ -238,9 +254,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  204 0111 13020000 		.4byte	.LASF20
  205 0115 03       		.byte	0x3
  206 0116 1B       		.byte	0x1b
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 5
-
-
  207 0117 6B000000 		.4byte	0x6b
  208 011b 85       		.byte	0x85
  209 011c 06       		.uleb128 0x6
@@ -285,11 +298,14 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  248 016a 26       		.byte	0x26
  249 016b 6B000000 		.4byte	0x6b
  250 016f 97       		.byte	0x97
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 6
+
+
  251 0170 00       		.byte	0
  252 0171 0A       		.uleb128 0xa
  253 0172 1D010000 		.4byte	.LASF32
  254 0176 01       		.byte	0x1
- 255 0177 0E       		.byte	0xe
+ 255 0177 10       		.byte	0x10
  256 0178 00000000 		.4byte	.LFB34
  257 017c 24000000 		.4byte	.LFE34-.LFB34
  258 0180 01       		.uleb128 0x1
@@ -298,9 +314,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  261 0186 0B       		.uleb128 0xb
  262 0187 1C000000 		.4byte	.LVL0
  263 018b AB010000 		.4byte	0x1ab
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 6
-
-
  264 018f 0C       		.uleb128 0xc
  265 0190 01       		.uleb128 0x1
  266 0191 50       		.byte	0x50
@@ -345,6 +358,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  305 000b 55       		.uleb128 0x55
  306 000c 17       		.uleb128 0x17
  307 000d 11       		.uleb128 0x11
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 7
+
+
  308 000e 01       		.uleb128 0x1
  309 000f 10       		.uleb128 0x10
  310 0010 17       		.uleb128 0x17
@@ -358,9 +374,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  318 0018 3E       		.uleb128 0x3e
  319 0019 0B       		.uleb128 0xb
  320 001a 03       		.uleb128 0x3
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 7
-
-
  321 001b 0E       		.uleb128 0xe
  322 001c 00       		.byte	0
  323 001d 00       		.byte	0
@@ -405,6 +418,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  362 0044 00       		.byte	0
  363 0045 06       		.uleb128 0x6
  364 0046 0D       		.uleb128 0xd
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 8
+
+
  365 0047 00       		.byte	0
  366 0048 03       		.uleb128 0x3
  367 0049 0E       		.uleb128 0xe
@@ -418,9 +434,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  375 0051 0B       		.uleb128 0xb
  376 0052 00       		.byte	0
  377 0053 00       		.byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 8
-
-
  378 0054 07       		.uleb128 0x7
  379 0055 0D       		.uleb128 0xd
  380 0056 00       		.byte	0
@@ -465,6 +478,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  419 007d 0B       		.uleb128 0xb
  420 007e 3B       		.uleb128 0x3b
  421 007f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 9
+
+
  422 0080 11       		.uleb128 0x11
  423 0081 01       		.uleb128 0x1
  424 0082 12       		.uleb128 0x12
@@ -478,9 +494,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  432 008b 00       		.byte	0
  433 008c 00       		.byte	0
  434 008d 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 9
-
-
  435 008e 898201   		.uleb128 0x4109
  436 0091 01       		.byte	0x1
  437 0092 11       		.uleb128 0x11
@@ -525,6 +538,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  476 00bc 3A       		.uleb128 0x3a
  477 00bd 0B       		.uleb128 0xb
  478 00be 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 10
+
+
  479 00bf 0B       		.uleb128 0xb
  480 00c0 27       		.uleb128 0x27
  481 00c1 19       		.uleb128 0x19
@@ -538,9 +554,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  489 00c9 05       		.uleb128 0x5
  490 00ca 00       		.byte	0
  491 00cb 49       		.uleb128 0x49
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 10
-
-
  492 00cc 13       		.uleb128 0x13
  493 00cd 00       		.byte	0
  494 00ce 00       		.byte	0
@@ -574,7 +587,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  522 000c 00000000 		.4byte	0
  523              		.section	.debug_line,"",%progbits
  524              	.Ldebug_line0:
- 525 0000 8A000000 		.section	.debug_str,"MS",%progbits,1
+ 525 0000 8C000000 		.section	.debug_str,"MS",%progbits,1
  525      02006F00 
  525      00000201 
  525      FB0E0D00 
@@ -585,6 +598,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  527      757800
  528              	.LASF14:
  529 000b 73746172 		.ascii	"start\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 11
+
+
  529      7400
  530              	.LASF3:
  531 0011 73686F72 		.ascii	"short unsigned int\000"
@@ -598,9 +614,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  533      00
  534              	.LASF30:
  535 002d 433A5C55 		.ascii	"C:\\Users\\Simon\\Documents\\GitHub\\E3PRJ3-Gruppe1"
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 11
-
-
  535      73657273 
  535      5C53696D 
  535      6F6E5C44 
@@ -645,6 +658,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  552      20756E73 
  552      69676E65 
  552      6420696E 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 12
+
+
  552      7400
  553              	.LASF31:
  554 00d6 75696E74 		.ascii	"uint8\000"
@@ -658,9 +674,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  558      6E736F72 
  558      44617461 
  558      2E6300
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 12
-
-
  559              	.LASF15:
  560 00f5 43697263 		.ascii	"CircularMean\000"
  560      756C6172 
@@ -705,6 +718,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  576      7400
  577              	.LASF11:
  578 016d 63686172 		.ascii	"char\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccAHMAo4.s 			page 13
+
+
  578      00
  579              	.LASF28:
  580 0172 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
@@ -718,9 +734,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 1
  581      6E203232 
  581      31323230 
  582 01d8 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\cc5KH1Ah.s 			page 13
-
-
  582      66756E63 
  582      74696F6E 
  582      2D736563 

@@ -17,8 +17,14 @@
 #include "i2c.h"
 #include "queue.h"
 
+//#define DEBUG_ON
+
+#ifdef DEBUG_ON
+uint8 t = 0;
+#endif
+
 // Main loop control stuff
-enum sensor {DIST, LUMEN, PIR, DIST_ALERT, MOVE_ALERT};
+enum sensor {DIST, LUMEN, PIR, DIST_ALERT, LEDS};
 enum ctrl {COUNT, RATE, FLAG};
 char controlFlags[5][3] = {
     {1,-1, 0},
@@ -31,7 +37,12 @@ void initCtrlFlags()
 {
     controlFlags[DIST][RATE] = 3;
     controlFlags[LUMEN][RATE] = 2;
-    controlFlags[PIR][RATE] = 10;
+    controlFlags[PIR][RATE] = 1;
+
+    // debug
+#ifdef DEBUG_ON
+    controlFlags[LEDS][RATE] = 1;
+#endif
 }
 void incrCtrlFlag(enum sensor se)
 {
@@ -42,12 +53,18 @@ void incrCtrlFlag(enum sensor se)
 }
 CY_ISR(Metronome_Interrupt)
 {
+    // Clear interrupt
+    MetronomeTimer_ReadStatusRegister();
+
     incrCtrlFlag(DIST);
     incrCtrlFlag(LUMEN);
     incrCtrlFlag(PIR);
 
-    // Clear interrupt
-    MetronomeTimer_ReadStatusRegister();
+    //debug
+#ifdef DEBUG_ON
+    incrCtrlFlag(LEDS);
+//    DEBUG_PutString("Beat\r\n");
+#endif
 }
 
 // Flag: Have we already triggered a "too close" alert?
@@ -73,6 +90,12 @@ CY_ISR(DistTimer_Interrupt)
 
     // Reset the timer
     DistReset_Write(1);
+
+#ifdef DEBUG_ON
+//    char bla[15];
+//    sprintf(bla, "Dist: %i\n\r", sensorData.distance);
+//    DEBUG_PutString(bla);
+#endif
 }
 
 int main()
@@ -85,6 +108,9 @@ int main()
     // Afstandssensor
     DistTimer_Start();
     DistTimerInt_StartEx(DistTimer_Interrupt);
+    
+    // Lumen sensor
+    initLumenSensor();
 
     // LED PWM
     GreenPWM_Start();
@@ -128,6 +154,8 @@ int main()
             // Have to get two "too close" readings in a row to trigger alert
             ++(controlFlags[DIST_ALERT][COUNT]);
             if (!distAlertTriggered && controlFlags[DIST_ALERT][COUNT] >= 2) {
+                // Set counter to fixed value - keeps it high but prevents overflow
+                controlFlags[DIST_ALERT][COUNT] = 10;
                 distAlertTriggered = 1;
                 handler(cmdDistanceAlert, 0xff);
             }
@@ -137,6 +165,10 @@ int main()
         if (controlFlags[PIR][FLAG]) {
             controlFlags[PIR][FLAG] = 0;
 
+#ifdef DEBUG_ON
+            DEBUG_PutHexByte(sensorData.movement);
+            DEBUG_PutCRLF();
+#endif
             if (sensorData.movementAlertOn) {
                 // Read the PIR sensor output
                 int tmp = PIR_Trig_Read();
@@ -151,6 +183,28 @@ int main()
             }
         }
 
+        //debug
+#ifdef DEBUG_ON
+        if (controlFlags[LEDS][FLAG]) {
+            controlFlags[LEDS][FLAG] = 0;
+
+            t = !t;
+            if (//t) {
+                sensorData.movementAlertOn && sensorData.movement) {
+                RedPWM_Start();
+                GreenPWM_Start();
+                BluePWM_Start();
+                RedPWM_WriteCompare(sensorData.redPWMPct);
+                GreenPWM_WriteCompare(sensorData.greenPWMPct);
+                BluePWM_WriteCompare(sensorData.bluePWMPct);
+            } else {
+                RedPWM_Stop();
+                GreenPWM_Stop();
+                BluePWM_Stop();
+            }
+        }
+#endif
+
         // Lumen sensor
         if (controlFlags[LUMEN][FLAG]) {
             controlFlags[LUMEN][FLAG] = 0;
@@ -159,6 +213,12 @@ int main()
             // Add lux value to history
             insertValue(&sensorData.LumenMean, luxValue);
             sensorData.lux = getMeanValue(&sensorData.LumenMean);
+
+#ifdef DEBUG_ON
+//            char bla[15];
+//            sprintf(bla, "Lux: %i, mean: %i\n\r", luxValue, sensorData.lux);
+//            DEBUG_PutString(bla);
+#endif
         }
     }
 }

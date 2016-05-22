@@ -19,7 +19,7 @@
 #include "handler.h"
 #include "SensorData.h"
 
-#define DEBUG_ON
+//#define DEBUG_ON
 
 void handler(uint8 cmd, uint8 val)
 {
@@ -37,7 +37,7 @@ void handler(uint8 cmd, uint8 val)
             break;
         case cmdSetRed : 
             sensorData.redPWMPct = val;
-            RedPWM_WriteCompare(sensorData.redPWMPct);            
+            RedPWM_WriteCompare(sensorData.redPWMPct);
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetRed ");
     DEBUG_PutHexByte(sensorData.redPWMPct);
@@ -56,7 +56,7 @@ void handler(uint8 cmd, uint8 val)
             break;
         case cmdSetGreen : 
             sensorData.greenPWMPct = val;
-            GreenPWM_WriteCompare(sensorData.greenPWMPct);            
+            GreenPWM_WriteCompare(sensorData.greenPWMPct);
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetGreen ");
     DEBUG_PutHexByte(sensorData.greenPWMPct);
@@ -75,7 +75,7 @@ void handler(uint8 cmd, uint8 val)
             break;
         case cmdSetBlue : 
             sensorData.bluePWMPct = val;
-            BluePWM_WriteCompare(sensorData.bluePWMPct);            
+            BluePWM_WriteCompare(sensorData.bluePWMPct);
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetBlue ");
     DEBUG_PutHexByte(sensorData.bluePWMPct);
