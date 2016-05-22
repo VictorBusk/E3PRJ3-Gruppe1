@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 1
-=======
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
->>>>>>> origin/master
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -32,9 +28,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
    1:.\queue.c     **** /*!
    2:.\queue.c     ****  * @file        queue.c
    3:.\queue.c     ****  * @brief       A queue for incoming commands
-   4:.\queue.c     ****  * @author      Jeppe Stærk (201271201@uni.au.dk)
-   5:.\queue.c     ****  */
-   6:.\queue.c     **** 
+   4:.\queue.c     ****  * @class       Queue
+   5:.\queue.c     ****  * @author      Jeppe Stærk (201271201@uni.au.dk)
+   6:.\queue.c     ****  */
    7:.\queue.c     **** #include "queue.h"
    8:.\queue.c     **** #include <stdio.h>
    9:.\queue.c     **** #include <stdlib.h>
@@ -46,7 +42,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
   15:.\queue.c     **** /*!
   16:.\queue.c     ****  *  @brief      Struct to contain a element in the queue
   17:.\queue.c     ****  *  @private
-  18:.\queue.c     ****  *  @implements Queue
+  18:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
   19:.\queue.c     ****  */
   20:.\queue.c     **** struct Node
   21:.\queue.c     **** {
@@ -54,7 +50,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
   23:.\queue.c     ****   struct Node* next_;   /**< Next node in queue */
   24:.\queue.c     **** };
   25:.\queue.c     **** 
-<<<<<<< HEAD
   26:.\queue.c     **** /***************************************
   27:.\queue.c     **** *       Private attributes
   28:.\queue.c     **** ***************************************/
@@ -63,189 +58,205 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
   31:.\queue.c     ****  *  @brief      Pointer to front element in queue
   32:.\queue.c     ****  *  @private
   33:.\queue.c     ****  *  @memberof   Queue
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 2
 
 
-  34:.\queue.c     ****  */
-  35:.\queue.c     **** static struct Node* frontOfQueuePtr_;
-  36:.\queue.c     **** 
-  37:.\queue.c     **** /*!
-  38:.\queue.c     ****  *  @brief      Pointer to back element in queue
-  39:.\queue.c     ****  *  @private
-  40:.\queue.c     ****  *  @memberof   Queue
-  41:.\queue.c     ****  */
-  42:.\queue.c     **** static struct Node* backOfQueuePtr_;
-  43:.\queue.c     **** 
-  44:.\queue.c     **** /*!
-  45:.\queue.c     ****  *  @brief      Conuter for elements in the queue
-  46:.\queue.c     ****  *  @private
-  47:.\queue.c     ****  *  @memberof   Queue
-  48:.\queue.c     ****  */
-  49:.\queue.c     **** static uint8 queueCount_;
-  50:.\queue.c     **** 
-  51:.\queue.c     **** /*!
-  52:.\queue.c     ****  *  @brief      Maximum elements in queue
-  53:.\queue.c     ****  *  @private
-  54:.\queue.c     ****  *  @memberof   Queue
-  55:.\queue.c     ****  */
-  56:.\queue.c     **** static uint8 queueMax_;
-  57:.\queue.c     **** 
-  58:.\queue.c     **** /***************************************
-  59:.\queue.c     **** *       Private methods            
-  60:.\queue.c     **** ***************************************/
+  34:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+  35:.\queue.c     ****  */
+  36:.\queue.c     **** static struct Node* frontOfQueuePtr_;
+  37:.\queue.c     **** 
+  38:.\queue.c     **** /*!
+  39:.\queue.c     ****  *  @brief      Pointer to back element in queue
+  40:.\queue.c     ****  *  @private
+  41:.\queue.c     ****  *  @memberof   Queue
+  42:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+  43:.\queue.c     ****  */
+  44:.\queue.c     **** static struct Node* backOfQueuePtr_;
+  45:.\queue.c     **** 
+  46:.\queue.c     **** /*!
+  47:.\queue.c     ****  *  @brief      Conuter for elements in the queue
+  48:.\queue.c     ****  *  @private
+  49:.\queue.c     ****  *  @memberof   Queue
+  50:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+  51:.\queue.c     ****  */
+  52:.\queue.c     **** static uint8 queueCount_;
+  53:.\queue.c     **** 
+  54:.\queue.c     **** /*!
+  55:.\queue.c     ****  *  @brief      Maximum elements in queue
+  56:.\queue.c     ****  *  @private
+  57:.\queue.c     ****  *  @memberof   Queue
+  58:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+  59:.\queue.c     ****  */
+  60:.\queue.c     **** static uint8 queueMax_;
   61:.\queue.c     **** 
-  62:.\queue.c     **** static void headInsert(struct Node** headPtr, const struct Data data);
-  63:.\queue.c     **** static void headRemove(struct Node** headPtr);
-  64:.\queue.c     **** static void backInsert(struct Node** backPtr, const struct Data data);
+  62:.\queue.c     **** /***************************************
+  63:.\queue.c     **** *       Private methods            
+  64:.\queue.c     **** ***************************************/
   65:.\queue.c     **** 
-  66:.\queue.c     **** 
-  67:.\queue.c     **** /**
-  68:.\queue.c     ****  *  @brief      Initialize queue.
-  69:.\queue.c     ****  *  @param[in]  queueSize   Size of queue.
-  70:.\queue.c     ****  *  @public
-  71:.\queue.c     ****  *  @memberof   Queue
-  72:.\queue.c     ****  */
-  73:.\queue.c     **** void queue_init(uint8 queueSize)
-  74:.\queue.c     **** {
-  75:.\queue.c     ****   frontOfQueuePtr_ = NULL;
-  76:.\queue.c     ****   frontOfQueuePtr_->next_ = NULL;
-  77:.\queue.c     ****   backOfQueuePtr_ = NULL;
-  78:.\queue.c     ****   backOfQueuePtr_->next_ = NULL;
-  79:.\queue.c     ****   queueMax_ = queueSize;
-  80:.\queue.c     ****   queueCount_ = 0;
-  81:.\queue.c     **** }
-  82:.\queue.c     **** 
-  83:.\queue.c     **** /**
-  84:.\queue.c     ****  *  @brief      Insert element in FIFO ordre in queue 
-  85:.\queue.c     ****  *  @param[in]  data    Struct of data to be placed in the queue
-  86:.\queue.c     ****  *  @public
-  87:.\queue.c     ****  *  @memberof   Queue
-  88:.\queue.c     ****  */
-  89:.\queue.c     **** void pushQueue(const struct Data data)
-  90:.\queue.c     **** {
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 3
+  66:.\queue.c     **** static void headInsert(struct Node** headPtr, const struct Data data);
+  67:.\queue.c     **** static void headRemove(struct Node** headPtr);
+  68:.\queue.c     **** static void backInsert(struct Node** backPtr, const struct Data data);
+  69:.\queue.c     **** 
+  70:.\queue.c     **** 
+  71:.\queue.c     **** /***************************************
+  72:.\queue.c     ****  *       Public methods
+  73:.\queue.c     ****  ***************************************/
+  74:.\queue.c     **** 
+  75:.\queue.c     **** /**
+  76:.\queue.c     ****  *  @brief      Initialize queue.
+  77:.\queue.c     ****  *  @param[in]  queueSize   Size of queue.
+  78:.\queue.c     ****  *  @public
+  79:.\queue.c     ****  *  @memberof   Queue
+  80:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+  81:.\queue.c     ****  */
+  82:.\queue.c     **** void queue_init(uint8 queueSize)
+  83:.\queue.c     **** {
+  84:.\queue.c     ****   frontOfQueuePtr_ = NULL;
+  85:.\queue.c     ****   frontOfQueuePtr_->next_ = NULL;
+  86:.\queue.c     ****   backOfQueuePtr_ = NULL;
+  87:.\queue.c     ****   backOfQueuePtr_->next_ = NULL;
+  88:.\queue.c     ****   queueMax_ = queueSize;
+  89:.\queue.c     ****   queueCount_ = 0;
+  90:.\queue.c     **** }
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 3
 
 
-  91:.\queue.c     ****   if(queueCount_<queueMax_)
-  92:.\queue.c     ****   {
-  93:.\queue.c     ****   if(isEmptyQueue() != 1)
-  94:.\queue.c     ****   {
-  95:.\queue.c     ****     backInsert(&backOfQueuePtr_, data);
-  96:.\queue.c     ****     backOfQueuePtr_ = backOfQueuePtr_->next_;
-  97:.\queue.c     ****     queueCount_++;
-  98:.\queue.c     ****   }
-  99:.\queue.c     ****     else
- 100:.\queue.c     ****     {
- 101:.\queue.c     ****       headInsert(&frontOfQueuePtr_, data);
- 102:.\queue.c     ****       backOfQueuePtr_ = frontOfQueuePtr_;
- 103:.\queue.c     ****       queueCount_++;
- 104:.\queue.c     ****     }
- 105:.\queue.c     ****   }
- 106:.\queue.c     **** }
- 107:.\queue.c     **** 
- 108:.\queue.c     **** /**
- 109:.\queue.c     ****  *  @brief      Remove front element of the queue  
- 110:.\queue.c     ****  *  @public
- 111:.\queue.c     ****  *  @memberof   Queue
- 112:.\queue.c     ****  */
- 113:.\queue.c     **** void popQueue()
- 114:.\queue.c     **** {
- 115:.\queue.c     ****   headRemove(&frontOfQueuePtr_);
- 116:.\queue.c     ****   queueCount_--;
- 117:.\queue.c     ****   if(isEmptyQueue() == 1)
- 118:.\queue.c     ****   {
- 119:.\queue.c     ****     backOfQueuePtr_ = NULL;
- 120:.\queue.c     ****   }
- 121:.\queue.c     **** }
- 122:.\queue.c     **** 
- 123:.\queue.c     **** /*!
- 124:.\queue.c     ****  *  @brief      Return data from the front element in the queue 
- 125:.\queue.c     ****  *  @return     Data
- 126:.\queue.c     ****  *  @public
- 127:.\queue.c     ****  *  @memberof   Queue
- 128:.\queue.c     ****  */
- 129:.\queue.c     **** struct Data frontQueue()
- 130:.\queue.c     **** {
- 131:.\queue.c     ****   return frontOfQueuePtr_->data_;
+  91:.\queue.c     **** 
+  92:.\queue.c     **** /**
+  93:.\queue.c     ****  *  @brief      Insert element in FIFO ordre in queue 
+  94:.\queue.c     ****  *  @param[in]  data    Struct of data to be placed in the queue
+  95:.\queue.c     ****  *  @public
+  96:.\queue.c     ****  *  @memberof   Queue
+  97:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+  98:.\queue.c     ****  */
+  99:.\queue.c     **** void pushQueue(const struct Data data)
+ 100:.\queue.c     **** {
+ 101:.\queue.c     ****   if(queueCount_<queueMax_)
+ 102:.\queue.c     ****   {
+ 103:.\queue.c     ****   if(isEmptyQueue() != 1)
+ 104:.\queue.c     ****   {
+ 105:.\queue.c     ****     backInsert(&backOfQueuePtr_, data);
+ 106:.\queue.c     ****     backOfQueuePtr_ = backOfQueuePtr_->next_;
+ 107:.\queue.c     ****     queueCount_++;
+ 108:.\queue.c     ****   }
+ 109:.\queue.c     ****     else
+ 110:.\queue.c     ****     {
+ 111:.\queue.c     ****       headInsert(&frontOfQueuePtr_, data);
+ 112:.\queue.c     ****       backOfQueuePtr_ = frontOfQueuePtr_;
+ 113:.\queue.c     ****       queueCount_++;
+ 114:.\queue.c     ****     }
+ 115:.\queue.c     ****   }
+ 116:.\queue.c     **** }
+ 117:.\queue.c     **** 
+ 118:.\queue.c     **** /**
+ 119:.\queue.c     ****  *  @brief      Remove front element of the queue  
+ 120:.\queue.c     ****  *  @public
+ 121:.\queue.c     ****  *  @memberof   Queue
+ 122:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ 123:.\queue.c     ****  */
+ 124:.\queue.c     **** void popQueue()
+ 125:.\queue.c     **** {
+ 126:.\queue.c     ****   headRemove(&frontOfQueuePtr_);
+ 127:.\queue.c     ****   queueCount_--;
+ 128:.\queue.c     ****   if(isEmptyQueue() == 1)
+ 129:.\queue.c     ****   {
+ 130:.\queue.c     ****     backOfQueuePtr_ = NULL;
+ 131:.\queue.c     ****   }
  132:.\queue.c     **** }
  133:.\queue.c     **** 
  134:.\queue.c     **** /*!
- 135:.\queue.c     ****  *  @brief      Return 1 (true) if queue is empty or 0 (false) if not 
- 136:.\queue.c     ****  *  @return     int
+ 135:.\queue.c     ****  *  @brief      Return data from the front element in the queue 
+ 136:.\queue.c     ****  *  @return     Data
  137:.\queue.c     ****  *  @public
  138:.\queue.c     ****  *  @memberof   Queue
- 139:.\queue.c     ****  */
- 140:.\queue.c     **** int isEmptyQueue()
- 141:.\queue.c     **** {
- 142:.\queue.c     ****   if(frontOfQueuePtr_ == NULL)
- 143:.\queue.c     ****   {
- 144:.\queue.c     ****     return 1;
- 145:.\queue.c     ****   }
- 146:.\queue.c     ****   else
- 147:.\queue.c     ****   {
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 4
+ 139:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ 140:.\queue.c     ****  */
+ 141:.\queue.c     **** struct Data frontQueue()
+ 142:.\queue.c     **** {
+ 143:.\queue.c     ****   return frontOfQueuePtr_->data_;
+ 144:.\queue.c     **** }
+ 145:.\queue.c     **** 
+ 146:.\queue.c     **** /*!
+ 147:.\queue.c     ****  *  @brief      Return 1 (true) if queue is empty or 0 (false) if not 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 4
 
 
- 148:.\queue.c     ****     return 0;
- 149:.\queue.c     ****   }
- 150:.\queue.c     **** }
- 151:.\queue.c     **** 
- 152:.\queue.c     **** /*!
- 153:.\queue.c     ****  *  @brief      Insert element in the front of the queue
- 154:.\queue.c     ****  *  @param[in]  headPtr     Pointer to front of queue
- 155:.\queue.c     ****  *  @param[in]  data        Struct of data to be placed in the queue
- 156:.\queue.c     ****  *  @private
- 157:.\queue.c     ****  *  @memberof   Queue
- 158:.\queue.c     ****  */
- 159:.\queue.c     **** void headInsert(struct Node** headPtr, const struct Data data)
- 160:.\queue.c     **** {
- 161:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
- 162:.\queue.c     ****   if(temp == NULL)
- 163:.\queue.c     ****   {
- 164:.\queue.c     ****     return;
- 165:.\queue.c     ****   }
- 166:.\queue.c     **** 
- 167:.\queue.c     ****   temp->data_ = data;
- 168:.\queue.c     ****   temp->next_ = NULL;
- 169:.\queue.c     **** 
- 170:.\queue.c     ****   *headPtr = temp;
- 171:.\queue.c     **** }
- 172:.\queue.c     **** 
- 173:.\queue.c     **** /*!
- 174:.\queue.c     ****  *  @brief      Remove element in front af queue
- 175:.\queue.c     ****  *  @param[in]  headPtr     Pointer to front of queue
- 176:.\queue.c     ****  *  @private
- 177:.\queue.c     ****  *  @memberof   Queue
- 178:.\queue.c     ****  */
- 179:.\queue.c     **** void headRemove(struct Node** headPtr)
- 180:.\queue.c     **** {
- 181:.\queue.c     ****   if(headPtr != NULL)
- 182:.\queue.c     ****   {
- 183:.\queue.c     **** struct Node* condemned;
- 184:.\queue.c     ****     condemned = *headPtr;
- 185:.\queue.c     ****     *headPtr = (*headPtr)->next_;
- 186:.\queue.c     ****     free(condemned);
- 187:.\queue.c     ****   }
- 188:.\queue.c     **** }
- 189:.\queue.c     **** 
- 190:.\queue.c     **** /*!
- 191:.\queue.c     ****  *  @brief      Insert element in the back of the queue
- 192:.\queue.c     ****  *  @param[in]  headPtr     Pointer to back of queue
- 193:.\queue.c     ****  *  @param[in]  data        Struct of data to be placed in the queue
- 194:.\queue.c     ****  *  @private
- 195:.\queue.c     ****  *  @memberof   Queue
- 196:.\queue.c     ****  */
- 197:.\queue.c     **** void backInsert(struct Node** backPtr, const struct Data data)
- 198:.\queue.c     **** {
-  25              		.loc 1 198 0
+ 148:.\queue.c     ****  *  @return     int
+ 149:.\queue.c     ****  *  @public
+ 150:.\queue.c     ****  *  @memberof   Queue
+ 151:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ 152:.\queue.c     ****  */
+ 153:.\queue.c     **** int isEmptyQueue()
+ 154:.\queue.c     **** {
+ 155:.\queue.c     ****   if(frontOfQueuePtr_ == NULL)
+ 156:.\queue.c     ****   {
+ 157:.\queue.c     ****     return 1;
+ 158:.\queue.c     ****   }
+ 159:.\queue.c     ****   else
+ 160:.\queue.c     ****   {
+ 161:.\queue.c     ****     return 0;
+ 162:.\queue.c     ****   }
+ 163:.\queue.c     **** }
+ 164:.\queue.c     **** 
+ 165:.\queue.c     **** /*!
+ 166:.\queue.c     ****  *  @brief      Insert element in the front of the queue
+ 167:.\queue.c     ****  *  @param[in]  headPtr     Pointer to front of queue
+ 168:.\queue.c     ****  *  @param[in]  data        Struct of data to be placed in the queue
+ 169:.\queue.c     ****  *  @private
+ 170:.\queue.c     ****  *  @memberof   Queue
+ 171:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ 172:.\queue.c     ****  */
+ 173:.\queue.c     **** void headInsert(struct Node** headPtr, const struct Data data)
+ 174:.\queue.c     **** {
+ 175:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+ 176:.\queue.c     ****   if(temp == NULL)
+ 177:.\queue.c     ****   {
+ 178:.\queue.c     ****     return;
+ 179:.\queue.c     ****   }
+ 180:.\queue.c     **** 
+ 181:.\queue.c     ****   temp->data_ = data;
+ 182:.\queue.c     ****   temp->next_ = NULL;
+ 183:.\queue.c     **** 
+ 184:.\queue.c     ****   *headPtr = temp;
+ 185:.\queue.c     **** }
+ 186:.\queue.c     **** 
+ 187:.\queue.c     **** /*!
+ 188:.\queue.c     ****  *  @brief      Remove element in front af queue
+ 189:.\queue.c     ****  *  @param[in]  headPtr     Pointer to front of queue
+ 190:.\queue.c     ****  *  @private
+ 191:.\queue.c     ****  *  @memberof   Queue
+ 192:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ 193:.\queue.c     ****  */
+ 194:.\queue.c     **** void headRemove(struct Node** headPtr)
+ 195:.\queue.c     **** {
+ 196:.\queue.c     ****   if(headPtr != NULL)
+ 197:.\queue.c     ****   {
+ 198:.\queue.c     **** struct Node* condemned;
+ 199:.\queue.c     ****     condemned = *headPtr;
+ 200:.\queue.c     ****     *headPtr = (*headPtr)->next_;
+ 201:.\queue.c     ****     free(condemned);
+ 202:.\queue.c     ****   }
+ 203:.\queue.c     **** }
+ 204:.\queue.c     **** 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 5
+
+
+ 205:.\queue.c     **** /*!
+ 206:.\queue.c     ****  *  @brief      Insert element in the back of the queue
+ 207:.\queue.c     ****  *  @param[in]  backPtr     Pointer to back of queue
+ 208:.\queue.c     ****  *  @param[in]  data        Struct of data to be placed in the queue
+ 209:.\queue.c     ****  *  @private
+ 210:.\queue.c     ****  *  @memberof   Queue
+ 211:.\queue.c     ****  *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ 212:.\queue.c     ****  */
+ 213:.\queue.c     **** void backInsert(struct Node** backPtr, const struct Data data)
+ 214:.\queue.c     **** {
+  25              		.loc 1 214 0
   26              		.cfi_startproc
   27              	.LVL0:
   28 0000 70B5     		push	{r4, r5, r6, lr}
   29              		.cfi_def_cfa_offset 16
   30              		.cfi_offset 4, -16
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 5
-
-
   31              		.cfi_offset 5, -12
   32              		.cfi_offset 6, -8
   33              		.cfi_offset 14, -4
@@ -253,43 +264,46 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
   35              		.cfi_def_cfa_offset 24
   36 0004 0091     		str	r1, [sp]
   37 0006 0192     		str	r2, [sp, #4]
- 199:.\queue.c     ****   if(*backPtr == NULL)
-  38              		.loc 1 199 0
+ 215:.\queue.c     ****   if(*backPtr == NULL)
+  38              		.loc 1 215 0
   39 0008 0368     		ldr	r3, [r0]
   40 000a 002B     		cmp	r3, #0
   41 000c 0BD0     		beq	.L1
   42 000e 041C     		mov	r4, r0
- 200:.\queue.c     ****   {
- 201:.\queue.c     ****     return;
- 202:.\queue.c     ****   }
- 203:.\queue.c     **** 
- 204:.\queue.c     ****   struct Node* next = (*backPtr)->next_;
-  43              		.loc 1 204 0
+ 216:.\queue.c     ****   {
+ 217:.\queue.c     ****     return;
+ 218:.\queue.c     ****   }
+ 219:.\queue.c     **** 
+ 220:.\queue.c     ****   struct Node* next = (*backPtr)->next_;
+  43              		.loc 1 220 0
   44 0010 9D68     		ldr	r5, [r3, #8]
   45              	.LVL1:
- 205:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
-  46              		.loc 1 205 0
+ 221:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+  46              		.loc 1 221 0
   47 0012 0C20     		mov	r0, #12
   48              	.LVL2:
   49 0014 FFF7FEFF 		bl	malloc
   50              	.LVL3:
- 206:.\queue.c     ****   temp->data_ = data;
-  51              		.loc 1 206 0
+ 222:.\queue.c     ****   temp->data_ = data;
+  51              		.loc 1 222 0
   52 0018 6B46     		mov	r3, sp
   53 001a 021C     		mov	r2, r0
   54 001c 42CB     		ldmia	r3!, {r1, r6}
   55 001e 42C2     		stmia	r2!, {r1, r6}
- 207:.\queue.c     ****   temp->next_ = next;
-  56              		.loc 1 207 0
+ 223:.\queue.c     ****   temp->next_ = next;
+  56              		.loc 1 223 0
   57 0020 8560     		str	r5, [r0, #8]
- 208:.\queue.c     ****   (*backPtr)->next_ = temp;
-  58              		.loc 1 208 0
+ 224:.\queue.c     ****   (*backPtr)->next_ = temp;
+  58              		.loc 1 224 0
   59 0022 2368     		ldr	r3, [r4]
   60 0024 9860     		str	r0, [r3, #8]
   61              	.LVL4:
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 6
+
+
   62              	.L1:
- 209:.\queue.c     **** }
-  63              		.loc 1 209 0
+ 225:.\queue.c     **** }
+  63              		.loc 1 225 0
   64 0026 02B0     		add	sp, sp, #8
   65              		@ sp needed
   66 0028 70BD     		pop	{r4, r5, r6, pc}
@@ -303,201 +317,8 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
   74              		.type	headInsert, %function
   75              	headInsert:
   76              	.LFB39:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 6
-
-=======
-  26:.\queue.c     **** void queue_init()
-  27:.\queue.c     **** {
-  26              		.loc 1 27 0
-  27              		.cfi_startproc
-  28:.\queue.c     ****   frontOfQueuePtr = NULL;
-  28              		.loc 1 28 0
-  29 0000 0023     		mov	r3, #0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 2
-
-
-  30 0002 044A     		ldr	r2, .L2
-  31 0004 1360     		str	r3, [r2]
-  29:.\queue.c     ****   frontOfQueuePtr->next_ = NULL;
-  32              		.loc 1 29 0
-  33 0006 9B60     		str	r3, [r3, #8]
-  30:.\queue.c     ****   backOfQueuePtr = NULL;
-  34              		.loc 1 30 0
-  35 0008 034A     		ldr	r2, .L2+4
-  36 000a 1360     		str	r3, [r2]
-  31:.\queue.c     ****   backOfQueuePtr->next_ = NULL;
-  32:.\queue.c     ****   queueCount = 0;
-  37              		.loc 1 32 0
-  38 000c 034A     		ldr	r2, .L2+8
-  39 000e 1370     		strb	r3, [r2]
-  33:.\queue.c     **** }
-  40              		.loc 1 33 0
-  41              		@ sp needed
-  42 0010 7047     		bx	lr
-  43              	.L3:
-  44 0012 C046     		.align	2
-  45              	.L2:
-  46 0014 00000000 		.word	frontOfQueuePtr
-  47 0018 00000000 		.word	backOfQueuePtr
-  48 001c 00000000 		.word	queueCount
-  49              		.cfi_endproc
-  50              	.LFE34:
-  51              		.size	queue_init, .-queue_init
-  52              		.section	.text.frontQueue,"ax",%progbits
-  53              		.align	2
-  54              		.global	frontQueue
-  55              		.code	16
-  56              		.thumb_func
-  57              		.type	frontQueue, %function
-  58              	frontQueue:
-  59              	.LFB37:
-  34:.\queue.c     **** 
-  35:.\queue.c     **** void pushQueue(const struct Data data)
-  36:.\queue.c     **** {
-  37:.\queue.c     ****     if(queueCount<6)
-  38:.\queue.c     ****     {
-  39:.\queue.c     ****   if(isEmptyQueue() != 1)
-  40:.\queue.c     ****   {
-  41:.\queue.c     ****     backInsert(&backOfQueuePtr, data);
-  42:.\queue.c     ****     backOfQueuePtr = backOfQueuePtr->next_;
-  43:.\queue.c     ****     queueCount++;
-  44:.\queue.c     ****   }
-  45:.\queue.c     ****   else
-  46:.\queue.c     ****   {
-  47:.\queue.c     ****     headInsert(&frontOfQueuePtr, data);
-  48:.\queue.c     ****     backOfQueuePtr = frontOfQueuePtr;
-  49:.\queue.c     ****     queueCount++;
-  50:.\queue.c     ****   }
-  51:.\queue.c     ****     }
-  52:.\queue.c     **** }
-  53:.\queue.c     **** 
-  54:.\queue.c     **** void popQueue()
-  55:.\queue.c     **** {
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 3
-
-
-  56:.\queue.c     ****   headRemove(&frontOfQueuePtr);
-  57:.\queue.c     ****   queueCount--;
-  58:.\queue.c     ****   if(isEmptyQueue() == 1)
-  59:.\queue.c     ****   {
-  60:.\queue.c     ****     backOfQueuePtr = NULL;
-  61:.\queue.c     ****   }
-  62:.\queue.c     **** }
-  63:.\queue.c     **** 
-  64:.\queue.c     **** struct Data frontQueue()
-  65:.\queue.c     **** {
-  60              		.loc 1 65 0
-  61              		.cfi_startproc
-  62              	.LVL0:
-  63 0000 10B5     		push	{r4, lr}
-  64              		.cfi_def_cfa_offset 8
-  65              		.cfi_offset 4, -8
-  66              		.cfi_offset 14, -4
-  66:.\queue.c     ****   return frontOfQueuePtr->data_;
-  67              		.loc 1 66 0
-  68 0002 034B     		ldr	r3, .L5
-  69 0004 1B68     		ldr	r3, [r3]
-  70 0006 021C     		mov	r2, r0
-  71 0008 12CB     		ldmia	r3!, {r1, r4}
-  72 000a 12C2     		stmia	r2!, {r1, r4}
-  67:.\queue.c     **** }
-  73              		.loc 1 67 0
-  74              		@ sp needed
-  75 000c 10BD     		pop	{r4, pc}
-  76              	.L6:
-  77 000e C046     		.align	2
-  78              	.L5:
-  79 0010 00000000 		.word	frontOfQueuePtr
-  80              		.cfi_endproc
-  81              	.LFE37:
-  82              		.size	frontQueue, .-frontQueue
-  83              		.section	.text.isEmptyQueue,"ax",%progbits
-  84              		.align	2
-  85              		.global	isEmptyQueue
-  86              		.code	16
-  87              		.thumb_func
-  88              		.type	isEmptyQueue, %function
-  89              	isEmptyQueue:
-  90              	.LFB38:
-  68:.\queue.c     **** 
-  69:.\queue.c     **** int isEmptyQueue()
-  70:.\queue.c     **** {
-  91              		.loc 1 70 0
-  92              		.cfi_startproc
-  71:.\queue.c     ****   if(frontOfQueuePtr == NULL)
-  93              		.loc 1 71 0
-  94 0000 034B     		ldr	r3, .L10
-  95 0002 1B68     		ldr	r3, [r3]
-  96 0004 002B     		cmp	r3, #0
-  97 0006 01D1     		bne	.L9
-  72:.\queue.c     ****   {
-  73:.\queue.c     ****     return 1;
-  98              		.loc 1 73 0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 4
-
-
-  99 0008 0120     		mov	r0, #1
- 100 000a 00E0     		b	.L8
- 101              	.L9:
-  74:.\queue.c     ****   }
-  75:.\queue.c     ****   else
-  76:.\queue.c     ****   {
-  77:.\queue.c     ****     return 0;
- 102              		.loc 1 77 0
- 103 000c 0020     		mov	r0, #0
- 104              	.L8:
-  78:.\queue.c     ****   }
-  79:.\queue.c     **** }
- 105              		.loc 1 79 0
- 106              		@ sp needed
- 107 000e 7047     		bx	lr
- 108              	.L11:
- 109              		.align	2
- 110              	.L10:
- 111 0010 00000000 		.word	frontOfQueuePtr
- 112              		.cfi_endproc
- 113              	.LFE38:
- 114              		.size	isEmptyQueue, .-isEmptyQueue
- 115              		.section	.text.headInsert,"ax",%progbits
- 116              		.align	2
- 117              		.global	headInsert
- 118              		.code	16
- 119              		.thumb_func
- 120              		.type	headInsert, %function
- 121              	headInsert:
- 122              	.LFB39:
-  80:.\queue.c     **** 
-  81:.\queue.c     **** void headInsert(struct Node** headPtr, const struct Data data)
-  82:.\queue.c     **** {
- 123              		.loc 1 82 0
- 124              		.cfi_startproc
- 125              	.LVL1:
- 126 0000 30B5     		push	{r4, r5, lr}
- 127              		.cfi_def_cfa_offset 12
- 128              		.cfi_offset 4, -12
- 129              		.cfi_offset 5, -8
- 130              		.cfi_offset 14, -4
- 131 0002 83B0     		sub	sp, sp, #12
- 132              		.cfi_def_cfa_offset 24
- 133 0004 041C     		mov	r4, r0
- 134 0006 0091     		str	r1, [sp]
- 135 0008 0192     		str	r2, [sp, #4]
-  83:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
- 136              		.loc 1 83 0
- 137 000a 0C20     		mov	r0, #12
- 138              	.LVL2:
- 139 000c FFF7FEFF 		bl	malloc
- 140              	.LVL3:
-  84:.\queue.c     ****   if(temp == NULL)
- 141              		.loc 1 84 0
- 142 0010 0028     		cmp	r0, #0
- 143 0012 06D0     		beq	.L12
-  85:.\queue.c     ****   {
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 5
->>>>>>> origin/master
-
- 160:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
-  77              		.loc 1 160 0
+ 174:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+  77              		.loc 1 174 0
   78              		.cfi_startproc
   79              	.LVL5:
   80 0000 30B5     		push	{r4, r5, lr}
@@ -510,33 +331,36 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
   87 0004 041C     		mov	r4, r0
   88 0006 0091     		str	r1, [sp]
   89 0008 0192     		str	r2, [sp, #4]
- 161:.\queue.c     ****   if(temp == NULL)
-  90              		.loc 1 161 0
+ 175:.\queue.c     ****   if(temp == NULL)
+  90              		.loc 1 175 0
   91 000a 0C20     		mov	r0, #12
   92              	.LVL6:
   93 000c FFF7FEFF 		bl	malloc
   94              	.LVL7:
- 162:.\queue.c     ****   {
-  95              		.loc 1 162 0
+ 176:.\queue.c     ****   {
+  95              		.loc 1 176 0
   96 0010 0028     		cmp	r0, #0
   97 0012 06D0     		beq	.L3
- 167:.\queue.c     ****   temp->next_ = NULL;
-  98              		.loc 1 167 0
+ 181:.\queue.c     ****   temp->next_ = NULL;
+  98              		.loc 1 181 0
   99 0014 6B46     		mov	r3, sp
  100 0016 021C     		mov	r2, r0
  101 0018 22CB     		ldmia	r3!, {r1, r5}
  102 001a 22C2     		stmia	r2!, {r1, r5}
- 168:.\queue.c     **** 
- 103              		.loc 1 168 0
+ 182:.\queue.c     **** 
+ 103              		.loc 1 182 0
  104 001c 0023     		mov	r3, #0
  105 001e 8360     		str	r3, [r0, #8]
- 170:.\queue.c     **** }
- 106              		.loc 1 170 0
+ 184:.\queue.c     **** }
+ 106              		.loc 1 184 0
  107 0020 2060     		str	r0, [r4]
  108              	.L3:
- 171:.\queue.c     **** 
- 109              		.loc 1 171 0
+ 185:.\queue.c     **** 
+ 109              		.loc 1 185 0
  110 0022 03B0     		add	sp, sp, #12
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 7
+
+
  111              		@ sp needed
  112              	.LVL8:
  113 0024 30BD     		pop	{r4, r5, pc}
@@ -550,40 +374,36 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  121              		.type	headRemove, %function
  122              	headRemove:
  123              	.LFB40:
- 180:.\queue.c     ****   if(headPtr != NULL)
- 124              		.loc 1 180 0
+ 195:.\queue.c     ****   if(headPtr != NULL)
+ 124              		.loc 1 195 0
  125              		.cfi_startproc
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 7
-
-<<<<<<< HEAD
-
  126              	.LVL9:
  127 0000 08B5     		push	{r3, lr}
  128              		.cfi_def_cfa_offset 8
  129              		.cfi_offset 3, -8
  130              		.cfi_offset 14, -4
- 181:.\queue.c     ****   {
- 131              		.loc 1 181 0
+ 196:.\queue.c     ****   {
+ 131              		.loc 1 196 0
  132 0002 0028     		cmp	r0, #0
  133 0004 05D0     		beq	.L5
  134 0006 031C     		mov	r3, r0
  135              	.LBB2:
- 184:.\queue.c     ****     *headPtr = (*headPtr)->next_;
- 136              		.loc 1 184 0
+ 199:.\queue.c     ****     *headPtr = (*headPtr)->next_;
+ 136              		.loc 1 199 0
  137 0008 0068     		ldr	r0, [r0]
  138              	.LVL10:
- 185:.\queue.c     ****     free(condemned);
- 139              		.loc 1 185 0
+ 200:.\queue.c     ****     free(condemned);
+ 139              		.loc 1 200 0
  140 000a 8268     		ldr	r2, [r0, #8]
  141 000c 1A60     		str	r2, [r3]
- 186:.\queue.c     ****   }
- 142              		.loc 1 186 0
+ 201:.\queue.c     ****   }
+ 142              		.loc 1 201 0
  143 000e FFF7FEFF 		bl	free
  144              	.LVL11:
  145              	.L5:
  146              	.LBE2:
- 188:.\queue.c     **** 
- 147              		.loc 1 188 0
+ 203:.\queue.c     **** 
+ 147              		.loc 1 203 0
  148              		@ sp needed
  149 0012 08BD     		pop	{r3, pc}
  150              		.cfi_endproc
@@ -597,32 +417,32 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  158              		.type	queue_init, %function
  159              	queue_init:
  160              	.LFB34:
-  74:.\queue.c     ****   frontOfQueuePtr_ = NULL;
- 161              		.loc 1 74 0
+  83:.\queue.c     ****   frontOfQueuePtr_ = NULL;
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 8
+
+
+ 161              		.loc 1 83 0
  162              		.cfi_startproc
  163              	.LVL12:
-  75:.\queue.c     ****   frontOfQueuePtr_->next_ = NULL;
- 164              		.loc 1 75 0
+  84:.\queue.c     ****   frontOfQueuePtr_->next_ = NULL;
+ 164              		.loc 1 84 0
  165 0000 034A     		ldr	r2, .L8
  166 0002 0023     		mov	r3, #0
  167 0004 1360     		str	r3, [r2]
-  76:.\queue.c     ****   backOfQueuePtr_ = NULL;
- 168              		.loc 1 76 0
+  85:.\queue.c     ****   backOfQueuePtr_ = NULL;
+ 168              		.loc 1 85 0
  169 0006 9B60     		str	r3, [r3, #8]
-  77:.\queue.c     ****   backOfQueuePtr_->next_ = NULL;
- 170              		.loc 1 77 0
+  86:.\queue.c     ****   backOfQueuePtr_->next_ = NULL;
+ 170              		.loc 1 86 0
  171 0008 5360     		str	r3, [r2, #4]
-  79:.\queue.c     ****   queueCount_ = 0;
- 172              		.loc 1 79 0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 8
-
-
+  88:.\queue.c     ****   queueCount_ = 0;
+ 172              		.loc 1 88 0
  173 000a 1072     		strb	r0, [r2, #8]
-  80:.\queue.c     **** }
- 174              		.loc 1 80 0
+  89:.\queue.c     **** }
+ 174              		.loc 1 89 0
  175 000c 5372     		strb	r3, [r2, #9]
-  81:.\queue.c     **** 
- 176              		.loc 1 81 0
+  90:.\queue.c     **** 
+ 176              		.loc 1 90 0
  177              		@ sp needed
  178 000e 7047     		bx	lr
  179              	.L9:
@@ -640,24 +460,27 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  191              		.type	frontQueue, %function
  192              	frontQueue:
  193              	.LFB37:
- 130:.\queue.c     ****   return frontOfQueuePtr_->data_;
- 194              		.loc 1 130 0
+ 142:.\queue.c     ****   return frontOfQueuePtr_->data_;
+ 194              		.loc 1 142 0
  195              		.cfi_startproc
  196              	.LVL13:
  197 0000 10B5     		push	{r4, lr}
  198              		.cfi_def_cfa_offset 8
  199              		.cfi_offset 4, -8
  200              		.cfi_offset 14, -4
- 131:.\queue.c     **** }
- 201              		.loc 1 131 0
+ 143:.\queue.c     **** }
+ 201              		.loc 1 143 0
  202 0002 034B     		ldr	r3, .L11
  203 0004 1B68     		ldr	r3, [r3]
  204 0006 021C     		mov	r2, r0
  205 0008 12CB     		ldmia	r3!, {r1, r4}
  206 000a 12C2     		stmia	r2!, {r1, r4}
- 132:.\queue.c     **** 
- 207              		.loc 1 132 0
+ 144:.\queue.c     **** 
+ 207              		.loc 1 144 0
  208              		@ sp needed
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 9
+
+
  209 000c 10BD     		pop	{r4, pc}
  210              	.L12:
  211 000e C046     		.align	2
@@ -674,29 +497,26 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  222              		.type	isEmptyQueue, %function
  223              	isEmptyQueue:
  224              	.LFB38:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 9
-
-
- 141:.\queue.c     ****   if(frontOfQueuePtr_ == NULL)
- 225              		.loc 1 141 0
+ 154:.\queue.c     ****   if(frontOfQueuePtr_ == NULL)
+ 225              		.loc 1 154 0
  226              		.cfi_startproc
- 142:.\queue.c     ****   {
- 227              		.loc 1 142 0
+ 155:.\queue.c     ****   {
+ 227              		.loc 1 155 0
  228 0000 034B     		ldr	r3, .L16
  229 0002 1B68     		ldr	r3, [r3]
  230 0004 002B     		cmp	r3, #0
  231 0006 01D1     		bne	.L15
- 144:.\queue.c     ****   }
- 232              		.loc 1 144 0
+ 157:.\queue.c     ****   }
+ 232              		.loc 1 157 0
  233 0008 0120     		mov	r0, #1
  234 000a 00E0     		b	.L14
  235              	.L15:
- 148:.\queue.c     ****   }
- 236              		.loc 1 148 0
+ 161:.\queue.c     ****   }
+ 236              		.loc 1 161 0
  237 000c 0020     		mov	r0, #0
  238              	.L14:
- 150:.\queue.c     **** 
- 239              		.loc 1 150 0
+ 163:.\queue.c     **** 
+ 239              		.loc 1 163 0
  240              		@ sp needed
  241 000e 7047     		bx	lr
  242              	.L17:
@@ -714,10 +534,13 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  254              		.type	pushQueue, %function
  255              	pushQueue:
  256              	.LFB35:
-  90:.\queue.c     ****   if(queueCount_<queueMax_)
- 257              		.loc 1 90 0
+ 100:.\queue.c     ****   if(queueCount_<queueMax_)
+ 257              		.loc 1 100 0
  258              		.cfi_startproc
  259 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 10
+
+
  260              		.cfi_def_cfa_offset 8
  261              		.cfi_offset 4, -8
  262              		.cfi_offset 14, -4
@@ -725,62 +548,62 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  264              		.cfi_def_cfa_offset 16
  265 0004 0090     		str	r0, [sp]
  266 0006 0191     		str	r1, [sp, #4]
-  91:.\queue.c     ****   {
- 267              		.loc 1 91 0
+ 101:.\queue.c     ****   {
+ 267              		.loc 1 101 0
  268 0008 114B     		ldr	r3, .L21
  269 000a 5A7A     		ldrb	r2, [r3, #9]
  270 000c 1B7A     		ldrb	r3, [r3, #8]
  271 000e 9A42     		cmp	r2, r3
  272 0010 1BD2     		bcs	.L18
-  93:.\queue.c     ****   {
- 273              		.loc 1 93 0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 10
-
-
+ 103:.\queue.c     ****   {
+ 273              		.loc 1 103 0
  274 0012 FFF7FEFF 		bl	isEmptyQueue
  275              	.LVL14:
  276 0016 0128     		cmp	r0, #1
  277 0018 0CD0     		beq	.L20
-  95:.\queue.c     ****     backOfQueuePtr_ = backOfQueuePtr_->next_;
- 278              		.loc 1 95 0
+ 105:.\queue.c     ****     backOfQueuePtr_ = backOfQueuePtr_->next_;
+ 278              		.loc 1 105 0
  279 001a 0D4C     		ldr	r4, .L21
  280 001c 201D     		add	r0, r4, #4
  281 001e 0099     		ldr	r1, [sp]
  282 0020 019A     		ldr	r2, [sp, #4]
  283 0022 FFF7FEFF 		bl	backInsert
  284              	.LVL15:
-  96:.\queue.c     ****     queueCount_++;
- 285              		.loc 1 96 0
+ 106:.\queue.c     ****     queueCount_++;
+ 285              		.loc 1 106 0
  286 0026 6368     		ldr	r3, [r4, #4]
  287 0028 9B68     		ldr	r3, [r3, #8]
  288 002a 6360     		str	r3, [r4, #4]
-  97:.\queue.c     ****   }
- 289              		.loc 1 97 0
+ 107:.\queue.c     ****   }
+ 289              		.loc 1 107 0
  290 002c 637A     		ldrb	r3, [r4, #9]
  291 002e 0133     		add	r3, r3, #1
  292 0030 6372     		strb	r3, [r4, #9]
  293 0032 0AE0     		b	.L18
  294              	.L20:
- 101:.\queue.c     ****       backOfQueuePtr_ = frontOfQueuePtr_;
- 295              		.loc 1 101 0
+ 111:.\queue.c     ****       backOfQueuePtr_ = frontOfQueuePtr_;
+ 295              		.loc 1 111 0
  296 0034 064C     		ldr	r4, .L21
  297 0036 201C     		mov	r0, r4
  298 0038 0099     		ldr	r1, [sp]
  299 003a 019A     		ldr	r2, [sp, #4]
  300 003c FFF7FEFF 		bl	headInsert
  301              	.LVL16:
- 102:.\queue.c     ****       queueCount_++;
- 302              		.loc 1 102 0
+ 112:.\queue.c     ****       queueCount_++;
+ 302              		.loc 1 112 0
  303 0040 2368     		ldr	r3, [r4]
  304 0042 6360     		str	r3, [r4, #4]
- 103:.\queue.c     ****     }
- 305              		.loc 1 103 0
+ 113:.\queue.c     ****     }
+ 305              		.loc 1 113 0
  306 0044 637A     		ldrb	r3, [r4, #9]
  307 0046 0133     		add	r3, r3, #1
  308 0048 6372     		strb	r3, [r4, #9]
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 11
+
+
  309              	.L18:
- 106:.\queue.c     **** 
- 310              		.loc 1 106 0
+ 116:.\queue.c     **** 
+ 310              		.loc 1 116 0
  311 004a 02B0     		add	sp, sp, #8
  312              		@ sp needed
  313 004c 10BD     		pop	{r4, pc}
@@ -794,50 +617,50 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  321              		.section	.text.popQueue,"ax",%progbits
  322              		.align	2
  323              		.global	popQueue
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 11
-
-
  324              		.code	16
  325              		.thumb_func
  326              		.type	popQueue, %function
  327              	popQueue:
  328              	.LFB36:
- 114:.\queue.c     ****   headRemove(&frontOfQueuePtr_);
- 329              		.loc 1 114 0
+ 125:.\queue.c     ****   headRemove(&frontOfQueuePtr_);
+ 329              		.loc 1 125 0
  330              		.cfi_startproc
  331 0000 10B5     		push	{r4, lr}
  332              		.cfi_def_cfa_offset 8
  333              		.cfi_offset 4, -8
  334              		.cfi_offset 14, -4
- 115:.\queue.c     ****   queueCount_--;
- 335              		.loc 1 115 0
+ 126:.\queue.c     ****   queueCount_--;
+ 335              		.loc 1 126 0
  336 0002 074C     		ldr	r4, .L25
  337 0004 201C     		mov	r0, r4
  338 0006 FFF7FEFF 		bl	headRemove
  339              	.LVL17:
- 116:.\queue.c     ****   if(isEmptyQueue() == 1)
- 340              		.loc 1 116 0
+ 127:.\queue.c     ****   if(isEmptyQueue() == 1)
+ 340              		.loc 1 127 0
  341 000a 637A     		ldrb	r3, [r4, #9]
  342 000c 013B     		sub	r3, r3, #1
  343 000e 6372     		strb	r3, [r4, #9]
- 117:.\queue.c     ****   {
- 344              		.loc 1 117 0
+ 128:.\queue.c     ****   {
+ 344              		.loc 1 128 0
  345 0010 FFF7FEFF 		bl	isEmptyQueue
  346              	.LVL18:
  347 0014 0128     		cmp	r0, #1
  348 0016 02D1     		bne	.L23
- 119:.\queue.c     ****   }
- 349              		.loc 1 119 0
+ 130:.\queue.c     ****   }
+ 349              		.loc 1 130 0
  350 0018 0022     		mov	r2, #0
  351 001a 014B     		ldr	r3, .L25
  352 001c 5A60     		str	r2, [r3, #4]
  353              	.L23:
- 121:.\queue.c     **** 
- 354              		.loc 1 121 0
+ 132:.\queue.c     **** 
+ 354              		.loc 1 132 0
  355              		@ sp needed
  356 001e 10BD     		pop	{r4, pc}
  357              	.L26:
  358              		.align	2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 12
+
+
  359              	.L25:
  360 0020 00000000 		.word	.LANCHOR0
  361              		.cfi_endproc
@@ -854,9 +677,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  372              		.size	backOfQueuePtr_, 4
  373              	backOfQueuePtr_:
  374 0004 00000000 		.space	4
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 12
-
-
  375              		.type	queueMax_, %object
  376              		.size	queueMax_, 1
  377              	queueMax_:
@@ -878,17 +698,17 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  393 0006 00000000 		.4byte	.Ldebug_abbrev0
  394 000a 04       		.byte	0x4
  395 000b 01       		.uleb128 0x1
- 396 000c 7B010000 		.4byte	.LASF40
+ 396 000c 98010000 		.4byte	.LASF40
  397 0010 01       		.byte	0x1
- 398 0011 39010000 		.4byte	.LASF41
- 399 0015 EE000000 		.4byte	.LASF42
+ 398 0011 56010000 		.4byte	.LASF41
+ 399 0015 E1000000 		.4byte	.LASF42
  400 0019 00000000 		.4byte	.Ldebug_ranges0+0
  401 001d 00000000 		.4byte	0
  402 0021 00000000 		.4byte	.Ldebug_line0
  403 0025 02       		.uleb128 0x2
  404 0026 01       		.byte	0x1
  405 0027 06       		.byte	0x6
- 406 0028 3C020000 		.4byte	.LASF0
+ 406 0028 59020000 		.4byte	.LASF0
  407 002c 02       		.uleb128 0x2
  408 002d 01       		.byte	0x1
  409 002e 08       		.byte	0x8
@@ -896,15 +716,18 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  411 0033 02       		.uleb128 0x2
  412 0034 02       		.byte	0x2
  413 0035 05       		.byte	0x5
- 414 0036 09020000 		.4byte	.LASF2
+ 414 0036 26020000 		.4byte	.LASF2
  415 003a 02       		.uleb128 0x2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 13
+
+
  416 003b 02       		.byte	0x2
  417 003c 07       		.byte	0x7
  418 003d A5000000 		.4byte	.LASF3
  419 0041 02       		.uleb128 0x2
  420 0042 04       		.byte	0x4
  421 0043 05       		.byte	0x5
- 422 0044 2E020000 		.4byte	.LASF4
+ 422 0044 4B020000 		.4byte	.LASF4
  423 0048 02       		.uleb128 0x2
  424 0049 04       		.byte	0x4
  425 004a 07       		.byte	0x7
@@ -912,14 +735,11 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  427 004f 02       		.uleb128 0x2
  428 0050 08       		.byte	0x8
  429 0051 05       		.byte	0x5
- 430 0052 63010000 		.4byte	.LASF6
+ 430 0052 80010000 		.4byte	.LASF6
  431 0056 02       		.uleb128 0x2
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 13
-
-
  432 0057 08       		.byte	0x8
  433 0058 07       		.byte	0x7
- 434 0059 17010000 		.4byte	.LASF7
+ 434 0059 34010000 		.4byte	.LASF7
  435 005d 03       		.uleb128 0x3
  436 005e 04       		.byte	0x4
  437 005f 05       		.byte	0x5
@@ -927,7 +747,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  439 0064 02       		.uleb128 0x2
  440 0065 04       		.byte	0x4
  441 0066 07       		.byte	0x7
- 442 0067 E1000000 		.4byte	.LASF8
+ 442 0067 27010000 		.4byte	.LASF8
  443 006b 04       		.uleb128 0x4
  444 006c 68000000 		.4byte	.LASF12
  445 0070 02       		.byte	0x2
@@ -944,7 +764,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  456 0085 02       		.uleb128 0x2
  457 0086 01       		.byte	0x1
  458 0087 08       		.byte	0x8
- 459 0088 37020000 		.4byte	.LASF11
+ 459 0088 54020000 		.4byte	.LASF11
  460 008c 05       		.uleb128 0x5
  461 008d B8000000 		.4byte	.LASF13
  462 0091 03       		.byte	0x3
@@ -953,30 +773,30 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  465 0097 02       		.uleb128 0x2
  466 0098 04       		.byte	0x4
  467 0099 07       		.byte	0x7
- 468 009a 54010000 		.4byte	.LASF14
+ 468 009a 71010000 		.4byte	.LASF14
  469 009e 06       		.uleb128 0x6
  470 009f 04       		.byte	0x4
  471 00a0 07       		.uleb128 0x7
  472 00a1 DC000000 		.4byte	.LASF17
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 14
+
+
  473 00a5 08       		.byte	0x8
  474 00a6 04       		.byte	0x4
- 475 00a7 19       		.byte	0x19
+ 475 00a7 18       		.byte	0x18
  476 00a8 C5000000 		.4byte	0xc5
  477 00ac 08       		.uleb128 0x8
- 478 00ad 76010000 		.4byte	.LASF15
+ 478 00ad 93010000 		.4byte	.LASF15
  479 00b1 04       		.byte	0x4
- 480 00b2 1B       		.byte	0x1b
+ 480 00b2 1A       		.byte	0x1a
  481 00b3 5D000000 		.4byte	0x5d
  482 00b7 00       		.byte	0
  483 00b8 08       		.uleb128 0x8
- 484 00b9 71010000 		.4byte	.LASF16
+ 484 00b9 8E010000 		.4byte	.LASF16
  485 00bd 04       		.byte	0x4
- 486 00be 1C       		.byte	0x1c
+ 486 00be 1B       		.byte	0x1b
  487 00bf 5D000000 		.4byte	0x5d
  488 00c3 04       		.byte	0x4
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 14
-
-
  489 00c4 00       		.byte	0
  490 00c5 07       		.uleb128 0x7
  491 00c6 10000000 		.4byte	.LASF18
@@ -991,7 +811,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  500 00d8 A0000000 		.4byte	0xa0
  501 00dc 00       		.byte	0
  502 00dd 08       		.uleb128 0x8
- 503 00de 5D010000 		.4byte	.LASF20
+ 503 00de 7A010000 		.4byte	.LASF20
  504 00e2 01       		.byte	0x1
  505 00e3 17       		.byte	0x17
  506 00e4 EA000000 		.4byte	0xea
@@ -1001,9 +821,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  510 00eb 04       		.byte	0x4
  511 00ec C5000000 		.4byte	0xc5
  512 00f0 0A       		.uleb128 0xa
- 513 00f1 2E010000 		.4byte	.LASF25
+ 513 00f1 4B010000 		.4byte	.LASF25
  514 00f5 01       		.byte	0x1
- 515 00f6 C5       		.byte	0xc5
+ 515 00f6 D5       		.byte	0xd5
  516 00f7 00000000 		.4byte	.LFB41
  517 00fb 2A000000 		.4byte	.LFE41-.LFB41
  518 00ff 01       		.uleb128 0x1
@@ -1012,13 +832,16 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  521 0105 0B       		.uleb128 0xb
  522 0106 55000000 		.4byte	.LASF21
  523 010a 01       		.byte	0x1
- 524 010b C5       		.byte	0xc5
+ 524 010b D5       		.byte	0xd5
  525 010c 50010000 		.4byte	0x150
  526 0110 00000000 		.4byte	.LLST0
  527 0114 0C       		.uleb128 0xc
  528 0115 63000000 		.4byte	.LASF22
  529 0119 01       		.byte	0x1
- 530 011a C5       		.byte	0xc5
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 15
+
+
+ 530 011a D5       		.byte	0xd5
  531 011b 56010000 		.4byte	0x156
  532 011f 02       		.uleb128 0x2
  533 0120 91       		.byte	0x91
@@ -1026,17 +849,14 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  535 0122 0D       		.uleb128 0xd
  536 0123 15000000 		.4byte	.LASF23
  537 0127 01       		.byte	0x1
- 538 0128 CC       		.byte	0xcc
+ 538 0128 DC       		.byte	0xdc
  539 0129 EA000000 		.4byte	0xea
  540 012d 2C000000 		.4byte	.LLST1
  541 0131 0D       		.uleb128 0xd
  542 0132 A0000000 		.4byte	.LASF24
  543 0136 01       		.byte	0x1
- 544 0137 CD       		.byte	0xcd
+ 544 0137 DD       		.byte	0xdd
  545 0138 EA000000 		.4byte	0xea
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 15
-
-
  546 013c 3F000000 		.4byte	.LLST2
  547 0140 0E       		.uleb128 0xe
  548 0141 18000000 		.4byte	.LVL3
@@ -1056,30 +876,33 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  562 015b 0A       		.uleb128 0xa
  563 015c 1A000000 		.4byte	.LASF26
  564 0160 01       		.byte	0x1
- 565 0161 9F       		.byte	0x9f
+ 565 0161 AD       		.byte	0xad
  566 0162 00000000 		.4byte	.LFB39
  567 0166 26000000 		.4byte	.LFE39-.LFB39
  568 016a 01       		.uleb128 0x1
  569 016b 9C       		.byte	0x9c
  570 016c AA010000 		.4byte	0x1aa
  571 0170 0B       		.uleb128 0xb
- 572 0171 43010000 		.4byte	.LASF27
+ 572 0171 60010000 		.4byte	.LASF27
  573 0175 01       		.byte	0x1
- 574 0176 9F       		.byte	0x9f
+ 574 0176 AD       		.byte	0xad
  575 0177 50010000 		.4byte	0x150
  576 017b 52000000 		.4byte	.LLST3
  577 017f 0C       		.uleb128 0xc
  578 0180 63000000 		.4byte	.LASF22
  579 0184 01       		.byte	0x1
- 580 0185 9F       		.byte	0x9f
+ 580 0185 AD       		.byte	0xad
  581 0186 56010000 		.4byte	0x156
  582 018a 02       		.uleb128 0x2
  583 018b 91       		.byte	0x91
  584 018c 68       		.sleb128 -24
  585 018d 11       		.uleb128 0x11
  586 018e A0000000 		.4byte	.LASF24
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 16
+
+
  587 0192 01       		.byte	0x1
- 588 0193 A1       		.byte	0xa1
+ 588 0193 AF       		.byte	0xaf
  589 0194 EA000000 		.4byte	0xea
  590 0198 01       		.uleb128 0x1
  591 0199 50       		.byte	0x50
@@ -1094,21 +917,18 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  600 01a8 00       		.byte	0
  601 01a9 00       		.byte	0
  602 01aa 0A       		.uleb128 0xa
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 16
-
-
- 603 01ab 23020000 		.4byte	.LASF28
+ 603 01ab 40020000 		.4byte	.LASF28
  604 01af 01       		.byte	0x1
- 605 01b0 B3       		.byte	0xb3
+ 605 01b0 C2       		.byte	0xc2
  606 01b1 00000000 		.4byte	.LFB40
  607 01b5 14000000 		.4byte	.LFE40-.LFB40
  608 01b9 01       		.uleb128 0x1
  609 01ba 9C       		.byte	0x9c
  610 01bb F1010000 		.4byte	0x1f1
  611 01bf 0B       		.uleb128 0xb
- 612 01c0 43010000 		.4byte	.LASF27
+ 612 01c0 60010000 		.4byte	.LASF27
  613 01c4 01       		.byte	0x1
- 614 01c5 B3       		.byte	0xb3
+ 614 01c5 C2       		.byte	0xc2
  615 01c6 50010000 		.4byte	0x150
  616 01ca 7E000000 		.4byte	.LLST4
  617 01ce 12       		.uleb128 0x12
@@ -1117,7 +937,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  620 01d7 0D       		.uleb128 0xd
  621 01d8 CB000000 		.4byte	.LASF29
  622 01dc 01       		.byte	0x1
- 623 01dd B7       		.byte	0xb7
+ 623 01dd C6       		.byte	0xc6
  624 01de EA000000 		.4byte	0xea
  625 01e2 AA000000 		.4byte	.LLST5
  626 01e6 13       		.uleb128 0x13
@@ -1128,7 +948,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  631 01f1 14       		.uleb128 0x14
  632 01f2 40000000 		.4byte	.LASF33
  633 01f6 01       		.byte	0x1
- 634 01f7 49       		.byte	0x49
+ 634 01f7 52       		.byte	0x52
  635 01f8 00000000 		.4byte	.LFB34
  636 01fc 14000000 		.4byte	.LFE34-.LFB34
  637 0200 01       		.uleb128 0x1
@@ -1137,15 +957,18 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  640 0206 0C       		.uleb128 0xc
  641 0207 36000000 		.4byte	.LASF30
  642 020b 01       		.byte	0x1
- 643 020c 49       		.byte	0x49
+ 643 020c 52       		.byte	0x52
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 17
+
+
  644 020d 6B000000 		.4byte	0x6b
  645 0211 01       		.uleb128 0x1
  646 0212 50       		.byte	0x50
  647 0213 00       		.byte	0
  648 0214 15       		.uleb128 0x15
- 649 0215 48020000 		.4byte	.LASF31
+ 649 0215 65020000 		.4byte	.LASF31
  650 0219 01       		.byte	0x1
- 651 021a 81       		.byte	0x81
+ 651 021a 8D       		.byte	0x8d
  652 021b A0000000 		.4byte	0xa0
  653 021f 00000000 		.4byte	.LFB37
  654 0223 14000000 		.4byte	.LFE37-.LFB37
@@ -1154,10 +977,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  657 0229 15       		.uleb128 0x15
  658 022a 81000000 		.4byte	.LASF32
  659 022e 01       		.byte	0x1
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 17
-
-
- 660 022f 8C       		.byte	0x8c
+ 660 022f 99       		.byte	0x99
  661 0230 5D000000 		.4byte	0x5d
  662 0234 00000000 		.4byte	.LFB38
  663 0238 14000000 		.4byte	.LFE38-.LFB38
@@ -1166,7 +986,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  666 023e 14       		.uleb128 0x14
  667 023f 4B000000 		.4byte	.LASF34
  668 0243 01       		.byte	0x1
- 669 0244 59       		.byte	0x59
+ 669 0244 63       		.byte	0x63
  670 0245 00000000 		.4byte	.LFB35
  671 0249 54000000 		.4byte	.LFE35-.LFB35
  672 024d 01       		.uleb128 0x1
@@ -1175,7 +995,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  675 0253 0C       		.uleb128 0xc
  676 0254 63000000 		.4byte	.LASF22
  677 0258 01       		.byte	0x1
- 678 0259 59       		.byte	0x59
+ 678 0259 63       		.byte	0x63
  679 025a 56010000 		.4byte	0x156
  680 025e 02       		.uleb128 0x2
  681 025f 91       		.byte	0x91
@@ -1198,6 +1018,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  698 027f 40000000 		.4byte	.LVL16
  699 0283 5B010000 		.4byte	0x15b
  700 0287 0F       		.uleb128 0xf
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 18
+
+
  701 0288 01       		.uleb128 0x1
  702 0289 50       		.byte	0x50
  703 028a 02       		.uleb128 0x2
@@ -1206,17 +1029,14 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  706 028d 00       		.byte	0
  707 028e 00       		.byte	0
  708 028f 14       		.uleb128 0x14
- 709 0290 4B010000 		.4byte	.LASF35
+ 709 0290 68010000 		.4byte	.LASF35
  710 0294 01       		.byte	0x1
- 711 0295 71       		.byte	0x71
+ 711 0295 7C       		.byte	0x7c
  712 0296 00000000 		.4byte	.LFB36
  713 029a 24000000 		.4byte	.LFE36-.LFB36
  714 029e 01       		.uleb128 0x1
  715 029f 9C       		.byte	0x9c
  716 02a0 C2020000 		.4byte	0x2c2
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 18
-
-
  717 02a4 16       		.uleb128 0x16
  718 02a5 0A000000 		.4byte	.LVL17
  719 02a9 AA010000 		.4byte	0x1aa
@@ -1235,15 +1055,15 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  732 02c2 11       		.uleb128 0x11
  733 02c3 25000000 		.4byte	.LASF36
  734 02c7 01       		.byte	0x1
- 735 02c8 23       		.byte	0x23
+ 735 02c8 24       		.byte	0x24
  736 02c9 EA000000 		.4byte	0xea
  737 02cd 05       		.uleb128 0x5
  738 02ce 03       		.byte	0x3
  739 02cf 00000000 		.4byte	frontOfQueuePtr_
  740 02d3 11       		.uleb128 0x11
- 741 02d4 13020000 		.4byte	.LASF37
+ 741 02d4 30020000 		.4byte	.LASF37
  742 02d8 01       		.byte	0x1
- 743 02d9 2A       		.byte	0x2a
+ 743 02d9 2C       		.byte	0x2c
  744 02da EA000000 		.4byte	0xea
  745 02de 05       		.uleb128 0x5
  746 02df 03       		.byte	0x3
@@ -1251,21 +1071,24 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  748 02e4 11       		.uleb128 0x11
  749 02e5 BF000000 		.4byte	.LASF38
  750 02e9 01       		.byte	0x1
- 751 02ea 31       		.byte	0x31
+ 751 02ea 34       		.byte	0x34
  752 02eb 6B000000 		.4byte	0x6b
  753 02ef 05       		.uleb128 0x5
  754 02f0 03       		.byte	0x3
  755 02f1 09000000 		.4byte	queueCount_
  756 02f5 11       		.uleb128 0x11
  757 02f6 06000000 		.4byte	.LASF39
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 19
+
+
  758 02fa 01       		.byte	0x1
- 759 02fb 38       		.byte	0x38
+ 759 02fb 3C       		.byte	0x3c
  760 02fc 6B000000 		.4byte	0x6b
  761 0300 05       		.uleb128 0x5
  762 0301 03       		.byte	0x3
  763 0302 08000000 		.4byte	queueMax_
  764 0306 17       		.uleb128 0x17
- 765 0307 53020000 		.4byte	.LASF43
+ 765 0307 70020000 		.4byte	.LASF43
  766 030b 05       		.byte	0x5
  767 030c 61       		.byte	0x61
  768 030d 9E000000 		.4byte	0x9e
@@ -1274,9 +1097,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  771 0316 8C000000 		.4byte	0x8c
  772 031a 00       		.byte	0
  773 031b 19       		.uleb128 0x19
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 19
-
-
  774 031c 7C000000 		.4byte	.LASF44
  775 0320 05       		.byte	0x5
  776 0321 56       		.byte	0x56
@@ -1318,6 +1138,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  812 001d 00       		.byte	0
  813 001e 03       		.uleb128 0x3
  814 001f 24       		.uleb128 0x24
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 20
+
+
  815 0020 00       		.byte	0
  816 0021 0B       		.uleb128 0xb
  817 0022 0B       		.uleb128 0xb
@@ -1334,9 +1157,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  828 002d 0E       		.uleb128 0xe
  829 002e 3A       		.uleb128 0x3a
  830 002f 0B       		.uleb128 0xb
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 20
-
-
  831 0030 3B       		.uleb128 0x3b
  832 0031 05       		.uleb128 0x5
  833 0032 49       		.uleb128 0x49
@@ -1378,6 +1198,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  869 0056 13       		.uleb128 0x13
  870 0057 00       		.byte	0
  871 0058 00       		.byte	0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 21
+
+
  872 0059 08       		.uleb128 0x8
  873 005a 0D       		.uleb128 0xd
  874 005b 00       		.byte	0
@@ -1394,9 +1217,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  885 0066 00       		.byte	0
  886 0067 00       		.byte	0
  887 0068 09       		.uleb128 0x9
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 21
-
-
  888 0069 0F       		.uleb128 0xf
  889 006a 00       		.byte	0
  890 006b 0B       		.uleb128 0xb
@@ -1438,6 +1258,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  926 0090 3B       		.uleb128 0x3b
  927 0091 0B       		.uleb128 0xb
  928 0092 49       		.uleb128 0x49
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 22
+
+
  929 0093 13       		.uleb128 0x13
  930 0094 02       		.uleb128 0x2
  931 0095 17       		.uleb128 0x17
@@ -1454,9 +1277,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  942 00a0 0B       		.uleb128 0xb
  943 00a1 49       		.uleb128 0x49
  944 00a2 13       		.uleb128 0x13
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 22
-
-
  945 00a3 02       		.uleb128 0x2
  946 00a4 18       		.uleb128 0x18
  947 00a5 00       		.byte	0
@@ -1498,6 +1318,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  983 00ce 26       		.uleb128 0x26
  984 00cf 00       		.byte	0
  985 00d0 49       		.uleb128 0x49
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 23
+
+
  986 00d1 13       		.uleb128 0x13
  987 00d2 00       		.byte	0
  988 00d3 00       		.byte	0
@@ -1514,9 +1337,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  999 00de 13       		.uleb128 0x13
  1000 00df 02       		.uleb128 0x2
  1001 00e0 18       		.uleb128 0x18
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 23
-
-
  1002 00e1 00       		.byte	0
  1003 00e2 00       		.byte	0
  1004 00e3 12       		.uleb128 0x12
@@ -1558,6 +1378,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1040 0109 18       		.uleb128 0x18
  1041 010a 9742     		.uleb128 0x2117
  1042 010c 19       		.uleb128 0x19
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 24
+
+
  1043 010d 01       		.uleb128 0x1
  1044 010e 13       		.uleb128 0x13
  1045 010f 00       		.byte	0
@@ -1574,9 +1397,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1056 011a 3B       		.uleb128 0x3b
  1057 011b 0B       		.uleb128 0xb
  1058 011c 27       		.uleb128 0x27
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 24
-
-
  1059 011d 19       		.uleb128 0x19
  1060 011e 49       		.uleb128 0x49
  1061 011f 13       		.uleb128 0x13
@@ -1618,6 +1438,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1097 0146 13       		.uleb128 0x13
  1098 0147 3C       		.uleb128 0x3c
  1099 0148 19       		.uleb128 0x19
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 25
+
+
  1100 0149 01       		.uleb128 0x1
  1101 014a 13       		.uleb128 0x13
  1102 014b 00       		.byte	0
@@ -1634,9 +1457,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1113 0156 01       		.byte	0x1
  1114 0157 3F       		.uleb128 0x3f
  1115 0158 19       		.uleb128 0x19
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 25
-
-
  1116 0159 03       		.uleb128 0x3
  1117 015a 0E       		.uleb128 0xe
  1118 015b 3A       		.uleb128 0x3a
@@ -1678,6 +1498,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1154 0037 00000000 		.4byte	0
  1155 003b 00000000 		.4byte	0
  1156              	.LLST2:
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 26
+
+
  1157 003f 18000000 		.4byte	.LVL3
  1158 0043 26000000 		.4byte	.LVL4
  1159 0047 0100     		.2byte	0x1
@@ -1694,9 +1517,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1170 0065 0100     		.2byte	0x1
  1171 0067 54       		.byte	0x54
  1172 0068 24000000 		.4byte	.LVL8
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 26
-
-
  1173 006c 26000000 		.4byte	.LFE39
  1174 0070 0400     		.2byte	0x4
  1175 0072 F3       		.byte	0xf3
@@ -1738,6 +1558,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1211 000b 00       		.byte	0
  1212 000c 0000     		.2byte	0
  1213 000e 0000     		.2byte	0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 27
+
+
  1214 0010 00000000 		.4byte	.LFB41
  1215 0014 2A000000 		.4byte	.LFE41-.LFB41
  1216 0018 00000000 		.4byte	.LFB39
@@ -1754,9 +1577,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1227 0044 54000000 		.4byte	.LFE35-.LFB35
  1228 0048 00000000 		.4byte	.LFB36
  1229 004c 24000000 		.4byte	.LFE36-.LFB36
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 27
-
-
  1230 0050 00000000 		.4byte	0
  1231 0054 00000000 		.4byte	0
  1232              		.section	.debug_ranges,"",%progbits
@@ -1798,6 +1618,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1260      00
  1261              	.LASF23:
  1262 0015 6E657874 		.ascii	"next\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 28
+
+
  1262      00
  1263              	.LASF26:
  1264 001a 68656164 		.ascii	"headInsert\000"
@@ -1814,1269 +1637,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1268      6553697A 
  1268      6500
  1269              	.LASF33:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 28
-=======
-  86:.\queue.c     ****     return;
-  87:.\queue.c     ****   }
-  88:.\queue.c     ****   
-  89:.\queue.c     ****   temp->data_ = data;
- 144              		.loc 1 89 0
- 145 0014 6B46     		mov	r3, sp
- 146 0016 021C     		mov	r2, r0
- 147 0018 22CB     		ldmia	r3!, {r1, r5}
- 148 001a 22C2     		stmia	r2!, {r1, r5}
-  90:.\queue.c     ****   temp->next_ = NULL;
- 149              		.loc 1 90 0
- 150 001c 0023     		mov	r3, #0
- 151 001e 8360     		str	r3, [r0, #8]
-  91:.\queue.c     ****   
-  92:.\queue.c     ****   *headPtr = temp;
- 152              		.loc 1 92 0
- 153 0020 2060     		str	r0, [r4]
- 154              	.L12:
-  93:.\queue.c     **** }
- 155              		.loc 1 93 0
- 156 0022 03B0     		add	sp, sp, #12
- 157              		@ sp needed
- 158              	.LVL4:
- 159 0024 30BD     		pop	{r4, r5, pc}
- 160              		.cfi_endproc
- 161              	.LFE39:
- 162              		.size	headInsert, .-headInsert
- 163 0026 C046     		.section	.text.headRemove,"ax",%progbits
- 164              		.align	2
- 165              		.global	headRemove
- 166              		.code	16
- 167              		.thumb_func
- 168              		.type	headRemove, %function
- 169              	headRemove:
- 170              	.LFB40:
-  94:.\queue.c     **** 
-  95:.\queue.c     **** void headRemove(struct Node** headPtr)
-  96:.\queue.c     **** {
- 171              		.loc 1 96 0
- 172              		.cfi_startproc
- 173              	.LVL5:
- 174 0000 08B5     		push	{r3, lr}
- 175              		.cfi_def_cfa_offset 8
- 176              		.cfi_offset 3, -8
- 177              		.cfi_offset 14, -4
-  97:.\queue.c     ****   if(headPtr != NULL)
- 178              		.loc 1 97 0
- 179 0002 0028     		cmp	r0, #0
- 180 0004 05D0     		beq	.L14
- 181 0006 031C     		mov	r3, r0
- 182              	.LBB2:
-  98:.\queue.c     ****   {
-  99:.\queue.c     ****     struct Node* condemned;
- 100:.\queue.c     ****     condemned = *headPtr;
- 183              		.loc 1 100 0
- 184 0008 0068     		ldr	r0, [r0]
- 185              	.LVL6:
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 6
-
-
- 101:.\queue.c     ****     *headPtr = (*headPtr)->next_;
- 186              		.loc 1 101 0
- 187 000a 8268     		ldr	r2, [r0, #8]
- 188 000c 1A60     		str	r2, [r3]
- 102:.\queue.c     ****     free(condemned);
- 189              		.loc 1 102 0
- 190 000e FFF7FEFF 		bl	free
- 191              	.LVL7:
- 192              	.L14:
- 193              	.LBE2:
- 103:.\queue.c     ****   }
- 104:.\queue.c     **** }
- 194              		.loc 1 104 0
- 195              		@ sp needed
- 196 0012 08BD     		pop	{r3, pc}
- 197              		.cfi_endproc
- 198              	.LFE40:
- 199              		.size	headRemove, .-headRemove
- 200              		.section	.text.popQueue,"ax",%progbits
- 201              		.align	2
- 202              		.global	popQueue
- 203              		.code	16
- 204              		.thumb_func
- 205              		.type	popQueue, %function
- 206              	popQueue:
- 207              	.LFB36:
-  55:.\queue.c     ****   headRemove(&frontOfQueuePtr);
- 208              		.loc 1 55 0
- 209              		.cfi_startproc
- 210 0000 08B5     		push	{r3, lr}
- 211              		.cfi_def_cfa_offset 8
- 212              		.cfi_offset 3, -8
- 213              		.cfi_offset 14, -4
-  56:.\queue.c     ****   queueCount--;
- 214              		.loc 1 56 0
- 215 0002 0748     		ldr	r0, .L18
- 216 0004 FFF7FEFF 		bl	headRemove
- 217              	.LVL8:
-  57:.\queue.c     ****   if(isEmptyQueue() == 1)
- 218              		.loc 1 57 0
- 219 0008 064A     		ldr	r2, .L18+4
- 220 000a 1378     		ldrb	r3, [r2]
- 221 000c 013B     		sub	r3, r3, #1
- 222 000e 1370     		strb	r3, [r2]
-  58:.\queue.c     ****   {
- 223              		.loc 1 58 0
- 224 0010 FFF7FEFF 		bl	isEmptyQueue
- 225              	.LVL9:
- 226 0014 0128     		cmp	r0, #1
- 227 0016 02D1     		bne	.L16
-  60:.\queue.c     ****   }
- 228              		.loc 1 60 0
- 229 0018 0022     		mov	r2, #0
- 230 001a 034B     		ldr	r3, .L18+8
- 231 001c 1A60     		str	r2, [r3]
- 232              	.L16:
-  62:.\queue.c     **** 
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 7
-
-
- 233              		.loc 1 62 0
- 234              		@ sp needed
- 235 001e 08BD     		pop	{r3, pc}
- 236              	.L19:
- 237              		.align	2
- 238              	.L18:
- 239 0020 00000000 		.word	frontOfQueuePtr
- 240 0024 00000000 		.word	queueCount
- 241 0028 00000000 		.word	backOfQueuePtr
- 242              		.cfi_endproc
- 243              	.LFE36:
- 244              		.size	popQueue, .-popQueue
- 245              		.section	.text.backInsert,"ax",%progbits
- 246              		.align	2
- 247              		.global	backInsert
- 248              		.code	16
- 249              		.thumb_func
- 250              		.type	backInsert, %function
- 251              	backInsert:
- 252              	.LFB41:
- 105:.\queue.c     **** 
- 106:.\queue.c     **** void backInsert(struct Node** backPtr, const struct Data data)
- 107:.\queue.c     **** {
- 253              		.loc 1 107 0
- 254              		.cfi_startproc
- 255              	.LVL10:
- 256 0000 70B5     		push	{r4, r5, r6, lr}
- 257              		.cfi_def_cfa_offset 16
- 258              		.cfi_offset 4, -16
- 259              		.cfi_offset 5, -12
- 260              		.cfi_offset 6, -8
- 261              		.cfi_offset 14, -4
- 262 0002 82B0     		sub	sp, sp, #8
- 263              		.cfi_def_cfa_offset 24
- 264 0004 0091     		str	r1, [sp]
- 265 0006 0192     		str	r2, [sp, #4]
- 108:.\queue.c     ****   if(*backPtr == NULL)
- 266              		.loc 1 108 0
- 267 0008 0368     		ldr	r3, [r0]
- 268 000a 002B     		cmp	r3, #0
- 269 000c 0BD0     		beq	.L20
- 270 000e 041C     		mov	r4, r0
- 109:.\queue.c     ****   {
- 110:.\queue.c     ****     return;
- 111:.\queue.c     ****   }
- 112:.\queue.c     ****   
- 113:.\queue.c     ****   struct Node* next = (*backPtr)->next_;
- 271              		.loc 1 113 0
- 272 0010 9D68     		ldr	r5, [r3, #8]
- 273              	.LVL11:
- 114:.\queue.c     ****   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
- 274              		.loc 1 114 0
- 275 0012 0C20     		mov	r0, #12
- 276              	.LVL12:
- 277 0014 FFF7FEFF 		bl	malloc
- 278              	.LVL13:
- 115:.\queue.c     ****   temp->data_ = data;
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 8
-
-
- 279              		.loc 1 115 0
- 280 0018 6B46     		mov	r3, sp
- 281 001a 021C     		mov	r2, r0
- 282 001c 42CB     		ldmia	r3!, {r1, r6}
- 283 001e 42C2     		stmia	r2!, {r1, r6}
- 116:.\queue.c     ****   temp->next_ = next;
- 284              		.loc 1 116 0
- 285 0020 8560     		str	r5, [r0, #8]
- 117:.\queue.c     ****   (*backPtr)->next_ = temp;
- 286              		.loc 1 117 0
- 287 0022 2368     		ldr	r3, [r4]
- 288 0024 9860     		str	r0, [r3, #8]
- 289              	.LVL14:
- 290              	.L20:
- 118:.\queue.c     **** }
- 291              		.loc 1 118 0
- 292 0026 02B0     		add	sp, sp, #8
- 293              		@ sp needed
- 294 0028 70BD     		pop	{r4, r5, r6, pc}
- 295              		.cfi_endproc
- 296              	.LFE41:
- 297              		.size	backInsert, .-backInsert
- 298 002a C046     		.section	.text.pushQueue,"ax",%progbits
- 299              		.align	2
- 300              		.global	pushQueue
- 301              		.code	16
- 302              		.thumb_func
- 303              		.type	pushQueue, %function
- 304              	pushQueue:
- 305              	.LFB35:
-  36:.\queue.c     ****     if(queueCount<6)
- 306              		.loc 1 36 0
- 307              		.cfi_startproc
- 308 0000 10B5     		push	{r4, lr}
- 309              		.cfi_def_cfa_offset 8
- 310              		.cfi_offset 4, -8
- 311              		.cfi_offset 14, -4
- 312 0002 82B0     		sub	sp, sp, #8
- 313              		.cfi_def_cfa_offset 16
- 314 0004 0090     		str	r0, [sp]
- 315 0006 0191     		str	r1, [sp, #4]
-  37:.\queue.c     ****     {
- 316              		.loc 1 37 0
- 317 0008 124B     		ldr	r3, .L25
- 318 000a 1B78     		ldrb	r3, [r3]
- 319 000c 052B     		cmp	r3, #5
- 320 000e 1ED8     		bhi	.L22
-  39:.\queue.c     ****   {
- 321              		.loc 1 39 0
- 322 0010 FFF7FEFF 		bl	isEmptyQueue
- 323              	.LVL15:
- 324 0014 0128     		cmp	r0, #1
- 325 0016 0DD0     		beq	.L24
-  41:.\queue.c     ****     backOfQueuePtr = backOfQueuePtr->next_;
- 326              		.loc 1 41 0
- 327 0018 0F4C     		ldr	r4, .L25+4
- 328 001a 201C     		mov	r0, r4
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 9
-
-
- 329 001c 0099     		ldr	r1, [sp]
- 330 001e 019A     		ldr	r2, [sp, #4]
- 331 0020 FFF7FEFF 		bl	backInsert
- 332              	.LVL16:
-  42:.\queue.c     ****     queueCount++;
- 333              		.loc 1 42 0
- 334 0024 2368     		ldr	r3, [r4]
- 335 0026 9B68     		ldr	r3, [r3, #8]
- 336 0028 2360     		str	r3, [r4]
-  43:.\queue.c     ****   }
- 337              		.loc 1 43 0
- 338 002a 0A4A     		ldr	r2, .L25
- 339 002c 1378     		ldrb	r3, [r2]
- 340 002e 0133     		add	r3, r3, #1
- 341 0030 1370     		strb	r3, [r2]
- 342 0032 0CE0     		b	.L22
- 343              	.L24:
-  47:.\queue.c     ****     backOfQueuePtr = frontOfQueuePtr;
- 344              		.loc 1 47 0
- 345 0034 094C     		ldr	r4, .L25+8
- 346 0036 201C     		mov	r0, r4
- 347 0038 0099     		ldr	r1, [sp]
- 348 003a 019A     		ldr	r2, [sp, #4]
- 349 003c FFF7FEFF 		bl	headInsert
- 350              	.LVL17:
-  48:.\queue.c     ****     queueCount++;
- 351              		.loc 1 48 0
- 352 0040 2268     		ldr	r2, [r4]
- 353 0042 054B     		ldr	r3, .L25+4
- 354 0044 1A60     		str	r2, [r3]
-  49:.\queue.c     ****   }
- 355              		.loc 1 49 0
- 356 0046 034A     		ldr	r2, .L25
- 357 0048 1378     		ldrb	r3, [r2]
- 358 004a 0133     		add	r3, r3, #1
- 359 004c 1370     		strb	r3, [r2]
- 360              	.L22:
-  52:.\queue.c     **** 
- 361              		.loc 1 52 0
- 362 004e 02B0     		add	sp, sp, #8
- 363              		@ sp needed
- 364 0050 10BD     		pop	{r4, pc}
- 365              	.L26:
- 366 0052 C046     		.align	2
- 367              	.L25:
- 368 0054 00000000 		.word	queueCount
- 369 0058 00000000 		.word	backOfQueuePtr
- 370 005c 00000000 		.word	frontOfQueuePtr
- 371              		.cfi_endproc
- 372              	.LFE35:
- 373              		.size	pushQueue, .-pushQueue
- 374              		.comm	queueCount,1,1
- 375              		.comm	backOfQueuePtr,4,4
- 376              		.comm	frontOfQueuePtr,4,4
- 377              		.text
- 378              	.Letext0:
- 379              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 10
-
-
- 380              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
- 381              		.file 4 ".\\queue.h"
- 382              		.file 5 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9.
- 383              		.section	.debug_info,"",%progbits
- 384              	.Ldebug_info0:
- 385 0000 05030000 		.4byte	0x305
- 386 0004 0400     		.2byte	0x4
- 387 0006 00000000 		.4byte	.Ldebug_abbrev0
- 388 000a 04       		.byte	0x4
- 389 000b 01       		.uleb128 0x1
- 390 000c 8B010000 		.4byte	.LASF37
- 391 0010 01       		.byte	0x1
- 392 0011 46010000 		.4byte	.LASF38
- 393 0015 BC000000 		.4byte	.LASF39
- 394 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 395 001d 00000000 		.4byte	0
- 396 0021 00000000 		.4byte	.Ldebug_line0
- 397 0025 02       		.uleb128 0x2
- 398 0026 01       		.byte	0x1
- 399 0027 06       		.byte	0x6
- 400 0028 42020000 		.4byte	.LASF0
- 401 002c 02       		.uleb128 0x2
- 402 002d 01       		.byte	0x1
- 403 002e 08       		.byte	0x8
- 404 002f 4B000000 		.4byte	.LASF1
- 405 0033 02       		.uleb128 0x2
- 406 0034 02       		.byte	0x2
- 407 0035 05       		.byte	0x5
- 408 0036 19020000 		.4byte	.LASF2
- 409 003a 02       		.uleb128 0x2
- 410 003b 02       		.byte	0x2
- 411 003c 07       		.byte	0x7
- 412 003d 82000000 		.4byte	.LASF3
- 413 0041 02       		.uleb128 0x2
- 414 0042 04       		.byte	0x4
- 415 0043 05       		.byte	0x5
- 416 0044 34020000 		.4byte	.LASF4
- 417 0048 02       		.uleb128 0x2
- 418 0049 04       		.byte	0x4
- 419 004a 07       		.byte	0x7
- 420 004b 6B000000 		.4byte	.LASF5
- 421 004f 02       		.uleb128 0x2
- 422 0050 08       		.byte	0x8
- 423 0051 05       		.byte	0x5
- 424 0052 73010000 		.4byte	.LASF6
- 425 0056 02       		.uleb128 0x2
- 426 0057 08       		.byte	0x8
- 427 0058 07       		.byte	0x7
- 428 0059 0F010000 		.4byte	.LASF7
- 429 005d 03       		.uleb128 0x3
- 430 005e 04       		.byte	0x4
- 431 005f 05       		.byte	0x5
- 432 0060 696E7400 		.ascii	"int\000"
- 433 0064 02       		.uleb128 0x2
- 434 0065 04       		.byte	0x4
- 435 0066 07       		.byte	0x7
- 436 0067 02010000 		.4byte	.LASF8
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 11
-
-
- 437 006b 04       		.uleb128 0x4
- 438 006c 23020000 		.4byte	.LASF12
- 439 0070 02       		.byte	0x2
- 440 0071 3801     		.2byte	0x138
- 441 0073 2C000000 		.4byte	0x2c
- 442 0077 02       		.uleb128 0x2
- 443 0078 04       		.byte	0x4
- 444 0079 04       		.byte	0x4
- 445 007a 40000000 		.4byte	.LASF9
- 446 007e 02       		.uleb128 0x2
- 447 007f 08       		.byte	0x8
- 448 0080 04       		.byte	0x4
- 449 0081 A6000000 		.4byte	.LASF10
- 450 0085 02       		.uleb128 0x2
- 451 0086 01       		.byte	0x1
- 452 0087 08       		.byte	0x8
- 453 0088 3D020000 		.4byte	.LASF11
- 454 008c 05       		.uleb128 0x5
- 455 008d 95000000 		.4byte	.LASF13
- 456 0091 03       		.byte	0x3
- 457 0092 D4       		.byte	0xd4
- 458 0093 64000000 		.4byte	0x64
- 459 0097 02       		.uleb128 0x2
- 460 0098 04       		.byte	0x4
- 461 0099 07       		.byte	0x7
- 462 009a 64010000 		.4byte	.LASF14
- 463 009e 06       		.uleb128 0x6
- 464 009f 04       		.byte	0x4
- 465 00a0 07       		.uleb128 0x7
- 466 00a1 31010000 		.4byte	.LASF17
- 467 00a5 08       		.byte	0x8
- 468 00a6 04       		.byte	0x4
- 469 00a7 1A       		.byte	0x1a
- 470 00a8 C5000000 		.4byte	0xc5
- 471 00ac 08       		.uleb128 0x8
- 472 00ad 86010000 		.4byte	.LASF15
- 473 00b1 04       		.byte	0x4
- 474 00b2 1C       		.byte	0x1c
- 475 00b3 5D000000 		.4byte	0x5d
- 476 00b7 00       		.byte	0
- 477 00b8 08       		.uleb128 0x8
- 478 00b9 81010000 		.4byte	.LASF16
- 479 00bd 04       		.byte	0x4
- 480 00be 1D       		.byte	0x1d
- 481 00bf 5D000000 		.4byte	0x5d
- 482 00c3 04       		.byte	0x4
- 483 00c4 00       		.byte	0
- 484 00c5 07       		.uleb128 0x7
- 485 00c6 0E000000 		.4byte	.LASF18
- 486 00ca 0C       		.byte	0xc
- 487 00cb 04       		.byte	0x4
- 488 00cc 20       		.byte	0x20
- 489 00cd EA000000 		.4byte	0xea
- 490 00d1 08       		.uleb128 0x8
- 491 00d2 00000000 		.4byte	.LASF19
- 492 00d6 04       		.byte	0x4
- 493 00d7 22       		.byte	0x22
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 12
-
-
- 494 00d8 A0000000 		.4byte	0xa0
- 495 00dc 00       		.byte	0
- 496 00dd 08       		.uleb128 0x8
- 497 00de 6D010000 		.4byte	.LASF20
- 498 00e2 04       		.byte	0x4
- 499 00e3 23       		.byte	0x23
- 500 00e4 EA000000 		.4byte	0xea
- 501 00e8 08       		.byte	0x8
- 502 00e9 00       		.byte	0
- 503 00ea 09       		.uleb128 0x9
- 504 00eb 04       		.byte	0x4
- 505 00ec C5000000 		.4byte	0xc5
- 506 00f0 0A       		.uleb128 0xa
- 507 00f1 23000000 		.4byte	.LASF40
- 508 00f5 01       		.byte	0x1
- 509 00f6 1A       		.byte	0x1a
- 510 00f7 00000000 		.4byte	.LFB34
- 511 00fb 20000000 		.4byte	.LFE34-.LFB34
- 512 00ff 01       		.uleb128 0x1
- 513 0100 9C       		.byte	0x9c
- 514 0101 0B       		.uleb128 0xb
- 515 0102 4E020000 		.4byte	.LASF21
- 516 0106 01       		.byte	0x1
- 517 0107 40       		.byte	0x40
- 518 0108 A0000000 		.4byte	0xa0
- 519 010c 00000000 		.4byte	.LFB37
- 520 0110 14000000 		.4byte	.LFE37-.LFB37
- 521 0114 01       		.uleb128 0x1
- 522 0115 9C       		.byte	0x9c
- 523 0116 0B       		.uleb128 0xb
- 524 0117 5E000000 		.4byte	.LASF22
- 525 011b 01       		.byte	0x1
- 526 011c 45       		.byte	0x45
- 527 011d 5D000000 		.4byte	0x5d
- 528 0121 00000000 		.4byte	.LFB38
- 529 0125 14000000 		.4byte	.LFE38-.LFB38
- 530 0129 01       		.uleb128 0x1
- 531 012a 9C       		.byte	0x9c
- 532 012b 0C       		.uleb128 0xc
- 533 012c 18000000 		.4byte	.LASF25
- 534 0130 01       		.byte	0x1
- 535 0131 51       		.byte	0x51
- 536 0132 00000000 		.4byte	.LFB39
- 537 0136 26000000 		.4byte	.LFE39-.LFB39
- 538 013a 01       		.uleb128 0x1
- 539 013b 9C       		.byte	0x9c
- 540 013c 7A010000 		.4byte	0x17a
- 541 0140 0D       		.uleb128 0xd
- 542 0141 06000000 		.4byte	.LASF23
- 543 0145 01       		.byte	0x1
- 544 0146 51       		.byte	0x51
- 545 0147 7A010000 		.4byte	0x17a
- 546 014b 00000000 		.4byte	.LLST0
- 547 014f 0E       		.uleb128 0xe
- 548 0150 46000000 		.4byte	.LASF24
- 549 0154 01       		.byte	0x1
- 550 0155 51       		.byte	0x51
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 13
-
-
- 551 0156 80010000 		.4byte	0x180
- 552 015a 02       		.uleb128 0x2
- 553 015b 91       		.byte	0x91
- 554 015c 68       		.sleb128 -24
- 555 015d 0F       		.uleb128 0xf
- 556 015e 7D000000 		.4byte	.LASF27
- 557 0162 01       		.byte	0x1
- 558 0163 53       		.byte	0x53
- 559 0164 EA000000 		.4byte	0xea
- 560 0168 01       		.uleb128 0x1
- 561 0169 50       		.byte	0x50
- 562 016a 10       		.uleb128 0x10
- 563 016b 10000000 		.4byte	.LVL3
- 564 016f E6020000 		.4byte	0x2e6
- 565 0173 11       		.uleb128 0x11
- 566 0174 01       		.uleb128 0x1
- 567 0175 50       		.byte	0x50
- 568 0176 01       		.uleb128 0x1
- 569 0177 3C       		.byte	0x3c
- 570 0178 00       		.byte	0
- 571 0179 00       		.byte	0
- 572 017a 09       		.uleb128 0x9
- 573 017b 04       		.byte	0x4
- 574 017c EA000000 		.4byte	0xea
- 575 0180 12       		.uleb128 0x12
- 576 0181 A0000000 		.4byte	0xa0
- 577 0185 0C       		.uleb128 0xc
- 578 0186 29020000 		.4byte	.LASF26
- 579 018a 01       		.byte	0x1
- 580 018b 5F       		.byte	0x5f
- 581 018c 00000000 		.4byte	.LFB40
- 582 0190 14000000 		.4byte	.LFE40-.LFB40
- 583 0194 01       		.uleb128 0x1
- 584 0195 9C       		.byte	0x9c
- 585 0196 CC010000 		.4byte	0x1cc
- 586 019a 0D       		.uleb128 0xd
- 587 019b 06000000 		.4byte	.LASF23
- 588 019f 01       		.byte	0x1
- 589 01a0 5F       		.byte	0x5f
- 590 01a1 7A010000 		.4byte	0x17a
- 591 01a5 2C000000 		.4byte	.LLST1
- 592 01a9 13       		.uleb128 0x13
- 593 01aa 08000000 		.4byte	.LBB2
- 594 01ae 0A000000 		.4byte	.LBE2-.LBB2
- 595 01b2 14       		.uleb128 0x14
- 596 01b3 9C000000 		.4byte	.LASF28
- 597 01b7 01       		.byte	0x1
- 598 01b8 63       		.byte	0x63
- 599 01b9 EA000000 		.4byte	0xea
- 600 01bd 58000000 		.4byte	.LLST2
- 601 01c1 15       		.uleb128 0x15
- 602 01c2 12000000 		.4byte	.LVL7
- 603 01c6 FB020000 		.4byte	0x2fb
- 604 01ca 00       		.byte	0
- 605 01cb 00       		.byte	0
- 606 01cc 0C       		.uleb128 0xc
- 607 01cd 50010000 		.4byte	.LASF29
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 14
-
-
- 608 01d1 01       		.byte	0x1
- 609 01d2 36       		.byte	0x36
- 610 01d3 00000000 		.4byte	.LFB36
- 611 01d7 2C000000 		.4byte	.LFE36-.LFB36
- 612 01db 01       		.uleb128 0x1
- 613 01dc 9C       		.byte	0x9c
- 614 01dd 02020000 		.4byte	0x202
- 615 01e1 16       		.uleb128 0x16
- 616 01e2 08000000 		.4byte	.LVL8
- 617 01e6 85010000 		.4byte	0x185
- 618 01ea F8010000 		.4byte	0x1f8
- 619 01ee 11       		.uleb128 0x11
- 620 01ef 01       		.uleb128 0x1
- 621 01f0 50       		.byte	0x50
- 622 01f1 05       		.uleb128 0x5
- 623 01f2 03       		.byte	0x3
- 624 01f3 00000000 		.4byte	frontOfQueuePtr
- 625 01f7 00       		.byte	0
- 626 01f8 15       		.uleb128 0x15
- 627 01f9 14000000 		.4byte	.LVL9
- 628 01fd 16010000 		.4byte	0x116
- 629 0201 00       		.byte	0
- 630 0202 0C       		.uleb128 0xc
- 631 0203 26010000 		.4byte	.LASF30
- 632 0207 01       		.byte	0x1
- 633 0208 6A       		.byte	0x6a
- 634 0209 00000000 		.4byte	.LFB41
- 635 020d 2A000000 		.4byte	.LFE41-.LFB41
- 636 0211 01       		.uleb128 0x1
- 637 0212 9C       		.byte	0x9c
- 638 0213 62020000 		.4byte	0x262
- 639 0217 0D       		.uleb128 0xd
- 640 0218 38000000 		.4byte	.LASF31
- 641 021c 01       		.byte	0x1
- 642 021d 6A       		.byte	0x6a
- 643 021e 7A010000 		.4byte	0x17a
- 644 0222 6B000000 		.4byte	.LLST3
- 645 0226 0E       		.uleb128 0xe
- 646 0227 46000000 		.4byte	.LASF24
- 647 022b 01       		.byte	0x1
- 648 022c 6A       		.byte	0x6a
- 649 022d 80010000 		.4byte	0x180
- 650 0231 02       		.uleb128 0x2
- 651 0232 91       		.byte	0x91
- 652 0233 68       		.sleb128 -24
- 653 0234 14       		.uleb128 0x14
- 654 0235 13000000 		.4byte	.LASF32
- 655 0239 01       		.byte	0x1
- 656 023a 71       		.byte	0x71
- 657 023b EA000000 		.4byte	0xea
- 658 023f 97000000 		.4byte	.LLST4
- 659 0243 14       		.uleb128 0x14
- 660 0244 7D000000 		.4byte	.LASF27
- 661 0248 01       		.byte	0x1
- 662 0249 72       		.byte	0x72
- 663 024a EA000000 		.4byte	0xea
- 664 024e AA000000 		.4byte	.LLST5
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 15
-
-
- 665 0252 10       		.uleb128 0x10
- 666 0253 18000000 		.4byte	.LVL13
- 667 0257 E6020000 		.4byte	0x2e6
- 668 025b 11       		.uleb128 0x11
- 669 025c 01       		.uleb128 0x1
- 670 025d 50       		.byte	0x50
- 671 025e 01       		.uleb128 0x1
- 672 025f 3C       		.byte	0x3c
- 673 0260 00       		.byte	0
- 674 0261 00       		.byte	0
- 675 0262 0C       		.uleb128 0xc
- 676 0263 2E000000 		.4byte	.LASF33
- 677 0267 01       		.byte	0x1
- 678 0268 23       		.byte	0x23
- 679 0269 00000000 		.4byte	.LFB35
- 680 026d 60000000 		.4byte	.LFE35-.LFB35
- 681 0271 01       		.uleb128 0x1
- 682 0272 9C       		.byte	0x9c
- 683 0273 B3020000 		.4byte	0x2b3
- 684 0277 0E       		.uleb128 0xe
- 685 0278 46000000 		.4byte	.LASF24
- 686 027c 01       		.byte	0x1
- 687 027d 23       		.byte	0x23
- 688 027e 80010000 		.4byte	0x180
- 689 0282 02       		.uleb128 0x2
- 690 0283 91       		.byte	0x91
- 691 0284 70       		.sleb128 -16
- 692 0285 15       		.uleb128 0x15
- 693 0286 14000000 		.4byte	.LVL15
- 694 028a 16010000 		.4byte	0x116
- 695 028e 16       		.uleb128 0x16
- 696 028f 24000000 		.4byte	.LVL16
- 697 0293 02020000 		.4byte	0x202
- 698 0297 A2020000 		.4byte	0x2a2
- 699 029b 11       		.uleb128 0x11
- 700 029c 01       		.uleb128 0x1
- 701 029d 50       		.byte	0x50
- 702 029e 02       		.uleb128 0x2
- 703 029f 74       		.byte	0x74
- 704 02a0 00       		.sleb128 0
- 705 02a1 00       		.byte	0
- 706 02a2 10       		.uleb128 0x10
- 707 02a3 40000000 		.4byte	.LVL17
- 708 02a7 2B010000 		.4byte	0x12b
- 709 02ab 11       		.uleb128 0x11
- 710 02ac 01       		.uleb128 0x1
- 711 02ad 50       		.byte	0x50
- 712 02ae 02       		.uleb128 0x2
- 713 02af 74       		.byte	0x74
- 714 02b0 00       		.sleb128 0
- 715 02b1 00       		.byte	0
- 716 02b2 00       		.byte	0
- 717 02b3 17       		.uleb128 0x17
- 718 02b4 36010000 		.4byte	.LASF34
- 719 02b8 01       		.byte	0x1
- 720 02b9 15       		.byte	0x15
- 721 02ba EA000000 		.4byte	0xea
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 16
-
-
- 722 02be 05       		.uleb128 0x5
- 723 02bf 03       		.byte	0x3
- 724 02c0 00000000 		.4byte	frontOfQueuePtr
- 725 02c4 17       		.uleb128 0x17
- 726 02c5 AD000000 		.4byte	.LASF35
- 727 02c9 01       		.byte	0x1
- 728 02ca 16       		.byte	0x16
- 729 02cb EA000000 		.4byte	0xea
- 730 02cf 05       		.uleb128 0x5
- 731 02d0 03       		.byte	0x3
- 732 02d1 00000000 		.4byte	backOfQueuePtr
- 733 02d5 17       		.uleb128 0x17
- 734 02d6 59010000 		.4byte	.LASF36
- 735 02da 01       		.byte	0x1
- 736 02db 18       		.byte	0x18
- 737 02dc 6B000000 		.4byte	0x6b
- 738 02e0 05       		.uleb128 0x5
- 739 02e1 03       		.byte	0x3
- 740 02e2 00000000 		.4byte	queueCount
- 741 02e6 18       		.uleb128 0x18
- 742 02e7 59020000 		.4byte	.LASF41
- 743 02eb 05       		.byte	0x5
- 744 02ec 61       		.byte	0x61
- 745 02ed 9E000000 		.4byte	0x9e
- 746 02f1 FB020000 		.4byte	0x2fb
- 747 02f5 19       		.uleb128 0x19
- 748 02f6 8C000000 		.4byte	0x8c
- 749 02fa 00       		.byte	0
- 750 02fb 1A       		.uleb128 0x1a
- 751 02fc 59000000 		.4byte	.LASF42
- 752 0300 05       		.byte	0x5
- 753 0301 56       		.byte	0x56
- 754 0302 19       		.uleb128 0x19
- 755 0303 9E000000 		.4byte	0x9e
- 756 0307 00       		.byte	0
- 757 0308 00       		.byte	0
- 758              		.section	.debug_abbrev,"",%progbits
- 759              	.Ldebug_abbrev0:
- 760 0000 01       		.uleb128 0x1
- 761 0001 11       		.uleb128 0x11
- 762 0002 01       		.byte	0x1
- 763 0003 25       		.uleb128 0x25
- 764 0004 0E       		.uleb128 0xe
- 765 0005 13       		.uleb128 0x13
- 766 0006 0B       		.uleb128 0xb
- 767 0007 03       		.uleb128 0x3
- 768 0008 0E       		.uleb128 0xe
- 769 0009 1B       		.uleb128 0x1b
- 770 000a 0E       		.uleb128 0xe
- 771 000b 55       		.uleb128 0x55
- 772 000c 17       		.uleb128 0x17
- 773 000d 11       		.uleb128 0x11
- 774 000e 01       		.uleb128 0x1
- 775 000f 10       		.uleb128 0x10
- 776 0010 17       		.uleb128 0x17
- 777 0011 00       		.byte	0
- 778 0012 00       		.byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 17
-
-
- 779 0013 02       		.uleb128 0x2
- 780 0014 24       		.uleb128 0x24
- 781 0015 00       		.byte	0
- 782 0016 0B       		.uleb128 0xb
- 783 0017 0B       		.uleb128 0xb
- 784 0018 3E       		.uleb128 0x3e
- 785 0019 0B       		.uleb128 0xb
- 786 001a 03       		.uleb128 0x3
- 787 001b 0E       		.uleb128 0xe
- 788 001c 00       		.byte	0
- 789 001d 00       		.byte	0
- 790 001e 03       		.uleb128 0x3
- 791 001f 24       		.uleb128 0x24
- 792 0020 00       		.byte	0
- 793 0021 0B       		.uleb128 0xb
- 794 0022 0B       		.uleb128 0xb
- 795 0023 3E       		.uleb128 0x3e
- 796 0024 0B       		.uleb128 0xb
- 797 0025 03       		.uleb128 0x3
- 798 0026 08       		.uleb128 0x8
- 799 0027 00       		.byte	0
- 800 0028 00       		.byte	0
- 801 0029 04       		.uleb128 0x4
- 802 002a 16       		.uleb128 0x16
- 803 002b 00       		.byte	0
- 804 002c 03       		.uleb128 0x3
- 805 002d 0E       		.uleb128 0xe
- 806 002e 3A       		.uleb128 0x3a
- 807 002f 0B       		.uleb128 0xb
- 808 0030 3B       		.uleb128 0x3b
- 809 0031 05       		.uleb128 0x5
- 810 0032 49       		.uleb128 0x49
- 811 0033 13       		.uleb128 0x13
- 812 0034 00       		.byte	0
- 813 0035 00       		.byte	0
- 814 0036 05       		.uleb128 0x5
- 815 0037 16       		.uleb128 0x16
- 816 0038 00       		.byte	0
- 817 0039 03       		.uleb128 0x3
- 818 003a 0E       		.uleb128 0xe
- 819 003b 3A       		.uleb128 0x3a
- 820 003c 0B       		.uleb128 0xb
- 821 003d 3B       		.uleb128 0x3b
- 822 003e 0B       		.uleb128 0xb
- 823 003f 49       		.uleb128 0x49
- 824 0040 13       		.uleb128 0x13
- 825 0041 00       		.byte	0
- 826 0042 00       		.byte	0
- 827 0043 06       		.uleb128 0x6
- 828 0044 0F       		.uleb128 0xf
- 829 0045 00       		.byte	0
- 830 0046 0B       		.uleb128 0xb
- 831 0047 0B       		.uleb128 0xb
- 832 0048 00       		.byte	0
- 833 0049 00       		.byte	0
- 834 004a 07       		.uleb128 0x7
- 835 004b 13       		.uleb128 0x13
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 18
-
-
- 836 004c 01       		.byte	0x1
- 837 004d 03       		.uleb128 0x3
- 838 004e 0E       		.uleb128 0xe
- 839 004f 0B       		.uleb128 0xb
- 840 0050 0B       		.uleb128 0xb
- 841 0051 3A       		.uleb128 0x3a
- 842 0052 0B       		.uleb128 0xb
- 843 0053 3B       		.uleb128 0x3b
- 844 0054 0B       		.uleb128 0xb
- 845 0055 01       		.uleb128 0x1
- 846 0056 13       		.uleb128 0x13
- 847 0057 00       		.byte	0
- 848 0058 00       		.byte	0
- 849 0059 08       		.uleb128 0x8
- 850 005a 0D       		.uleb128 0xd
- 851 005b 00       		.byte	0
- 852 005c 03       		.uleb128 0x3
- 853 005d 0E       		.uleb128 0xe
- 854 005e 3A       		.uleb128 0x3a
- 855 005f 0B       		.uleb128 0xb
- 856 0060 3B       		.uleb128 0x3b
- 857 0061 0B       		.uleb128 0xb
- 858 0062 49       		.uleb128 0x49
- 859 0063 13       		.uleb128 0x13
- 860 0064 38       		.uleb128 0x38
- 861 0065 0B       		.uleb128 0xb
- 862 0066 00       		.byte	0
- 863 0067 00       		.byte	0
- 864 0068 09       		.uleb128 0x9
- 865 0069 0F       		.uleb128 0xf
- 866 006a 00       		.byte	0
- 867 006b 0B       		.uleb128 0xb
- 868 006c 0B       		.uleb128 0xb
- 869 006d 49       		.uleb128 0x49
- 870 006e 13       		.uleb128 0x13
- 871 006f 00       		.byte	0
- 872 0070 00       		.byte	0
- 873 0071 0A       		.uleb128 0xa
- 874 0072 2E       		.uleb128 0x2e
- 875 0073 00       		.byte	0
- 876 0074 3F       		.uleb128 0x3f
- 877 0075 19       		.uleb128 0x19
- 878 0076 03       		.uleb128 0x3
- 879 0077 0E       		.uleb128 0xe
- 880 0078 3A       		.uleb128 0x3a
- 881 0079 0B       		.uleb128 0xb
- 882 007a 3B       		.uleb128 0x3b
- 883 007b 0B       		.uleb128 0xb
- 884 007c 27       		.uleb128 0x27
- 885 007d 19       		.uleb128 0x19
- 886 007e 11       		.uleb128 0x11
- 887 007f 01       		.uleb128 0x1
- 888 0080 12       		.uleb128 0x12
- 889 0081 06       		.uleb128 0x6
- 890 0082 40       		.uleb128 0x40
- 891 0083 18       		.uleb128 0x18
- 892 0084 9742     		.uleb128 0x2117
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 19
-
-
- 893 0086 19       		.uleb128 0x19
- 894 0087 00       		.byte	0
- 895 0088 00       		.byte	0
- 896 0089 0B       		.uleb128 0xb
- 897 008a 2E       		.uleb128 0x2e
- 898 008b 00       		.byte	0
- 899 008c 3F       		.uleb128 0x3f
- 900 008d 19       		.uleb128 0x19
- 901 008e 03       		.uleb128 0x3
- 902 008f 0E       		.uleb128 0xe
- 903 0090 3A       		.uleb128 0x3a
- 904 0091 0B       		.uleb128 0xb
- 905 0092 3B       		.uleb128 0x3b
- 906 0093 0B       		.uleb128 0xb
- 907 0094 27       		.uleb128 0x27
- 908 0095 19       		.uleb128 0x19
- 909 0096 49       		.uleb128 0x49
- 910 0097 13       		.uleb128 0x13
- 911 0098 11       		.uleb128 0x11
- 912 0099 01       		.uleb128 0x1
- 913 009a 12       		.uleb128 0x12
- 914 009b 06       		.uleb128 0x6
- 915 009c 40       		.uleb128 0x40
- 916 009d 18       		.uleb128 0x18
- 917 009e 9742     		.uleb128 0x2117
- 918 00a0 19       		.uleb128 0x19
- 919 00a1 00       		.byte	0
- 920 00a2 00       		.byte	0
- 921 00a3 0C       		.uleb128 0xc
- 922 00a4 2E       		.uleb128 0x2e
- 923 00a5 01       		.byte	0x1
- 924 00a6 3F       		.uleb128 0x3f
- 925 00a7 19       		.uleb128 0x19
- 926 00a8 03       		.uleb128 0x3
- 927 00a9 0E       		.uleb128 0xe
- 928 00aa 3A       		.uleb128 0x3a
- 929 00ab 0B       		.uleb128 0xb
- 930 00ac 3B       		.uleb128 0x3b
- 931 00ad 0B       		.uleb128 0xb
- 932 00ae 27       		.uleb128 0x27
- 933 00af 19       		.uleb128 0x19
- 934 00b0 11       		.uleb128 0x11
- 935 00b1 01       		.uleb128 0x1
- 936 00b2 12       		.uleb128 0x12
- 937 00b3 06       		.uleb128 0x6
- 938 00b4 40       		.uleb128 0x40
- 939 00b5 18       		.uleb128 0x18
- 940 00b6 9742     		.uleb128 0x2117
- 941 00b8 19       		.uleb128 0x19
- 942 00b9 01       		.uleb128 0x1
- 943 00ba 13       		.uleb128 0x13
- 944 00bb 00       		.byte	0
- 945 00bc 00       		.byte	0
- 946 00bd 0D       		.uleb128 0xd
- 947 00be 05       		.uleb128 0x5
- 948 00bf 00       		.byte	0
- 949 00c0 03       		.uleb128 0x3
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 20
-
-
- 950 00c1 0E       		.uleb128 0xe
- 951 00c2 3A       		.uleb128 0x3a
- 952 00c3 0B       		.uleb128 0xb
- 953 00c4 3B       		.uleb128 0x3b
- 954 00c5 0B       		.uleb128 0xb
- 955 00c6 49       		.uleb128 0x49
- 956 00c7 13       		.uleb128 0x13
- 957 00c8 02       		.uleb128 0x2
- 958 00c9 17       		.uleb128 0x17
- 959 00ca 00       		.byte	0
- 960 00cb 00       		.byte	0
- 961 00cc 0E       		.uleb128 0xe
- 962 00cd 05       		.uleb128 0x5
- 963 00ce 00       		.byte	0
- 964 00cf 03       		.uleb128 0x3
- 965 00d0 0E       		.uleb128 0xe
- 966 00d1 3A       		.uleb128 0x3a
- 967 00d2 0B       		.uleb128 0xb
- 968 00d3 3B       		.uleb128 0x3b
- 969 00d4 0B       		.uleb128 0xb
- 970 00d5 49       		.uleb128 0x49
- 971 00d6 13       		.uleb128 0x13
- 972 00d7 02       		.uleb128 0x2
- 973 00d8 18       		.uleb128 0x18
- 974 00d9 00       		.byte	0
- 975 00da 00       		.byte	0
- 976 00db 0F       		.uleb128 0xf
- 977 00dc 34       		.uleb128 0x34
- 978 00dd 00       		.byte	0
- 979 00de 03       		.uleb128 0x3
- 980 00df 0E       		.uleb128 0xe
- 981 00e0 3A       		.uleb128 0x3a
- 982 00e1 0B       		.uleb128 0xb
- 983 00e2 3B       		.uleb128 0x3b
- 984 00e3 0B       		.uleb128 0xb
- 985 00e4 49       		.uleb128 0x49
- 986 00e5 13       		.uleb128 0x13
- 987 00e6 02       		.uleb128 0x2
- 988 00e7 18       		.uleb128 0x18
- 989 00e8 00       		.byte	0
- 990 00e9 00       		.byte	0
- 991 00ea 10       		.uleb128 0x10
- 992 00eb 898201   		.uleb128 0x4109
- 993 00ee 01       		.byte	0x1
- 994 00ef 11       		.uleb128 0x11
- 995 00f0 01       		.uleb128 0x1
- 996 00f1 31       		.uleb128 0x31
- 997 00f2 13       		.uleb128 0x13
- 998 00f3 00       		.byte	0
- 999 00f4 00       		.byte	0
- 1000 00f5 11       		.uleb128 0x11
- 1001 00f6 8A8201   		.uleb128 0x410a
- 1002 00f9 00       		.byte	0
- 1003 00fa 02       		.uleb128 0x2
- 1004 00fb 18       		.uleb128 0x18
- 1005 00fc 9142     		.uleb128 0x2111
- 1006 00fe 18       		.uleb128 0x18
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 21
-
-
- 1007 00ff 00       		.byte	0
- 1008 0100 00       		.byte	0
- 1009 0101 12       		.uleb128 0x12
- 1010 0102 26       		.uleb128 0x26
- 1011 0103 00       		.byte	0
- 1012 0104 49       		.uleb128 0x49
- 1013 0105 13       		.uleb128 0x13
- 1014 0106 00       		.byte	0
- 1015 0107 00       		.byte	0
- 1016 0108 13       		.uleb128 0x13
- 1017 0109 0B       		.uleb128 0xb
- 1018 010a 01       		.byte	0x1
- 1019 010b 11       		.uleb128 0x11
- 1020 010c 01       		.uleb128 0x1
- 1021 010d 12       		.uleb128 0x12
- 1022 010e 06       		.uleb128 0x6
- 1023 010f 00       		.byte	0
- 1024 0110 00       		.byte	0
- 1025 0111 14       		.uleb128 0x14
- 1026 0112 34       		.uleb128 0x34
- 1027 0113 00       		.byte	0
- 1028 0114 03       		.uleb128 0x3
- 1029 0115 0E       		.uleb128 0xe
- 1030 0116 3A       		.uleb128 0x3a
- 1031 0117 0B       		.uleb128 0xb
- 1032 0118 3B       		.uleb128 0x3b
- 1033 0119 0B       		.uleb128 0xb
- 1034 011a 49       		.uleb128 0x49
- 1035 011b 13       		.uleb128 0x13
- 1036 011c 02       		.uleb128 0x2
- 1037 011d 17       		.uleb128 0x17
- 1038 011e 00       		.byte	0
- 1039 011f 00       		.byte	0
- 1040 0120 15       		.uleb128 0x15
- 1041 0121 898201   		.uleb128 0x4109
- 1042 0124 00       		.byte	0
- 1043 0125 11       		.uleb128 0x11
- 1044 0126 01       		.uleb128 0x1
- 1045 0127 31       		.uleb128 0x31
- 1046 0128 13       		.uleb128 0x13
- 1047 0129 00       		.byte	0
- 1048 012a 00       		.byte	0
- 1049 012b 16       		.uleb128 0x16
- 1050 012c 898201   		.uleb128 0x4109
- 1051 012f 01       		.byte	0x1
- 1052 0130 11       		.uleb128 0x11
- 1053 0131 01       		.uleb128 0x1
- 1054 0132 31       		.uleb128 0x31
- 1055 0133 13       		.uleb128 0x13
- 1056 0134 01       		.uleb128 0x1
- 1057 0135 13       		.uleb128 0x13
- 1058 0136 00       		.byte	0
- 1059 0137 00       		.byte	0
- 1060 0138 17       		.uleb128 0x17
- 1061 0139 34       		.uleb128 0x34
- 1062 013a 00       		.byte	0
- 1063 013b 03       		.uleb128 0x3
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 22
-
-
- 1064 013c 0E       		.uleb128 0xe
- 1065 013d 3A       		.uleb128 0x3a
- 1066 013e 0B       		.uleb128 0xb
- 1067 013f 3B       		.uleb128 0x3b
- 1068 0140 0B       		.uleb128 0xb
- 1069 0141 49       		.uleb128 0x49
- 1070 0142 13       		.uleb128 0x13
- 1071 0143 3F       		.uleb128 0x3f
- 1072 0144 19       		.uleb128 0x19
- 1073 0145 02       		.uleb128 0x2
- 1074 0146 18       		.uleb128 0x18
- 1075 0147 00       		.byte	0
- 1076 0148 00       		.byte	0
- 1077 0149 18       		.uleb128 0x18
- 1078 014a 2E       		.uleb128 0x2e
- 1079 014b 01       		.byte	0x1
- 1080 014c 3F       		.uleb128 0x3f
- 1081 014d 19       		.uleb128 0x19
- 1082 014e 03       		.uleb128 0x3
- 1083 014f 0E       		.uleb128 0xe
- 1084 0150 3A       		.uleb128 0x3a
- 1085 0151 0B       		.uleb128 0xb
- 1086 0152 3B       		.uleb128 0x3b
- 1087 0153 0B       		.uleb128 0xb
- 1088 0154 27       		.uleb128 0x27
- 1089 0155 19       		.uleb128 0x19
- 1090 0156 49       		.uleb128 0x49
- 1091 0157 13       		.uleb128 0x13
- 1092 0158 3C       		.uleb128 0x3c
- 1093 0159 19       		.uleb128 0x19
- 1094 015a 01       		.uleb128 0x1
- 1095 015b 13       		.uleb128 0x13
- 1096 015c 00       		.byte	0
- 1097 015d 00       		.byte	0
- 1098 015e 19       		.uleb128 0x19
- 1099 015f 05       		.uleb128 0x5
- 1100 0160 00       		.byte	0
- 1101 0161 49       		.uleb128 0x49
- 1102 0162 13       		.uleb128 0x13
- 1103 0163 00       		.byte	0
- 1104 0164 00       		.byte	0
- 1105 0165 1A       		.uleb128 0x1a
- 1106 0166 2E       		.uleb128 0x2e
- 1107 0167 01       		.byte	0x1
- 1108 0168 3F       		.uleb128 0x3f
- 1109 0169 19       		.uleb128 0x19
- 1110 016a 03       		.uleb128 0x3
- 1111 016b 0E       		.uleb128 0xe
- 1112 016c 3A       		.uleb128 0x3a
- 1113 016d 0B       		.uleb128 0xb
- 1114 016e 3B       		.uleb128 0x3b
- 1115 016f 0B       		.uleb128 0xb
- 1116 0170 27       		.uleb128 0x27
- 1117 0171 19       		.uleb128 0x19
- 1118 0172 3C       		.uleb128 0x3c
- 1119 0173 19       		.uleb128 0x19
- 1120 0174 00       		.byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 23
-
-
- 1121 0175 00       		.byte	0
- 1122 0176 00       		.byte	0
- 1123              		.section	.debug_loc,"",%progbits
- 1124              	.Ldebug_loc0:
- 1125              	.LLST0:
- 1126 0000 00000000 		.4byte	.LVL1
- 1127 0004 0C000000 		.4byte	.LVL2
- 1128 0008 0100     		.2byte	0x1
- 1129 000a 50       		.byte	0x50
- 1130 000b 0C000000 		.4byte	.LVL2
- 1131 000f 24000000 		.4byte	.LVL4
- 1132 0013 0100     		.2byte	0x1
- 1133 0015 54       		.byte	0x54
- 1134 0016 24000000 		.4byte	.LVL4
- 1135 001a 26000000 		.4byte	.LFE39
- 1136 001e 0400     		.2byte	0x4
- 1137 0020 F3       		.byte	0xf3
- 1138 0021 01       		.uleb128 0x1
- 1139 0022 50       		.byte	0x50
- 1140 0023 9F       		.byte	0x9f
- 1141 0024 00000000 		.4byte	0
- 1142 0028 00000000 		.4byte	0
- 1143              	.LLST1:
- 1144 002c 00000000 		.4byte	.LVL5
- 1145 0030 0A000000 		.4byte	.LVL6
- 1146 0034 0100     		.2byte	0x1
- 1147 0036 50       		.byte	0x50
- 1148 0037 0A000000 		.4byte	.LVL6
- 1149 003b 11000000 		.4byte	.LVL7-1
- 1150 003f 0100     		.2byte	0x1
- 1151 0041 53       		.byte	0x53
- 1152 0042 11000000 		.4byte	.LVL7-1
- 1153 0046 14000000 		.4byte	.LFE40
- 1154 004a 0400     		.2byte	0x4
- 1155 004c F3       		.byte	0xf3
- 1156 004d 01       		.uleb128 0x1
- 1157 004e 50       		.byte	0x50
- 1158 004f 9F       		.byte	0x9f
- 1159 0050 00000000 		.4byte	0
- 1160 0054 00000000 		.4byte	0
- 1161              	.LLST2:
- 1162 0058 0A000000 		.4byte	.LVL6
- 1163 005c 11000000 		.4byte	.LVL7-1
- 1164 0060 0100     		.2byte	0x1
- 1165 0062 50       		.byte	0x50
- 1166 0063 00000000 		.4byte	0
- 1167 0067 00000000 		.4byte	0
- 1168              	.LLST3:
- 1169 006b 00000000 		.4byte	.LVL10
- 1170 006f 14000000 		.4byte	.LVL12
- 1171 0073 0100     		.2byte	0x1
- 1172 0075 50       		.byte	0x50
- 1173 0076 14000000 		.4byte	.LVL12
- 1174 007a 26000000 		.4byte	.LVL14
- 1175 007e 0100     		.2byte	0x1
- 1176 0080 54       		.byte	0x54
- 1177 0081 26000000 		.4byte	.LVL14
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 24
-
-
- 1178 0085 2A000000 		.4byte	.LFE41
- 1179 0089 0400     		.2byte	0x4
- 1180 008b F3       		.byte	0xf3
- 1181 008c 01       		.uleb128 0x1
- 1182 008d 50       		.byte	0x50
- 1183 008e 9F       		.byte	0x9f
- 1184 008f 00000000 		.4byte	0
- 1185 0093 00000000 		.4byte	0
- 1186              	.LLST4:
- 1187 0097 12000000 		.4byte	.LVL11
- 1188 009b 26000000 		.4byte	.LVL14
- 1189 009f 0100     		.2byte	0x1
- 1190 00a1 55       		.byte	0x55
- 1191 00a2 00000000 		.4byte	0
- 1192 00a6 00000000 		.4byte	0
- 1193              	.LLST5:
- 1194 00aa 18000000 		.4byte	.LVL13
- 1195 00ae 26000000 		.4byte	.LVL14
- 1196 00b2 0100     		.2byte	0x1
- 1197 00b4 50       		.byte	0x50
- 1198 00b5 00000000 		.4byte	0
- 1199 00b9 00000000 		.4byte	0
- 1200              		.section	.debug_aranges,"",%progbits
- 1201 0000 54000000 		.4byte	0x54
- 1202 0004 0200     		.2byte	0x2
- 1203 0006 00000000 		.4byte	.Ldebug_info0
- 1204 000a 04       		.byte	0x4
- 1205 000b 00       		.byte	0
- 1206 000c 0000     		.2byte	0
- 1207 000e 0000     		.2byte	0
- 1208 0010 00000000 		.4byte	.LFB34
- 1209 0014 20000000 		.4byte	.LFE34-.LFB34
- 1210 0018 00000000 		.4byte	.LFB37
- 1211 001c 14000000 		.4byte	.LFE37-.LFB37
- 1212 0020 00000000 		.4byte	.LFB38
- 1213 0024 14000000 		.4byte	.LFE38-.LFB38
- 1214 0028 00000000 		.4byte	.LFB39
- 1215 002c 26000000 		.4byte	.LFE39-.LFB39
- 1216 0030 00000000 		.4byte	.LFB40
- 1217 0034 14000000 		.4byte	.LFE40-.LFB40
- 1218 0038 00000000 		.4byte	.LFB36
- 1219 003c 2C000000 		.4byte	.LFE36-.LFB36
- 1220 0040 00000000 		.4byte	.LFB41
- 1221 0044 2A000000 		.4byte	.LFE41-.LFB41
- 1222 0048 00000000 		.4byte	.LFB35
- 1223 004c 60000000 		.4byte	.LFE35-.LFB35
- 1224 0050 00000000 		.4byte	0
- 1225 0054 00000000 		.4byte	0
- 1226              		.section	.debug_ranges,"",%progbits
- 1227              	.Ldebug_ranges0:
- 1228 0000 00000000 		.4byte	.LFB34
- 1229 0004 20000000 		.4byte	.LFE34
- 1230 0008 00000000 		.4byte	.LFB37
- 1231 000c 14000000 		.4byte	.LFE37
- 1232 0010 00000000 		.4byte	.LFB38
- 1233 0014 14000000 		.4byte	.LFE38
- 1234 0018 00000000 		.4byte	.LFB39
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 25
-
-
- 1235 001c 26000000 		.4byte	.LFE39
- 1236 0020 00000000 		.4byte	.LFB40
- 1237 0024 14000000 		.4byte	.LFE40
- 1238 0028 00000000 		.4byte	.LFB36
- 1239 002c 2C000000 		.4byte	.LFE36
- 1240 0030 00000000 		.4byte	.LFB41
- 1241 0034 2A000000 		.4byte	.LFE41
- 1242 0038 00000000 		.4byte	.LFB35
- 1243 003c 60000000 		.4byte	.LFE35
- 1244 0040 00000000 		.4byte	0
- 1245 0044 00000000 		.4byte	0
- 1246              		.section	.debug_line,"",%progbits
- 1247              	.Ldebug_line0:
- 1248 0000 F5010000 		.section	.debug_str,"MS",%progbits,1
- 1248      02004701 
- 1248      00000201 
- 1248      FB0E0D00 
- 1248      01010101 
- 1249              	.LASF19:
- 1250 0000 64617461 		.ascii	"data_\000"
- 1250      5F00
- 1251              	.LASF23:
- 1252 0006 68656164 		.ascii	"headPtr\000"
- 1252      50747200 
- 1253              	.LASF18:
- 1254 000e 4E6F6465 		.ascii	"Node\000"
- 1254      00
- 1255              	.LASF32:
- 1256 0013 6E657874 		.ascii	"next\000"
- 1256      00
- 1257              	.LASF25:
- 1258 0018 68656164 		.ascii	"headInsert\000"
- 1258      496E7365 
- 1258      727400
- 1259              	.LASF40:
- 1260 0023 71756575 		.ascii	"queue_init\000"
- 1260      655F696E 
- 1260      697400
- 1261              	.LASF33:
- 1262 002e 70757368 		.ascii	"pushQueue\000"
- 1262      51756575 
- 1262      6500
- 1263              	.LASF31:
- 1264 0038 6261636B 		.ascii	"backPtr\000"
- 1264      50747200 
- 1265              	.LASF9:
- 1266 0040 666C6F61 		.ascii	"float\000"
- 1266      7400
- 1267              	.LASF24:
- 1268 0046 64617461 		.ascii	"data\000"
- 1268      00
- 1269              	.LASF1:
- 1270 004b 756E7369 		.ascii	"unsigned char\000"
- 1270      676E6564 
- 1270      20636861 
- 1270      7200
- 1271              	.LASF42:
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 26
->>>>>>> origin/master
-
-
  1270 0040 71756575 		.ascii	"queue_init\000"
  1270      655F696E 
  1270      697400
@@ -3093,7 +1653,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1277              	.LASF22:
  1278 0063 64617461 		.ascii	"data\000"
  1278      00
-<<<<<<< HEAD
  1279              	.LASF12:
  1280 0068 75696E74 		.ascii	"uint8\000"
  1280      3800
@@ -3119,6 +1678,9 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1289              	.LASF24:
  1290 00a0 74656D70 		.ascii	"temp\000"
  1290      00
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 29
+
+
  1291              	.LASF3:
  1292 00a5 73686F72 		.ascii	"short unsigned int\000"
  1292      7420756E 
@@ -3135,9 +1697,6 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1297              	.LASF29:
  1298 00cb 636F6E64 		.ascii	"condemned\000"
  1298      656D6E65 
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 29
-
-
  1298      6400
  1299              	.LASF10:
  1300 00d5 646F7562 		.ascii	"double\000"
@@ -3145,243 +1704,112 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 1
  1301              	.LASF17:
  1302 00dc 44617461 		.ascii	"Data\000"
  1302      00
- 1303              	.LASF8:
- 1304 00e1 756E7369 		.ascii	"unsigned int\000"
- 1304      676E6564 
- 1304      20696E74 
- 1304      00
- 1305              	.LASF42:
- 1306 00ee 433A5C45 		.ascii	"C:\\E3PRJ3-Gruppe1\\PSoC\\PSoC4Master.cydsn\000"
- 1306      3350524A 
- 1306      332D4772 
- 1306      75707065 
- 1306      315C5053 
- 1307              	.LASF7:
- 1308 0117 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1308      206C6F6E 
- 1308      6720756E 
- 1308      7369676E 
- 1308      65642069 
- 1309              	.LASF25:
- 1310 012e 6261636B 		.ascii	"backInsert\000"
- 1310      496E7365 
- 1310      727400
- 1311              	.LASF41:
- 1312 0139 2E5C7175 		.ascii	".\\queue.c\000"
- 1312      6575652E 
- 1312      6300
- 1313              	.LASF27:
- 1314 0143 68656164 		.ascii	"headPtr\000"
- 1314      50747200 
- 1315              	.LASF35:
- 1316 014b 706F7051 		.ascii	"popQueue\000"
- 1316      75657565 
- 1316      00
- 1317              	.LASF14:
- 1318 0154 73697A65 		.ascii	"sizetype\000"
- 1318      74797065 
- 1318      00
- 1319              	.LASF20:
- 1320 015d 6E657874 		.ascii	"next_\000"
- 1320      5F00
- 1321              	.LASF6:
- 1322 0163 6C6F6E67 		.ascii	"long long int\000"
- 1322      206C6F6E 
- 1322      6720696E 
- 1322      7400
- 1323              	.LASF16:
- 1324 0171 76616C5F 		.ascii	"val_\000"
- 1324      00
- 1325              	.LASF15:
- 1326 0176 636D645F 		.ascii	"cmd_\000"
- 1326      00
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\cca12zgk.s 			page 30
+ 1303              	.LASF42:
+ 1304 00e1 433A5C55 		.ascii	"C:\\Users\\Simon\\Documents\\GitHub\\E3PRJ3-Gruppe1"
+ 1304      73657273 
+ 1304      5C53696D 
+ 1304      6F6E5C44 
+ 1304      6F63756D 
+ 1305 010f 5C50536F 		.ascii	"\\PSoC\\PSoC4Master.cydsn\000"
+ 1305      435C5053 
+ 1305      6F43344D 
+ 1305      61737465 
+ 1305      722E6379 
+ 1306              	.LASF8:
+ 1307 0127 756E7369 		.ascii	"unsigned int\000"
+ 1307      676E6564 
+ 1307      20696E74 
+ 1307      00
+ 1308              	.LASF7:
+ 1309 0134 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1309      206C6F6E 
+ 1309      6720756E 
+ 1309      7369676E 
+ 1309      65642069 
+ 1310              	.LASF25:
+ 1311 014b 6261636B 		.ascii	"backInsert\000"
+ 1311      496E7365 
+ 1311      727400
+ 1312              	.LASF41:
+ 1313 0156 2E5C7175 		.ascii	".\\queue.c\000"
+ 1313      6575652E 
+ 1313      6300
+ 1314              	.LASF27:
+ 1315 0160 68656164 		.ascii	"headPtr\000"
+ 1315      50747200 
+ 1316              	.LASF35:
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 30
 
 
- 1327              	.LASF40:
- 1328 017b 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1328      4320342E 
- 1328      392E3320 
- 1328      32303135 
- 1328      30333033 
- 1329 01ae 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 1329      20726576 
- 1329      6973696F 
- 1329      6E203232 
- 1329      31323230 
- 1330 01e1 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1330      66756E63 
- 1330      74696F6E 
- 1330      2D736563 
- 1330      74696F6E 
- 1331              	.LASF2:
- 1332 0209 73686F72 		.ascii	"short int\000"
- 1332      7420696E 
- 1332      7400
- 1333              	.LASF37:
- 1334 0213 6261636B 		.ascii	"backOfQueuePtr_\000"
- 1334      4F665175 
- 1334      65756550 
- 1334      74725F00 
- 1335              	.LASF28:
- 1336 0223 68656164 		.ascii	"headRemove\000"
- 1336      52656D6F 
- 1336      766500
- 1337              	.LASF4:
- 1338 022e 6C6F6E67 		.ascii	"long int\000"
- 1338      20696E74 
- 1338      00
- 1339              	.LASF11:
- 1340 0237 63686172 		.ascii	"char\000"
- 1340      00
- 1341              	.LASF0:
- 1342 023c 7369676E 		.ascii	"signed char\000"
- 1342      65642063 
- 1342      68617200 
- 1343              	.LASF31:
- 1344 0248 66726F6E 		.ascii	"frontQueue\000"
- 1344      74517565 
- 1344      756500
- 1345              	.LASF43:
- 1346 0253 6D616C6C 		.ascii	"malloc\000"
- 1346      6F6300
- 1347              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
-=======
- 1279              	.LASF3:
- 1280 0082 73686F72 		.ascii	"short unsigned int\000"
- 1280      7420756E 
- 1280      7369676E 
- 1280      65642069 
- 1280      6E7400
- 1281              	.LASF13:
- 1282 0095 73697A65 		.ascii	"size_t\000"
- 1282      5F7400
- 1283              	.LASF28:
- 1284 009c 636F6E64 		.ascii	"condemned\000"
- 1284      656D6E65 
- 1284      6400
- 1285              	.LASF10:
- 1286 00a6 646F7562 		.ascii	"double\000"
- 1286      6C6500
- 1287              	.LASF35:
- 1288 00ad 6261636B 		.ascii	"backOfQueuePtr\000"
- 1288      4F665175 
- 1288      65756550 
- 1288      747200
- 1289              	.LASF39:
- 1290 00bc 433A5C55 		.ascii	"C:\\Users\\Simon\\Documents\\GitHub\\E3PRJ3-Gruppe1"
- 1290      73657273 
- 1290      5C53696D 
- 1290      6F6E5C44 
- 1290      6F63756D 
- 1291 00ea 5C50536F 		.ascii	"\\PSoC\\PSoC4Master.cydsn\000"
- 1291      435C5053 
- 1291      6F43344D 
- 1291      61737465 
- 1291      722E6379 
- 1292              	.LASF8:
- 1293 0102 756E7369 		.ascii	"unsigned int\000"
- 1293      676E6564 
- 1293      20696E74 
- 1293      00
- 1294              	.LASF7:
- 1295 010f 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1295      206C6F6E 
- 1295      6720756E 
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 27
-
-
- 1295      7369676E 
- 1295      65642069 
- 1296              	.LASF30:
- 1297 0126 6261636B 		.ascii	"backInsert\000"
- 1297      496E7365 
- 1297      727400
- 1298              	.LASF17:
- 1299 0131 44617461 		.ascii	"Data\000"
- 1299      00
- 1300              	.LASF34:
- 1301 0136 66726F6E 		.ascii	"frontOfQueuePtr\000"
- 1301      744F6651 
- 1301      75657565 
- 1301      50747200 
- 1302              	.LASF38:
- 1303 0146 2E5C7175 		.ascii	".\\queue.c\000"
- 1303      6575652E 
- 1303      6300
- 1304              	.LASF29:
- 1305 0150 706F7051 		.ascii	"popQueue\000"
- 1305      75657565 
- 1305      00
- 1306              	.LASF36:
- 1307 0159 71756575 		.ascii	"queueCount\000"
- 1307      65436F75 
- 1307      6E7400
- 1308              	.LASF14:
- 1309 0164 73697A65 		.ascii	"sizetype\000"
- 1309      74797065 
- 1309      00
- 1310              	.LASF20:
- 1311 016d 6E657874 		.ascii	"next_\000"
- 1311      5F00
- 1312              	.LASF6:
- 1313 0173 6C6F6E67 		.ascii	"long long int\000"
- 1313      206C6F6E 
- 1313      6720696E 
- 1313      7400
- 1314              	.LASF16:
- 1315 0181 76616C5F 		.ascii	"val_\000"
- 1315      00
- 1316              	.LASF15:
- 1317 0186 636D645F 		.ascii	"cmd_\000"
+ 1317 0168 706F7051 		.ascii	"popQueue\000"
+ 1317      75657565 
  1317      00
- 1318              	.LASF37:
- 1319 018b 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1319      4320342E 
- 1319      392E3320 
- 1319      32303135 
- 1319      30333033 
- 1320 01be 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 1320      20726576 
- 1320      6973696F 
- 1320      6E203232 
- 1320      31323230 
- 1321 01f1 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1321      66756E63 
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccvLh2YB.s 			page 28
-
-
- 1321      74696F6E 
- 1321      2D736563 
- 1321      74696F6E 
- 1322              	.LASF2:
- 1323 0219 73686F72 		.ascii	"short int\000"
- 1323      7420696E 
+ 1318              	.LASF14:
+ 1319 0171 73697A65 		.ascii	"sizetype\000"
+ 1319      74797065 
+ 1319      00
+ 1320              	.LASF20:
+ 1321 017a 6E657874 		.ascii	"next_\000"
+ 1321      5F00
+ 1322              	.LASF6:
+ 1323 0180 6C6F6E67 		.ascii	"long long int\000"
+ 1323      206C6F6E 
+ 1323      6720696E 
  1323      7400
- 1324              	.LASF12:
- 1325 0223 75696E74 		.ascii	"uint8\000"
- 1325      3800
- 1326              	.LASF26:
- 1327 0229 68656164 		.ascii	"headRemove\000"
- 1327      52656D6F 
- 1327      766500
- 1328              	.LASF4:
- 1329 0234 6C6F6E67 		.ascii	"long int\000"
- 1329      20696E74 
- 1329      00
- 1330              	.LASF11:
- 1331 023d 63686172 		.ascii	"char\000"
- 1331      00
- 1332              	.LASF0:
- 1333 0242 7369676E 		.ascii	"signed char\000"
- 1333      65642063 
- 1333      68617200 
- 1334              	.LASF21:
- 1335 024e 66726F6E 		.ascii	"frontQueue\000"
- 1335      74517565 
- 1335      756500
- 1336              	.LASF41:
- 1337 0259 6D616C6C 		.ascii	"malloc\000"
- 1337      6F6300
- 1338              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
->>>>>>> origin/master
+ 1324              	.LASF16:
+ 1325 018e 76616C5F 		.ascii	"val_\000"
+ 1325      00
+ 1326              	.LASF15:
+ 1327 0193 636D645F 		.ascii	"cmd_\000"
+ 1327      00
+ 1328              	.LASF40:
+ 1329 0198 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1329      4320342E 
+ 1329      392E3320 
+ 1329      32303135 
+ 1329      30333033 
+ 1330 01cb 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1330      20726576 
+ 1330      6973696F 
+ 1330      6E203232 
+ 1330      31323230 
+ 1331 01fe 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1331      66756E63 
+ 1331      74696F6E 
+ 1331      2D736563 
+ 1331      74696F6E 
+ 1332              	.LASF2:
+ 1333 0226 73686F72 		.ascii	"short int\000"
+ 1333      7420696E 
+ 1333      7400
+ 1334              	.LASF37:
+ 1335 0230 6261636B 		.ascii	"backOfQueuePtr_\000"
+ 1335      4F665175 
+ 1335      65756550 
+ 1335      74725F00 
+ 1336              	.LASF28:
+ 1337 0240 68656164 		.ascii	"headRemove\000"
+ 1337      52656D6F 
+ 1337      766500
+ 1338              	.LASF4:
+ 1339 024b 6C6F6E67 		.ascii	"long int\000"
+ 1339      20696E74 
+ 1339      00
+ 1340              	.LASF11:
+ 1341 0254 63686172 		.ascii	"char\000"
+ 1341      00
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccHESFfU.s 			page 31
+
+
+ 1342              	.LASF0:
+ 1343 0259 7369676E 		.ascii	"signed char\000"
+ 1343      65642063 
+ 1343      68617200 
+ 1344              	.LASF31:
+ 1345 0265 66726F6E 		.ascii	"frontQueue\000"
+ 1345      74517565 
+ 1345      756500
+ 1346              	.LASF43:
+ 1347 0270 6D616C6C 		.ascii	"malloc\000"
+ 1347      6F6300
+ 1348              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

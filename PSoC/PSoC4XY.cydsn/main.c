@@ -17,7 +17,6 @@
 */
 
 #include <project.h>
-#include "capsense.h"
 #include "handler.h"
 #include "i2c.h"
 #include "led.h"
@@ -31,7 +30,6 @@ int main()
     queue_init();
     xy_init();
     i2c_init();
-//    capsense_init();
     
     for(;;)
     {
@@ -49,11 +47,9 @@ int main()
             }
         }
         
-//        capsense();
-        
-        i2c_rx();
-        
-        while(isEmptyQueue() != 1)
+//        i2c_rx();
+      
+        if((isEmptyQueue() != 1) && (interruptX == 0) && (interruptY == 0))
         {
             struct Data action;
             action = frontQueue();
@@ -64,6 +60,8 @@ int main()
         CyDelay(50);
         
         i2c_tx();
+        interruptX = 0;
+        interruptY = 0;
     }
 }
 

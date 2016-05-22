@@ -25,11 +25,4 @@ void setLed(uint8 red, uint8 green, uint8 blue)
     blue ? LED_Blue_Write(0u) : LED_Blue_Write(1u);
 }
 
-void toggelLed(uint8 red, uint8 green, uint8 blue)
-{
-    red ? LED_Red_Write(~LED_Red_Read()) : LED_Red_Write(1u);
-    green ? LED_Green_Write(~LED_Red_Read()) : LED_Green_Write(1u);
-    blue ? LED_Blue_Write(~LED_Red_Read()) : LED_Blue_Write(1u);
-}
-
 /* [] END OF FILE */

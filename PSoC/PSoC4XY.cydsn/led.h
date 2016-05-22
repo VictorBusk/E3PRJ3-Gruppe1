@@ -20,15 +20,12 @@
 #define LED_H
     
 #include <project.h>
-#include "capsense.h"
 #include "handler.h"
 #include "i2c.h"
 #include "queue.h"
 #include "xy.h"
     
 void setLed(uint8 red, uint8 green, uint8 blue);
-void toggelLed(uint8 red, uint8 green, uint8 blue);
-
     
 #endif  // ifndef LED_H
 /* [] END OF FILE */
