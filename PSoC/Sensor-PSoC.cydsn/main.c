@@ -17,7 +17,7 @@
 #include "i2c.h"
 #include "queue.h"
 
-//#define DEBUG_ON
+#define DEBUG_ON
 
 #ifdef DEBUG_ON
 uint8 t = 0;
@@ -41,7 +41,7 @@ void initCtrlFlags()
 
     // debug
 #ifdef DEBUG_ON
-    controlFlags[LEDS][RATE] = 1;
+//    controlFlags[LEDS][RATE] = 1;
 #endif
 }
 void incrCtrlFlag(enum sensor se)
@@ -127,7 +127,7 @@ int main()
     for(;;)
     {
         // Handle communication with PSoC4Master
-        i2c_rx();
+//        i2c_rx();
         while(isEmptyQueue() != 1)
         {
             struct Data action;
@@ -165,10 +165,6 @@ int main()
         if (controlFlags[PIR][FLAG]) {
             controlFlags[PIR][FLAG] = 0;
 
-#ifdef DEBUG_ON
-            DEBUG_PutHexByte(sensorData.movement);
-            DEBUG_PutCRLF();
-#endif
             if (sensorData.movementAlertOn) {
                 // Read the PIR sensor output
                 int tmp = PIR_Trig_Read();
@@ -185,24 +181,27 @@ int main()
 
         //debug
 #ifdef DEBUG_ON
-        if (controlFlags[LEDS][FLAG]) {
-            controlFlags[LEDS][FLAG] = 0;
-
-            t = !t;
-            if (//t) {
-                sensorData.movementAlertOn && sensorData.movement) {
-                RedPWM_Start();
-                GreenPWM_Start();
-                BluePWM_Start();
-                RedPWM_WriteCompare(sensorData.redPWMPct);
-                GreenPWM_WriteCompare(sensorData.greenPWMPct);
-                BluePWM_WriteCompare(sensorData.bluePWMPct);
-            } else {
-                RedPWM_Stop();
-                GreenPWM_Stop();
-                BluePWM_Stop();
-            }
-        }
+//        if (controlFlags[LEDS][FLAG]) {
+//            controlFlags[LEDS][FLAG] = 0;
+//
+//            DEBUG_PutHexByte(sensorData.movement);
+//            DEBUG_PutCRLF();
+//
+//            t = !t;
+//            if (//t) {
+//                sensorData.movementAlertOn && sensorData.movement) {
+//                RedPWM_Start();
+//                GreenPWM_Start();
+//                BluePWM_Start();
+//                RedPWM_WriteCompare(sensorData.redPWMPct);
+//                GreenPWM_WriteCompare(sensorData.greenPWMPct);
+//                BluePWM_WriteCompare(sensorData.bluePWMPct);
+//            } else {
+//                RedPWM_Stop();
+//                GreenPWM_Stop();
+//                BluePWM_Stop();
+//            }
+//        }
 #endif
 
         // Lumen sensor
@@ -215,9 +214,9 @@ int main()
             sensorData.lux = getMeanValue(&sensorData.LumenMean);
 
 #ifdef DEBUG_ON
-//            char bla[15];
-//            sprintf(bla, "Lux: %i, mean: %i\n\r", luxValue, sensorData.lux);
-//            DEBUG_PutString(bla);
+            char bla[15];
+            sprintf(bla, "Lux: %i, mean: %i\n\r", luxValue, sensorData.lux);
+            DEBUG_PutString(bla);
 #endif
         }
     }

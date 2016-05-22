@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -46,7 +46,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
   17:.\main.c      **** #include "i2c.h"
   18:.\main.c      **** #include "queue.h"
   19:.\main.c      **** 
-  20:.\main.c      **** //#define DEBUG_ON
+  20:.\main.c      **** #define DEBUG_ON
   21:.\main.c      **** 
   22:.\main.c      **** #ifdef DEBUG_ON
   23:.\main.c      **** uint8 t = 0;
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
   29:.\main.c      **** char controlFlags[5][3] = {
   30:.\main.c      ****     {1,-1, 0},
   31:.\main.c      ****     {1,-1, 0},
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 2
 
 
   32:.\main.c      ****     {1,-1, 0},
@@ -73,7 +73,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
   41:.\main.c      **** 
   42:.\main.c      ****     // debug
   43:.\main.c      **** #ifdef DEBUG_ON
-  44:.\main.c      ****     controlFlags[LEDS][RATE] = 1;
+  44:.\main.c      **** //    controlFlags[LEDS][RATE] = 1;
   45:.\main.c      **** #endif
   46:.\main.c      **** }
   47:.\main.c      **** void incrCtrlFlag(enum sensor se)
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
   35              	.LVL0:
   36 0006 8024     		mov	r4, #128
   37 0008 6402     		lsl	r4, r4, #9
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 3
 
 
   38 000a 241A     		sub	r4, r4, r0
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
   98:.\main.c      **** #endif
   99:.\main.c      **** }
   72              		.loc 1 99 0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 4
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 4
 
 
   73              		@ sp needed
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
  122              		.type	incrCtrlFlag, %function
  123              	incrCtrlFlag:
  124              	.LFB35:
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 5
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 5
 
 
   48:.\main.c      ****     controlFlags[se][COUNT] = (controlFlags[se][COUNT] + 1) % controlFlags[se][RATE];
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
  173              		.loc 1 55 0
  174              		.cfi_startproc
  175 0000 08B5     		push	{r3, lr}
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 6
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 6
 
 
  176              		.cfi_def_cfa_offset 8
@@ -323,242 +323,243 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
  191 0012 0220     		mov	r0, #2
  192 0014 FFF7FEFF 		bl	incrCtrlFlag
  193              	.LVL11:
+  65:.\main.c      **** //    DEBUG_PutString("Beat\r\n");
+ 194              		.loc 1 65 0
+ 195 0018 0420     		mov	r0, #4
+ 196 001a FFF7FEFF 		bl	incrCtrlFlag
+ 197              	.LVL12:
   68:.\main.c      **** 
- 194              		.loc 1 68 0
- 195              		@ sp needed
- 196 0018 08BD     		pop	{r3, pc}
- 197              		.cfi_endproc
- 198              	.LFE36:
- 199              		.size	Metronome_Interrupt, .-Metronome_Interrupt
- 200 001a C046     		.section	.text.main,"ax",%progbits
- 201              		.align	2
- 202              		.global	main
- 203              		.code	16
- 204              		.thumb_func
- 205              		.type	main, %function
- 206              	main:
- 207              	.LFB38:
+ 198              		.loc 1 68 0
+ 199              		@ sp needed
+ 200 001e 08BD     		pop	{r3, pc}
+ 201              		.cfi_endproc
+ 202              	.LFE36:
+ 203              		.size	Metronome_Interrupt, .-Metronome_Interrupt
+ 204              		.section	.text.main,"ax",%progbits
+ 205              		.align	2
+ 206              		.global	main
+ 207              		.code	16
+ 208              		.thumb_func
+ 209              		.type	main, %function
+ 210              	main:
+ 211              	.LFB38:
  100:.\main.c      **** 
  101:.\main.c      **** int main()
  102:.\main.c      **** {
- 208              		.loc 1 102 0
- 209              		.cfi_startproc
- 210 0000 10B5     		push	{r4, lr}
- 211              		.cfi_def_cfa_offset 8
- 212              		.cfi_offset 4, -8
- 213              		.cfi_offset 14, -4
- 214 0002 82B0     		sub	sp, sp, #8
- 215              		.cfi_def_cfa_offset 16
+ 212              		.loc 1 102 0
+ 213              		.cfi_startproc
+ 214 0000 30B5     		push	{r4, r5, lr}
+ 215              		.cfi_def_cfa_offset 12
+ 216              		.cfi_offset 4, -12
+ 217              		.cfi_offset 5, -8
+ 218              		.cfi_offset 14, -4
+ 219 0002 85B0     		sub	sp, sp, #20
+ 220              		.cfi_def_cfa_offset 32
  103:.\main.c      ****     CyGlobalIntEnable; /* Enable global interrupts. */
- 216              		.loc 1 103 0
- 217              	@ 103 ".\main.c" 1
- 218 0004 62B6     		CPSIE   i
- 219              	@ 0 "" 2
+ 221              		.loc 1 103 0
+ 222              	@ 103 ".\main.c" 1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 7
+
+
+ 223 0004 62B6     		CPSIE   i
+ 224              	@ 0 "" 2
  104:.\main.c      **** 
  105:.\main.c      ****     // Data collection
  106:.\main.c      ****     initSensorData();
- 220              		.loc 1 106 0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 7
-
-
- 221              		.code	16
- 222 0006 FFF7FEFF 		bl	initSensorData
- 223              	.LVL12:
+ 225              		.loc 1 106 0
+ 226              		.code	16
+ 227 0006 FFF7FEFF 		bl	initSensorData
+ 228              	.LVL13:
  107:.\main.c      ****     
  108:.\main.c      ****     // Afstandssensor
  109:.\main.c      ****     DistTimer_Start();
- 224              		.loc 1 109 0
- 225 000a FFF7FEFF 		bl	DistTimer_Start
- 226              	.LVL13:
+ 229              		.loc 1 109 0
+ 230 000a FFF7FEFF 		bl	DistTimer_Start
+ 231              	.LVL14:
  110:.\main.c      ****     DistTimerInt_StartEx(DistTimer_Interrupt);
- 227              		.loc 1 110 0
- 228 000e 4848     		ldr	r0, .L24
- 229 0010 FFF7FEFF 		bl	DistTimerInt_StartEx
- 230              	.LVL14:
+ 232              		.loc 1 110 0
+ 233 000e 4C48     		ldr	r0, .L23
+ 234 0010 FFF7FEFF 		bl	DistTimerInt_StartEx
+ 235              	.LVL15:
  111:.\main.c      ****     
  112:.\main.c      ****     // Lumen sensor
  113:.\main.c      ****     initLumenSensor();
- 231              		.loc 1 113 0
- 232 0014 FFF7FEFF 		bl	initLumenSensor
- 233              	.LVL15:
+ 236              		.loc 1 113 0
+ 237 0014 FFF7FEFF 		bl	initLumenSensor
+ 238              	.LVL16:
  114:.\main.c      **** 
  115:.\main.c      ****     // LED PWM
  116:.\main.c      ****     GreenPWM_Start();
- 234              		.loc 1 116 0
- 235 0018 FFF7FEFF 		bl	GreenPWM_Start
- 236              	.LVL16:
+ 239              		.loc 1 116 0
+ 240 0018 FFF7FEFF 		bl	GreenPWM_Start
+ 241              	.LVL17:
  117:.\main.c      ****     RedPWM_Start();
- 237              		.loc 1 117 0
- 238 001c FFF7FEFF 		bl	RedPWM_Start
- 239              	.LVL17:
+ 242              		.loc 1 117 0
+ 243 001c FFF7FEFF 		bl	RedPWM_Start
+ 244              	.LVL18:
  118:.\main.c      ****     BluePWM_Start();
- 240              		.loc 1 118 0
- 241 0020 FFF7FEFF 		bl	BluePWM_Start
- 242              	.LVL18:
+ 245              		.loc 1 118 0
+ 246 0020 FFF7FEFF 		bl	BluePWM_Start
+ 247              	.LVL19:
  119:.\main.c      ****     
  120:.\main.c      ****     // Main command loop
  121:.\main.c      ****     initCtrlFlags();
- 243              		.loc 1 121 0
- 244 0024 FFF7FEFF 		bl	initCtrlFlags
- 245              	.LVL19:
+ 248              		.loc 1 121 0
+ 249 0024 FFF7FEFF 		bl	initCtrlFlags
+ 250              	.LVL20:
  122:.\main.c      ****     MetronomeTimer_Start();
- 246              		.loc 1 122 0
- 247 0028 FFF7FEFF 		bl	MetronomeTimer_Start
- 248              	.LVL20:
+ 251              		.loc 1 122 0
+ 252 0028 FFF7FEFF 		bl	MetronomeTimer_Start
+ 253              	.LVL21:
  123:.\main.c      ****     MetronomeISR_StartEx(Metronome_Interrupt);
- 249              		.loc 1 123 0
- 250 002c 4148     		ldr	r0, .L24+4
- 251 002e FFF7FEFF 		bl	MetronomeISR_StartEx
- 252              	.LVL21:
+ 254              		.loc 1 123 0
+ 255 002c 4548     		ldr	r0, .L23+4
+ 256 002e FFF7FEFF 		bl	MetronomeISR_StartEx
+ 257              	.LVL22:
  124:.\main.c      ****     queue_init();
- 253              		.loc 1 124 0
- 254 0032 FFF7FEFF 		bl	queue_init
- 255              	.LVL22:
+ 258              		.loc 1 124 0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 8
+
+
+ 259 0032 FFF7FEFF 		bl	queue_init
+ 260              	.LVL23:
  125:.\main.c      ****     i2c_init();
- 256              		.loc 1 125 0
- 257 0036 FFF7FEFF 		bl	i2c_init
- 258              	.LVL23:
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 8
-
-
- 259              	.L22:
+ 261              		.loc 1 125 0
+ 262 0036 FFF7FEFF 		bl	i2c_init
+ 263              	.LVL24:
+ 264 003a 0AE0     		b	.L15
+ 265              	.L16:
+ 266              	.LBB2:
  126:.\main.c      **** 
  127:.\main.c      ****     for(;;)
  128:.\main.c      ****     {
  129:.\main.c      ****         // Handle communication with PSoC4Master
- 130:.\main.c      ****         i2c_rx();
- 260              		.loc 1 130 0
- 261 003a FFF7FEFF 		bl	i2c_rx
- 262              	.LVL24:
+ 130:.\main.c      **** //        i2c_rx();
  131:.\main.c      ****         while(isEmptyQueue() != 1)
- 263              		.loc 1 131 0
- 264 003e 0AE0     		b	.L15
- 265              	.L16:
- 266              	.LBB2:
  132:.\main.c      ****         {
  133:.\main.c      ****             struct Data action;
  134:.\main.c      ****             action = frontQueue();
  267              		.loc 1 134 0
- 268 0040 6846     		mov	r0, sp
- 269 0042 FFF7FEFF 		bl	frontQueue
+ 268 003c 6846     		mov	r0, sp
+ 269 003e FFF7FEFF 		bl	frontQueue
  270              	.LVL25:
  135:.\main.c      ****             handler(action.cmd_, action.val_);
  271              		.loc 1 135 0
- 272 0046 009B     		ldr	r3, [sp]
- 273 0048 D8B2     		uxtb	r0, r3
- 274 004a 6B46     		mov	r3, sp
- 275 004c 1979     		ldrb	r1, [r3, #4]
- 276 004e FFF7FEFF 		bl	handler
+ 272 0042 009B     		ldr	r3, [sp]
+ 273 0044 D8B2     		uxtb	r0, r3
+ 274 0046 6B46     		mov	r3, sp
+ 275 0048 1979     		ldrb	r1, [r3, #4]
+ 276 004a FFF7FEFF 		bl	handler
  277              	.LVL26:
  136:.\main.c      ****             popQueue();
  278              		.loc 1 136 0
- 279 0052 FFF7FEFF 		bl	popQueue
+ 279 004e FFF7FEFF 		bl	popQueue
  280              	.LVL27:
  281              	.L15:
  282              	.LBE2:
  131:.\main.c      ****         {
  283              		.loc 1 131 0
- 284 0056 FFF7FEFF 		bl	isEmptyQueue
+ 284 0052 FFF7FEFF 		bl	isEmptyQueue
  285              	.LVL28:
- 286 005a 0128     		cmp	r0, #1
- 287 005c F0D1     		bne	.L16
+ 286 0056 0128     		cmp	r0, #1
+ 287 0058 F0D1     		bne	.L16
  137:.\main.c      ****         }
  138:.\main.c      ****         CyDelay(50);
  288              		.loc 1 138 0
- 289 005e 3130     		add	r0, r0, #49
- 290 0060 FFF7FEFF 		bl	CyDelay
+ 289 005a 3130     		add	r0, r0, #49
+ 290 005c FFF7FEFF 		bl	CyDelay
  291              	.LVL29:
  139:.\main.c      ****         i2c_tx();
  292              		.loc 1 139 0
- 293 0064 FFF7FEFF 		bl	i2c_tx
+ 293 0060 FFF7FEFF 		bl	i2c_tx
  294              	.LVL30:
  140:.\main.c      ****         
  141:.\main.c      ****         // Afstandssensor
  142:.\main.c      ****         if (controlFlags[DIST][FLAG]) {
  295              		.loc 1 142 0
- 296 0068 334B     		ldr	r3, .L24+8
- 297 006a 9B78     		ldrb	r3, [r3, #2]
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 9
+ 296 0064 384B     		ldr	r3, .L23+8
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 9
 
 
- 298 006c 002B     		cmp	r3, #0
- 299 006e 0ED0     		beq	.L17
+ 297 0066 9B78     		ldrb	r3, [r3, #2]
+ 298 0068 002B     		cmp	r3, #0
+ 299 006a 0ED0     		beq	.L17
  143:.\main.c      ****             controlFlags[DIST][FLAG] = 0;
  300              		.loc 1 143 0
- 301 0070 0022     		mov	r2, #0
- 302 0072 314B     		ldr	r3, .L24+8
- 303 0074 9A70     		strb	r2, [r3, #2]
+ 301 006c 0022     		mov	r2, #0
+ 302 006e 364B     		ldr	r3, .L23+8
+ 303 0070 9A70     		strb	r2, [r3, #2]
  144:.\main.c      ****             // Start the distance sensor by holding the trigger pin high for 10us
  145:.\main.c      ****             DistReset_Write(0);
  304              		.loc 1 145 0
- 305 0076 0020     		mov	r0, #0
- 306 0078 FFF7FEFF 		bl	DistReset_Write
+ 305 0072 0020     		mov	r0, #0
+ 306 0074 FFF7FEFF 		bl	DistReset_Write
  307              	.LVL31:
  146:.\main.c      ****             DistTrigger_Write(1);
  308              		.loc 1 146 0
- 309 007c 0120     		mov	r0, #1
- 310 007e FFF7FEFF 		bl	DistTrigger_Write
+ 309 0078 0120     		mov	r0, #1
+ 310 007a FFF7FEFF 		bl	DistTrigger_Write
  311              	.LVL32:
  147:.\main.c      ****             CyDelayUs(10);
  312              		.loc 1 147 0
- 313 0082 0A20     		mov	r0, #10
- 314 0084 FFF7FEFF 		bl	CyDelayUs
+ 313 007e 0A20     		mov	r0, #10
+ 314 0080 FFF7FEFF 		bl	CyDelayUs
  315              	.LVL33:
  148:.\main.c      ****             DistTrigger_Write(0);
  316              		.loc 1 148 0
- 317 0088 0020     		mov	r0, #0
- 318 008a FFF7FEFF 		bl	DistTrigger_Write
+ 317 0084 0020     		mov	r0, #0
+ 318 0086 FFF7FEFF 		bl	DistTrigger_Write
  319              	.LVL34:
  320              	.L17:
  149:.\main.c      ****         }
  150:.\main.c      **** 
  151:.\main.c      ****         if (controlFlags[DIST_ALERT][FLAG]) {
  321              		.loc 1 151 0
- 322 008e 2A4B     		ldr	r3, .L24+8
- 323 0090 DB7A     		ldrb	r3, [r3, #11]
- 324 0092 002B     		cmp	r3, #0
- 325 0094 16D0     		beq	.L18
+ 322 008a 2F4B     		ldr	r3, .L23+8
+ 323 008c DB7A     		ldrb	r3, [r3, #11]
+ 324 008e 002B     		cmp	r3, #0
+ 325 0090 16D0     		beq	.L18
  152:.\main.c      ****             controlFlags[DIST_ALERT][FLAG] = 0;
  326              		.loc 1 152 0
- 327 0096 284A     		ldr	r2, .L24+8
- 328 0098 0023     		mov	r3, #0
- 329 009a D372     		strb	r3, [r2, #11]
+ 327 0092 2D4A     		ldr	r2, .L23+8
+ 328 0094 0023     		mov	r3, #0
+ 329 0096 D372     		strb	r3, [r2, #11]
  153:.\main.c      ****             
  154:.\main.c      ****             // Have to get two "too close" readings in a row to trigger alert
  155:.\main.c      ****             ++(controlFlags[DIST_ALERT][COUNT]);
  330              		.loc 1 155 0
- 331 009c 537A     		ldrb	r3, [r2, #9]
- 332 009e 0133     		add	r3, r3, #1
- 333 00a0 DBB2     		uxtb	r3, r3
- 334 00a2 5372     		strb	r3, [r2, #9]
+ 331 0098 537A     		ldrb	r3, [r2, #9]
+ 332 009a 0133     		add	r3, r3, #1
+ 333 009c DBB2     		uxtb	r3, r3
+ 334 009e 5372     		strb	r3, [r2, #9]
  156:.\main.c      ****             if (!distAlertTriggered && controlFlags[DIST_ALERT][COUNT] >= 2) {
  335              		.loc 1 156 0
- 336 00a4 254A     		ldr	r2, .L24+12
- 337 00a6 1278     		ldrb	r2, [r2]
- 338 00a8 002A     		cmp	r2, #0
- 339 00aa 0BD1     		bne	.L18
+ 336 00a0 2A4A     		ldr	r2, .L23+12
+ 337 00a2 1278     		ldrb	r2, [r2]
+ 338 00a4 002A     		cmp	r2, #0
+ 339 00a6 0BD1     		bne	.L18
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 10
+
+
  340              		.loc 1 156 0 is_stmt 0 discriminator 1
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 10
-
-
- 341 00ac 012B     		cmp	r3, #1
- 342 00ae 09D9     		bls	.L18
+ 341 00a8 012B     		cmp	r3, #1
+ 342 00aa 09D9     		bls	.L18
  157:.\main.c      ****                 // Set counter to fixed value - keeps it high but prevents overflow
  158:.\main.c      ****                 controlFlags[DIST_ALERT][COUNT] = 10;
  343              		.loc 1 158 0 is_stmt 1
- 344 00b0 0A32     		add	r2, r2, #10
- 345 00b2 214B     		ldr	r3, .L24+8
- 346 00b4 5A72     		strb	r2, [r3, #9]
+ 344 00ac 0A32     		add	r2, r2, #10
+ 345 00ae 264B     		ldr	r3, .L23+8
+ 346 00b0 5A72     		strb	r2, [r3, #9]
  159:.\main.c      ****                 distAlertTriggered = 1;
  347              		.loc 1 159 0
- 348 00b6 093A     		sub	r2, r2, #9
- 349 00b8 204B     		ldr	r3, .L24+12
- 350 00ba 1A70     		strb	r2, [r3]
+ 348 00b2 093A     		sub	r2, r2, #9
+ 349 00b4 254B     		ldr	r3, .L23+12
+ 350 00b6 1A70     		strb	r2, [r3]
  160:.\main.c      ****                 handler(cmdDistanceAlert, 0xff);
  351              		.loc 1 160 0
- 352 00bc 4420     		mov	r0, #68
- 353 00be FF21     		mov	r1, #255
- 354 00c0 FFF7FEFF 		bl	handler
+ 352 00b8 4420     		mov	r0, #68
+ 353 00ba FF21     		mov	r1, #255
+ 354 00bc FFF7FEFF 		bl	handler
  355              	.LVL35:
  356              	.L18:
  161:.\main.c      ****             }
@@ -567,2216 +568,2406 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 1
  164:.\main.c      ****         // PIR sensor
  165:.\main.c      ****         if (controlFlags[PIR][FLAG]) {
  357              		.loc 1 165 0
- 358 00c4 1C4B     		ldr	r3, .L24+8
- 359 00c6 1B7A     		ldrb	r3, [r3, #8]
- 360 00c8 002B     		cmp	r3, #0
- 361 00ca 1CD0     		beq	.L19
+ 358 00c0 214B     		ldr	r3, .L23+8
+ 359 00c2 1B7A     		ldrb	r3, [r3, #8]
+ 360 00c4 002B     		cmp	r3, #0
+ 361 00c6 1CD0     		beq	.L19
  166:.\main.c      ****             controlFlags[PIR][FLAG] = 0;
  362              		.loc 1 166 0
- 363 00cc 0022     		mov	r2, #0
- 364 00ce 1A4B     		ldr	r3, .L24+8
- 365 00d0 1A72     		strb	r2, [r3, #8]
+ 363 00c8 0022     		mov	r2, #0
+ 364 00ca 1F4B     		ldr	r3, .L23+8
+ 365 00cc 1A72     		strb	r2, [r3, #8]
  167:.\main.c      **** 
- 168:.\main.c      **** #ifdef DEBUG_ON
- 169:.\main.c      ****             DEBUG_PutHexByte(sensorData.movement);
- 170:.\main.c      ****             DEBUG_PutCRLF();
- 171:.\main.c      **** #endif
- 172:.\main.c      ****             if (sensorData.movementAlertOn) {
- 366              		.loc 1 172 0
- 367 00d2 8523     		mov	r3, #133
- 368 00d4 1A4A     		ldr	r2, .L24+16
- 369 00d6 D35C     		ldrb	r3, [r2, r3]
- 370 00d8 002B     		cmp	r3, #0
- 371 00da 10D0     		beq	.L20
+ 168:.\main.c      ****             if (sensorData.movementAlertOn) {
+ 366              		.loc 1 168 0
+ 367 00ce 8523     		mov	r3, #133
+ 368 00d0 1F4A     		ldr	r2, .L23+16
+ 369 00d2 D35C     		ldrb	r3, [r2, r3]
+ 370 00d4 002B     		cmp	r3, #0
+ 371 00d6 10D0     		beq	.L20
  372              	.LBB3:
- 173:.\main.c      ****                 // Read the PIR sensor output
- 174:.\main.c      ****                 int tmp = PIR_Trig_Read();
- 373              		.loc 1 174 0
- 374 00dc FFF7FEFF 		bl	PIR_Trig_Read
+ 169:.\main.c      ****                 // Read the PIR sensor output
+ 170:.\main.c      ****                 int tmp = PIR_Trig_Read();
+ 373              		.loc 1 170 0
+ 374 00d8 FFF7FEFF 		bl	PIR_Trig_Read
  375              	.LVL36:
- 376 00e0 041E     		sub	r4, r0, #0
+ 376 00dc 041E     		sub	r4, r0, #0
  377              	.LVL37:
- 175:.\main.c      ****                 // If there is movement now but not before
- 176:.\main.c      ****                 if (tmp && (tmp != sensorData.movement)) {
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 11
+ 171:.\main.c      ****                 // If there is movement now but not before
+ 172:.\main.c      ****                 if (tmp && (tmp != sensorData.movement)) {
+ 378              		.loc 1 172 0
+ 379 00de 08D0     		beq	.L21
+ 380              		.loc 1 172 0 is_stmt 0 discriminator 1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 11
 
 
- 378              		.loc 1 176 0
- 379 00e2 08D0     		beq	.L21
- 380              		.loc 1 176 0 is_stmt 0 discriminator 1
- 381 00e4 8422     		mov	r2, #132
- 382 00e6 1649     		ldr	r1, .L24+16
- 383 00e8 8A5C     		ldrb	r2, [r1, r2]
- 384 00ea 8242     		cmp	r2, r0
- 385 00ec 03D0     		beq	.L21
- 177:.\main.c      ****                     handler(cmdMovementAlert, 0xff);
- 386              		.loc 1 177 0 is_stmt 1
- 387 00ee 4520     		mov	r0, #69
+ 381 00e0 8422     		mov	r2, #132
+ 382 00e2 1B49     		ldr	r1, .L23+16
+ 383 00e4 8A5C     		ldrb	r2, [r1, r2]
+ 384 00e6 8242     		cmp	r2, r0
+ 385 00e8 03D0     		beq	.L21
+ 173:.\main.c      ****                     handler(cmdMovementAlert, 0xff);
+ 386              		.loc 1 173 0 is_stmt 1
+ 387 00ea 4520     		mov	r0, #69
  388              	.LVL38:
- 389 00f0 FF21     		mov	r1, #255
- 390 00f2 FFF7FEFF 		bl	handler
+ 389 00ec FF21     		mov	r1, #255
+ 390 00ee FFF7FEFF 		bl	handler
  391              	.LVL39:
  392              	.L21:
- 178:.\main.c      ****                 }
- 179:.\main.c      ****                 // Store new value
- 180:.\main.c      ****                 sensorData.movement = tmp;
- 393              		.loc 1 180 0
- 394 00f6 8423     		mov	r3, #132
- 395 00f8 114A     		ldr	r2, .L24+16
- 396 00fa D454     		strb	r4, [r2, r3]
+ 174:.\main.c      ****                 }
+ 175:.\main.c      ****                 // Store new value
+ 176:.\main.c      ****                 sensorData.movement = tmp;
+ 393              		.loc 1 176 0
+ 394 00f2 8423     		mov	r3, #132
+ 395 00f4 164A     		ldr	r2, .L23+16
+ 396 00f6 D454     		strb	r4, [r2, r3]
  397              	.LBE3:
- 398 00fc 03E0     		b	.L19
+ 398 00f8 03E0     		b	.L19
  399              	.LVL40:
  400              	.L20:
- 181:.\main.c      ****             } else {
- 182:.\main.c      ****                 sensorData.movement = 0;
- 401              		.loc 1 182 0
- 402 00fe 0021     		mov	r1, #0
- 403 0100 8423     		mov	r3, #132
- 404 0102 0F4A     		ldr	r2, .L24+16
- 405 0104 D154     		strb	r1, [r2, r3]
+ 177:.\main.c      ****             } else {
+ 178:.\main.c      ****                 sensorData.movement = 0;
+ 401              		.loc 1 178 0
+ 402 00fa 0021     		mov	r1, #0
+ 403 00fc 8423     		mov	r3, #132
+ 404 00fe 144A     		ldr	r2, .L23+16
+ 405 0100 D154     		strb	r1, [r2, r3]
  406              	.L19:
- 183:.\main.c      ****             }
- 184:.\main.c      ****         }
- 185:.\main.c      **** 
- 186:.\main.c      ****         //debug
- 187:.\main.c      **** #ifdef DEBUG_ON
- 188:.\main.c      ****         if (controlFlags[LEDS][FLAG]) {
- 189:.\main.c      ****             controlFlags[LEDS][FLAG] = 0;
- 190:.\main.c      **** 
- 191:.\main.c      ****             t = !t;
- 192:.\main.c      ****             if (//t) {
- 193:.\main.c      ****                 sensorData.movementAlertOn && sensorData.movement) {
- 194:.\main.c      ****                 RedPWM_Start();
- 195:.\main.c      ****                 GreenPWM_Start();
- 196:.\main.c      ****                 BluePWM_Start();
- 197:.\main.c      ****                 RedPWM_WriteCompare(sensorData.redPWMPct);
- 198:.\main.c      ****                 GreenPWM_WriteCompare(sensorData.greenPWMPct);
- 199:.\main.c      ****                 BluePWM_WriteCompare(sensorData.bluePWMPct);
- 200:.\main.c      ****             } else {
- 201:.\main.c      ****                 RedPWM_Stop();
- 202:.\main.c      ****                 GreenPWM_Stop();
- 203:.\main.c      ****                 BluePWM_Stop();
- 204:.\main.c      ****             }
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 12
+ 179:.\main.c      ****             }
+ 180:.\main.c      ****         }
+ 181:.\main.c      **** 
+ 182:.\main.c      ****         //debug
+ 183:.\main.c      **** #ifdef DEBUG_ON
+ 184:.\main.c      **** //        if (controlFlags[LEDS][FLAG]) {
+ 185:.\main.c      **** //            controlFlags[LEDS][FLAG] = 0;
+ 186:.\main.c      **** //
+ 187:.\main.c      **** //            DEBUG_PutHexByte(sensorData.movement);
+ 188:.\main.c      **** //            DEBUG_PutCRLF();
+ 189:.\main.c      **** //
+ 190:.\main.c      **** //            t = !t;
+ 191:.\main.c      **** //            if (//t) {
+ 192:.\main.c      **** //                sensorData.movementAlertOn && sensorData.movement) {
+ 193:.\main.c      **** //                RedPWM_Start();
+ 194:.\main.c      **** //                GreenPWM_Start();
+ 195:.\main.c      **** //                BluePWM_Start();
+ 196:.\main.c      **** //                RedPWM_WriteCompare(sensorData.redPWMPct);
+ 197:.\main.c      **** //                GreenPWM_WriteCompare(sensorData.greenPWMPct);
+ 198:.\main.c      **** //                BluePWM_WriteCompare(sensorData.bluePWMPct);
+ 199:.\main.c      **** //            } else {
+ 200:.\main.c      **** //                RedPWM_Stop();
+ 201:.\main.c      **** //                GreenPWM_Stop();
+ 202:.\main.c      **** //                BluePWM_Stop();
+ 203:.\main.c      **** //            }
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 12
 
 
- 205:.\main.c      ****         }
- 206:.\main.c      **** #endif
- 207:.\main.c      **** 
- 208:.\main.c      ****         // Lumen sensor
- 209:.\main.c      ****         if (controlFlags[LUMEN][FLAG]) {
- 407              		.loc 1 209 0
- 408 0106 0C4B     		ldr	r3, .L24+8
- 409 0108 5B79     		ldrb	r3, [r3, #5]
- 410 010a 002B     		cmp	r3, #0
- 411 010c 95D0     		beq	.L22
+ 204:.\main.c      **** //        }
+ 205:.\main.c      **** #endif
+ 206:.\main.c      **** 
+ 207:.\main.c      ****         // Lumen sensor
+ 208:.\main.c      ****         if (controlFlags[LUMEN][FLAG]) {
+ 407              		.loc 1 208 0
+ 408 0102 114B     		ldr	r3, .L23+8
+ 409 0104 5B79     		ldrb	r3, [r3, #5]
+ 410 0106 002B     		cmp	r3, #0
+ 411 0108 A3D0     		beq	.L15
  412              	.LBB4:
- 210:.\main.c      ****             controlFlags[LUMEN][FLAG] = 0;
- 413              		.loc 1 210 0
- 414 010e 0022     		mov	r2, #0
- 415 0110 094B     		ldr	r3, .L24+8
- 416 0112 5A71     		strb	r2, [r3, #5]
- 211:.\main.c      ****             // Read the lux value from the sensor
- 212:.\main.c      ****             unsigned int luxValue = readLumenSensor();
- 417              		.loc 1 212 0
- 418 0114 FFF7FEFF 		bl	readLumenSensor
+ 209:.\main.c      ****             controlFlags[LUMEN][FLAG] = 0;
+ 413              		.loc 1 209 0
+ 414 010a 0022     		mov	r2, #0
+ 415 010c 0E4B     		ldr	r3, .L23+8
+ 416 010e 5A71     		strb	r2, [r3, #5]
+ 210:.\main.c      ****             // Read the lux value from the sensor
+ 211:.\main.c      ****             unsigned int luxValue = readLumenSensor();
+ 417              		.loc 1 211 0
+ 418 0110 FFF7FEFF 		bl	readLumenSensor
  419              	.LVL41:
- 420 0118 011C     		mov	r1, r0
+ 420 0114 051C     		mov	r5, r0
  421              	.LVL42:
- 213:.\main.c      ****             // Add lux value to history
- 214:.\main.c      ****             insertValue(&sensorData.LumenMean, luxValue);
- 422              		.loc 1 214 0
- 423 011a 0A4C     		ldr	r4, .L24+20
- 424 011c 201C     		mov	r0, r4
+ 212:.\main.c      ****             // Add lux value to history
+ 213:.\main.c      ****             insertValue(&sensorData.LumenMean, luxValue);
+ 422              		.loc 1 213 0
+ 423 0116 0F4C     		ldr	r4, .L23+20
+ 424 0118 201C     		mov	r0, r4
  425              	.LVL43:
- 426 011e FFF7FEFF 		bl	insertValue
- 427              	.LVL44:
- 215:.\main.c      ****             sensorData.lux = getMeanValue(&sensorData.LumenMean);
- 428              		.loc 1 215 0
- 429 0122 201C     		mov	r0, r4
- 430 0124 FFF7FEFF 		bl	getMeanValue
- 431              	.LVL45:
- 432 0128 083C     		sub	r4, r4, #8
- 433 012a 2060     		str	r0, [r4]
- 434 012c 85E7     		b	.L22
- 435              	.L25:
- 436 012e C046     		.align	2
- 437              	.L24:
- 438 0130 00000000 		.word	DistTimer_Interrupt
- 439 0134 00000000 		.word	Metronome_Interrupt
- 440 0138 00000000 		.word	.LANCHOR0
- 441 013c 00000000 		.word	.LANCHOR1
- 442 0140 00000000 		.word	sensorData
- 443 0144 08000000 		.word	sensorData+8
- 444              	.LBE4:
- 445              		.cfi_endproc
- 446              	.LFE38:
- 447              		.size	main, .-main
- 448              		.global	distAlertTriggered
- 449              		.global	controlFlags
- 450              		.comm	i2c_rxBuffer,4,4
- 451              		.comm	i2c_txBuffer,4,4
- 452              		.comm	backOfQueuePtr,4,4
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 13
-
-
- 453              		.comm	frontOfQueuePtr,4,4
- 454              		.comm	sensorData,152,4
- 455              		.data
- 456              		.align	2
- 457              		.set	.LANCHOR0,. + 0
- 458              		.type	controlFlags, %object
- 459              		.size	controlFlags, 15
- 460              	controlFlags:
- 461 0000 01       		.byte	1
- 462 0001 FF       		.byte	-1
- 463 0002 00       		.byte	0
- 464 0003 01       		.byte	1
- 465 0004 FF       		.byte	-1
- 466 0005 00       		.byte	0
- 467 0006 01       		.byte	1
- 468 0007 FF       		.byte	-1
- 469 0008 00       		.byte	0
- 470 0009 01       		.byte	1
- 471 000a FF       		.byte	-1
- 472 000b 00       		.byte	0
- 473 000c 01       		.byte	1
- 474 000d FF       		.byte	-1
- 475 000e 00       		.byte	0
- 476 000f 00       		.bss
- 477              		.set	.LANCHOR1,. + 0
- 478              		.type	distAlertTriggered, %object
- 479              		.size	distAlertTriggered, 1
- 480              	distAlertTriggered:
- 481 0000 00       		.space	1
- 482              		.text
- 483              	.Letext0:
- 484              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
- 485              		.file 3 ".\\CircularMean.h"
- 486              		.file 4 ".\\SensorData.h"
- 487              		.file 5 ".\\queue.h"
- 488              		.file 6 ".\\i2c.h"
- 489              		.file 7 "Generated_Source\\PSoC4/DistTimer.h"
- 490              		.file 8 "Generated_Source\\PSoC4/MetronomeTimer.h"
- 491              		.file 9 "Generated_Source\\PSoC4/DistReset.h"
- 492              		.file 10 ".\\handler.h"
- 493              		.file 11 "Generated_Source\\PSoC4/PIR_Trig.h"
- 494              		.file 12 ".\\LumenSensor.h"
- 495              		.file 13 "Generated_Source\\PSoC4/DistTimerInt.h"
- 496              		.file 14 "Generated_Source\\PSoC4/GreenPWM.h"
- 497              		.file 15 "Generated_Source\\PSoC4/RedPWM.h"
- 498              		.file 16 "Generated_Source\\PSoC4/BluePWM.h"
- 499              		.file 17 "Generated_Source\\PSoC4/MetronomeISR.h"
- 500              		.file 18 "Generated_Source\\PSoC4/CyLib.h"
- 501              		.file 19 "Generated_Source\\PSoC4/DistTrigger.h"
- 502              		.section	.debug_info,"",%progbits
- 503              	.Ldebug_info0:
- 504 0000 EF060000 		.4byte	0x6ef
- 505 0004 0400     		.2byte	0x4
- 506 0006 00000000 		.4byte	.Ldebug_abbrev0
- 507 000a 04       		.byte	0x4
- 508 000b 01       		.uleb128 0x1
- 509 000c 33020000 		.4byte	.LASF87
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 14
-
-
- 510 0010 01       		.byte	0x1
- 511 0011 83040000 		.4byte	.LASF88
- 512 0015 96010000 		.4byte	.LASF89
- 513 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 514 001d 00000000 		.4byte	0
- 515 0021 00000000 		.4byte	.Ldebug_line0
- 516 0025 02       		.uleb128 0x2
- 517 0026 01       		.byte	0x1
- 518 0027 06       		.byte	0x6
- 519 0028 12030000 		.4byte	.LASF0
- 520 002c 02       		.uleb128 0x2
- 521 002d 01       		.byte	0x1
- 522 002e 08       		.byte	0x8
- 523 002f 03020000 		.4byte	.LASF1
- 524 0033 02       		.uleb128 0x2
- 525 0034 02       		.byte	0x2
- 526 0035 05       		.byte	0x5
- 527 0036 54000000 		.4byte	.LASF2
- 528 003a 02       		.uleb128 0x2
- 529 003b 02       		.byte	0x2
- 530 003c 07       		.byte	0x7
- 531 003d 65030000 		.4byte	.LASF3
- 532 0041 02       		.uleb128 0x2
- 533 0042 04       		.byte	0x4
- 534 0043 05       		.byte	0x5
- 535 0044 95030000 		.4byte	.LASF4
- 536 0048 02       		.uleb128 0x2
- 537 0049 04       		.byte	0x4
- 538 004a 07       		.byte	0x7
- 539 004b 2C040000 		.4byte	.LASF5
- 540 004f 02       		.uleb128 0x2
- 541 0050 08       		.byte	0x8
- 542 0051 05       		.byte	0x5
- 543 0052 97000000 		.4byte	.LASF6
- 544 0056 02       		.uleb128 0x2
- 545 0057 08       		.byte	0x8
- 546 0058 07       		.byte	0x7
- 547 0059 1E030000 		.4byte	.LASF7
- 548 005d 03       		.uleb128 0x3
- 549 005e 04       		.byte	0x4
- 550 005f 05       		.byte	0x5
- 551 0060 696E7400 		.ascii	"int\000"
- 552 0064 02       		.uleb128 0x2
- 553 0065 04       		.byte	0x4
- 554 0066 07       		.byte	0x7
- 555 0067 3B030000 		.4byte	.LASF8
- 556 006b 04       		.uleb128 0x4
- 557 006c C7030000 		.4byte	.LASF9
- 558 0070 02       		.byte	0x2
- 559 0071 3801     		.2byte	0x138
- 560 0073 2C000000 		.4byte	0x2c
- 561 0077 04       		.uleb128 0x4
- 562 0078 F2030000 		.4byte	.LASF10
- 563 007c 02       		.byte	0x2
- 564 007d 3901     		.2byte	0x139
- 565 007f 3A000000 		.4byte	0x3a
- 566 0083 04       		.uleb128 0x4
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 15
-
-
- 567 0084 60040000 		.4byte	.LASF11
- 568 0088 02       		.byte	0x2
- 569 0089 3A01     		.2byte	0x13a
- 570 008b 48000000 		.4byte	0x48
- 571 008f 02       		.uleb128 0x2
- 572 0090 04       		.byte	0x4
- 573 0091 04       		.byte	0x4
- 574 0092 28010000 		.4byte	.LASF12
- 575 0096 02       		.uleb128 0x2
- 576 0097 08       		.byte	0x8
- 577 0098 04       		.byte	0x4
- 578 0099 3B010000 		.4byte	.LASF13
- 579 009d 02       		.uleb128 0x2
- 580 009e 01       		.byte	0x1
- 581 009f 08       		.byte	0x8
- 582 00a0 87030000 		.4byte	.LASF14
- 583 00a4 04       		.uleb128 0x4
- 584 00a5 B3040000 		.4byte	.LASF15
- 585 00a9 02       		.byte	0x2
- 586 00aa F401     		.2byte	0x1f4
- 587 00ac B0000000 		.4byte	0xb0
- 588 00b0 05       		.uleb128 0x5
- 589 00b1 04       		.byte	0x4
- 590 00b2 B6000000 		.4byte	0xb6
- 591 00b6 06       		.uleb128 0x6
- 592 00b7 02       		.uleb128 0x2
- 593 00b8 04       		.byte	0x4
- 594 00b9 07       		.byte	0x7
- 595 00ba 71000000 		.4byte	.LASF16
- 596 00be 07       		.uleb128 0x7
- 597 00bf 30000000 		.4byte	.LASF19
- 598 00c3 7C       		.byte	0x7c
- 599 00c4 03       		.byte	0x3
- 600 00c5 0E       		.byte	0xe
- 601 00c6 EF000000 		.4byte	0xef
- 602 00ca 08       		.uleb128 0x8
- 603 00cb C0040000 		.4byte	.LASF17
- 604 00cf 03       		.byte	0x3
- 605 00d0 0F       		.byte	0xf
- 606 00d1 EF000000 		.4byte	0xef
- 607 00d5 00       		.byte	0
- 608 00d6 08       		.uleb128 0x8
- 609 00d7 5F030000 		.4byte	.LASF18
- 610 00db 03       		.byte	0x3
- 611 00dc 10       		.byte	0x10
- 612 00dd 2C000000 		.4byte	0x2c
- 613 00e1 78       		.byte	0x78
- 614 00e2 09       		.uleb128 0x9
- 615 00e3 6E756D00 		.ascii	"num\000"
- 616 00e7 03       		.byte	0x3
- 617 00e8 11       		.byte	0x11
- 618 00e9 2C000000 		.4byte	0x2c
- 619 00ed 79       		.byte	0x79
- 620 00ee 00       		.byte	0
- 621 00ef 0A       		.uleb128 0xa
- 622 00f0 5D000000 		.4byte	0x5d
- 623 00f4 FF000000 		.4byte	0xff
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 16
-
-
- 624 00f8 0B       		.uleb128 0xb
- 625 00f9 B7000000 		.4byte	0xb7
- 626 00fd 1D       		.byte	0x1d
- 627 00fe 00       		.byte	0
- 628 00ff 07       		.uleb128 0x7
- 629 0100 77040000 		.4byte	.LASF20
- 630 0104 98       		.byte	0x98
- 631 0105 04       		.byte	0x4
- 632 0106 13       		.byte	0x13
- 633 0107 9C010000 		.4byte	0x19c
- 634 010b 09       		.uleb128 0x9
- 635 010c 6C757800 		.ascii	"lux\000"
- 636 0110 04       		.byte	0x4
- 637 0111 15       		.byte	0x15
- 638 0112 64000000 		.4byte	0x64
- 639 0116 00       		.byte	0
- 640 0117 08       		.uleb128 0x8
- 641 0118 8C040000 		.4byte	.LASF21
- 642 011c 04       		.byte	0x4
- 643 011d 16       		.byte	0x16
- 644 011e 64000000 		.4byte	0x64
- 645 0122 04       		.byte	0x4
- 646 0123 08       		.uleb128 0x8
- 647 0124 CD030000 		.4byte	.LASF22
- 648 0128 04       		.byte	0x4
- 649 0129 17       		.byte	0x17
- 650 012a BE000000 		.4byte	0xbe
- 651 012e 08       		.byte	0x8
- 652 012f 08       		.uleb128 0x8
- 653 0130 59010000 		.4byte	.LASF23
- 654 0134 04       		.byte	0x4
- 655 0135 1A       		.byte	0x1a
- 656 0136 6B000000 		.4byte	0x6b
- 657 013a 84       		.byte	0x84
- 658 013b 08       		.uleb128 0x8
- 659 013c 67040000 		.4byte	.LASF24
- 660 0140 04       		.byte	0x4
- 661 0141 1B       		.byte	0x1b
- 662 0142 6B000000 		.4byte	0x6b
- 663 0146 85       		.byte	0x85
- 664 0147 08       		.uleb128 0x8
- 665 0148 8C030000 		.4byte	.LASF25
- 666 014c 04       		.byte	0x4
- 667 014d 1E       		.byte	0x1e
- 668 014e 5D000000 		.4byte	0x5d
- 669 0152 88       		.byte	0x88
- 670 0153 08       		.uleb128 0x8
- 671 0154 E5020000 		.4byte	.LASF26
- 672 0158 04       		.byte	0x4
- 673 0159 1F       		.byte	0x1f
- 674 015a 5D000000 		.4byte	0x5d
- 675 015e 8C       		.byte	0x8c
- 676 015f 08       		.uleb128 0x8
- 677 0160 D3040000 		.4byte	.LASF27
- 678 0164 04       		.byte	0x4
- 679 0165 20       		.byte	0x20
- 680 0166 5D000000 		.4byte	0x5d
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 17
-
-
- 681 016a 90       		.byte	0x90
- 682 016b 08       		.uleb128 0x8
- 683 016c A7040000 		.4byte	.LASF28
- 684 0170 04       		.byte	0x4
- 685 0171 23       		.byte	0x23
- 686 0172 6B000000 		.4byte	0x6b
- 687 0176 94       		.byte	0x94
- 688 0177 08       		.uleb128 0x8
- 689 0178 F9030000 		.4byte	.LASF29
- 690 017c 04       		.byte	0x4
- 691 017d 24       		.byte	0x24
- 692 017e 6B000000 		.4byte	0x6b
- 693 0182 95       		.byte	0x95
- 694 0183 08       		.uleb128 0x8
- 695 0184 25000000 		.4byte	.LASF30
- 696 0188 04       		.byte	0x4
- 697 0189 25       		.byte	0x25
- 698 018a 6B000000 		.4byte	0x6b
- 699 018e 96       		.byte	0x96
- 700 018f 08       		.uleb128 0x8
- 701 0190 70010000 		.4byte	.LASF31
- 702 0194 04       		.byte	0x4
- 703 0195 26       		.byte	0x26
- 704 0196 6B000000 		.4byte	0x6b
- 705 019a 97       		.byte	0x97
- 706 019b 00       		.byte	0
- 707 019c 07       		.uleb128 0x7
- 708 019d FE010000 		.4byte	.LASF32
- 709 01a1 08       		.byte	0x8
- 710 01a2 05       		.byte	0x5
- 711 01a3 1A       		.byte	0x1a
- 712 01a4 C1010000 		.4byte	0x1c1
- 713 01a8 08       		.uleb128 0x8
- 714 01a9 5B040000 		.4byte	.LASF33
- 715 01ad 05       		.byte	0x5
- 716 01ae 1C       		.byte	0x1c
- 717 01af 5D000000 		.4byte	0x5d
- 718 01b3 00       		.byte	0
- 719 01b4 08       		.uleb128 0x8
- 720 01b5 13040000 		.4byte	.LASF34
- 721 01b9 05       		.byte	0x5
- 722 01ba 1D       		.byte	0x1d
- 723 01bb 5D000000 		.4byte	0x5d
- 724 01bf 04       		.byte	0x4
- 725 01c0 00       		.byte	0
- 726 01c1 07       		.uleb128 0x7
- 727 01c2 7A000000 		.4byte	.LASF35
- 728 01c6 0C       		.byte	0xc
- 729 01c7 05       		.byte	0x5
- 730 01c8 20       		.byte	0x20
- 731 01c9 E6010000 		.4byte	0x1e6
- 732 01cd 08       		.uleb128 0x8
- 733 01ce 5E000000 		.4byte	.LASF36
- 734 01d2 05       		.byte	0x5
- 735 01d3 22       		.byte	0x22
- 736 01d4 9C010000 		.4byte	0x19c
- 737 01d8 00       		.byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 18
-
-
- 738 01d9 08       		.uleb128 0x8
- 739 01da 17010000 		.4byte	.LASF37
- 740 01de 05       		.byte	0x5
- 741 01df 23       		.byte	0x23
- 742 01e0 E6010000 		.4byte	0x1e6
- 743 01e4 08       		.byte	0x8
- 744 01e5 00       		.byte	0
- 745 01e6 05       		.uleb128 0x5
- 746 01e7 04       		.byte	0x4
- 747 01e8 C1010000 		.4byte	0x1c1
- 748 01ec 0C       		.uleb128 0xc
- 749 01ed 00010000 		.4byte	.LASF42
- 750 01f1 01       		.byte	0x1
- 751 01f2 01       		.byte	0x1
- 752 01f3 1B       		.byte	0x1b
- 753 01f4 17020000 		.4byte	0x217
- 754 01f8 0D       		.uleb128 0xd
- 755 01f9 C6040000 		.4byte	.LASF38
- 756 01fd 00       		.sleb128 0
- 757 01fe 0D       		.uleb128 0xd
- 758 01ff 35030000 		.4byte	.LASF39
- 759 0203 01       		.sleb128 1
- 760 0204 0E       		.uleb128 0xe
- 761 0205 50495200 		.ascii	"PIR\000"
- 762 0209 02       		.sleb128 2
- 763 020a 0D       		.uleb128 0xd
- 764 020b 97040000 		.4byte	.LASF40
- 765 020f 03       		.sleb128 3
- 766 0210 0D       		.uleb128 0xd
- 767 0211 A2040000 		.4byte	.LASF41
- 768 0215 04       		.sleb128 4
- 769 0216 00       		.byte	0
- 770 0217 0C       		.uleb128 0xc
- 771 0218 47040000 		.4byte	.LASF43
- 772 021c 01       		.byte	0x1
- 773 021d 01       		.byte	0x1
- 774 021e 1C       		.byte	0x1c
- 775 021f 36020000 		.4byte	0x236
- 776 0223 0D       		.uleb128 0xd
- 777 0224 4C010000 		.4byte	.LASF44
- 778 0228 00       		.sleb128 0
- 779 0229 0D       		.uleb128 0xd
- 780 022a 4F000000 		.4byte	.LASF45
- 781 022e 01       		.sleb128 1
- 782 022f 0D       		.uleb128 0xd
- 783 0230 9E030000 		.4byte	.LASF46
- 784 0234 02       		.sleb128 2
- 785 0235 00       		.byte	0
- 786 0236 0F       		.uleb128 0xf
- 787 0237 79010000 		.4byte	.LASF47
- 788 023b 01       		.byte	0x1
- 789 023c 49       		.byte	0x49
- 790 023d 00000000 		.4byte	.LFB37
- 791 0241 50000000 		.4byte	.LFE37-.LFB37
- 792 0245 01       		.uleb128 0x1
- 793 0246 9C       		.byte	0x9c
- 794 0247 73020000 		.4byte	0x273
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 19
-
-
- 795 024b 10       		.uleb128 0x10
- 796 024c 42010000 		.4byte	.LASF51
- 797 0250 01       		.byte	0x1
- 798 0251 4D       		.byte	0x4d
- 799 0252 5D000000 		.4byte	0x5d
- 800 0256 00000000 		.4byte	.LLST0
- 801 025a 11       		.uleb128 0x11
- 802 025b 06000000 		.4byte	.LVL0
- 803 025f 9E050000 		.4byte	0x59e
- 804 0263 12       		.uleb128 0x12
- 805 0264 3C000000 		.4byte	.LVL3
- 806 0268 A9050000 		.4byte	0x5a9
- 807 026c 13       		.uleb128 0x13
- 808 026d 01       		.uleb128 0x1
- 809 026e 50       		.byte	0x50
- 810 026f 01       		.uleb128 0x1
- 811 0270 31       		.byte	0x31
- 812 0271 00       		.byte	0
- 813 0272 00       		.byte	0
- 814 0273 14       		.uleb128 0x14
- 815 0274 DE000000 		.4byte	.LASF90
- 816 0278 01       		.byte	0x1
- 817 0279 24       		.byte	0x24
- 818 027a 00000000 		.4byte	.LFB34
- 819 027e 14000000 		.4byte	.LFE34-.LFB34
- 820 0282 01       		.uleb128 0x1
- 821 0283 9C       		.byte	0x9c
- 822 0284 0F       		.uleb128 0xf
- 823 0285 64000000 		.4byte	.LASF48
- 824 0289 01       		.byte	0x1
- 825 028a 2F       		.byte	0x2f
- 826 028b 00000000 		.4byte	.LFB35
- 827 028f 28000000 		.4byte	.LFE35-.LFB35
- 828 0293 01       		.uleb128 0x1
- 829 0294 9C       		.byte	0x9c
- 830 0295 A8020000 		.4byte	0x2a8
- 831 0299 15       		.uleb128 0x15
- 832 029a 736500   		.ascii	"se\000"
- 833 029d 01       		.byte	0x1
- 834 029e 2F       		.byte	0x2f
- 835 029f EC010000 		.4byte	0x1ec
- 836 02a3 13000000 		.4byte	.LLST1
- 837 02a7 00       		.byte	0
- 838 02a8 16       		.uleb128 0x16
- 839 02a9 A5000000 		.4byte	.LASF49
- 840 02ad 01       		.byte	0x1
- 841 02ae 36       		.byte	0x36
- 842 02af 00000000 		.4byte	.LFB36
- 843 02b3 1A000000 		.4byte	.LFE36-.LFB36
- 844 02b7 01       		.uleb128 0x1
- 845 02b8 9C       		.byte	0x9c
- 846 02b9 FC020000 		.4byte	0x2fc
- 847 02bd 11       		.uleb128 0x11
- 848 02be 06000000 		.4byte	.LVL8
- 849 02c2 BA050000 		.4byte	0x5ba
- 850 02c6 17       		.uleb128 0x17
- 851 02c7 0C000000 		.4byte	.LVL9
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 20
-
-
- 852 02cb 84020000 		.4byte	0x284
- 853 02cf D9020000 		.4byte	0x2d9
- 854 02d3 13       		.uleb128 0x13
- 855 02d4 01       		.uleb128 0x1
- 856 02d5 50       		.byte	0x50
- 857 02d6 01       		.uleb128 0x1
- 858 02d7 30       		.byte	0x30
- 859 02d8 00       		.byte	0
- 860 02d9 17       		.uleb128 0x17
- 861 02da 12000000 		.4byte	.LVL10
- 862 02de 84020000 		.4byte	0x284
- 863 02e2 EC020000 		.4byte	0x2ec
- 864 02e6 13       		.uleb128 0x13
- 865 02e7 01       		.uleb128 0x1
- 866 02e8 50       		.byte	0x50
- 867 02e9 01       		.uleb128 0x1
- 868 02ea 31       		.byte	0x31
- 869 02eb 00       		.byte	0
- 870 02ec 12       		.uleb128 0x12
- 871 02ed 18000000 		.4byte	.LVL11
- 872 02f1 84020000 		.4byte	0x284
- 873 02f5 13       		.uleb128 0x13
- 874 02f6 01       		.uleb128 0x1
- 875 02f7 50       		.byte	0x50
- 876 02f8 01       		.uleb128 0x1
- 877 02f9 32       		.byte	0x32
- 878 02fa 00       		.byte	0
- 879 02fb 00       		.byte	0
- 880 02fc 18       		.uleb128 0x18
- 881 02fd 7F000000 		.4byte	.LASF50
- 882 0301 01       		.byte	0x1
- 883 0302 65       		.byte	0x65
- 884 0303 5D000000 		.4byte	0x5d
- 885 0307 00000000 		.4byte	.LFB38
- 886 030b 48010000 		.4byte	.LFE38-.LFB38
- 887 030f 01       		.uleb128 0x1
- 888 0310 9C       		.byte	0x9c
- 889 0311 01050000 		.4byte	0x501
- 890 0315 19       		.uleb128 0x19
- 891 0316 40000000 		.4byte	.LBB2
- 892 031a 16000000 		.4byte	.LBE2-.LBB2
- 893 031e 6C030000 		.4byte	0x36c
- 894 0322 1A       		.uleb128 0x1a
- 895 0323 52010000 		.4byte	.LASF52
- 896 0327 01       		.byte	0x1
- 897 0328 85       		.byte	0x85
- 898 0329 9C010000 		.4byte	0x19c
- 899 032d 02       		.uleb128 0x2
- 900 032e 91       		.byte	0x91
- 901 032f 70       		.sleb128 -16
- 902 0330 17       		.uleb128 0x17
- 903 0331 46000000 		.4byte	.LVL25
- 904 0335 C5050000 		.4byte	0x5c5
- 905 0339 44030000 		.4byte	0x344
- 906 033d 13       		.uleb128 0x13
- 907 033e 01       		.uleb128 0x1
- 908 033f 50       		.byte	0x50
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 21
-
-
- 909 0340 02       		.uleb128 0x2
- 910 0341 7D       		.byte	0x7d
- 911 0342 00       		.sleb128 0
- 912 0343 00       		.byte	0
- 913 0344 17       		.uleb128 0x17
- 914 0345 52000000 		.4byte	.LVL26
- 915 0349 D0050000 		.4byte	0x5d0
- 916 034d 62030000 		.4byte	0x362
- 917 0351 13       		.uleb128 0x13
- 918 0352 01       		.uleb128 0x1
- 919 0353 51       		.byte	0x51
- 920 0354 04       		.uleb128 0x4
- 921 0355 7D       		.byte	0x7d
- 922 0356 04       		.sleb128 4
- 923 0357 94       		.byte	0x94
- 924 0358 01       		.byte	0x1
- 925 0359 13       		.uleb128 0x13
- 926 035a 01       		.uleb128 0x1
- 927 035b 50       		.byte	0x50
- 928 035c 04       		.uleb128 0x4
- 929 035d 7D       		.byte	0x7d
- 930 035e 00       		.sleb128 0
- 931 035f 94       		.byte	0x94
- 932 0360 01       		.byte	0x1
- 933 0361 00       		.byte	0
- 934 0362 11       		.uleb128 0x11
- 935 0363 56000000 		.4byte	.LVL27
- 936 0367 E6050000 		.4byte	0x5e6
- 937 036b 00       		.byte	0
- 938 036c 19       		.uleb128 0x19
- 939 036d DC000000 		.4byte	.LBB3
- 940 0371 20000000 		.4byte	.LBE3-.LBB3
- 941 0375 A8030000 		.4byte	0x3a8
- 942 0379 1B       		.uleb128 0x1b
- 943 037a 746D7000 		.ascii	"tmp\000"
- 944 037e 01       		.byte	0x1
- 945 037f AE       		.byte	0xae
- 946 0380 5D000000 		.4byte	0x5d
- 947 0384 34000000 		.4byte	.LLST2
- 948 0388 11       		.uleb128 0x11
- 949 0389 E0000000 		.4byte	.LVL36
- 950 038d ED050000 		.4byte	0x5ed
- 951 0391 12       		.uleb128 0x12
- 952 0392 F6000000 		.4byte	.LVL39
- 953 0396 D0050000 		.4byte	0x5d0
- 954 039a 13       		.uleb128 0x13
- 955 039b 01       		.uleb128 0x1
- 956 039c 51       		.byte	0x51
- 957 039d 02       		.uleb128 0x2
- 958 039e 09       		.byte	0x9
- 959 039f FF       		.byte	0xff
- 960 03a0 13       		.uleb128 0x13
- 961 03a1 01       		.uleb128 0x1
- 962 03a2 50       		.byte	0x50
- 963 03a3 02       		.uleb128 0x2
- 964 03a4 08       		.byte	0x8
- 965 03a5 45       		.byte	0x45
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 22
-
-
- 966 03a6 00       		.byte	0
- 967 03a7 00       		.byte	0
- 968 03a8 19       		.uleb128 0x19
- 969 03a9 0E010000 		.4byte	.LBB4
- 970 03ad 3A000000 		.4byte	.LBE4-.LBB4
- 971 03b1 F2030000 		.4byte	0x3f2
- 972 03b5 10       		.uleb128 0x10
- 973 03b6 8D010000 		.4byte	.LASF53
- 974 03ba 01       		.byte	0x1
- 975 03bb D4       		.byte	0xd4
- 976 03bc 64000000 		.4byte	0x64
- 977 03c0 52000000 		.4byte	.LLST3
- 978 03c4 11       		.uleb128 0x11
- 979 03c5 18010000 		.4byte	.LVL41
- 980 03c9 F8050000 		.4byte	0x5f8
- 981 03cd 17       		.uleb128 0x17
- 982 03ce 22010000 		.4byte	.LVL44
- 983 03d2 09060000 		.4byte	0x609
- 984 03d6 E1030000 		.4byte	0x3e1
- 985 03da 13       		.uleb128 0x13
- 986 03db 01       		.uleb128 0x1
- 987 03dc 50       		.byte	0x50
- 988 03dd 02       		.uleb128 0x2
- 989 03de 74       		.byte	0x74
- 990 03df 00       		.sleb128 0
- 991 03e0 00       		.byte	0
- 992 03e1 12       		.uleb128 0x12
- 993 03e2 28010000 		.4byte	.LVL45
- 994 03e6 25060000 		.4byte	0x625
- 995 03ea 13       		.uleb128 0x13
- 996 03eb 01       		.uleb128 0x1
- 997 03ec 50       		.byte	0x50
- 998 03ed 02       		.uleb128 0x2
- 999 03ee 74       		.byte	0x74
- 1000 03ef 00       		.sleb128 0
- 1001 03f0 00       		.byte	0
- 1002 03f1 00       		.byte	0
- 1003 03f2 11       		.uleb128 0x11
- 1004 03f3 0A000000 		.4byte	.LVL12
- 1005 03f7 3A060000 		.4byte	0x63a
- 1006 03fb 11       		.uleb128 0x11
- 1007 03fc 0E000000 		.4byte	.LVL13
- 1008 0400 47060000 		.4byte	0x647
- 1009 0404 17       		.uleb128 0x17
- 1010 0405 14000000 		.4byte	.LVL14
- 1011 0409 4E060000 		.4byte	0x64e
- 1012 040d 1B040000 		.4byte	0x41b
- 1013 0411 13       		.uleb128 0x13
- 1014 0412 01       		.uleb128 0x1
- 1015 0413 50       		.byte	0x50
- 1016 0414 05       		.uleb128 0x5
- 1017 0415 03       		.byte	0x3
- 1018 0416 00000000 		.4byte	DistTimer_Interrupt
- 1019 041a 00       		.byte	0
- 1020 041b 11       		.uleb128 0x11
- 1021 041c 18000000 		.4byte	.LVL15
- 1022 0420 5F060000 		.4byte	0x65f
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 23
-
-
- 1023 0424 11       		.uleb128 0x11
- 1024 0425 1C000000 		.4byte	.LVL16
- 1025 0429 6C060000 		.4byte	0x66c
- 1026 042d 11       		.uleb128 0x11
- 1027 042e 20000000 		.4byte	.LVL17
- 1028 0432 74060000 		.4byte	0x674
- 1029 0436 11       		.uleb128 0x11
- 1030 0437 24000000 		.4byte	.LVL18
- 1031 043b 7C060000 		.4byte	0x67c
- 1032 043f 11       		.uleb128 0x11
- 1033 0440 28000000 		.4byte	.LVL19
- 1034 0444 73020000 		.4byte	0x273
- 1035 0448 11       		.uleb128 0x11
- 1036 0449 2C000000 		.4byte	.LVL20
- 1037 044d 84060000 		.4byte	0x684
- 1038 0451 17       		.uleb128 0x17
- 1039 0452 32000000 		.4byte	.LVL21
- 1040 0456 8B060000 		.4byte	0x68b
- 1041 045a 68040000 		.4byte	0x468
- 1042 045e 13       		.uleb128 0x13
- 1043 045f 01       		.uleb128 0x1
- 1044 0460 50       		.byte	0x50
- 1045 0461 05       		.uleb128 0x5
- 1046 0462 03       		.byte	0x3
- 1047 0463 00000000 		.4byte	Metronome_Interrupt
- 1048 0467 00       		.byte	0
- 1049 0468 11       		.uleb128 0x11
- 1050 0469 36000000 		.4byte	.LVL22
- 1051 046d 9C060000 		.4byte	0x69c
- 1052 0471 11       		.uleb128 0x11
- 1053 0472 3A000000 		.4byte	.LVL23
- 1054 0476 A3060000 		.4byte	0x6a3
- 1055 047a 11       		.uleb128 0x11
- 1056 047b 3E000000 		.4byte	.LVL24
- 1057 047f AA060000 		.4byte	0x6aa
- 1058 0483 11       		.uleb128 0x11
- 1059 0484 5A000000 		.4byte	.LVL28
- 1060 0488 B1060000 		.4byte	0x6b1
- 1061 048c 11       		.uleb128 0x11
- 1062 048d 64000000 		.4byte	.LVL29
- 1063 0491 BC060000 		.4byte	0x6bc
- 1064 0495 11       		.uleb128 0x11
- 1065 0496 68000000 		.4byte	.LVL30
- 1066 049a CD060000 		.4byte	0x6cd
- 1067 049e 17       		.uleb128 0x17
- 1068 049f 7C000000 		.4byte	.LVL31
- 1069 04a3 A9050000 		.4byte	0x5a9
- 1070 04a7 B1040000 		.4byte	0x4b1
- 1071 04ab 13       		.uleb128 0x13
- 1072 04ac 01       		.uleb128 0x1
- 1073 04ad 50       		.byte	0x50
- 1074 04ae 01       		.uleb128 0x1
- 1075 04af 30       		.byte	0x30
- 1076 04b0 00       		.byte	0
- 1077 04b1 17       		.uleb128 0x17
- 1078 04b2 82000000 		.4byte	.LVL32
- 1079 04b6 D4060000 		.4byte	0x6d4
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 24
-
-
- 1080 04ba C4040000 		.4byte	0x4c4
- 1081 04be 13       		.uleb128 0x13
- 1082 04bf 01       		.uleb128 0x1
- 1083 04c0 50       		.byte	0x50
- 1084 04c1 01       		.uleb128 0x1
- 1085 04c2 31       		.byte	0x31
- 1086 04c3 00       		.byte	0
- 1087 04c4 17       		.uleb128 0x17
- 1088 04c5 88000000 		.4byte	.LVL33
- 1089 04c9 E5060000 		.4byte	0x6e5
- 1090 04cd D7040000 		.4byte	0x4d7
- 1091 04d1 13       		.uleb128 0x13
- 1092 04d2 01       		.uleb128 0x1
- 1093 04d3 50       		.byte	0x50
- 1094 04d4 01       		.uleb128 0x1
- 1095 04d5 3A       		.byte	0x3a
- 1096 04d6 00       		.byte	0
- 1097 04d7 17       		.uleb128 0x17
- 1098 04d8 8E000000 		.4byte	.LVL34
- 1099 04dc D4060000 		.4byte	0x6d4
- 1100 04e0 EA040000 		.4byte	0x4ea
- 1101 04e4 13       		.uleb128 0x13
- 1102 04e5 01       		.uleb128 0x1
- 1103 04e6 50       		.byte	0x50
- 1104 04e7 01       		.uleb128 0x1
- 1105 04e8 30       		.byte	0x30
- 1106 04e9 00       		.byte	0
- 1107 04ea 12       		.uleb128 0x12
- 1108 04eb C4000000 		.4byte	.LVL35
- 1109 04ef D0050000 		.4byte	0x5d0
- 1110 04f3 13       		.uleb128 0x13
- 1111 04f4 01       		.uleb128 0x1
- 1112 04f5 51       		.byte	0x51
- 1113 04f6 02       		.uleb128 0x2
- 1114 04f7 09       		.byte	0x9
- 1115 04f8 FF       		.byte	0xff
- 1116 04f9 13       		.uleb128 0x13
- 1117 04fa 01       		.uleb128 0x1
- 1118 04fb 50       		.byte	0x50
- 1119 04fc 02       		.uleb128 0x2
- 1120 04fd 08       		.byte	0x8
- 1121 04fe 44       		.byte	0x44
- 1122 04ff 00       		.byte	0
- 1123 0500 00       		.byte	0
- 1124 0501 1C       		.uleb128 0x1c
- 1125 0502 E7030000 		.4byte	.LASF54
- 1126 0506 04       		.byte	0x4
- 1127 0507 27       		.byte	0x27
- 1128 0508 FF000000 		.4byte	0xff
- 1129 050c 05       		.uleb128 0x5
- 1130 050d 03       		.byte	0x3
- 1131 050e 00000000 		.4byte	sensorData
- 1132 0512 1C       		.uleb128 0x1c
- 1133 0513 03040000 		.4byte	.LASF55
- 1134 0517 05       		.byte	0x5
- 1135 0518 26       		.byte	0x26
- 1136 0519 E6010000 		.4byte	0x1e6
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 25
-
-
- 1137 051d 05       		.uleb128 0x5
- 1138 051e 03       		.byte	0x3
- 1139 051f 00000000 		.4byte	frontOfQueuePtr
- 1140 0523 1C       		.uleb128 0x1c
- 1141 0524 78030000 		.4byte	.LASF56
- 1142 0528 05       		.byte	0x5
- 1143 0529 27       		.byte	0x27
- 1144 052a E6010000 		.4byte	0x1e6
- 1145 052e 05       		.uleb128 0x5
- 1146 052f 03       		.byte	0x3
- 1147 0530 00000000 		.4byte	backOfQueuePtr
- 1148 0534 0A       		.uleb128 0xa
- 1149 0535 6B000000 		.4byte	0x6b
- 1150 0539 44050000 		.4byte	0x544
- 1151 053d 0B       		.uleb128 0xb
- 1152 053e B7000000 		.4byte	0xb7
- 1153 0542 03       		.byte	0x3
- 1154 0543 00       		.byte	0
- 1155 0544 1C       		.uleb128 0x1c
- 1156 0545 2E010000 		.4byte	.LASF57
- 1157 0549 06       		.byte	0x6
- 1158 054a 30       		.byte	0x30
- 1159 054b 34050000 		.4byte	0x534
- 1160 054f 05       		.uleb128 0x5
- 1161 0550 03       		.byte	0x3
- 1162 0551 00000000 		.4byte	i2c_txBuffer
- 1163 0555 1C       		.uleb128 0x1c
- 1164 0556 52030000 		.4byte	.LASF58
- 1165 055a 06       		.byte	0x6
- 1166 055b 31       		.byte	0x31
- 1167 055c 34050000 		.4byte	0x534
- 1168 0560 05       		.uleb128 0x5
- 1169 0561 03       		.byte	0x3
- 1170 0562 00000000 		.4byte	i2c_rxBuffer
- 1171 0566 0A       		.uleb128 0xa
- 1172 0567 9D000000 		.4byte	0x9d
- 1173 056b 7C050000 		.4byte	0x57c
- 1174 056f 0B       		.uleb128 0xb
- 1175 0570 B7000000 		.4byte	0xb7
- 1176 0574 04       		.byte	0x4
- 1177 0575 0B       		.uleb128 0xb
- 1178 0576 B7000000 		.4byte	0xb7
- 1179 057a 02       		.byte	0x2
- 1180 057b 00       		.byte	0
- 1181 057c 1C       		.uleb128 0x1c
- 1182 057d F3000000 		.4byte	.LASF59
- 1183 0581 01       		.byte	0x1
- 1184 0582 1D       		.byte	0x1d
- 1185 0583 66050000 		.4byte	0x566
- 1186 0587 05       		.uleb128 0x5
- 1187 0588 03       		.byte	0x3
- 1188 0589 00000000 		.4byte	controlFlags
- 1189 058d 1C       		.uleb128 0x1c
- 1190 058e 84000000 		.4byte	.LASF60
- 1191 0592 01       		.byte	0x1
- 1192 0593 47       		.byte	0x47
- 1193 0594 6B000000 		.4byte	0x6b
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 26
-
-
- 1194 0598 05       		.uleb128 0x5
- 1195 0599 03       		.byte	0x3
- 1196 059a 00000000 		.4byte	distAlertTriggered
- 1197 059e 1D       		.uleb128 0x1d
- 1198 059f CF020000 		.4byte	.LASF61
- 1199 05a3 07       		.byte	0x7
- 1200 05a4 6B       		.byte	0x6b
- 1201 05a5 77000000 		.4byte	0x77
- 1202 05a9 1E       		.uleb128 0x1e
- 1203 05aa 07010000 		.4byte	.LASF64
- 1204 05ae 09       		.byte	0x9
- 1205 05af 33       		.byte	0x33
- 1206 05b0 BA050000 		.4byte	0x5ba
- 1207 05b4 1F       		.uleb128 0x1f
- 1208 05b5 6B000000 		.4byte	0x6b
- 1209 05b9 00       		.byte	0
- 1210 05ba 1D       		.uleb128 0x1d
- 1211 05bb DC010000 		.4byte	.LASF62
- 1212 05bf 08       		.byte	0x8
- 1213 05c0 5E       		.byte	0x5e
- 1214 05c1 6B000000 		.4byte	0x6b
- 1215 05c5 1D       		.uleb128 0x1d
- 1216 05c6 F2020000 		.4byte	.LASF63
- 1217 05ca 05       		.byte	0x5
- 1218 05cb 2C       		.byte	0x2c
- 1219 05cc 9C010000 		.4byte	0x19c
- 1220 05d0 1E       		.uleb128 0x1e
- 1221 05d1 D6000000 		.4byte	.LASF65
- 1222 05d5 0A       		.byte	0xa
- 1223 05d6 1A       		.byte	0x1a
- 1224 05d7 E6050000 		.4byte	0x5e6
- 1225 05db 1F       		.uleb128 0x1f
- 1226 05dc 6B000000 		.4byte	0x6b
- 1227 05e0 1F       		.uleb128 0x1f
- 1228 05e1 6B000000 		.4byte	0x6b
- 1229 05e5 00       		.byte	0
- 1230 05e6 20       		.uleb128 0x20
- 1231 05e7 3E040000 		.4byte	.LASF69
- 1232 05eb 05       		.byte	0x5
- 1233 05ec 2B       		.byte	0x2b
- 1234 05ed 1D       		.uleb128 0x1d
- 1235 05ee 62010000 		.4byte	.LASF66
- 1236 05f2 0B       		.byte	0xb
- 1237 05f3 32       		.byte	0x32
- 1238 05f4 6B000000 		.4byte	0x6b
- 1239 05f8 21       		.uleb128 0x21
- 1240 05f9 15000000 		.4byte	.LASF67
- 1241 05fd 0C       		.byte	0xc
- 1242 05fe 12       		.byte	0x12
- 1243 05ff 64000000 		.4byte	0x64
- 1244 0603 09060000 		.4byte	0x609
- 1245 0607 22       		.uleb128 0x22
- 1246 0608 00       		.byte	0
- 1247 0609 1E       		.uleb128 0x1e
- 1248 060a 09000000 		.4byte	.LASF68
- 1249 060e 03       		.byte	0x3
- 1250 060f 18       		.byte	0x18
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 27
-
-
- 1251 0610 1F060000 		.4byte	0x61f
- 1252 0614 1F       		.uleb128 0x1f
- 1253 0615 1F060000 		.4byte	0x61f
- 1254 0619 1F       		.uleb128 0x1f
- 1255 061a 5D000000 		.4byte	0x5d
- 1256 061e 00       		.byte	0
- 1257 061f 05       		.uleb128 0x5
- 1258 0620 04       		.byte	0x4
- 1259 0621 BE000000 		.4byte	0xbe
- 1260 0625 23       		.uleb128 0x23
- 1261 0626 11020000 		.4byte	.LASF91
- 1262 062a 03       		.byte	0x3
- 1263 062b 1B       		.byte	0x1b
- 1264 062c 5D000000 		.4byte	0x5d
- 1265 0630 3A060000 		.4byte	0x63a
- 1266 0634 1F       		.uleb128 0x1f
- 1267 0635 1F060000 		.4byte	0x61f
- 1268 0639 00       		.byte	0
- 1269 063a 24       		.uleb128 0x24
- 1270 063b B8030000 		.4byte	.LASF72
- 1271 063f 04       		.byte	0x4
- 1272 0640 29       		.byte	0x29
- 1273 0641 47060000 		.4byte	0x647
- 1274 0645 22       		.uleb128 0x22
- 1275 0646 00       		.byte	0
- 1276 0647 20       		.uleb128 0x20
- 1277 0648 C6000000 		.4byte	.LASF70
- 1278 064c 07       		.byte	0x7
- 1279 064d 5A       		.byte	0x5a
- 1280 064e 1E       		.uleb128 0x1e
- 1281 064f A3030000 		.4byte	.LASF71
- 1282 0653 0D       		.byte	0xd
- 1283 0654 18       		.byte	0x18
- 1284 0655 5F060000 		.4byte	0x65f
- 1285 0659 1F       		.uleb128 0x1f
- 1286 065a A4000000 		.4byte	0xa4
- 1287 065e 00       		.byte	0
- 1288 065f 24       		.uleb128 0x24
- 1289 0660 D7030000 		.4byte	.LASF73
- 1290 0664 0C       		.byte	0xc
- 1291 0665 11       		.byte	0x11
- 1292 0666 6C060000 		.4byte	0x66c
- 1293 066a 22       		.uleb128 0x22
- 1294 066b 00       		.byte	0
- 1295 066c 25       		.uleb128 0x25
- 1296 066d 4C040000 		.4byte	.LASF74
- 1297 0671 0E       		.byte	0xe
- 1298 0672 3201     		.2byte	0x132
- 1299 0674 25       		.uleb128 0x25
- 1300 0675 18040000 		.4byte	.LASF75
- 1301 0679 0F       		.byte	0xf
- 1302 067a 3201     		.2byte	0x132
- 1303 067c 25       		.uleb128 0x25
- 1304 067d C1020000 		.4byte	.LASF76
- 1305 0681 10       		.byte	0x10
- 1306 0682 3201     		.2byte	0x132
- 1307 0684 20       		.uleb128 0x20
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 28
-
-
- 1308 0685 FD020000 		.4byte	.LASF77
- 1309 0689 08       		.byte	0x8
- 1310 068a 5A       		.byte	0x5a
- 1311 068b 1E       		.uleb128 0x1e
- 1312 068c 1E020000 		.4byte	.LASF78
- 1313 0690 11       		.byte	0x11
- 1314 0691 18       		.byte	0x18
- 1315 0692 9C060000 		.4byte	0x69c
- 1316 0696 1F       		.uleb128 0x1f
- 1317 0697 A4000000 		.4byte	0xa4
- 1318 069b 00       		.byte	0
- 1319 069c 20       		.uleb128 0x20
- 1320 069d 1D010000 		.4byte	.LASF79
- 1321 06a1 05       		.byte	0x5
- 1322 06a2 29       		.byte	0x29
- 1323 06a3 20       		.uleb128 0x20
- 1324 06a4 00000000 		.4byte	.LASF80
- 1325 06a8 06       		.byte	0x6
- 1326 06a9 1A       		.byte	0x1a
- 1327 06aa 20       		.uleb128 0x20
- 1328 06ab EC000000 		.4byte	.LASF81
- 1329 06af 06       		.byte	0x6
- 1330 06b0 1B       		.byte	0x1b
- 1331 06b1 1D       		.uleb128 0x1d
- 1332 06b2 B9000000 		.4byte	.LASF82
- 1333 06b6 05       		.byte	0x5
- 1334 06b7 2D       		.byte	0x2d
- 1335 06b8 5D000000 		.4byte	0x5d
- 1336 06bc 1E       		.uleb128 0x1e
- 1337 06bd CB040000 		.4byte	.LASF83
- 1338 06c1 12       		.byte	0x12
- 1339 06c2 5A       		.byte	0x5a
- 1340 06c3 CD060000 		.4byte	0x6cd
- 1341 06c7 1F       		.uleb128 0x1f
- 1342 06c8 83000000 		.4byte	0x83
- 1343 06cc 00       		.byte	0
- 1344 06cd 20       		.uleb128 0x20
- 1345 06ce 25040000 		.4byte	.LASF84
- 1346 06d2 06       		.byte	0x6
- 1347 06d3 1C       		.byte	0x1c
- 1348 06d4 1E       		.uleb128 0x1e
- 1349 06d5 3D000000 		.4byte	.LASF85
- 1350 06d9 13       		.byte	0x13
- 1351 06da 33       		.byte	0x33
- 1352 06db E5060000 		.4byte	0x6e5
- 1353 06df 1F       		.uleb128 0x1f
- 1354 06e0 6B000000 		.4byte	0x6b
- 1355 06e4 00       		.byte	0
- 1356 06e5 26       		.uleb128 0x26
- 1357 06e6 48030000 		.4byte	.LASF86
- 1358 06ea 12       		.byte	0x12
- 1359 06eb 5B       		.byte	0x5b
- 1360 06ec 1F       		.uleb128 0x1f
- 1361 06ed 77000000 		.4byte	0x77
- 1362 06f1 00       		.byte	0
- 1363 06f2 00       		.byte	0
- 1364              		.section	.debug_abbrev,"",%progbits
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 29
-
-
- 1365              	.Ldebug_abbrev0:
- 1366 0000 01       		.uleb128 0x1
- 1367 0001 11       		.uleb128 0x11
- 1368 0002 01       		.byte	0x1
- 1369 0003 25       		.uleb128 0x25
- 1370 0004 0E       		.uleb128 0xe
- 1371 0005 13       		.uleb128 0x13
- 1372 0006 0B       		.uleb128 0xb
- 1373 0007 03       		.uleb128 0x3
- 1374 0008 0E       		.uleb128 0xe
- 1375 0009 1B       		.uleb128 0x1b
- 1376 000a 0E       		.uleb128 0xe
- 1377 000b 55       		.uleb128 0x55
- 1378 000c 17       		.uleb128 0x17
- 1379 000d 11       		.uleb128 0x11
- 1380 000e 01       		.uleb128 0x1
- 1381 000f 10       		.uleb128 0x10
- 1382 0010 17       		.uleb128 0x17
- 1383 0011 00       		.byte	0
- 1384 0012 00       		.byte	0
- 1385 0013 02       		.uleb128 0x2
- 1386 0014 24       		.uleb128 0x24
- 1387 0015 00       		.byte	0
- 1388 0016 0B       		.uleb128 0xb
- 1389 0017 0B       		.uleb128 0xb
- 1390 0018 3E       		.uleb128 0x3e
- 1391 0019 0B       		.uleb128 0xb
- 1392 001a 03       		.uleb128 0x3
- 1393 001b 0E       		.uleb128 0xe
- 1394 001c 00       		.byte	0
- 1395 001d 00       		.byte	0
- 1396 001e 03       		.uleb128 0x3
- 1397 001f 24       		.uleb128 0x24
- 1398 0020 00       		.byte	0
- 1399 0021 0B       		.uleb128 0xb
- 1400 0022 0B       		.uleb128 0xb
- 1401 0023 3E       		.uleb128 0x3e
- 1402 0024 0B       		.uleb128 0xb
- 1403 0025 03       		.uleb128 0x3
- 1404 0026 08       		.uleb128 0x8
- 1405 0027 00       		.byte	0
- 1406 0028 00       		.byte	0
- 1407 0029 04       		.uleb128 0x4
- 1408 002a 16       		.uleb128 0x16
- 1409 002b 00       		.byte	0
- 1410 002c 03       		.uleb128 0x3
- 1411 002d 0E       		.uleb128 0xe
- 1412 002e 3A       		.uleb128 0x3a
- 1413 002f 0B       		.uleb128 0xb
- 1414 0030 3B       		.uleb128 0x3b
- 1415 0031 05       		.uleb128 0x5
- 1416 0032 49       		.uleb128 0x49
- 1417 0033 13       		.uleb128 0x13
- 1418 0034 00       		.byte	0
- 1419 0035 00       		.byte	0
- 1420 0036 05       		.uleb128 0x5
- 1421 0037 0F       		.uleb128 0xf
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 30
-
-
- 1422 0038 00       		.byte	0
- 1423 0039 0B       		.uleb128 0xb
- 1424 003a 0B       		.uleb128 0xb
- 1425 003b 49       		.uleb128 0x49
- 1426 003c 13       		.uleb128 0x13
- 1427 003d 00       		.byte	0
- 1428 003e 00       		.byte	0
- 1429 003f 06       		.uleb128 0x6
- 1430 0040 15       		.uleb128 0x15
- 1431 0041 00       		.byte	0
- 1432 0042 27       		.uleb128 0x27
- 1433 0043 19       		.uleb128 0x19
- 1434 0044 00       		.byte	0
- 1435 0045 00       		.byte	0
- 1436 0046 07       		.uleb128 0x7
- 1437 0047 13       		.uleb128 0x13
- 1438 0048 01       		.byte	0x1
- 1439 0049 03       		.uleb128 0x3
- 1440 004a 0E       		.uleb128 0xe
- 1441 004b 0B       		.uleb128 0xb
- 1442 004c 0B       		.uleb128 0xb
- 1443 004d 3A       		.uleb128 0x3a
- 1444 004e 0B       		.uleb128 0xb
- 1445 004f 3B       		.uleb128 0x3b
- 1446 0050 0B       		.uleb128 0xb
- 1447 0051 01       		.uleb128 0x1
- 1448 0052 13       		.uleb128 0x13
- 1449 0053 00       		.byte	0
- 1450 0054 00       		.byte	0
- 1451 0055 08       		.uleb128 0x8
- 1452 0056 0D       		.uleb128 0xd
- 1453 0057 00       		.byte	0
- 1454 0058 03       		.uleb128 0x3
- 1455 0059 0E       		.uleb128 0xe
- 1456 005a 3A       		.uleb128 0x3a
- 1457 005b 0B       		.uleb128 0xb
- 1458 005c 3B       		.uleb128 0x3b
- 1459 005d 0B       		.uleb128 0xb
- 1460 005e 49       		.uleb128 0x49
- 1461 005f 13       		.uleb128 0x13
- 1462 0060 38       		.uleb128 0x38
- 1463 0061 0B       		.uleb128 0xb
- 1464 0062 00       		.byte	0
- 1465 0063 00       		.byte	0
- 1466 0064 09       		.uleb128 0x9
- 1467 0065 0D       		.uleb128 0xd
- 1468 0066 00       		.byte	0
- 1469 0067 03       		.uleb128 0x3
- 1470 0068 08       		.uleb128 0x8
- 1471 0069 3A       		.uleb128 0x3a
- 1472 006a 0B       		.uleb128 0xb
- 1473 006b 3B       		.uleb128 0x3b
- 1474 006c 0B       		.uleb128 0xb
- 1475 006d 49       		.uleb128 0x49
- 1476 006e 13       		.uleb128 0x13
- 1477 006f 38       		.uleb128 0x38
- 1478 0070 0B       		.uleb128 0xb
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 31
-
-
- 1479 0071 00       		.byte	0
- 1480 0072 00       		.byte	0
- 1481 0073 0A       		.uleb128 0xa
- 1482 0074 01       		.uleb128 0x1
- 1483 0075 01       		.byte	0x1
- 1484 0076 49       		.uleb128 0x49
- 1485 0077 13       		.uleb128 0x13
- 1486 0078 01       		.uleb128 0x1
- 1487 0079 13       		.uleb128 0x13
- 1488 007a 00       		.byte	0
- 1489 007b 00       		.byte	0
- 1490 007c 0B       		.uleb128 0xb
- 1491 007d 21       		.uleb128 0x21
- 1492 007e 00       		.byte	0
- 1493 007f 49       		.uleb128 0x49
- 1494 0080 13       		.uleb128 0x13
- 1495 0081 2F       		.uleb128 0x2f
- 1496 0082 0B       		.uleb128 0xb
- 1497 0083 00       		.byte	0
- 1498 0084 00       		.byte	0
- 1499 0085 0C       		.uleb128 0xc
- 1500 0086 04       		.uleb128 0x4
- 1501 0087 01       		.byte	0x1
- 1502 0088 03       		.uleb128 0x3
- 1503 0089 0E       		.uleb128 0xe
- 1504 008a 0B       		.uleb128 0xb
- 1505 008b 0B       		.uleb128 0xb
- 1506 008c 3A       		.uleb128 0x3a
- 1507 008d 0B       		.uleb128 0xb
- 1508 008e 3B       		.uleb128 0x3b
- 1509 008f 0B       		.uleb128 0xb
- 1510 0090 01       		.uleb128 0x1
- 1511 0091 13       		.uleb128 0x13
- 1512 0092 00       		.byte	0
- 1513 0093 00       		.byte	0
- 1514 0094 0D       		.uleb128 0xd
- 1515 0095 28       		.uleb128 0x28
- 1516 0096 00       		.byte	0
- 1517 0097 03       		.uleb128 0x3
- 1518 0098 0E       		.uleb128 0xe
- 1519 0099 1C       		.uleb128 0x1c
- 1520 009a 0D       		.uleb128 0xd
- 1521 009b 00       		.byte	0
- 1522 009c 00       		.byte	0
- 1523 009d 0E       		.uleb128 0xe
- 1524 009e 28       		.uleb128 0x28
- 1525 009f 00       		.byte	0
- 1526 00a0 03       		.uleb128 0x3
- 1527 00a1 08       		.uleb128 0x8
- 1528 00a2 1C       		.uleb128 0x1c
- 1529 00a3 0D       		.uleb128 0xd
- 1530 00a4 00       		.byte	0
- 1531 00a5 00       		.byte	0
- 1532 00a6 0F       		.uleb128 0xf
- 1533 00a7 2E       		.uleb128 0x2e
- 1534 00a8 01       		.byte	0x1
- 1535 00a9 3F       		.uleb128 0x3f
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 32
-
-
- 1536 00aa 19       		.uleb128 0x19
- 1537 00ab 03       		.uleb128 0x3
- 1538 00ac 0E       		.uleb128 0xe
- 1539 00ad 3A       		.uleb128 0x3a
- 1540 00ae 0B       		.uleb128 0xb
- 1541 00af 3B       		.uleb128 0x3b
- 1542 00b0 0B       		.uleb128 0xb
- 1543 00b1 27       		.uleb128 0x27
- 1544 00b2 19       		.uleb128 0x19
- 1545 00b3 11       		.uleb128 0x11
- 1546 00b4 01       		.uleb128 0x1
- 1547 00b5 12       		.uleb128 0x12
- 1548 00b6 06       		.uleb128 0x6
- 1549 00b7 40       		.uleb128 0x40
- 1550 00b8 18       		.uleb128 0x18
- 1551 00b9 9642     		.uleb128 0x2116
- 1552 00bb 19       		.uleb128 0x19
- 1553 00bc 01       		.uleb128 0x1
- 1554 00bd 13       		.uleb128 0x13
- 1555 00be 00       		.byte	0
- 1556 00bf 00       		.byte	0
- 1557 00c0 10       		.uleb128 0x10
- 1558 00c1 34       		.uleb128 0x34
- 1559 00c2 00       		.byte	0
- 1560 00c3 03       		.uleb128 0x3
- 1561 00c4 0E       		.uleb128 0xe
- 1562 00c5 3A       		.uleb128 0x3a
- 1563 00c6 0B       		.uleb128 0xb
- 1564 00c7 3B       		.uleb128 0x3b
- 1565 00c8 0B       		.uleb128 0xb
- 1566 00c9 49       		.uleb128 0x49
- 1567 00ca 13       		.uleb128 0x13
- 1568 00cb 02       		.uleb128 0x2
- 1569 00cc 17       		.uleb128 0x17
- 1570 00cd 00       		.byte	0
- 1571 00ce 00       		.byte	0
- 1572 00cf 11       		.uleb128 0x11
- 1573 00d0 898201   		.uleb128 0x4109
- 1574 00d3 00       		.byte	0
- 1575 00d4 11       		.uleb128 0x11
- 1576 00d5 01       		.uleb128 0x1
- 1577 00d6 31       		.uleb128 0x31
- 1578 00d7 13       		.uleb128 0x13
- 1579 00d8 00       		.byte	0
- 1580 00d9 00       		.byte	0
- 1581 00da 12       		.uleb128 0x12
- 1582 00db 898201   		.uleb128 0x4109
- 1583 00de 01       		.byte	0x1
- 1584 00df 11       		.uleb128 0x11
- 1585 00e0 01       		.uleb128 0x1
- 1586 00e1 31       		.uleb128 0x31
- 1587 00e2 13       		.uleb128 0x13
- 1588 00e3 00       		.byte	0
- 1589 00e4 00       		.byte	0
- 1590 00e5 13       		.uleb128 0x13
- 1591 00e6 8A8201   		.uleb128 0x410a
- 1592 00e9 00       		.byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 33
-
-
- 1593 00ea 02       		.uleb128 0x2
- 1594 00eb 18       		.uleb128 0x18
- 1595 00ec 9142     		.uleb128 0x2111
- 1596 00ee 18       		.uleb128 0x18
- 1597 00ef 00       		.byte	0
- 1598 00f0 00       		.byte	0
- 1599 00f1 14       		.uleb128 0x14
- 1600 00f2 2E       		.uleb128 0x2e
- 1601 00f3 00       		.byte	0
- 1602 00f4 3F       		.uleb128 0x3f
- 1603 00f5 19       		.uleb128 0x19
- 1604 00f6 03       		.uleb128 0x3
- 1605 00f7 0E       		.uleb128 0xe
- 1606 00f8 3A       		.uleb128 0x3a
- 1607 00f9 0B       		.uleb128 0xb
- 1608 00fa 3B       		.uleb128 0x3b
- 1609 00fb 0B       		.uleb128 0xb
- 1610 00fc 11       		.uleb128 0x11
- 1611 00fd 01       		.uleb128 0x1
- 1612 00fe 12       		.uleb128 0x12
- 1613 00ff 06       		.uleb128 0x6
- 1614 0100 40       		.uleb128 0x40
- 1615 0101 18       		.uleb128 0x18
- 1616 0102 9742     		.uleb128 0x2117
- 1617 0104 19       		.uleb128 0x19
- 1618 0105 00       		.byte	0
- 1619 0106 00       		.byte	0
- 1620 0107 15       		.uleb128 0x15
- 1621 0108 05       		.uleb128 0x5
- 1622 0109 00       		.byte	0
- 1623 010a 03       		.uleb128 0x3
- 1624 010b 08       		.uleb128 0x8
- 1625 010c 3A       		.uleb128 0x3a
- 1626 010d 0B       		.uleb128 0xb
- 1627 010e 3B       		.uleb128 0x3b
- 1628 010f 0B       		.uleb128 0xb
- 1629 0110 49       		.uleb128 0x49
- 1630 0111 13       		.uleb128 0x13
- 1631 0112 02       		.uleb128 0x2
- 1632 0113 17       		.uleb128 0x17
- 1633 0114 00       		.byte	0
- 1634 0115 00       		.byte	0
- 1635 0116 16       		.uleb128 0x16
- 1636 0117 2E       		.uleb128 0x2e
- 1637 0118 01       		.byte	0x1
- 1638 0119 3F       		.uleb128 0x3f
- 1639 011a 19       		.uleb128 0x19
- 1640 011b 03       		.uleb128 0x3
- 1641 011c 0E       		.uleb128 0xe
- 1642 011d 3A       		.uleb128 0x3a
- 1643 011e 0B       		.uleb128 0xb
- 1644 011f 3B       		.uleb128 0x3b
- 1645 0120 0B       		.uleb128 0xb
- 1646 0121 27       		.uleb128 0x27
- 1647 0122 19       		.uleb128 0x19
- 1648 0123 11       		.uleb128 0x11
- 1649 0124 01       		.uleb128 0x1
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 34
-
-
- 1650 0125 12       		.uleb128 0x12
- 1651 0126 06       		.uleb128 0x6
- 1652 0127 40       		.uleb128 0x40
- 1653 0128 18       		.uleb128 0x18
- 1654 0129 9742     		.uleb128 0x2117
- 1655 012b 19       		.uleb128 0x19
- 1656 012c 01       		.uleb128 0x1
- 1657 012d 13       		.uleb128 0x13
- 1658 012e 00       		.byte	0
- 1659 012f 00       		.byte	0
- 1660 0130 17       		.uleb128 0x17
- 1661 0131 898201   		.uleb128 0x4109
- 1662 0134 01       		.byte	0x1
- 1663 0135 11       		.uleb128 0x11
- 1664 0136 01       		.uleb128 0x1
- 1665 0137 31       		.uleb128 0x31
- 1666 0138 13       		.uleb128 0x13
- 1667 0139 01       		.uleb128 0x1
- 1668 013a 13       		.uleb128 0x13
- 1669 013b 00       		.byte	0
- 1670 013c 00       		.byte	0
- 1671 013d 18       		.uleb128 0x18
- 1672 013e 2E       		.uleb128 0x2e
- 1673 013f 01       		.byte	0x1
- 1674 0140 3F       		.uleb128 0x3f
- 1675 0141 19       		.uleb128 0x19
- 1676 0142 03       		.uleb128 0x3
- 1677 0143 0E       		.uleb128 0xe
- 1678 0144 3A       		.uleb128 0x3a
- 1679 0145 0B       		.uleb128 0xb
- 1680 0146 3B       		.uleb128 0x3b
- 1681 0147 0B       		.uleb128 0xb
- 1682 0148 49       		.uleb128 0x49
- 1683 0149 13       		.uleb128 0x13
- 1684 014a 11       		.uleb128 0x11
- 1685 014b 01       		.uleb128 0x1
- 1686 014c 12       		.uleb128 0x12
- 1687 014d 06       		.uleb128 0x6
- 1688 014e 40       		.uleb128 0x40
- 1689 014f 18       		.uleb128 0x18
- 1690 0150 9742     		.uleb128 0x2117
- 1691 0152 19       		.uleb128 0x19
- 1692 0153 01       		.uleb128 0x1
- 1693 0154 13       		.uleb128 0x13
- 1694 0155 00       		.byte	0
- 1695 0156 00       		.byte	0
- 1696 0157 19       		.uleb128 0x19
- 1697 0158 0B       		.uleb128 0xb
- 1698 0159 01       		.byte	0x1
- 1699 015a 11       		.uleb128 0x11
- 1700 015b 01       		.uleb128 0x1
- 1701 015c 12       		.uleb128 0x12
- 1702 015d 06       		.uleb128 0x6
- 1703 015e 01       		.uleb128 0x1
- 1704 015f 13       		.uleb128 0x13
- 1705 0160 00       		.byte	0
- 1706 0161 00       		.byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 35
-
-
- 1707 0162 1A       		.uleb128 0x1a
- 1708 0163 34       		.uleb128 0x34
- 1709 0164 00       		.byte	0
- 1710 0165 03       		.uleb128 0x3
- 1711 0166 0E       		.uleb128 0xe
- 1712 0167 3A       		.uleb128 0x3a
- 1713 0168 0B       		.uleb128 0xb
- 1714 0169 3B       		.uleb128 0x3b
- 1715 016a 0B       		.uleb128 0xb
- 1716 016b 49       		.uleb128 0x49
- 1717 016c 13       		.uleb128 0x13
- 1718 016d 02       		.uleb128 0x2
- 1719 016e 18       		.uleb128 0x18
- 1720 016f 00       		.byte	0
- 1721 0170 00       		.byte	0
- 1722 0171 1B       		.uleb128 0x1b
- 1723 0172 34       		.uleb128 0x34
- 1724 0173 00       		.byte	0
- 1725 0174 03       		.uleb128 0x3
- 1726 0175 08       		.uleb128 0x8
- 1727 0176 3A       		.uleb128 0x3a
- 1728 0177 0B       		.uleb128 0xb
- 1729 0178 3B       		.uleb128 0x3b
- 1730 0179 0B       		.uleb128 0xb
- 1731 017a 49       		.uleb128 0x49
- 1732 017b 13       		.uleb128 0x13
- 1733 017c 02       		.uleb128 0x2
- 1734 017d 17       		.uleb128 0x17
- 1735 017e 00       		.byte	0
- 1736 017f 00       		.byte	0
- 1737 0180 1C       		.uleb128 0x1c
- 1738 0181 34       		.uleb128 0x34
- 1739 0182 00       		.byte	0
- 1740 0183 03       		.uleb128 0x3
- 1741 0184 0E       		.uleb128 0xe
- 1742 0185 3A       		.uleb128 0x3a
- 1743 0186 0B       		.uleb128 0xb
- 1744 0187 3B       		.uleb128 0x3b
- 1745 0188 0B       		.uleb128 0xb
- 1746 0189 49       		.uleb128 0x49
- 1747 018a 13       		.uleb128 0x13
- 1748 018b 3F       		.uleb128 0x3f
- 1749 018c 19       		.uleb128 0x19
- 1750 018d 02       		.uleb128 0x2
- 1751 018e 18       		.uleb128 0x18
- 1752 018f 00       		.byte	0
- 1753 0190 00       		.byte	0
- 1754 0191 1D       		.uleb128 0x1d
- 1755 0192 2E       		.uleb128 0x2e
- 1756 0193 00       		.byte	0
- 1757 0194 3F       		.uleb128 0x3f
- 1758 0195 19       		.uleb128 0x19
- 1759 0196 03       		.uleb128 0x3
- 1760 0197 0E       		.uleb128 0xe
- 1761 0198 3A       		.uleb128 0x3a
- 1762 0199 0B       		.uleb128 0xb
- 1763 019a 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 36
-
-
- 1764 019b 0B       		.uleb128 0xb
- 1765 019c 27       		.uleb128 0x27
- 1766 019d 19       		.uleb128 0x19
- 1767 019e 49       		.uleb128 0x49
- 1768 019f 13       		.uleb128 0x13
- 1769 01a0 3C       		.uleb128 0x3c
- 1770 01a1 19       		.uleb128 0x19
- 1771 01a2 00       		.byte	0
- 1772 01a3 00       		.byte	0
- 1773 01a4 1E       		.uleb128 0x1e
- 1774 01a5 2E       		.uleb128 0x2e
- 1775 01a6 01       		.byte	0x1
- 1776 01a7 3F       		.uleb128 0x3f
- 1777 01a8 19       		.uleb128 0x19
- 1778 01a9 03       		.uleb128 0x3
- 1779 01aa 0E       		.uleb128 0xe
- 1780 01ab 3A       		.uleb128 0x3a
- 1781 01ac 0B       		.uleb128 0xb
- 1782 01ad 3B       		.uleb128 0x3b
- 1783 01ae 0B       		.uleb128 0xb
- 1784 01af 27       		.uleb128 0x27
- 1785 01b0 19       		.uleb128 0x19
- 1786 01b1 3C       		.uleb128 0x3c
- 1787 01b2 19       		.uleb128 0x19
- 1788 01b3 01       		.uleb128 0x1
- 1789 01b4 13       		.uleb128 0x13
- 1790 01b5 00       		.byte	0
- 1791 01b6 00       		.byte	0
- 1792 01b7 1F       		.uleb128 0x1f
- 1793 01b8 05       		.uleb128 0x5
- 1794 01b9 00       		.byte	0
- 1795 01ba 49       		.uleb128 0x49
- 1796 01bb 13       		.uleb128 0x13
- 1797 01bc 00       		.byte	0
- 1798 01bd 00       		.byte	0
- 1799 01be 20       		.uleb128 0x20
- 1800 01bf 2E       		.uleb128 0x2e
- 1801 01c0 00       		.byte	0
- 1802 01c1 3F       		.uleb128 0x3f
- 1803 01c2 19       		.uleb128 0x19
- 1804 01c3 03       		.uleb128 0x3
- 1805 01c4 0E       		.uleb128 0xe
- 1806 01c5 3A       		.uleb128 0x3a
- 1807 01c6 0B       		.uleb128 0xb
- 1808 01c7 3B       		.uleb128 0x3b
- 1809 01c8 0B       		.uleb128 0xb
- 1810 01c9 27       		.uleb128 0x27
- 1811 01ca 19       		.uleb128 0x19
- 1812 01cb 3C       		.uleb128 0x3c
- 1813 01cc 19       		.uleb128 0x19
- 1814 01cd 00       		.byte	0
- 1815 01ce 00       		.byte	0
- 1816 01cf 21       		.uleb128 0x21
- 1817 01d0 2E       		.uleb128 0x2e
- 1818 01d1 01       		.byte	0x1
- 1819 01d2 3F       		.uleb128 0x3f
- 1820 01d3 19       		.uleb128 0x19
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 37
-
-
- 1821 01d4 03       		.uleb128 0x3
- 1822 01d5 0E       		.uleb128 0xe
- 1823 01d6 3A       		.uleb128 0x3a
- 1824 01d7 0B       		.uleb128 0xb
- 1825 01d8 3B       		.uleb128 0x3b
- 1826 01d9 0B       		.uleb128 0xb
- 1827 01da 49       		.uleb128 0x49
- 1828 01db 13       		.uleb128 0x13
- 1829 01dc 3C       		.uleb128 0x3c
- 1830 01dd 19       		.uleb128 0x19
- 1831 01de 01       		.uleb128 0x1
- 1832 01df 13       		.uleb128 0x13
- 1833 01e0 00       		.byte	0
- 1834 01e1 00       		.byte	0
- 1835 01e2 22       		.uleb128 0x22
- 1836 01e3 18       		.uleb128 0x18
- 1837 01e4 00       		.byte	0
- 1838 01e5 00       		.byte	0
- 1839 01e6 00       		.byte	0
- 1840 01e7 23       		.uleb128 0x23
- 1841 01e8 2E       		.uleb128 0x2e
- 1842 01e9 01       		.byte	0x1
- 1843 01ea 3F       		.uleb128 0x3f
- 1844 01eb 19       		.uleb128 0x19
- 1845 01ec 03       		.uleb128 0x3
- 1846 01ed 0E       		.uleb128 0xe
- 1847 01ee 3A       		.uleb128 0x3a
- 1848 01ef 0B       		.uleb128 0xb
- 1849 01f0 3B       		.uleb128 0x3b
- 1850 01f1 0B       		.uleb128 0xb
- 1851 01f2 27       		.uleb128 0x27
- 1852 01f3 19       		.uleb128 0x19
- 1853 01f4 49       		.uleb128 0x49
- 1854 01f5 13       		.uleb128 0x13
- 1855 01f6 3C       		.uleb128 0x3c
- 1856 01f7 19       		.uleb128 0x19
- 1857 01f8 01       		.uleb128 0x1
- 1858 01f9 13       		.uleb128 0x13
- 1859 01fa 00       		.byte	0
- 1860 01fb 00       		.byte	0
- 1861 01fc 24       		.uleb128 0x24
- 1862 01fd 2E       		.uleb128 0x2e
- 1863 01fe 01       		.byte	0x1
- 1864 01ff 3F       		.uleb128 0x3f
- 1865 0200 19       		.uleb128 0x19
- 1866 0201 03       		.uleb128 0x3
- 1867 0202 0E       		.uleb128 0xe
- 1868 0203 3A       		.uleb128 0x3a
- 1869 0204 0B       		.uleb128 0xb
- 1870 0205 3B       		.uleb128 0x3b
- 1871 0206 0B       		.uleb128 0xb
- 1872 0207 3C       		.uleb128 0x3c
- 1873 0208 19       		.uleb128 0x19
- 1874 0209 01       		.uleb128 0x1
- 1875 020a 13       		.uleb128 0x13
- 1876 020b 00       		.byte	0
- 1877 020c 00       		.byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 38
-
-
- 1878 020d 25       		.uleb128 0x25
- 1879 020e 2E       		.uleb128 0x2e
- 1880 020f 00       		.byte	0
- 1881 0210 3F       		.uleb128 0x3f
- 1882 0211 19       		.uleb128 0x19
- 1883 0212 03       		.uleb128 0x3
- 1884 0213 0E       		.uleb128 0xe
- 1885 0214 3A       		.uleb128 0x3a
- 1886 0215 0B       		.uleb128 0xb
- 1887 0216 3B       		.uleb128 0x3b
- 1888 0217 05       		.uleb128 0x5
- 1889 0218 27       		.uleb128 0x27
- 1890 0219 19       		.uleb128 0x19
- 1891 021a 3C       		.uleb128 0x3c
- 1892 021b 19       		.uleb128 0x19
- 1893 021c 00       		.byte	0
- 1894 021d 00       		.byte	0
- 1895 021e 26       		.uleb128 0x26
- 1896 021f 2E       		.uleb128 0x2e
- 1897 0220 01       		.byte	0x1
- 1898 0221 3F       		.uleb128 0x3f
- 1899 0222 19       		.uleb128 0x19
- 1900 0223 03       		.uleb128 0x3
- 1901 0224 0E       		.uleb128 0xe
- 1902 0225 3A       		.uleb128 0x3a
- 1903 0226 0B       		.uleb128 0xb
- 1904 0227 3B       		.uleb128 0x3b
- 1905 0228 0B       		.uleb128 0xb
- 1906 0229 27       		.uleb128 0x27
- 1907 022a 19       		.uleb128 0x19
- 1908 022b 3C       		.uleb128 0x3c
- 1909 022c 19       		.uleb128 0x19
- 1910 022d 00       		.byte	0
- 1911 022e 00       		.byte	0
- 1912 022f 00       		.byte	0
- 1913              		.section	.debug_loc,"",%progbits
- 1914              	.Ldebug_loc0:
- 1915              	.LLST0:
- 1916 0000 0C000000 		.4byte	.LVL1
- 1917 0004 3C000000 		.4byte	.LVL4
- 1918 0008 0100     		.2byte	0x1
- 1919 000a 54       		.byte	0x54
- 1920 000b 00000000 		.4byte	0
- 1921 000f 00000000 		.4byte	0
- 1922              	.LLST1:
- 1923 0013 00000000 		.4byte	.LVL5
- 1924 0017 0A000000 		.4byte	.LVL6
- 1925 001b 0100     		.2byte	0x1
- 1926 001d 50       		.byte	0x50
- 1927 001e 0A000000 		.4byte	.LVL6
- 1928 0022 28000000 		.4byte	.LFE35
- 1929 0026 0400     		.2byte	0x4
- 1930 0028 F3       		.byte	0xf3
- 1931 0029 01       		.uleb128 0x1
- 1932 002a 50       		.byte	0x50
- 1933 002b 9F       		.byte	0x9f
- 1934 002c 00000000 		.4byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 39
-
-
- 1935 0030 00000000 		.4byte	0
- 1936              	.LLST2:
- 1937 0034 E2000000 		.4byte	.LVL37
- 1938 0038 F0000000 		.4byte	.LVL38
- 1939 003c 0100     		.2byte	0x1
- 1940 003e 50       		.byte	0x50
- 1941 003f F0000000 		.4byte	.LVL38
- 1942 0043 FE000000 		.4byte	.LVL40
- 1943 0047 0100     		.2byte	0x1
- 1944 0049 54       		.byte	0x54
- 1945 004a 00000000 		.4byte	0
- 1946 004e 00000000 		.4byte	0
- 1947              	.LLST3:
- 1948 0052 1A010000 		.4byte	.LVL42
- 1949 0056 1E010000 		.4byte	.LVL43
- 1950 005a 0100     		.2byte	0x1
- 1951 005c 50       		.byte	0x50
- 1952 005d 1E010000 		.4byte	.LVL43
- 1953 0061 21010000 		.4byte	.LVL44-1
- 1954 0065 0100     		.2byte	0x1
- 1955 0067 51       		.byte	0x51
- 1956 0068 00000000 		.4byte	0
- 1957 006c 00000000 		.4byte	0
- 1958              		.section	.debug_aranges,"",%progbits
- 1959 0000 3C000000 		.4byte	0x3c
- 1960 0004 0200     		.2byte	0x2
- 1961 0006 00000000 		.4byte	.Ldebug_info0
- 1962 000a 04       		.byte	0x4
- 1963 000b 00       		.byte	0
- 1964 000c 0000     		.2byte	0
- 1965 000e 0000     		.2byte	0
- 1966 0010 00000000 		.4byte	.LFB37
- 1967 0014 50000000 		.4byte	.LFE37-.LFB37
- 1968 0018 00000000 		.4byte	.LFB34
- 1969 001c 14000000 		.4byte	.LFE34-.LFB34
- 1970 0020 00000000 		.4byte	.LFB35
- 1971 0024 28000000 		.4byte	.LFE35-.LFB35
- 1972 0028 00000000 		.4byte	.LFB36
- 1973 002c 1A000000 		.4byte	.LFE36-.LFB36
- 1974 0030 00000000 		.4byte	.LFB38
- 1975 0034 48010000 		.4byte	.LFE38-.LFB38
- 1976 0038 00000000 		.4byte	0
- 1977 003c 00000000 		.4byte	0
- 1978              		.section	.debug_ranges,"",%progbits
- 1979              	.Ldebug_ranges0:
- 1980 0000 00000000 		.4byte	.LFB37
- 1981 0004 50000000 		.4byte	.LFE37
- 1982 0008 00000000 		.4byte	.LFB34
- 1983 000c 14000000 		.4byte	.LFE34
- 1984 0010 00000000 		.4byte	.LFB35
- 1985 0014 28000000 		.4byte	.LFE35
- 1986 0018 00000000 		.4byte	.LFB36
- 1987 001c 1A000000 		.4byte	.LFE36
- 1988 0020 00000000 		.4byte	.LFB38
- 1989 0024 48010000 		.4byte	.LFE38
- 1990 0028 00000000 		.4byte	0
- 1991 002c 00000000 		.4byte	0
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 40
-
-
- 1992              		.section	.debug_line,"",%progbits
- 1993              	.Ldebug_line0:
- 1994 0000 F1010000 		.section	.debug_str,"MS",%progbits,1
- 1994      02004A01 
- 1994      00000201 
- 1994      FB0E0D00 
- 1994      01010101 
- 1995              	.LASF80:
- 1996 0000 6932635F 		.ascii	"i2c_init\000"
- 1996      696E6974 
- 1996      00
- 1997              	.LASF68:
- 1998 0009 696E7365 		.ascii	"insertValue\000"
- 1998      72745661 
- 1998      6C756500 
- 1999              	.LASF67:
- 2000 0015 72656164 		.ascii	"readLumenSensor\000"
- 2000      4C756D65 
- 2000      6E53656E 
- 2000      736F7200 
- 2001              	.LASF30:
- 2002 0025 626C7565 		.ascii	"bluePWMPct\000"
- 2002      50574D50 
- 2002      637400
- 2003              	.LASF19:
- 2004 0030 43697263 		.ascii	"CircularMean\000"
- 2004      756C6172 
- 2004      4D65616E 
- 2004      00
- 2005              	.LASF85:
- 2006 003d 44697374 		.ascii	"DistTrigger_Write\000"
- 2006      54726967 
- 2006      6765725F 
- 2006      57726974 
- 2006      6500
- 2007              	.LASF45:
- 2008 004f 52415445 		.ascii	"RATE\000"
- 2008      00
- 2009              	.LASF2:
- 2010 0054 73686F72 		.ascii	"short int\000"
- 2010      7420696E 
- 2010      7400
- 2011              	.LASF36:
- 2012 005e 64617461 		.ascii	"data_\000"
- 2012      5F00
- 2013              	.LASF48:
- 2014 0064 696E6372 		.ascii	"incrCtrlFlag\000"
- 2014      4374726C 
- 2014      466C6167 
- 2014      00
- 2015              	.LASF16:
- 2016 0071 73697A65 		.ascii	"sizetype\000"
- 2016      74797065 
- 2016      00
- 2017              	.LASF35:
- 2018 007a 4E6F6465 		.ascii	"Node\000"
- 2018      00
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 41
-
-
- 2019              	.LASF50:
- 2020 007f 6D61696E 		.ascii	"main\000"
- 2020      00
- 2021              	.LASF60:
- 2022 0084 64697374 		.ascii	"distAlertTriggered\000"
- 2022      416C6572 
- 2022      74547269 
- 2022      67676572 
- 2022      656400
- 2023              	.LASF6:
- 2024 0097 6C6F6E67 		.ascii	"long long int\000"
- 2024      206C6F6E 
- 2024      6720696E 
- 2024      7400
- 2025              	.LASF49:
- 2026 00a5 4D657472 		.ascii	"Metronome_Interrupt\000"
- 2026      6F6E6F6D 
- 2026      655F496E 
- 2026      74657272 
- 2026      75707400 
- 2027              	.LASF82:
- 2028 00b9 6973456D 		.ascii	"isEmptyQueue\000"
- 2028      70747951 
- 2028      75657565 
- 2028      00
- 2029              	.LASF70:
- 2030 00c6 44697374 		.ascii	"DistTimer_Start\000"
- 2030      54696D65 
- 2030      725F5374 
- 2030      61727400 
- 2031              	.LASF65:
- 2032 00d6 68616E64 		.ascii	"handler\000"
- 2032      6C657200 
- 2033              	.LASF90:
- 2034 00de 696E6974 		.ascii	"initCtrlFlags\000"
- 2034      4374726C 
- 2034      466C6167 
- 2034      7300
- 2035              	.LASF81:
- 2036 00ec 6932635F 		.ascii	"i2c_rx\000"
- 2036      727800
- 2037              	.LASF59:
- 2038 00f3 636F6E74 		.ascii	"controlFlags\000"
- 2038      726F6C46 
- 2038      6C616773 
- 2038      00
- 2039              	.LASF42:
- 2040 0100 73656E73 		.ascii	"sensor\000"
- 2040      6F7200
- 2041              	.LASF64:
- 2042 0107 44697374 		.ascii	"DistReset_Write\000"
- 2042      52657365 
- 2042      745F5772 
- 2042      69746500 
- 2043              	.LASF37:
- 2044 0117 6E657874 		.ascii	"next_\000"
- 2044      5F00
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 42
-
-
- 2045              	.LASF79:
- 2046 011d 71756575 		.ascii	"queue_init\000"
- 2046      655F696E 
- 2046      697400
- 2047              	.LASF12:
- 2048 0128 666C6F61 		.ascii	"float\000"
- 2048      7400
- 2049              	.LASF57:
- 2050 012e 6932635F 		.ascii	"i2c_txBuffer\000"
- 2050      74784275 
- 2050      66666572 
- 2050      00
- 2051              	.LASF13:
- 2052 013b 646F7562 		.ascii	"double\000"
- 2052      6C6500
- 2053              	.LASF51:
- 2054 0142 6563686F 		.ascii	"echoDelay\000"
- 2054      44656C61 
- 2054      7900
- 2055              	.LASF44:
- 2056 014c 434F554E 		.ascii	"COUNT\000"
- 2056      5400
- 2057              	.LASF52:
- 2058 0152 61637469 		.ascii	"action\000"
- 2058      6F6E00
- 2059              	.LASF23:
- 2060 0159 6D6F7665 		.ascii	"movement\000"
- 2060      6D656E74 
- 2060      00
- 2061              	.LASF66:
- 2062 0162 5049525F 		.ascii	"PIR_Trig_Read\000"
- 2062      54726967 
- 2062      5F526561 
- 2062      6400
- 2063              	.LASF31:
- 2064 0170 6C656450 		.ascii	"ledPower\000"
- 2064      6F776572 
- 2064      00
- 2065              	.LASF47:
- 2066 0179 44697374 		.ascii	"DistTimer_Interrupt\000"
- 2066      54696D65 
- 2066      725F496E 
- 2066      74657272 
- 2066      75707400 
- 2067              	.LASF53:
- 2068 018d 6C757856 		.ascii	"luxValue\000"
- 2068      616C7565 
- 2068      00
- 2069              	.LASF89:
- 2070 0196 433A5C55 		.ascii	"C:\\Users\\Simon\\Documents\\GitHub\\E3PRJ3-Gruppe1"
- 2070      73657273 
- 2070      5C53696D 
- 2070      6F6E5C44 
- 2070      6F63756D 
- 2071 01c4 5C50536F 		.ascii	"\\PSoC\\Sensor-PSoC.cydsn\000"
- 2071      435C5365 
- 2071      6E736F72 
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 43
-
-
- 2071      2D50536F 
- 2071      432E6379 
- 2072              	.LASF62:
- 2073 01dc 4D657472 		.ascii	"MetronomeTimer_ReadStatusRegister\000"
- 2073      6F6E6F6D 
- 2073      6554696D 
- 2073      65725F52 
- 2073      65616453 
- 2074              	.LASF32:
- 2075 01fe 44617461 		.ascii	"Data\000"
- 2075      00
- 2076              	.LASF1:
- 2077 0203 756E7369 		.ascii	"unsigned char\000"
- 2077      676E6564 
- 2077      20636861 
- 2077      7200
- 2078              	.LASF91:
- 2079 0211 6765744D 		.ascii	"getMeanValue\000"
- 2079      65616E56 
- 2079      616C7565 
- 2079      00
- 2080              	.LASF78:
- 2081 021e 4D657472 		.ascii	"MetronomeISR_StartEx\000"
- 2081      6F6E6F6D 
- 2081      65495352 
- 2081      5F537461 
- 2081      72744578 
- 2082              	.LASF87:
- 2083 0233 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 2083      4320342E 
- 2083      392E3320 
- 2083      32303135 
- 2083      30333033 
- 2084 0266 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 2084      20726576 
- 2084      6973696F 
- 2084      6E203232 
- 2084      31323230 
- 2085 0299 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 2085      66756E63 
- 2085      74696F6E 
- 2085      2D736563 
- 2085      74696F6E 
- 2086              	.LASF76:
- 2087 02c1 426C7565 		.ascii	"BluePWM_Start\000"
- 2087      50574D5F 
- 2087      53746172 
- 2087      7400
- 2088              	.LASF61:
- 2089 02cf 44697374 		.ascii	"DistTimer_ReadCapture\000"
- 2089      54696D65 
- 2089      725F5265 
- 2089      61644361 
- 2089      70747572 
- 2090              	.LASF26:
- 2091 02e5 74696D65 		.ascii	"timeDistance\000"
- 2091      44697374 
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 44
-
-
- 2091      616E6365 
- 2091      00
- 2092              	.LASF63:
- 2093 02f2 66726F6E 		.ascii	"frontQueue\000"
- 2093      74517565 
- 2093      756500
- 2094              	.LASF77:
- 2095 02fd 4D657472 		.ascii	"MetronomeTimer_Start\000"
- 2095      6F6E6F6D 
- 2095      6554696D 
- 2095      65725F53 
- 2095      74617274 
- 2096              	.LASF0:
- 2097 0312 7369676E 		.ascii	"signed char\000"
- 2097      65642063 
- 2097      68617200 
- 2098              	.LASF7:
- 2099 031e 6C6F6E67 		.ascii	"long long unsigned int\000"
- 2099      206C6F6E 
- 2099      6720756E 
- 2099      7369676E 
- 2099      65642069 
- 2100              	.LASF39:
- 2101 0335 4C554D45 		.ascii	"LUMEN\000"
- 2101      4E00
- 2102              	.LASF8:
- 2103 033b 756E7369 		.ascii	"unsigned int\000"
- 2103      676E6564 
- 2103      20696E74 
- 2103      00
- 2104              	.LASF86:
- 2105 0348 43794465 		.ascii	"CyDelayUs\000"
- 2105      6C617955 
- 2105      7300
- 2106              	.LASF58:
- 2107 0352 6932635F 		.ascii	"i2c_rxBuffer\000"
- 2107      72784275 
- 2107      66666572 
- 2107      00
- 2108              	.LASF18:
- 2109 035f 73746172 		.ascii	"start\000"
- 2109      7400
- 2110              	.LASF3:
- 2111 0365 73686F72 		.ascii	"short unsigned int\000"
- 2111      7420756E 
- 2111      7369676E 
- 2111      65642069 
- 2111      6E7400
- 2112              	.LASF56:
- 2113 0378 6261636B 		.ascii	"backOfQueuePtr\000"
- 2113      4F665175 
- 2113      65756550 
- 2113      747200
- 2114              	.LASF14:
- 2115 0387 63686172 		.ascii	"char\000"
- 2115      00
- 2116              	.LASF25:
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 45
-
-
- 2117 038c 64697374 		.ascii	"distance\000"
- 2117      616E6365 
- 2117      00
- 2118              	.LASF4:
- 2119 0395 6C6F6E67 		.ascii	"long int\000"
- 2119      20696E74 
- 2119      00
- 2120              	.LASF46:
- 2121 039e 464C4147 		.ascii	"FLAG\000"
- 2121      00
- 2122              	.LASF71:
- 2123 03a3 44697374 		.ascii	"DistTimerInt_StartEx\000"
- 2123      54696D65 
- 2123      72496E74 
- 2123      5F537461 
- 2123      72744578 
- 2124              	.LASF72:
- 2125 03b8 696E6974 		.ascii	"initSensorData\000"
- 2125      53656E73 
- 2125      6F724461 
- 2125      746100
- 2126              	.LASF9:
- 2127 03c7 75696E74 		.ascii	"uint8\000"
- 2127      3800
- 2128              	.LASF22:
- 2129 03cd 4C756D65 		.ascii	"LumenMean\000"
- 2129      6E4D6561 
- 2129      6E00
- 2130              	.LASF73:
- 2131 03d7 696E6974 		.ascii	"initLumenSensor\000"
- 2131      4C756D65 
- 2131      6E53656E 
- 2131      736F7200 
- 2132              	.LASF54:
- 2133 03e7 73656E73 		.ascii	"sensorData\000"
- 2133      6F724461 
- 2133      746100
- 2134              	.LASF10:
- 2135 03f2 75696E74 		.ascii	"uint16\000"
- 2135      313600
- 2136              	.LASF29:
- 2137 03f9 72656450 		.ascii	"redPWMPct\000"
- 2137      574D5063 
- 2137      7400
- 2138              	.LASF55:
- 2139 0403 66726F6E 		.ascii	"frontOfQueuePtr\000"
- 2139      744F6651 
- 2139      75657565 
- 2139      50747200 
- 2140              	.LASF34:
- 2141 0413 76616C5F 		.ascii	"val_\000"
- 2141      00
- 2142              	.LASF75:
- 2143 0418 52656450 		.ascii	"RedPWM_Start\000"
- 2143      574D5F53 
- 2143      74617274 
- 2143      00
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 46
-
-
- 2144              	.LASF84:
- 2145 0425 6932635F 		.ascii	"i2c_tx\000"
- 2145      747800
- 2146              	.LASF5:
- 2147 042c 6C6F6E67 		.ascii	"long unsigned int\000"
- 2147      20756E73 
- 2147      69676E65 
- 2147      6420696E 
- 2147      7400
- 2148              	.LASF69:
- 2149 043e 706F7051 		.ascii	"popQueue\000"
- 2149      75657565 
- 2149      00
- 2150              	.LASF43:
- 2151 0447 6374726C 		.ascii	"ctrl\000"
- 2151      00
- 2152              	.LASF74:
- 2153 044c 47726565 		.ascii	"GreenPWM_Start\000"
- 2153      6E50574D 
- 2153      5F537461 
- 2153      727400
- 2154              	.LASF33:
- 2155 045b 636D645F 		.ascii	"cmd_\000"
- 2155      00
- 2156              	.LASF11:
- 2157 0460 75696E74 		.ascii	"uint32\000"
- 2157      333200
- 2158              	.LASF24:
- 2159 0467 6D6F7665 		.ascii	"movementAlertOn\000"
- 2159      6D656E74 
- 2159      416C6572 
- 2159      744F6E00 
- 2160              	.LASF20:
- 2161 0477 73656E73 		.ascii	"sensorDataT\000"
- 2161      6F724461 
- 2161      74615400 
- 2162              	.LASF88:
- 2163 0483 2E5C6D61 		.ascii	".\\main.c\000"
- 2163      696E2E63 
+ 426 011a 291C     		mov	r1, r5
+ 427 011c FFF7FEFF 		bl	insertValue
+ 428              	.LVL44:
+ 214:.\main.c      ****             sensorData.lux = getMeanValue(&sensorData.LumenMean);
+ 429              		.loc 1 214 0
+ 430 0120 201C     		mov	r0, r4
+ 431 0122 FFF7FEFF 		bl	getMeanValue
+ 432              	.LVL45:
+ 433 0126 031C     		mov	r3, r0
+ 434 0128 083C     		sub	r4, r4, #8
+ 435 012a 2060     		str	r0, [r4]
+ 215:.\main.c      **** 
+ 216:.\main.c      **** #ifdef DEBUG_ON
+ 217:.\main.c      ****             char bla[15];
+ 218:.\main.c      ****             sprintf(bla, "Lux: %i, mean: %i\n\r", luxValue, sensorData.lux);
+ 436              		.loc 1 218 0
+ 437 012c 6846     		mov	r0, sp
+ 438 012e 0A49     		ldr	r1, .L23+24
+ 439 0130 2A1C     		mov	r2, r5
+ 440 0132 FFF7FEFF 		bl	sprintf
+ 441              	.LVL46:
+ 219:.\main.c      ****             DEBUG_PutString(bla);
+ 442              		.loc 1 219 0
+ 443 0136 6846     		mov	r0, sp
+ 444 0138 FFF7FEFF 		bl	DEBUG_PutString
+ 445              	.LVL47:
+ 446 013c 89E7     		b	.L15
+ 447              	.L24:
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 13
+
+
+ 448 013e C046     		.align	2
+ 449              	.L23:
+ 450 0140 00000000 		.word	DistTimer_Interrupt
+ 451 0144 00000000 		.word	Metronome_Interrupt
+ 452 0148 00000000 		.word	.LANCHOR0
+ 453 014c 00000000 		.word	.LANCHOR1
+ 454 0150 00000000 		.word	sensorData
+ 455 0154 08000000 		.word	sensorData+8
+ 456 0158 00000000 		.word	.LC11
+ 457              	.LBE4:
+ 458              		.cfi_endproc
+ 459              	.LFE38:
+ 460              		.size	main, .-main
+ 461              		.global	distAlertTriggered
+ 462              		.global	controlFlags
+ 463              		.global	t
+ 464              		.comm	i2cRxBuffer,4,4
+ 465              		.comm	i2cTxBuffer,4,4
+ 466              		.comm	backOfQueuePtr,4,4
+ 467              		.comm	frontOfQueuePtr,4,4
+ 468              		.comm	sensorData,152,4
+ 469              		.data
+ 470              		.align	2
+ 471              		.set	.LANCHOR0,. + 0
+ 472              		.type	controlFlags, %object
+ 473              		.size	controlFlags, 15
+ 474              	controlFlags:
+ 475 0000 01       		.byte	1
+ 476 0001 FF       		.byte	-1
+ 477 0002 00       		.byte	0
+ 478 0003 01       		.byte	1
+ 479 0004 FF       		.byte	-1
+ 480 0005 00       		.byte	0
+ 481 0006 01       		.byte	1
+ 482 0007 FF       		.byte	-1
+ 483 0008 00       		.byte	0
+ 484 0009 01       		.byte	1
+ 485 000a FF       		.byte	-1
+ 486 000b 00       		.byte	0
+ 487 000c 01       		.byte	1
+ 488 000d FF       		.byte	-1
+ 489 000e 00       		.byte	0
+ 490 000f 00       		.section	.rodata.str1.4,"aMS",%progbits,1
+ 491              		.align	2
+ 492              	.LC11:
+ 493 0000 4C75783A 		.ascii	"Lux: %i, mean: %i\012\015\000"
+ 493      2025692C 
+ 493      206D6561 
+ 493      6E3A2025 
+ 493      690A0D00 
+ 494              		.bss
+ 495              		.set	.LANCHOR1,. + 0
+ 496              		.type	distAlertTriggered, %object
+ 497              		.size	distAlertTriggered, 1
+ 498              	distAlertTriggered:
+ 499 0000 00       		.space	1
+ 500              		.type	t, %object
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 14
+
+
+ 501              		.size	t, 1
+ 502              	t:
+ 503 0001 00       		.space	1
+ 504              		.text
+ 505              	.Letext0:
+ 506              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 507              		.file 3 ".\\CircularMean.h"
+ 508              		.file 4 ".\\SensorData.h"
+ 509              		.file 5 ".\\queue.h"
+ 510              		.file 6 ".\\i2c.h"
+ 511              		.file 7 "Generated_Source\\PSoC4/DistTimer.h"
+ 512              		.file 8 "Generated_Source\\PSoC4/MetronomeTimer.h"
+ 513              		.file 9 "Generated_Source\\PSoC4/DistReset.h"
+ 514              		.file 10 ".\\handler.h"
+ 515              		.file 11 "Generated_Source\\PSoC4/PIR_Trig.h"
+ 516              		.file 12 ".\\LumenSensor.h"
+ 517              		.file 13 "c:\\program files (x86)\\cypress\\psoc creator\\3.3\\psoc creator\\import\\gnu\\arm\\4.9
+ 518              		.file 14 "Generated_Source\\PSoC4/DEBUG.h"
+ 519              		.file 15 "Generated_Source\\PSoC4/DistTimerInt.h"
+ 520              		.file 16 "Generated_Source\\PSoC4/GreenPWM.h"
+ 521              		.file 17 "Generated_Source\\PSoC4/RedPWM.h"
+ 522              		.file 18 "Generated_Source\\PSoC4/BluePWM.h"
+ 523              		.file 19 "Generated_Source\\PSoC4/MetronomeISR.h"
+ 524              		.file 20 "Generated_Source\\PSoC4/CyLib.h"
+ 525              		.file 21 "Generated_Source\\PSoC4/DistTrigger.h"
+ 526              		.section	.debug_info,"",%progbits
+ 527              	.Ldebug_info0:
+ 528 0000 B0070000 		.4byte	0x7b0
+ 529 0004 0400     		.2byte	0x4
+ 530 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 531 000a 04       		.byte	0x4
+ 532 000b 01       		.uleb128 0x1
+ 533 000c 2D020000 		.4byte	.LASF90
+ 534 0010 01       		.byte	0x1
+ 535 0011 7E040000 		.4byte	.LASF91
+ 536 0015 90010000 		.4byte	.LASF92
+ 537 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 538 001d 00000000 		.4byte	0
+ 539 0021 00000000 		.4byte	.Ldebug_line0
+ 540 0025 02       		.uleb128 0x2
+ 541 0026 01       		.byte	0x1
+ 542 0027 06       		.byte	0x6
+ 543 0028 0C030000 		.4byte	.LASF0
+ 544 002c 02       		.uleb128 0x2
+ 545 002d 01       		.byte	0x1
+ 546 002e 08       		.byte	0x8
+ 547 002f FD010000 		.4byte	.LASF1
+ 548 0033 02       		.uleb128 0x2
+ 549 0034 02       		.byte	0x2
+ 550 0035 05       		.byte	0x5
+ 551 0036 54000000 		.4byte	.LASF2
+ 552 003a 02       		.uleb128 0x2
+ 553 003b 02       		.byte	0x2
+ 554 003c 07       		.byte	0x7
+ 555 003d 5A030000 		.4byte	.LASF3
+ 556 0041 02       		.uleb128 0x2
+ 557 0042 04       		.byte	0x4
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 15
+
+
+ 558 0043 05       		.byte	0x5
+ 559 0044 8A030000 		.4byte	.LASF4
+ 560 0048 02       		.uleb128 0x2
+ 561 0049 04       		.byte	0x4
+ 562 004a 07       		.byte	0x7
+ 563 004b 27040000 		.4byte	.LASF5
+ 564 004f 02       		.uleb128 0x2
+ 565 0050 08       		.byte	0x8
+ 566 0051 05       		.byte	0x5
+ 567 0052 A3000000 		.4byte	.LASF6
+ 568 0056 02       		.uleb128 0x2
+ 569 0057 08       		.byte	0x8
+ 570 0058 07       		.byte	0x7
+ 571 0059 18030000 		.4byte	.LASF7
+ 572 005d 03       		.uleb128 0x3
+ 573 005e 04       		.byte	0x4
+ 574 005f 05       		.byte	0x5
+ 575 0060 696E7400 		.ascii	"int\000"
+ 576 0064 02       		.uleb128 0x2
+ 577 0065 04       		.byte	0x4
+ 578 0066 07       		.byte	0x7
+ 579 0067 3D030000 		.4byte	.LASF8
+ 580 006b 04       		.uleb128 0x4
+ 581 006c C2030000 		.4byte	.LASF9
+ 582 0070 02       		.byte	0x2
+ 583 0071 3801     		.2byte	0x138
+ 584 0073 2C000000 		.4byte	0x2c
+ 585 0077 04       		.uleb128 0x4
+ 586 0078 ED030000 		.4byte	.LASF10
+ 587 007c 02       		.byte	0x2
+ 588 007d 3901     		.2byte	0x139
+ 589 007f 3A000000 		.4byte	0x3a
+ 590 0083 04       		.uleb128 0x4
+ 591 0084 5B040000 		.4byte	.LASF11
+ 592 0088 02       		.byte	0x2
+ 593 0089 3A01     		.2byte	0x13a
+ 594 008b 48000000 		.4byte	0x48
+ 595 008f 02       		.uleb128 0x2
+ 596 0090 04       		.byte	0x4
+ 597 0091 04       		.byte	0x4
+ 598 0092 2F010000 		.4byte	.LASF12
+ 599 0096 02       		.uleb128 0x2
+ 600 0097 08       		.byte	0x8
+ 601 0098 04       		.byte	0x4
+ 602 0099 35010000 		.4byte	.LASF13
+ 603 009d 04       		.uleb128 0x4
+ 604 009e AD030000 		.4byte	.LASF14
+ 605 00a2 02       		.byte	0x2
+ 606 00a3 4901     		.2byte	0x149
+ 607 00a5 A9000000 		.4byte	0xa9
+ 608 00a9 02       		.uleb128 0x2
+ 609 00aa 01       		.byte	0x1
+ 610 00ab 08       		.byte	0x8
+ 611 00ac 7C030000 		.4byte	.LASF15
+ 612 00b0 04       		.uleb128 0x4
+ 613 00b1 BC040000 		.4byte	.LASF16
+ 614 00b5 02       		.byte	0x2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 16
+
+
+ 615 00b6 F401     		.2byte	0x1f4
+ 616 00b8 BC000000 		.4byte	0xbc
+ 617 00bc 05       		.uleb128 0x5
+ 618 00bd 04       		.byte	0x4
+ 619 00be C2000000 		.4byte	0xc2
+ 620 00c2 06       		.uleb128 0x6
+ 621 00c3 02       		.uleb128 0x2
+ 622 00c4 04       		.byte	0x4
+ 623 00c5 07       		.byte	0x7
+ 624 00c6 71000000 		.4byte	.LASF17
+ 625 00ca 05       		.uleb128 0x5
+ 626 00cb 04       		.byte	0x4
+ 627 00cc A9000000 		.4byte	0xa9
+ 628 00d0 05       		.uleb128 0x5
+ 629 00d1 04       		.byte	0x4
+ 630 00d2 D6000000 		.4byte	0xd6
+ 631 00d6 07       		.uleb128 0x7
+ 632 00d7 A9000000 		.4byte	0xa9
+ 633 00db 08       		.uleb128 0x8
+ 634 00dc 30000000 		.4byte	.LASF20
+ 635 00e0 7C       		.byte	0x7c
+ 636 00e1 03       		.byte	0x3
+ 637 00e2 0E       		.byte	0xe
+ 638 00e3 0C010000 		.4byte	0x10c
+ 639 00e7 09       		.uleb128 0x9
+ 640 00e8 C9040000 		.4byte	.LASF18
+ 641 00ec 03       		.byte	0x3
+ 642 00ed 0F       		.byte	0xf
+ 643 00ee 0C010000 		.4byte	0x10c
+ 644 00f2 00       		.byte	0
+ 645 00f3 09       		.uleb128 0x9
+ 646 00f4 54030000 		.4byte	.LASF19
+ 647 00f8 03       		.byte	0x3
+ 648 00f9 10       		.byte	0x10
+ 649 00fa 2C000000 		.4byte	0x2c
+ 650 00fe 78       		.byte	0x78
+ 651 00ff 0A       		.uleb128 0xa
+ 652 0100 6E756D00 		.ascii	"num\000"
+ 653 0104 03       		.byte	0x3
+ 654 0105 11       		.byte	0x11
+ 655 0106 2C000000 		.4byte	0x2c
+ 656 010a 79       		.byte	0x79
+ 657 010b 00       		.byte	0
+ 658 010c 0B       		.uleb128 0xb
+ 659 010d 5D000000 		.4byte	0x5d
+ 660 0111 1C010000 		.4byte	0x11c
+ 661 0115 0C       		.uleb128 0xc
+ 662 0116 C3000000 		.4byte	0xc3
+ 663 011a 1D       		.byte	0x1d
+ 664 011b 00       		.byte	0
+ 665 011c 08       		.uleb128 0x8
+ 666 011d 72040000 		.4byte	.LASF21
+ 667 0121 98       		.byte	0x98
+ 668 0122 04       		.byte	0x4
+ 669 0123 13       		.byte	0x13
+ 670 0124 B9010000 		.4byte	0x1b9
+ 671 0128 0A       		.uleb128 0xa
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 17
+
+
+ 672 0129 6C757800 		.ascii	"lux\000"
+ 673 012d 04       		.byte	0x4
+ 674 012e 15       		.byte	0x15
+ 675 012f 64000000 		.4byte	0x64
+ 676 0133 00       		.byte	0
+ 677 0134 09       		.uleb128 0x9
+ 678 0135 87040000 		.4byte	.LASF22
+ 679 0139 04       		.byte	0x4
+ 680 013a 16       		.byte	0x16
+ 681 013b 64000000 		.4byte	0x64
+ 682 013f 04       		.byte	0x4
+ 683 0140 09       		.uleb128 0x9
+ 684 0141 C8030000 		.4byte	.LASF23
+ 685 0145 04       		.byte	0x4
+ 686 0146 17       		.byte	0x17
+ 687 0147 DB000000 		.4byte	0xdb
+ 688 014b 08       		.byte	0x8
+ 689 014c 09       		.uleb128 0x9
+ 690 014d 53010000 		.4byte	.LASF24
+ 691 0151 04       		.byte	0x4
+ 692 0152 1A       		.byte	0x1a
+ 693 0153 6B000000 		.4byte	0x6b
+ 694 0157 84       		.byte	0x84
+ 695 0158 09       		.uleb128 0x9
+ 696 0159 62040000 		.4byte	.LASF25
+ 697 015d 04       		.byte	0x4
+ 698 015e 1B       		.byte	0x1b
+ 699 015f 6B000000 		.4byte	0x6b
+ 700 0163 85       		.byte	0x85
+ 701 0164 09       		.uleb128 0x9
+ 702 0165 81030000 		.4byte	.LASF26
+ 703 0169 04       		.byte	0x4
+ 704 016a 1E       		.byte	0x1e
+ 705 016b 5D000000 		.4byte	0x5d
+ 706 016f 88       		.byte	0x88
+ 707 0170 09       		.uleb128 0x9
+ 708 0171 DF020000 		.4byte	.LASF27
+ 709 0175 04       		.byte	0x4
+ 710 0176 1F       		.byte	0x1f
+ 711 0177 5D000000 		.4byte	0x5d
+ 712 017b 8C       		.byte	0x8c
+ 713 017c 09       		.uleb128 0x9
+ 714 017d E8040000 		.4byte	.LASF28
+ 715 0181 04       		.byte	0x4
+ 716 0182 20       		.byte	0x20
+ 717 0183 5D000000 		.4byte	0x5d
+ 718 0187 90       		.byte	0x90
+ 719 0188 09       		.uleb128 0x9
+ 720 0189 B0040000 		.4byte	.LASF29
+ 721 018d 04       		.byte	0x4
+ 722 018e 23       		.byte	0x23
+ 723 018f 6B000000 		.4byte	0x6b
+ 724 0193 94       		.byte	0x94
+ 725 0194 09       		.uleb128 0x9
+ 726 0195 F4030000 		.4byte	.LASF30
+ 727 0199 04       		.byte	0x4
+ 728 019a 24       		.byte	0x24
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 18
+
+
+ 729 019b 6B000000 		.4byte	0x6b
+ 730 019f 95       		.byte	0x95
+ 731 01a0 09       		.uleb128 0x9
+ 732 01a1 25000000 		.4byte	.LASF31
+ 733 01a5 04       		.byte	0x4
+ 734 01a6 25       		.byte	0x25
+ 735 01a7 6B000000 		.4byte	0x6b
+ 736 01ab 96       		.byte	0x96
+ 737 01ac 09       		.uleb128 0x9
+ 738 01ad 6A010000 		.4byte	.LASF32
+ 739 01b1 04       		.byte	0x4
+ 740 01b2 26       		.byte	0x26
+ 741 01b3 6B000000 		.4byte	0x6b
+ 742 01b7 97       		.byte	0x97
+ 743 01b8 00       		.byte	0
+ 744 01b9 08       		.uleb128 0x8
+ 745 01ba F8010000 		.4byte	.LASF33
+ 746 01be 08       		.byte	0x8
+ 747 01bf 05       		.byte	0x5
+ 748 01c0 1A       		.byte	0x1a
+ 749 01c1 DE010000 		.4byte	0x1de
+ 750 01c5 09       		.uleb128 0x9
+ 751 01c6 56040000 		.4byte	.LASF34
+ 752 01ca 05       		.byte	0x5
+ 753 01cb 1C       		.byte	0x1c
+ 754 01cc 5D000000 		.4byte	0x5d
+ 755 01d0 00       		.byte	0
+ 756 01d1 09       		.uleb128 0x9
+ 757 01d2 0E040000 		.4byte	.LASF35
+ 758 01d6 05       		.byte	0x5
+ 759 01d7 1D       		.byte	0x1d
+ 760 01d8 5D000000 		.4byte	0x5d
+ 761 01dc 04       		.byte	0x4
+ 762 01dd 00       		.byte	0
+ 763 01de 08       		.uleb128 0x8
+ 764 01df 7A000000 		.4byte	.LASF36
+ 765 01e3 0C       		.byte	0xc
+ 766 01e4 05       		.byte	0x5
+ 767 01e5 20       		.byte	0x20
+ 768 01e6 03020000 		.4byte	0x203
+ 769 01ea 09       		.uleb128 0x9
+ 770 01eb 5E000000 		.4byte	.LASF37
+ 771 01ef 05       		.byte	0x5
+ 772 01f0 22       		.byte	0x22
+ 773 01f1 B9010000 		.4byte	0x1b9
+ 774 01f5 00       		.byte	0
+ 775 01f6 09       		.uleb128 0x9
+ 776 01f7 1E010000 		.4byte	.LASF38
+ 777 01fb 05       		.byte	0x5
+ 778 01fc 23       		.byte	0x23
+ 779 01fd 03020000 		.4byte	0x203
+ 780 0201 08       		.byte	0x8
+ 781 0202 00       		.byte	0
+ 782 0203 05       		.uleb128 0x5
+ 783 0204 04       		.byte	0x4
+ 784 0205 DE010000 		.4byte	0x1de
+ 785 0209 0D       		.uleb128 0xd
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 19
+
+
+ 786 020a 07010000 		.4byte	.LASF43
+ 787 020e 01       		.byte	0x1
+ 788 020f 01       		.byte	0x1
+ 789 0210 1B       		.byte	0x1b
+ 790 0211 34020000 		.4byte	0x234
+ 791 0215 0E       		.uleb128 0xe
+ 792 0216 CF040000 		.4byte	.LASF39
+ 793 021a 00       		.sleb128 0
+ 794 021b 0E       		.uleb128 0xe
+ 795 021c 37030000 		.4byte	.LASF40
+ 796 0220 01       		.sleb128 1
+ 797 0221 0F       		.uleb128 0xf
+ 798 0222 50495200 		.ascii	"PIR\000"
+ 799 0226 02       		.sleb128 2
+ 800 0227 0E       		.uleb128 0xe
+ 801 0228 92040000 		.4byte	.LASF41
+ 802 022c 03       		.sleb128 3
+ 803 022d 0E       		.uleb128 0xe
+ 804 022e 9D040000 		.4byte	.LASF42
+ 805 0232 04       		.sleb128 4
+ 806 0233 00       		.byte	0
+ 807 0234 0D       		.uleb128 0xd
+ 808 0235 42040000 		.4byte	.LASF44
+ 809 0239 01       		.byte	0x1
+ 810 023a 01       		.byte	0x1
+ 811 023b 1C       		.byte	0x1c
+ 812 023c 53020000 		.4byte	0x253
+ 813 0240 0E       		.uleb128 0xe
+ 814 0241 46010000 		.4byte	.LASF45
+ 815 0245 00       		.sleb128 0
+ 816 0246 0E       		.uleb128 0xe
+ 817 0247 4F000000 		.4byte	.LASF46
+ 818 024b 01       		.sleb128 1
+ 819 024c 0E       		.uleb128 0xe
+ 820 024d 93030000 		.4byte	.LASF47
+ 821 0251 02       		.sleb128 2
+ 822 0252 00       		.byte	0
+ 823 0253 10       		.uleb128 0x10
+ 824 0254 73010000 		.4byte	.LASF48
+ 825 0258 01       		.byte	0x1
+ 826 0259 49       		.byte	0x49
+ 827 025a 00000000 		.4byte	.LFB37
+ 828 025e 50000000 		.4byte	.LFE37-.LFB37
+ 829 0262 01       		.uleb128 0x1
+ 830 0263 9C       		.byte	0x9c
+ 831 0264 90020000 		.4byte	0x290
+ 832 0268 11       		.uleb128 0x11
+ 833 0269 3C010000 		.4byte	.LASF52
+ 834 026d 01       		.byte	0x1
+ 835 026e 4D       		.byte	0x4d
+ 836 026f 5D000000 		.4byte	0x5d
+ 837 0273 00000000 		.4byte	.LLST0
+ 838 0277 12       		.uleb128 0x12
+ 839 0278 06000000 		.4byte	.LVL0
+ 840 027c 2F060000 		.4byte	0x62f
+ 841 0280 13       		.uleb128 0x13
+ 842 0281 3C000000 		.4byte	.LVL3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 20
+
+
+ 843 0285 3A060000 		.4byte	0x63a
+ 844 0289 14       		.uleb128 0x14
+ 845 028a 01       		.uleb128 0x1
+ 846 028b 50       		.byte	0x50
+ 847 028c 01       		.uleb128 0x1
+ 848 028d 31       		.byte	0x31
+ 849 028e 00       		.byte	0
+ 850 028f 00       		.byte	0
+ 851 0290 15       		.uleb128 0x15
+ 852 0291 A2040000 		.4byte	.LASF93
+ 853 0295 01       		.byte	0x1
+ 854 0296 24       		.byte	0x24
+ 855 0297 00000000 		.4byte	.LFB34
+ 856 029b 14000000 		.4byte	.LFE34-.LFB34
+ 857 029f 01       		.uleb128 0x1
+ 858 02a0 9C       		.byte	0x9c
+ 859 02a1 10       		.uleb128 0x10
+ 860 02a2 64000000 		.4byte	.LASF49
+ 861 02a6 01       		.byte	0x1
+ 862 02a7 2F       		.byte	0x2f
+ 863 02a8 00000000 		.4byte	.LFB35
+ 864 02ac 28000000 		.4byte	.LFE35-.LFB35
+ 865 02b0 01       		.uleb128 0x1
+ 866 02b1 9C       		.byte	0x9c
+ 867 02b2 C5020000 		.4byte	0x2c5
+ 868 02b6 16       		.uleb128 0x16
+ 869 02b7 736500   		.ascii	"se\000"
+ 870 02ba 01       		.byte	0x1
+ 871 02bb 2F       		.byte	0x2f
+ 872 02bc 09020000 		.4byte	0x209
+ 873 02c0 13000000 		.4byte	.LLST1
+ 874 02c4 00       		.byte	0
+ 875 02c5 17       		.uleb128 0x17
+ 876 02c6 B1000000 		.4byte	.LASF50
+ 877 02ca 01       		.byte	0x1
+ 878 02cb 36       		.byte	0x36
+ 879 02cc 00000000 		.4byte	.LFB36
+ 880 02d0 20000000 		.4byte	.LFE36-.LFB36
+ 881 02d4 01       		.uleb128 0x1
+ 882 02d5 9C       		.byte	0x9c
+ 883 02d6 2C030000 		.4byte	0x32c
+ 884 02da 12       		.uleb128 0x12
+ 885 02db 06000000 		.4byte	.LVL8
+ 886 02df 4B060000 		.4byte	0x64b
+ 887 02e3 18       		.uleb128 0x18
+ 888 02e4 0C000000 		.4byte	.LVL9
+ 889 02e8 A1020000 		.4byte	0x2a1
+ 890 02ec F6020000 		.4byte	0x2f6
+ 891 02f0 14       		.uleb128 0x14
+ 892 02f1 01       		.uleb128 0x1
+ 893 02f2 50       		.byte	0x50
+ 894 02f3 01       		.uleb128 0x1
+ 895 02f4 30       		.byte	0x30
+ 896 02f5 00       		.byte	0
+ 897 02f6 18       		.uleb128 0x18
+ 898 02f7 12000000 		.4byte	.LVL10
+ 899 02fb A1020000 		.4byte	0x2a1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 21
+
+
+ 900 02ff 09030000 		.4byte	0x309
+ 901 0303 14       		.uleb128 0x14
+ 902 0304 01       		.uleb128 0x1
+ 903 0305 50       		.byte	0x50
+ 904 0306 01       		.uleb128 0x1
+ 905 0307 31       		.byte	0x31
+ 906 0308 00       		.byte	0
+ 907 0309 18       		.uleb128 0x18
+ 908 030a 18000000 		.4byte	.LVL11
+ 909 030e A1020000 		.4byte	0x2a1
+ 910 0312 1C030000 		.4byte	0x31c
+ 911 0316 14       		.uleb128 0x14
+ 912 0317 01       		.uleb128 0x1
+ 913 0318 50       		.byte	0x50
+ 914 0319 01       		.uleb128 0x1
+ 915 031a 32       		.byte	0x32
+ 916 031b 00       		.byte	0
+ 917 031c 13       		.uleb128 0x13
+ 918 031d 1E000000 		.4byte	.LVL12
+ 919 0321 A1020000 		.4byte	0x2a1
+ 920 0325 14       		.uleb128 0x14
+ 921 0326 01       		.uleb128 0x1
+ 922 0327 50       		.byte	0x50
+ 923 0328 01       		.uleb128 0x1
+ 924 0329 34       		.byte	0x34
+ 925 032a 00       		.byte	0
+ 926 032b 00       		.byte	0
+ 927 032c 19       		.uleb128 0x19
+ 928 032d 7F000000 		.4byte	.LASF51
+ 929 0331 01       		.byte	0x1
+ 930 0332 65       		.byte	0x65
+ 931 0333 5D000000 		.4byte	0x5d
+ 932 0337 00000000 		.4byte	.LFB38
+ 933 033b 5C010000 		.4byte	.LFE38-.LFB38
+ 934 033f 01       		.uleb128 0x1
+ 935 0340 9C       		.byte	0x9c
+ 936 0341 73050000 		.4byte	0x573
+ 937 0345 1A       		.uleb128 0x1a
+ 938 0346 3C000000 		.4byte	.LBB2
+ 939 034a 16000000 		.4byte	.LBE2-.LBB2
+ 940 034e 9C030000 		.4byte	0x39c
+ 941 0352 1B       		.uleb128 0x1b
+ 942 0353 4C010000 		.4byte	.LASF53
+ 943 0357 01       		.byte	0x1
+ 944 0358 85       		.byte	0x85
+ 945 0359 B9010000 		.4byte	0x1b9
+ 946 035d 02       		.uleb128 0x2
+ 947 035e 91       		.byte	0x91
+ 948 035f 60       		.sleb128 -32
+ 949 0360 18       		.uleb128 0x18
+ 950 0361 42000000 		.4byte	.LVL25
+ 951 0365 56060000 		.4byte	0x656
+ 952 0369 74030000 		.4byte	0x374
+ 953 036d 14       		.uleb128 0x14
+ 954 036e 01       		.uleb128 0x1
+ 955 036f 50       		.byte	0x50
+ 956 0370 02       		.uleb128 0x2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 22
+
+
+ 957 0371 7D       		.byte	0x7d
+ 958 0372 00       		.sleb128 0
+ 959 0373 00       		.byte	0
+ 960 0374 18       		.uleb128 0x18
+ 961 0375 4E000000 		.4byte	.LVL26
+ 962 0379 61060000 		.4byte	0x661
+ 963 037d 92030000 		.4byte	0x392
+ 964 0381 14       		.uleb128 0x14
+ 965 0382 01       		.uleb128 0x1
+ 966 0383 51       		.byte	0x51
+ 967 0384 04       		.uleb128 0x4
+ 968 0385 7D       		.byte	0x7d
+ 969 0386 04       		.sleb128 4
+ 970 0387 94       		.byte	0x94
+ 971 0388 01       		.byte	0x1
+ 972 0389 14       		.uleb128 0x14
+ 973 038a 01       		.uleb128 0x1
+ 974 038b 50       		.byte	0x50
+ 975 038c 04       		.uleb128 0x4
+ 976 038d 7D       		.byte	0x7d
+ 977 038e 00       		.sleb128 0
+ 978 038f 94       		.byte	0x94
+ 979 0390 01       		.byte	0x1
+ 980 0391 00       		.byte	0
+ 981 0392 12       		.uleb128 0x12
+ 982 0393 52000000 		.4byte	.LVL27
+ 983 0397 77060000 		.4byte	0x677
+ 984 039b 00       		.byte	0
+ 985 039c 1A       		.uleb128 0x1a
+ 986 039d D8000000 		.4byte	.LBB3
+ 987 03a1 20000000 		.4byte	.LBE3-.LBB3
+ 988 03a5 D8030000 		.4byte	0x3d8
+ 989 03a9 1C       		.uleb128 0x1c
+ 990 03aa 746D7000 		.ascii	"tmp\000"
+ 991 03ae 01       		.byte	0x1
+ 992 03af AA       		.byte	0xaa
+ 993 03b0 5D000000 		.4byte	0x5d
+ 994 03b4 34000000 		.4byte	.LLST2
+ 995 03b8 12       		.uleb128 0x12
+ 996 03b9 DC000000 		.4byte	.LVL36
+ 997 03bd 7E060000 		.4byte	0x67e
+ 998 03c1 13       		.uleb128 0x13
+ 999 03c2 F2000000 		.4byte	.LVL39
+ 1000 03c6 61060000 		.4byte	0x661
+ 1001 03ca 14       		.uleb128 0x14
+ 1002 03cb 01       		.uleb128 0x1
+ 1003 03cc 51       		.byte	0x51
+ 1004 03cd 02       		.uleb128 0x2
+ 1005 03ce 09       		.byte	0x9
+ 1006 03cf FF       		.byte	0xff
+ 1007 03d0 14       		.uleb128 0x14
+ 1008 03d1 01       		.uleb128 0x1
+ 1009 03d2 50       		.byte	0x50
+ 1010 03d3 02       		.uleb128 0x2
+ 1011 03d4 08       		.byte	0x8
+ 1012 03d5 45       		.byte	0x45
+ 1013 03d6 00       		.byte	0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 23
+
+
+ 1014 03d7 00       		.byte	0
+ 1015 03d8 1A       		.uleb128 0x1a
+ 1016 03d9 0A010000 		.4byte	.LBB4
+ 1017 03dd 52000000 		.4byte	.LBE4-.LBB4
+ 1018 03e1 6D040000 		.4byte	0x46d
+ 1019 03e5 11       		.uleb128 0x11
+ 1020 03e6 87010000 		.4byte	.LASF54
+ 1021 03ea 01       		.byte	0x1
+ 1022 03eb D3       		.byte	0xd3
+ 1023 03ec 64000000 		.4byte	0x64
+ 1024 03f0 52000000 		.4byte	.LLST3
+ 1025 03f4 1D       		.uleb128 0x1d
+ 1026 03f5 626C6100 		.ascii	"bla\000"
+ 1027 03f9 01       		.byte	0x1
+ 1028 03fa D9       		.byte	0xd9
+ 1029 03fb 73050000 		.4byte	0x573
+ 1030 03ff 02       		.uleb128 0x2
+ 1031 0400 91       		.byte	0x91
+ 1032 0401 60       		.sleb128 -32
+ 1033 0402 12       		.uleb128 0x12
+ 1034 0403 14010000 		.4byte	.LVL41
+ 1035 0407 89060000 		.4byte	0x689
+ 1036 040b 18       		.uleb128 0x18
+ 1037 040c 20010000 		.4byte	.LVL44
+ 1038 0410 9A060000 		.4byte	0x69a
+ 1039 0414 25040000 		.4byte	0x425
+ 1040 0418 14       		.uleb128 0x14
+ 1041 0419 01       		.uleb128 0x1
+ 1042 041a 51       		.byte	0x51
+ 1043 041b 02       		.uleb128 0x2
+ 1044 041c 75       		.byte	0x75
+ 1045 041d 00       		.sleb128 0
+ 1046 041e 14       		.uleb128 0x14
+ 1047 041f 01       		.uleb128 0x1
+ 1048 0420 50       		.byte	0x50
+ 1049 0421 02       		.uleb128 0x2
+ 1050 0422 74       		.byte	0x74
+ 1051 0423 00       		.sleb128 0
+ 1052 0424 00       		.byte	0
+ 1053 0425 18       		.uleb128 0x18
+ 1054 0426 26010000 		.4byte	.LVL45
+ 1055 042a B6060000 		.4byte	0x6b6
+ 1056 042e 39040000 		.4byte	0x439
+ 1057 0432 14       		.uleb128 0x14
+ 1058 0433 01       		.uleb128 0x1
+ 1059 0434 50       		.byte	0x50
+ 1060 0435 02       		.uleb128 0x2
+ 1061 0436 74       		.byte	0x74
+ 1062 0437 00       		.sleb128 0
+ 1063 0438 00       		.byte	0
+ 1064 0439 18       		.uleb128 0x18
+ 1065 043a 36010000 		.4byte	.LVL46
+ 1066 043e CB060000 		.4byte	0x6cb
+ 1067 0442 5C040000 		.4byte	0x45c
+ 1068 0446 14       		.uleb128 0x14
+ 1069 0447 01       		.uleb128 0x1
+ 1070 0448 52       		.byte	0x52
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 24
+
+
+ 1071 0449 02       		.uleb128 0x2
+ 1072 044a 75       		.byte	0x75
+ 1073 044b 00       		.sleb128 0
+ 1074 044c 14       		.uleb128 0x14
+ 1075 044d 01       		.uleb128 0x1
+ 1076 044e 51       		.byte	0x51
+ 1077 044f 05       		.uleb128 0x5
+ 1078 0450 03       		.byte	0x3
+ 1079 0451 00000000 		.4byte	.LC11
+ 1080 0455 14       		.uleb128 0x14
+ 1081 0456 01       		.uleb128 0x1
+ 1082 0457 50       		.byte	0x50
+ 1083 0458 02       		.uleb128 0x2
+ 1084 0459 7D       		.byte	0x7d
+ 1085 045a 00       		.sleb128 0
+ 1086 045b 00       		.byte	0
+ 1087 045c 13       		.uleb128 0x13
+ 1088 045d 3C010000 		.4byte	.LVL47
+ 1089 0461 E6060000 		.4byte	0x6e6
+ 1090 0465 14       		.uleb128 0x14
+ 1091 0466 01       		.uleb128 0x1
+ 1092 0467 50       		.byte	0x50
+ 1093 0468 02       		.uleb128 0x2
+ 1094 0469 7D       		.byte	0x7d
+ 1095 046a 00       		.sleb128 0
+ 1096 046b 00       		.byte	0
+ 1097 046c 00       		.byte	0
+ 1098 046d 12       		.uleb128 0x12
+ 1099 046e 0A000000 		.4byte	.LVL13
+ 1100 0472 02070000 		.4byte	0x702
+ 1101 0476 12       		.uleb128 0x12
+ 1102 0477 0E000000 		.4byte	.LVL14
+ 1103 047b 0F070000 		.4byte	0x70f
+ 1104 047f 18       		.uleb128 0x18
+ 1105 0480 14000000 		.4byte	.LVL15
+ 1106 0484 16070000 		.4byte	0x716
+ 1107 0488 96040000 		.4byte	0x496
+ 1108 048c 14       		.uleb128 0x14
+ 1109 048d 01       		.uleb128 0x1
+ 1110 048e 50       		.byte	0x50
+ 1111 048f 05       		.uleb128 0x5
+ 1112 0490 03       		.byte	0x3
+ 1113 0491 00000000 		.4byte	DistTimer_Interrupt
+ 1114 0495 00       		.byte	0
+ 1115 0496 12       		.uleb128 0x12
+ 1116 0497 18000000 		.4byte	.LVL16
+ 1117 049b 27070000 		.4byte	0x727
+ 1118 049f 12       		.uleb128 0x12
+ 1119 04a0 1C000000 		.4byte	.LVL17
+ 1120 04a4 34070000 		.4byte	0x734
+ 1121 04a8 12       		.uleb128 0x12
+ 1122 04a9 20000000 		.4byte	.LVL18
+ 1123 04ad 3C070000 		.4byte	0x73c
+ 1124 04b1 12       		.uleb128 0x12
+ 1125 04b2 24000000 		.4byte	.LVL19
+ 1126 04b6 44070000 		.4byte	0x744
+ 1127 04ba 12       		.uleb128 0x12
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 25
+
+
+ 1128 04bb 28000000 		.4byte	.LVL20
+ 1129 04bf 90020000 		.4byte	0x290
+ 1130 04c3 12       		.uleb128 0x12
+ 1131 04c4 2C000000 		.4byte	.LVL21
+ 1132 04c8 4C070000 		.4byte	0x74c
+ 1133 04cc 18       		.uleb128 0x18
+ 1134 04cd 32000000 		.4byte	.LVL22
+ 1135 04d1 53070000 		.4byte	0x753
+ 1136 04d5 E3040000 		.4byte	0x4e3
+ 1137 04d9 14       		.uleb128 0x14
+ 1138 04da 01       		.uleb128 0x1
+ 1139 04db 50       		.byte	0x50
+ 1140 04dc 05       		.uleb128 0x5
+ 1141 04dd 03       		.byte	0x3
+ 1142 04de 00000000 		.4byte	Metronome_Interrupt
+ 1143 04e2 00       		.byte	0
+ 1144 04e3 12       		.uleb128 0x12
+ 1145 04e4 36000000 		.4byte	.LVL23
+ 1146 04e8 64070000 		.4byte	0x764
+ 1147 04ec 12       		.uleb128 0x12
+ 1148 04ed 3A000000 		.4byte	.LVL24
+ 1149 04f1 6B070000 		.4byte	0x76b
+ 1150 04f5 12       		.uleb128 0x12
+ 1151 04f6 56000000 		.4byte	.LVL28
+ 1152 04fa 72070000 		.4byte	0x772
+ 1153 04fe 12       		.uleb128 0x12
+ 1154 04ff 60000000 		.4byte	.LVL29
+ 1155 0503 7D070000 		.4byte	0x77d
+ 1156 0507 12       		.uleb128 0x12
+ 1157 0508 64000000 		.4byte	.LVL30
+ 1158 050c 8E070000 		.4byte	0x78e
+ 1159 0510 18       		.uleb128 0x18
+ 1160 0511 78000000 		.4byte	.LVL31
+ 1161 0515 3A060000 		.4byte	0x63a
+ 1162 0519 23050000 		.4byte	0x523
+ 1163 051d 14       		.uleb128 0x14
+ 1164 051e 01       		.uleb128 0x1
+ 1165 051f 50       		.byte	0x50
+ 1166 0520 01       		.uleb128 0x1
+ 1167 0521 30       		.byte	0x30
+ 1168 0522 00       		.byte	0
+ 1169 0523 18       		.uleb128 0x18
+ 1170 0524 7E000000 		.4byte	.LVL32
+ 1171 0528 95070000 		.4byte	0x795
+ 1172 052c 36050000 		.4byte	0x536
+ 1173 0530 14       		.uleb128 0x14
+ 1174 0531 01       		.uleb128 0x1
+ 1175 0532 50       		.byte	0x50
+ 1176 0533 01       		.uleb128 0x1
+ 1177 0534 31       		.byte	0x31
+ 1178 0535 00       		.byte	0
+ 1179 0536 18       		.uleb128 0x18
+ 1180 0537 84000000 		.4byte	.LVL33
+ 1181 053b A6070000 		.4byte	0x7a6
+ 1182 053f 49050000 		.4byte	0x549
+ 1183 0543 14       		.uleb128 0x14
+ 1184 0544 01       		.uleb128 0x1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 26
+
+
+ 1185 0545 50       		.byte	0x50
+ 1186 0546 01       		.uleb128 0x1
+ 1187 0547 3A       		.byte	0x3a
+ 1188 0548 00       		.byte	0
+ 1189 0549 18       		.uleb128 0x18
+ 1190 054a 8A000000 		.4byte	.LVL34
+ 1191 054e 95070000 		.4byte	0x795
+ 1192 0552 5C050000 		.4byte	0x55c
+ 1193 0556 14       		.uleb128 0x14
+ 1194 0557 01       		.uleb128 0x1
+ 1195 0558 50       		.byte	0x50
+ 1196 0559 01       		.uleb128 0x1
+ 1197 055a 30       		.byte	0x30
+ 1198 055b 00       		.byte	0
+ 1199 055c 13       		.uleb128 0x13
+ 1200 055d C0000000 		.4byte	.LVL35
+ 1201 0561 61060000 		.4byte	0x661
+ 1202 0565 14       		.uleb128 0x14
+ 1203 0566 01       		.uleb128 0x1
+ 1204 0567 51       		.byte	0x51
+ 1205 0568 02       		.uleb128 0x2
+ 1206 0569 09       		.byte	0x9
+ 1207 056a FF       		.byte	0xff
+ 1208 056b 14       		.uleb128 0x14
+ 1209 056c 01       		.uleb128 0x1
+ 1210 056d 50       		.byte	0x50
+ 1211 056e 02       		.uleb128 0x2
+ 1212 056f 08       		.byte	0x8
+ 1213 0570 44       		.byte	0x44
+ 1214 0571 00       		.byte	0
+ 1215 0572 00       		.byte	0
+ 1216 0573 0B       		.uleb128 0xb
+ 1217 0574 A9000000 		.4byte	0xa9
+ 1218 0578 83050000 		.4byte	0x583
+ 1219 057c 0C       		.uleb128 0xc
+ 1220 057d C3000000 		.4byte	0xc3
+ 1221 0581 0E       		.byte	0xe
+ 1222 0582 00       		.byte	0
+ 1223 0583 1E       		.uleb128 0x1e
+ 1224 0584 E2030000 		.4byte	.LASF55
+ 1225 0588 04       		.byte	0x4
+ 1226 0589 27       		.byte	0x27
+ 1227 058a 1C010000 		.4byte	0x11c
+ 1228 058e 05       		.uleb128 0x5
+ 1229 058f 03       		.byte	0x3
+ 1230 0590 00000000 		.4byte	sensorData
+ 1231 0594 1E       		.uleb128 0x1e
+ 1232 0595 FE030000 		.4byte	.LASF56
+ 1233 0599 05       		.byte	0x5
+ 1234 059a 26       		.byte	0x26
+ 1235 059b 03020000 		.4byte	0x203
+ 1236 059f 05       		.uleb128 0x5
+ 1237 05a0 03       		.byte	0x3
+ 1238 05a1 00000000 		.4byte	frontOfQueuePtr
+ 1239 05a5 1E       		.uleb128 0x1e
+ 1240 05a6 6D030000 		.4byte	.LASF57
+ 1241 05aa 05       		.byte	0x5
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 27
+
+
+ 1242 05ab 27       		.byte	0x27
+ 1243 05ac 03020000 		.4byte	0x203
+ 1244 05b0 05       		.uleb128 0x5
+ 1245 05b1 03       		.byte	0x3
+ 1246 05b2 00000000 		.4byte	backOfQueuePtr
+ 1247 05b6 0B       		.uleb128 0xb
+ 1248 05b7 6B000000 		.4byte	0x6b
+ 1249 05bb C6050000 		.4byte	0x5c6
+ 1250 05bf 0C       		.uleb128 0xc
+ 1251 05c0 C3000000 		.4byte	0xc3
+ 1252 05c4 03       		.byte	0x3
+ 1253 05c5 00       		.byte	0
+ 1254 05c6 1E       		.uleb128 0x1e
+ 1255 05c7 DC040000 		.4byte	.LASF58
+ 1256 05cb 06       		.byte	0x6
+ 1257 05cc 31       		.byte	0x31
+ 1258 05cd B6050000 		.4byte	0x5b6
+ 1259 05d1 05       		.uleb128 0x5
+ 1260 05d2 03       		.byte	0x3
+ 1261 05d3 00000000 		.4byte	i2cTxBuffer
+ 1262 05d7 1E       		.uleb128 0x1e
+ 1263 05d8 97000000 		.4byte	.LASF59
+ 1264 05dc 06       		.byte	0x6
+ 1265 05dd 32       		.byte	0x32
+ 1266 05de B6050000 		.4byte	0x5b6
+ 1267 05e2 05       		.uleb128 0x5
+ 1268 05e3 03       		.byte	0x3
+ 1269 05e4 00000000 		.4byte	i2cRxBuffer
+ 1270 05e8 1F       		.uleb128 0x1f
+ 1271 05e9 7400     		.ascii	"t\000"
+ 1272 05eb 01       		.byte	0x1
+ 1273 05ec 17       		.byte	0x17
+ 1274 05ed 6B000000 		.4byte	0x6b
+ 1275 05f1 05       		.uleb128 0x5
+ 1276 05f2 03       		.byte	0x3
+ 1277 05f3 00000000 		.4byte	t
+ 1278 05f7 0B       		.uleb128 0xb
+ 1279 05f8 A9000000 		.4byte	0xa9
+ 1280 05fc 0D060000 		.4byte	0x60d
+ 1281 0600 0C       		.uleb128 0xc
+ 1282 0601 C3000000 		.4byte	0xc3
+ 1283 0605 04       		.byte	0x4
+ 1284 0606 0C       		.uleb128 0xc
+ 1285 0607 C3000000 		.4byte	0xc3
+ 1286 060b 02       		.byte	0x2
+ 1287 060c 00       		.byte	0
+ 1288 060d 1E       		.uleb128 0x1e
+ 1289 060e FA000000 		.4byte	.LASF60
+ 1290 0612 01       		.byte	0x1
+ 1291 0613 1D       		.byte	0x1d
+ 1292 0614 F7050000 		.4byte	0x5f7
+ 1293 0618 05       		.uleb128 0x5
+ 1294 0619 03       		.byte	0x3
+ 1295 061a 00000000 		.4byte	controlFlags
+ 1296 061e 1E       		.uleb128 0x1e
+ 1297 061f 84000000 		.4byte	.LASF61
+ 1298 0623 01       		.byte	0x1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 28
+
+
+ 1299 0624 47       		.byte	0x47
+ 1300 0625 6B000000 		.4byte	0x6b
+ 1301 0629 05       		.uleb128 0x5
+ 1302 062a 03       		.byte	0x3
+ 1303 062b 00000000 		.4byte	distAlertTriggered
+ 1304 062f 20       		.uleb128 0x20
+ 1305 0630 C9020000 		.4byte	.LASF62
+ 1306 0634 07       		.byte	0x7
+ 1307 0635 6B       		.byte	0x6b
+ 1308 0636 77000000 		.4byte	0x77
+ 1309 063a 21       		.uleb128 0x21
+ 1310 063b 0E010000 		.4byte	.LASF65
+ 1311 063f 09       		.byte	0x9
+ 1312 0640 33       		.byte	0x33
+ 1313 0641 4B060000 		.4byte	0x64b
+ 1314 0645 22       		.uleb128 0x22
+ 1315 0646 6B000000 		.4byte	0x6b
+ 1316 064a 00       		.byte	0
+ 1317 064b 20       		.uleb128 0x20
+ 1318 064c D6010000 		.4byte	.LASF63
+ 1319 0650 08       		.byte	0x8
+ 1320 0651 5E       		.byte	0x5e
+ 1321 0652 6B000000 		.4byte	0x6b
+ 1322 0656 20       		.uleb128 0x20
+ 1323 0657 EC020000 		.4byte	.LASF64
+ 1324 065b 05       		.byte	0x5
+ 1325 065c 2C       		.byte	0x2c
+ 1326 065d B9010000 		.4byte	0x1b9
+ 1327 0661 21       		.uleb128 0x21
+ 1328 0662 E2000000 		.4byte	.LASF66
+ 1329 0666 0A       		.byte	0xa
+ 1330 0667 1A       		.byte	0x1a
+ 1331 0668 77060000 		.4byte	0x677
+ 1332 066c 22       		.uleb128 0x22
+ 1333 066d 6B000000 		.4byte	0x6b
+ 1334 0671 22       		.uleb128 0x22
+ 1335 0672 6B000000 		.4byte	0x6b
+ 1336 0676 00       		.byte	0
+ 1337 0677 23       		.uleb128 0x23
+ 1338 0678 39040000 		.4byte	.LASF73
+ 1339 067c 05       		.byte	0x5
+ 1340 067d 2B       		.byte	0x2b
+ 1341 067e 20       		.uleb128 0x20
+ 1342 067f 5C010000 		.4byte	.LASF67
+ 1343 0683 0B       		.byte	0xb
+ 1344 0684 32       		.byte	0x32
+ 1345 0685 6B000000 		.4byte	0x6b
+ 1346 0689 24       		.uleb128 0x24
+ 1347 068a 15000000 		.4byte	.LASF68
+ 1348 068e 0C       		.byte	0xc
+ 1349 068f 12       		.byte	0x12
+ 1350 0690 64000000 		.4byte	0x64
+ 1351 0694 9A060000 		.4byte	0x69a
+ 1352 0698 25       		.uleb128 0x25
+ 1353 0699 00       		.byte	0
+ 1354 069a 21       		.uleb128 0x21
+ 1355 069b 09000000 		.4byte	.LASF69
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 29
+
+
+ 1356 069f 03       		.byte	0x3
+ 1357 06a0 18       		.byte	0x18
+ 1358 06a1 B0060000 		.4byte	0x6b0
+ 1359 06a5 22       		.uleb128 0x22
+ 1360 06a6 B0060000 		.4byte	0x6b0
+ 1361 06aa 22       		.uleb128 0x22
+ 1362 06ab 5D000000 		.4byte	0x5d
+ 1363 06af 00       		.byte	0
+ 1364 06b0 05       		.uleb128 0x5
+ 1365 06b1 04       		.byte	0x4
+ 1366 06b2 DB000000 		.4byte	0xdb
+ 1367 06b6 26       		.uleb128 0x26
+ 1368 06b7 0B020000 		.4byte	.LASF70
+ 1369 06bb 03       		.byte	0x3
+ 1370 06bc 1B       		.byte	0x1b
+ 1371 06bd 5D000000 		.4byte	0x5d
+ 1372 06c1 CB060000 		.4byte	0x6cb
+ 1373 06c5 22       		.uleb128 0x22
+ 1374 06c6 B0060000 		.4byte	0x6b0
+ 1375 06ca 00       		.byte	0
+ 1376 06cb 26       		.uleb128 0x26
+ 1377 06cc 2F030000 		.4byte	.LASF71
+ 1378 06d0 0D       		.byte	0xd
+ 1379 06d1 DE       		.byte	0xde
+ 1380 06d2 5D000000 		.4byte	0x5d
+ 1381 06d6 E6060000 		.4byte	0x6e6
+ 1382 06da 22       		.uleb128 0x22
+ 1383 06db CA000000 		.4byte	0xca
+ 1384 06df 22       		.uleb128 0x22
+ 1385 06e0 D0000000 		.4byte	0xd0
+ 1386 06e4 25       		.uleb128 0x25
+ 1387 06e5 00       		.byte	0
+ 1388 06e6 21       		.uleb128 0x21
+ 1389 06e7 EA000000 		.4byte	.LASF72
+ 1390 06eb 0E       		.byte	0xe
+ 1391 06ec 26       		.byte	0x26
+ 1392 06ed F7060000 		.4byte	0x6f7
+ 1393 06f1 22       		.uleb128 0x22
+ 1394 06f2 F7060000 		.4byte	0x6f7
+ 1395 06f6 00       		.byte	0
+ 1396 06f7 05       		.uleb128 0x5
+ 1397 06f8 04       		.byte	0x4
+ 1398 06f9 FD060000 		.4byte	0x6fd
+ 1399 06fd 07       		.uleb128 0x7
+ 1400 06fe 9D000000 		.4byte	0x9d
+ 1401 0702 27       		.uleb128 0x27
+ 1402 0703 B3030000 		.4byte	.LASF76
+ 1403 0707 04       		.byte	0x4
+ 1404 0708 29       		.byte	0x29
+ 1405 0709 0F070000 		.4byte	0x70f
+ 1406 070d 25       		.uleb128 0x25
+ 1407 070e 00       		.byte	0
+ 1408 070f 23       		.uleb128 0x23
+ 1409 0710 D2000000 		.4byte	.LASF74
+ 1410 0714 07       		.byte	0x7
+ 1411 0715 5A       		.byte	0x5a
+ 1412 0716 21       		.uleb128 0x21
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 30
+
+
+ 1413 0717 98030000 		.4byte	.LASF75
+ 1414 071b 0F       		.byte	0xf
+ 1415 071c 18       		.byte	0x18
+ 1416 071d 27070000 		.4byte	0x727
+ 1417 0721 22       		.uleb128 0x22
+ 1418 0722 B0000000 		.4byte	0xb0
+ 1419 0726 00       		.byte	0
+ 1420 0727 27       		.uleb128 0x27
+ 1421 0728 D2030000 		.4byte	.LASF77
+ 1422 072c 0C       		.byte	0xc
+ 1423 072d 11       		.byte	0x11
+ 1424 072e 34070000 		.4byte	0x734
+ 1425 0732 25       		.uleb128 0x25
+ 1426 0733 00       		.byte	0
+ 1427 0734 28       		.uleb128 0x28
+ 1428 0735 47040000 		.4byte	.LASF78
+ 1429 0739 10       		.byte	0x10
+ 1430 073a 3201     		.2byte	0x132
+ 1431 073c 28       		.uleb128 0x28
+ 1432 073d 13040000 		.4byte	.LASF79
+ 1433 0741 11       		.byte	0x11
+ 1434 0742 3201     		.2byte	0x132
+ 1435 0744 28       		.uleb128 0x28
+ 1436 0745 BB020000 		.4byte	.LASF80
+ 1437 0749 12       		.byte	0x12
+ 1438 074a 3201     		.2byte	0x132
+ 1439 074c 23       		.uleb128 0x23
+ 1440 074d F7020000 		.4byte	.LASF81
+ 1441 0751 08       		.byte	0x8
+ 1442 0752 5A       		.byte	0x5a
+ 1443 0753 21       		.uleb128 0x21
+ 1444 0754 18020000 		.4byte	.LASF82
+ 1445 0758 13       		.byte	0x13
+ 1446 0759 18       		.byte	0x18
+ 1447 075a 64070000 		.4byte	0x764
+ 1448 075e 22       		.uleb128 0x22
+ 1449 075f B0000000 		.4byte	0xb0
+ 1450 0763 00       		.byte	0
+ 1451 0764 23       		.uleb128 0x23
+ 1452 0765 24010000 		.4byte	.LASF83
+ 1453 0769 05       		.byte	0x5
+ 1454 076a 29       		.byte	0x29
+ 1455 076b 23       		.uleb128 0x23
+ 1456 076c 00000000 		.4byte	.LASF84
+ 1457 0770 06       		.byte	0x6
+ 1458 0771 1A       		.byte	0x1a
+ 1459 0772 20       		.uleb128 0x20
+ 1460 0773 C5000000 		.4byte	.LASF85
+ 1461 0777 05       		.byte	0x5
+ 1462 0778 2D       		.byte	0x2d
+ 1463 0779 5D000000 		.4byte	0x5d
+ 1464 077d 21       		.uleb128 0x21
+ 1465 077e D4040000 		.4byte	.LASF86
+ 1466 0782 14       		.byte	0x14
+ 1467 0783 5A       		.byte	0x5a
+ 1468 0784 8E070000 		.4byte	0x78e
+ 1469 0788 22       		.uleb128 0x22
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 31
+
+
+ 1470 0789 83000000 		.4byte	0x83
+ 1471 078d 00       		.byte	0
+ 1472 078e 23       		.uleb128 0x23
+ 1473 078f 20040000 		.4byte	.LASF87
+ 1474 0793 06       		.byte	0x6
+ 1475 0794 1D       		.byte	0x1d
+ 1476 0795 21       		.uleb128 0x21
+ 1477 0796 3D000000 		.4byte	.LASF88
+ 1478 079a 15       		.byte	0x15
+ 1479 079b 33       		.byte	0x33
+ 1480 079c A6070000 		.4byte	0x7a6
+ 1481 07a0 22       		.uleb128 0x22
+ 1482 07a1 6B000000 		.4byte	0x6b
+ 1483 07a5 00       		.byte	0
+ 1484 07a6 29       		.uleb128 0x29
+ 1485 07a7 4A030000 		.4byte	.LASF89
+ 1486 07ab 14       		.byte	0x14
+ 1487 07ac 5B       		.byte	0x5b
+ 1488 07ad 22       		.uleb128 0x22
+ 1489 07ae 77000000 		.4byte	0x77
+ 1490 07b2 00       		.byte	0
+ 1491 07b3 00       		.byte	0
+ 1492              		.section	.debug_abbrev,"",%progbits
+ 1493              	.Ldebug_abbrev0:
+ 1494 0000 01       		.uleb128 0x1
+ 1495 0001 11       		.uleb128 0x11
+ 1496 0002 01       		.byte	0x1
+ 1497 0003 25       		.uleb128 0x25
+ 1498 0004 0E       		.uleb128 0xe
+ 1499 0005 13       		.uleb128 0x13
+ 1500 0006 0B       		.uleb128 0xb
+ 1501 0007 03       		.uleb128 0x3
+ 1502 0008 0E       		.uleb128 0xe
+ 1503 0009 1B       		.uleb128 0x1b
+ 1504 000a 0E       		.uleb128 0xe
+ 1505 000b 55       		.uleb128 0x55
+ 1506 000c 17       		.uleb128 0x17
+ 1507 000d 11       		.uleb128 0x11
+ 1508 000e 01       		.uleb128 0x1
+ 1509 000f 10       		.uleb128 0x10
+ 1510 0010 17       		.uleb128 0x17
+ 1511 0011 00       		.byte	0
+ 1512 0012 00       		.byte	0
+ 1513 0013 02       		.uleb128 0x2
+ 1514 0014 24       		.uleb128 0x24
+ 1515 0015 00       		.byte	0
+ 1516 0016 0B       		.uleb128 0xb
+ 1517 0017 0B       		.uleb128 0xb
+ 1518 0018 3E       		.uleb128 0x3e
+ 1519 0019 0B       		.uleb128 0xb
+ 1520 001a 03       		.uleb128 0x3
+ 1521 001b 0E       		.uleb128 0xe
+ 1522 001c 00       		.byte	0
+ 1523 001d 00       		.byte	0
+ 1524 001e 03       		.uleb128 0x3
+ 1525 001f 24       		.uleb128 0x24
+ 1526 0020 00       		.byte	0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 32
+
+
+ 1527 0021 0B       		.uleb128 0xb
+ 1528 0022 0B       		.uleb128 0xb
+ 1529 0023 3E       		.uleb128 0x3e
+ 1530 0024 0B       		.uleb128 0xb
+ 1531 0025 03       		.uleb128 0x3
+ 1532 0026 08       		.uleb128 0x8
+ 1533 0027 00       		.byte	0
+ 1534 0028 00       		.byte	0
+ 1535 0029 04       		.uleb128 0x4
+ 1536 002a 16       		.uleb128 0x16
+ 1537 002b 00       		.byte	0
+ 1538 002c 03       		.uleb128 0x3
+ 1539 002d 0E       		.uleb128 0xe
+ 1540 002e 3A       		.uleb128 0x3a
+ 1541 002f 0B       		.uleb128 0xb
+ 1542 0030 3B       		.uleb128 0x3b
+ 1543 0031 05       		.uleb128 0x5
+ 1544 0032 49       		.uleb128 0x49
+ 1545 0033 13       		.uleb128 0x13
+ 1546 0034 00       		.byte	0
+ 1547 0035 00       		.byte	0
+ 1548 0036 05       		.uleb128 0x5
+ 1549 0037 0F       		.uleb128 0xf
+ 1550 0038 00       		.byte	0
+ 1551 0039 0B       		.uleb128 0xb
+ 1552 003a 0B       		.uleb128 0xb
+ 1553 003b 49       		.uleb128 0x49
+ 1554 003c 13       		.uleb128 0x13
+ 1555 003d 00       		.byte	0
+ 1556 003e 00       		.byte	0
+ 1557 003f 06       		.uleb128 0x6
+ 1558 0040 15       		.uleb128 0x15
+ 1559 0041 00       		.byte	0
+ 1560 0042 27       		.uleb128 0x27
+ 1561 0043 19       		.uleb128 0x19
+ 1562 0044 00       		.byte	0
+ 1563 0045 00       		.byte	0
+ 1564 0046 07       		.uleb128 0x7
+ 1565 0047 26       		.uleb128 0x26
+ 1566 0048 00       		.byte	0
+ 1567 0049 49       		.uleb128 0x49
+ 1568 004a 13       		.uleb128 0x13
+ 1569 004b 00       		.byte	0
+ 1570 004c 00       		.byte	0
+ 1571 004d 08       		.uleb128 0x8
+ 1572 004e 13       		.uleb128 0x13
+ 1573 004f 01       		.byte	0x1
+ 1574 0050 03       		.uleb128 0x3
+ 1575 0051 0E       		.uleb128 0xe
+ 1576 0052 0B       		.uleb128 0xb
+ 1577 0053 0B       		.uleb128 0xb
+ 1578 0054 3A       		.uleb128 0x3a
+ 1579 0055 0B       		.uleb128 0xb
+ 1580 0056 3B       		.uleb128 0x3b
+ 1581 0057 0B       		.uleb128 0xb
+ 1582 0058 01       		.uleb128 0x1
+ 1583 0059 13       		.uleb128 0x13
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 33
+
+
+ 1584 005a 00       		.byte	0
+ 1585 005b 00       		.byte	0
+ 1586 005c 09       		.uleb128 0x9
+ 1587 005d 0D       		.uleb128 0xd
+ 1588 005e 00       		.byte	0
+ 1589 005f 03       		.uleb128 0x3
+ 1590 0060 0E       		.uleb128 0xe
+ 1591 0061 3A       		.uleb128 0x3a
+ 1592 0062 0B       		.uleb128 0xb
+ 1593 0063 3B       		.uleb128 0x3b
+ 1594 0064 0B       		.uleb128 0xb
+ 1595 0065 49       		.uleb128 0x49
+ 1596 0066 13       		.uleb128 0x13
+ 1597 0067 38       		.uleb128 0x38
+ 1598 0068 0B       		.uleb128 0xb
+ 1599 0069 00       		.byte	0
+ 1600 006a 00       		.byte	0
+ 1601 006b 0A       		.uleb128 0xa
+ 1602 006c 0D       		.uleb128 0xd
+ 1603 006d 00       		.byte	0
+ 1604 006e 03       		.uleb128 0x3
+ 1605 006f 08       		.uleb128 0x8
+ 1606 0070 3A       		.uleb128 0x3a
+ 1607 0071 0B       		.uleb128 0xb
+ 1608 0072 3B       		.uleb128 0x3b
+ 1609 0073 0B       		.uleb128 0xb
+ 1610 0074 49       		.uleb128 0x49
+ 1611 0075 13       		.uleb128 0x13
+ 1612 0076 38       		.uleb128 0x38
+ 1613 0077 0B       		.uleb128 0xb
+ 1614 0078 00       		.byte	0
+ 1615 0079 00       		.byte	0
+ 1616 007a 0B       		.uleb128 0xb
+ 1617 007b 01       		.uleb128 0x1
+ 1618 007c 01       		.byte	0x1
+ 1619 007d 49       		.uleb128 0x49
+ 1620 007e 13       		.uleb128 0x13
+ 1621 007f 01       		.uleb128 0x1
+ 1622 0080 13       		.uleb128 0x13
+ 1623 0081 00       		.byte	0
+ 1624 0082 00       		.byte	0
+ 1625 0083 0C       		.uleb128 0xc
+ 1626 0084 21       		.uleb128 0x21
+ 1627 0085 00       		.byte	0
+ 1628 0086 49       		.uleb128 0x49
+ 1629 0087 13       		.uleb128 0x13
+ 1630 0088 2F       		.uleb128 0x2f
+ 1631 0089 0B       		.uleb128 0xb
+ 1632 008a 00       		.byte	0
+ 1633 008b 00       		.byte	0
+ 1634 008c 0D       		.uleb128 0xd
+ 1635 008d 04       		.uleb128 0x4
+ 1636 008e 01       		.byte	0x1
+ 1637 008f 03       		.uleb128 0x3
+ 1638 0090 0E       		.uleb128 0xe
+ 1639 0091 0B       		.uleb128 0xb
+ 1640 0092 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 34
+
+
+ 1641 0093 3A       		.uleb128 0x3a
+ 1642 0094 0B       		.uleb128 0xb
+ 1643 0095 3B       		.uleb128 0x3b
+ 1644 0096 0B       		.uleb128 0xb
+ 1645 0097 01       		.uleb128 0x1
+ 1646 0098 13       		.uleb128 0x13
+ 1647 0099 00       		.byte	0
+ 1648 009a 00       		.byte	0
+ 1649 009b 0E       		.uleb128 0xe
+ 1650 009c 28       		.uleb128 0x28
+ 1651 009d 00       		.byte	0
+ 1652 009e 03       		.uleb128 0x3
+ 1653 009f 0E       		.uleb128 0xe
+ 1654 00a0 1C       		.uleb128 0x1c
+ 1655 00a1 0D       		.uleb128 0xd
+ 1656 00a2 00       		.byte	0
+ 1657 00a3 00       		.byte	0
+ 1658 00a4 0F       		.uleb128 0xf
+ 1659 00a5 28       		.uleb128 0x28
+ 1660 00a6 00       		.byte	0
+ 1661 00a7 03       		.uleb128 0x3
+ 1662 00a8 08       		.uleb128 0x8
+ 1663 00a9 1C       		.uleb128 0x1c
+ 1664 00aa 0D       		.uleb128 0xd
+ 1665 00ab 00       		.byte	0
+ 1666 00ac 00       		.byte	0
+ 1667 00ad 10       		.uleb128 0x10
+ 1668 00ae 2E       		.uleb128 0x2e
+ 1669 00af 01       		.byte	0x1
+ 1670 00b0 3F       		.uleb128 0x3f
+ 1671 00b1 19       		.uleb128 0x19
+ 1672 00b2 03       		.uleb128 0x3
+ 1673 00b3 0E       		.uleb128 0xe
+ 1674 00b4 3A       		.uleb128 0x3a
+ 1675 00b5 0B       		.uleb128 0xb
+ 1676 00b6 3B       		.uleb128 0x3b
+ 1677 00b7 0B       		.uleb128 0xb
+ 1678 00b8 27       		.uleb128 0x27
+ 1679 00b9 19       		.uleb128 0x19
+ 1680 00ba 11       		.uleb128 0x11
+ 1681 00bb 01       		.uleb128 0x1
+ 1682 00bc 12       		.uleb128 0x12
+ 1683 00bd 06       		.uleb128 0x6
+ 1684 00be 40       		.uleb128 0x40
+ 1685 00bf 18       		.uleb128 0x18
+ 1686 00c0 9642     		.uleb128 0x2116
+ 1687 00c2 19       		.uleb128 0x19
+ 1688 00c3 01       		.uleb128 0x1
+ 1689 00c4 13       		.uleb128 0x13
+ 1690 00c5 00       		.byte	0
+ 1691 00c6 00       		.byte	0
+ 1692 00c7 11       		.uleb128 0x11
+ 1693 00c8 34       		.uleb128 0x34
+ 1694 00c9 00       		.byte	0
+ 1695 00ca 03       		.uleb128 0x3
+ 1696 00cb 0E       		.uleb128 0xe
+ 1697 00cc 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 35
+
+
+ 1698 00cd 0B       		.uleb128 0xb
+ 1699 00ce 3B       		.uleb128 0x3b
+ 1700 00cf 0B       		.uleb128 0xb
+ 1701 00d0 49       		.uleb128 0x49
+ 1702 00d1 13       		.uleb128 0x13
+ 1703 00d2 02       		.uleb128 0x2
+ 1704 00d3 17       		.uleb128 0x17
+ 1705 00d4 00       		.byte	0
+ 1706 00d5 00       		.byte	0
+ 1707 00d6 12       		.uleb128 0x12
+ 1708 00d7 898201   		.uleb128 0x4109
+ 1709 00da 00       		.byte	0
+ 1710 00db 11       		.uleb128 0x11
+ 1711 00dc 01       		.uleb128 0x1
+ 1712 00dd 31       		.uleb128 0x31
+ 1713 00de 13       		.uleb128 0x13
+ 1714 00df 00       		.byte	0
+ 1715 00e0 00       		.byte	0
+ 1716 00e1 13       		.uleb128 0x13
+ 1717 00e2 898201   		.uleb128 0x4109
+ 1718 00e5 01       		.byte	0x1
+ 1719 00e6 11       		.uleb128 0x11
+ 1720 00e7 01       		.uleb128 0x1
+ 1721 00e8 31       		.uleb128 0x31
+ 1722 00e9 13       		.uleb128 0x13
+ 1723 00ea 00       		.byte	0
+ 1724 00eb 00       		.byte	0
+ 1725 00ec 14       		.uleb128 0x14
+ 1726 00ed 8A8201   		.uleb128 0x410a
+ 1727 00f0 00       		.byte	0
+ 1728 00f1 02       		.uleb128 0x2
+ 1729 00f2 18       		.uleb128 0x18
+ 1730 00f3 9142     		.uleb128 0x2111
+ 1731 00f5 18       		.uleb128 0x18
+ 1732 00f6 00       		.byte	0
+ 1733 00f7 00       		.byte	0
+ 1734 00f8 15       		.uleb128 0x15
+ 1735 00f9 2E       		.uleb128 0x2e
+ 1736 00fa 00       		.byte	0
+ 1737 00fb 3F       		.uleb128 0x3f
+ 1738 00fc 19       		.uleb128 0x19
+ 1739 00fd 03       		.uleb128 0x3
+ 1740 00fe 0E       		.uleb128 0xe
+ 1741 00ff 3A       		.uleb128 0x3a
+ 1742 0100 0B       		.uleb128 0xb
+ 1743 0101 3B       		.uleb128 0x3b
+ 1744 0102 0B       		.uleb128 0xb
+ 1745 0103 11       		.uleb128 0x11
+ 1746 0104 01       		.uleb128 0x1
+ 1747 0105 12       		.uleb128 0x12
+ 1748 0106 06       		.uleb128 0x6
+ 1749 0107 40       		.uleb128 0x40
+ 1750 0108 18       		.uleb128 0x18
+ 1751 0109 9742     		.uleb128 0x2117
+ 1752 010b 19       		.uleb128 0x19
+ 1753 010c 00       		.byte	0
+ 1754 010d 00       		.byte	0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 36
+
+
+ 1755 010e 16       		.uleb128 0x16
+ 1756 010f 05       		.uleb128 0x5
+ 1757 0110 00       		.byte	0
+ 1758 0111 03       		.uleb128 0x3
+ 1759 0112 08       		.uleb128 0x8
+ 1760 0113 3A       		.uleb128 0x3a
+ 1761 0114 0B       		.uleb128 0xb
+ 1762 0115 3B       		.uleb128 0x3b
+ 1763 0116 0B       		.uleb128 0xb
+ 1764 0117 49       		.uleb128 0x49
+ 1765 0118 13       		.uleb128 0x13
+ 1766 0119 02       		.uleb128 0x2
+ 1767 011a 17       		.uleb128 0x17
+ 1768 011b 00       		.byte	0
+ 1769 011c 00       		.byte	0
+ 1770 011d 17       		.uleb128 0x17
+ 1771 011e 2E       		.uleb128 0x2e
+ 1772 011f 01       		.byte	0x1
+ 1773 0120 3F       		.uleb128 0x3f
+ 1774 0121 19       		.uleb128 0x19
+ 1775 0122 03       		.uleb128 0x3
+ 1776 0123 0E       		.uleb128 0xe
+ 1777 0124 3A       		.uleb128 0x3a
+ 1778 0125 0B       		.uleb128 0xb
+ 1779 0126 3B       		.uleb128 0x3b
+ 1780 0127 0B       		.uleb128 0xb
+ 1781 0128 27       		.uleb128 0x27
+ 1782 0129 19       		.uleb128 0x19
+ 1783 012a 11       		.uleb128 0x11
+ 1784 012b 01       		.uleb128 0x1
+ 1785 012c 12       		.uleb128 0x12
+ 1786 012d 06       		.uleb128 0x6
+ 1787 012e 40       		.uleb128 0x40
+ 1788 012f 18       		.uleb128 0x18
+ 1789 0130 9742     		.uleb128 0x2117
+ 1790 0132 19       		.uleb128 0x19
+ 1791 0133 01       		.uleb128 0x1
+ 1792 0134 13       		.uleb128 0x13
+ 1793 0135 00       		.byte	0
+ 1794 0136 00       		.byte	0
+ 1795 0137 18       		.uleb128 0x18
+ 1796 0138 898201   		.uleb128 0x4109
+ 1797 013b 01       		.byte	0x1
+ 1798 013c 11       		.uleb128 0x11
+ 1799 013d 01       		.uleb128 0x1
+ 1800 013e 31       		.uleb128 0x31
+ 1801 013f 13       		.uleb128 0x13
+ 1802 0140 01       		.uleb128 0x1
+ 1803 0141 13       		.uleb128 0x13
+ 1804 0142 00       		.byte	0
+ 1805 0143 00       		.byte	0
+ 1806 0144 19       		.uleb128 0x19
+ 1807 0145 2E       		.uleb128 0x2e
+ 1808 0146 01       		.byte	0x1
+ 1809 0147 3F       		.uleb128 0x3f
+ 1810 0148 19       		.uleb128 0x19
+ 1811 0149 03       		.uleb128 0x3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 37
+
+
+ 1812 014a 0E       		.uleb128 0xe
+ 1813 014b 3A       		.uleb128 0x3a
+ 1814 014c 0B       		.uleb128 0xb
+ 1815 014d 3B       		.uleb128 0x3b
+ 1816 014e 0B       		.uleb128 0xb
+ 1817 014f 49       		.uleb128 0x49
+ 1818 0150 13       		.uleb128 0x13
+ 1819 0151 11       		.uleb128 0x11
+ 1820 0152 01       		.uleb128 0x1
+ 1821 0153 12       		.uleb128 0x12
+ 1822 0154 06       		.uleb128 0x6
+ 1823 0155 40       		.uleb128 0x40
+ 1824 0156 18       		.uleb128 0x18
+ 1825 0157 9742     		.uleb128 0x2117
+ 1826 0159 19       		.uleb128 0x19
+ 1827 015a 01       		.uleb128 0x1
+ 1828 015b 13       		.uleb128 0x13
+ 1829 015c 00       		.byte	0
+ 1830 015d 00       		.byte	0
+ 1831 015e 1A       		.uleb128 0x1a
+ 1832 015f 0B       		.uleb128 0xb
+ 1833 0160 01       		.byte	0x1
+ 1834 0161 11       		.uleb128 0x11
+ 1835 0162 01       		.uleb128 0x1
+ 1836 0163 12       		.uleb128 0x12
+ 1837 0164 06       		.uleb128 0x6
+ 1838 0165 01       		.uleb128 0x1
+ 1839 0166 13       		.uleb128 0x13
+ 1840 0167 00       		.byte	0
+ 1841 0168 00       		.byte	0
+ 1842 0169 1B       		.uleb128 0x1b
+ 1843 016a 34       		.uleb128 0x34
+ 1844 016b 00       		.byte	0
+ 1845 016c 03       		.uleb128 0x3
+ 1846 016d 0E       		.uleb128 0xe
+ 1847 016e 3A       		.uleb128 0x3a
+ 1848 016f 0B       		.uleb128 0xb
+ 1849 0170 3B       		.uleb128 0x3b
+ 1850 0171 0B       		.uleb128 0xb
+ 1851 0172 49       		.uleb128 0x49
+ 1852 0173 13       		.uleb128 0x13
+ 1853 0174 02       		.uleb128 0x2
+ 1854 0175 18       		.uleb128 0x18
+ 1855 0176 00       		.byte	0
+ 1856 0177 00       		.byte	0
+ 1857 0178 1C       		.uleb128 0x1c
+ 1858 0179 34       		.uleb128 0x34
+ 1859 017a 00       		.byte	0
+ 1860 017b 03       		.uleb128 0x3
+ 1861 017c 08       		.uleb128 0x8
+ 1862 017d 3A       		.uleb128 0x3a
+ 1863 017e 0B       		.uleb128 0xb
+ 1864 017f 3B       		.uleb128 0x3b
+ 1865 0180 0B       		.uleb128 0xb
+ 1866 0181 49       		.uleb128 0x49
+ 1867 0182 13       		.uleb128 0x13
+ 1868 0183 02       		.uleb128 0x2
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 38
+
+
+ 1869 0184 17       		.uleb128 0x17
+ 1870 0185 00       		.byte	0
+ 1871 0186 00       		.byte	0
+ 1872 0187 1D       		.uleb128 0x1d
+ 1873 0188 34       		.uleb128 0x34
+ 1874 0189 00       		.byte	0
+ 1875 018a 03       		.uleb128 0x3
+ 1876 018b 08       		.uleb128 0x8
+ 1877 018c 3A       		.uleb128 0x3a
+ 1878 018d 0B       		.uleb128 0xb
+ 1879 018e 3B       		.uleb128 0x3b
+ 1880 018f 0B       		.uleb128 0xb
+ 1881 0190 49       		.uleb128 0x49
+ 1882 0191 13       		.uleb128 0x13
+ 1883 0192 02       		.uleb128 0x2
+ 1884 0193 18       		.uleb128 0x18
+ 1885 0194 00       		.byte	0
+ 1886 0195 00       		.byte	0
+ 1887 0196 1E       		.uleb128 0x1e
+ 1888 0197 34       		.uleb128 0x34
+ 1889 0198 00       		.byte	0
+ 1890 0199 03       		.uleb128 0x3
+ 1891 019a 0E       		.uleb128 0xe
+ 1892 019b 3A       		.uleb128 0x3a
+ 1893 019c 0B       		.uleb128 0xb
+ 1894 019d 3B       		.uleb128 0x3b
+ 1895 019e 0B       		.uleb128 0xb
+ 1896 019f 49       		.uleb128 0x49
+ 1897 01a0 13       		.uleb128 0x13
+ 1898 01a1 3F       		.uleb128 0x3f
+ 1899 01a2 19       		.uleb128 0x19
+ 1900 01a3 02       		.uleb128 0x2
+ 1901 01a4 18       		.uleb128 0x18
+ 1902 01a5 00       		.byte	0
+ 1903 01a6 00       		.byte	0
+ 1904 01a7 1F       		.uleb128 0x1f
+ 1905 01a8 34       		.uleb128 0x34
+ 1906 01a9 00       		.byte	0
+ 1907 01aa 03       		.uleb128 0x3
+ 1908 01ab 08       		.uleb128 0x8
+ 1909 01ac 3A       		.uleb128 0x3a
+ 1910 01ad 0B       		.uleb128 0xb
+ 1911 01ae 3B       		.uleb128 0x3b
+ 1912 01af 0B       		.uleb128 0xb
+ 1913 01b0 49       		.uleb128 0x49
+ 1914 01b1 13       		.uleb128 0x13
+ 1915 01b2 3F       		.uleb128 0x3f
+ 1916 01b3 19       		.uleb128 0x19
+ 1917 01b4 02       		.uleb128 0x2
+ 1918 01b5 18       		.uleb128 0x18
+ 1919 01b6 00       		.byte	0
+ 1920 01b7 00       		.byte	0
+ 1921 01b8 20       		.uleb128 0x20
+ 1922 01b9 2E       		.uleb128 0x2e
+ 1923 01ba 00       		.byte	0
+ 1924 01bb 3F       		.uleb128 0x3f
+ 1925 01bc 19       		.uleb128 0x19
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 39
+
+
+ 1926 01bd 03       		.uleb128 0x3
+ 1927 01be 0E       		.uleb128 0xe
+ 1928 01bf 3A       		.uleb128 0x3a
+ 1929 01c0 0B       		.uleb128 0xb
+ 1930 01c1 3B       		.uleb128 0x3b
+ 1931 01c2 0B       		.uleb128 0xb
+ 1932 01c3 27       		.uleb128 0x27
+ 1933 01c4 19       		.uleb128 0x19
+ 1934 01c5 49       		.uleb128 0x49
+ 1935 01c6 13       		.uleb128 0x13
+ 1936 01c7 3C       		.uleb128 0x3c
+ 1937 01c8 19       		.uleb128 0x19
+ 1938 01c9 00       		.byte	0
+ 1939 01ca 00       		.byte	0
+ 1940 01cb 21       		.uleb128 0x21
+ 1941 01cc 2E       		.uleb128 0x2e
+ 1942 01cd 01       		.byte	0x1
+ 1943 01ce 3F       		.uleb128 0x3f
+ 1944 01cf 19       		.uleb128 0x19
+ 1945 01d0 03       		.uleb128 0x3
+ 1946 01d1 0E       		.uleb128 0xe
+ 1947 01d2 3A       		.uleb128 0x3a
+ 1948 01d3 0B       		.uleb128 0xb
+ 1949 01d4 3B       		.uleb128 0x3b
+ 1950 01d5 0B       		.uleb128 0xb
+ 1951 01d6 27       		.uleb128 0x27
+ 1952 01d7 19       		.uleb128 0x19
+ 1953 01d8 3C       		.uleb128 0x3c
+ 1954 01d9 19       		.uleb128 0x19
+ 1955 01da 01       		.uleb128 0x1
+ 1956 01db 13       		.uleb128 0x13
+ 1957 01dc 00       		.byte	0
+ 1958 01dd 00       		.byte	0
+ 1959 01de 22       		.uleb128 0x22
+ 1960 01df 05       		.uleb128 0x5
+ 1961 01e0 00       		.byte	0
+ 1962 01e1 49       		.uleb128 0x49
+ 1963 01e2 13       		.uleb128 0x13
+ 1964 01e3 00       		.byte	0
+ 1965 01e4 00       		.byte	0
+ 1966 01e5 23       		.uleb128 0x23
+ 1967 01e6 2E       		.uleb128 0x2e
+ 1968 01e7 00       		.byte	0
+ 1969 01e8 3F       		.uleb128 0x3f
+ 1970 01e9 19       		.uleb128 0x19
+ 1971 01ea 03       		.uleb128 0x3
+ 1972 01eb 0E       		.uleb128 0xe
+ 1973 01ec 3A       		.uleb128 0x3a
+ 1974 01ed 0B       		.uleb128 0xb
+ 1975 01ee 3B       		.uleb128 0x3b
+ 1976 01ef 0B       		.uleb128 0xb
+ 1977 01f0 27       		.uleb128 0x27
+ 1978 01f1 19       		.uleb128 0x19
+ 1979 01f2 3C       		.uleb128 0x3c
+ 1980 01f3 19       		.uleb128 0x19
+ 1981 01f4 00       		.byte	0
+ 1982 01f5 00       		.byte	0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 40
+
+
+ 1983 01f6 24       		.uleb128 0x24
+ 1984 01f7 2E       		.uleb128 0x2e
+ 1985 01f8 01       		.byte	0x1
+ 1986 01f9 3F       		.uleb128 0x3f
+ 1987 01fa 19       		.uleb128 0x19
+ 1988 01fb 03       		.uleb128 0x3
+ 1989 01fc 0E       		.uleb128 0xe
+ 1990 01fd 3A       		.uleb128 0x3a
+ 1991 01fe 0B       		.uleb128 0xb
+ 1992 01ff 3B       		.uleb128 0x3b
+ 1993 0200 0B       		.uleb128 0xb
+ 1994 0201 49       		.uleb128 0x49
+ 1995 0202 13       		.uleb128 0x13
+ 1996 0203 3C       		.uleb128 0x3c
+ 1997 0204 19       		.uleb128 0x19
+ 1998 0205 01       		.uleb128 0x1
+ 1999 0206 13       		.uleb128 0x13
+ 2000 0207 00       		.byte	0
+ 2001 0208 00       		.byte	0
+ 2002 0209 25       		.uleb128 0x25
+ 2003 020a 18       		.uleb128 0x18
+ 2004 020b 00       		.byte	0
+ 2005 020c 00       		.byte	0
+ 2006 020d 00       		.byte	0
+ 2007 020e 26       		.uleb128 0x26
+ 2008 020f 2E       		.uleb128 0x2e
+ 2009 0210 01       		.byte	0x1
+ 2010 0211 3F       		.uleb128 0x3f
+ 2011 0212 19       		.uleb128 0x19
+ 2012 0213 03       		.uleb128 0x3
+ 2013 0214 0E       		.uleb128 0xe
+ 2014 0215 3A       		.uleb128 0x3a
+ 2015 0216 0B       		.uleb128 0xb
+ 2016 0217 3B       		.uleb128 0x3b
+ 2017 0218 0B       		.uleb128 0xb
+ 2018 0219 27       		.uleb128 0x27
+ 2019 021a 19       		.uleb128 0x19
+ 2020 021b 49       		.uleb128 0x49
+ 2021 021c 13       		.uleb128 0x13
+ 2022 021d 3C       		.uleb128 0x3c
+ 2023 021e 19       		.uleb128 0x19
+ 2024 021f 01       		.uleb128 0x1
+ 2025 0220 13       		.uleb128 0x13
+ 2026 0221 00       		.byte	0
+ 2027 0222 00       		.byte	0
+ 2028 0223 27       		.uleb128 0x27
+ 2029 0224 2E       		.uleb128 0x2e
+ 2030 0225 01       		.byte	0x1
+ 2031 0226 3F       		.uleb128 0x3f
+ 2032 0227 19       		.uleb128 0x19
+ 2033 0228 03       		.uleb128 0x3
+ 2034 0229 0E       		.uleb128 0xe
+ 2035 022a 3A       		.uleb128 0x3a
+ 2036 022b 0B       		.uleb128 0xb
+ 2037 022c 3B       		.uleb128 0x3b
+ 2038 022d 0B       		.uleb128 0xb
+ 2039 022e 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 41
+
+
+ 2040 022f 19       		.uleb128 0x19
+ 2041 0230 01       		.uleb128 0x1
+ 2042 0231 13       		.uleb128 0x13
+ 2043 0232 00       		.byte	0
+ 2044 0233 00       		.byte	0
+ 2045 0234 28       		.uleb128 0x28
+ 2046 0235 2E       		.uleb128 0x2e
+ 2047 0236 00       		.byte	0
+ 2048 0237 3F       		.uleb128 0x3f
+ 2049 0238 19       		.uleb128 0x19
+ 2050 0239 03       		.uleb128 0x3
+ 2051 023a 0E       		.uleb128 0xe
+ 2052 023b 3A       		.uleb128 0x3a
+ 2053 023c 0B       		.uleb128 0xb
+ 2054 023d 3B       		.uleb128 0x3b
+ 2055 023e 05       		.uleb128 0x5
+ 2056 023f 27       		.uleb128 0x27
+ 2057 0240 19       		.uleb128 0x19
+ 2058 0241 3C       		.uleb128 0x3c
+ 2059 0242 19       		.uleb128 0x19
+ 2060 0243 00       		.byte	0
+ 2061 0244 00       		.byte	0
+ 2062 0245 29       		.uleb128 0x29
+ 2063 0246 2E       		.uleb128 0x2e
+ 2064 0247 01       		.byte	0x1
+ 2065 0248 3F       		.uleb128 0x3f
+ 2066 0249 19       		.uleb128 0x19
+ 2067 024a 03       		.uleb128 0x3
+ 2068 024b 0E       		.uleb128 0xe
+ 2069 024c 3A       		.uleb128 0x3a
+ 2070 024d 0B       		.uleb128 0xb
+ 2071 024e 3B       		.uleb128 0x3b
+ 2072 024f 0B       		.uleb128 0xb
+ 2073 0250 27       		.uleb128 0x27
+ 2074 0251 19       		.uleb128 0x19
+ 2075 0252 3C       		.uleb128 0x3c
+ 2076 0253 19       		.uleb128 0x19
+ 2077 0254 00       		.byte	0
+ 2078 0255 00       		.byte	0
+ 2079 0256 00       		.byte	0
+ 2080              		.section	.debug_loc,"",%progbits
+ 2081              	.Ldebug_loc0:
+ 2082              	.LLST0:
+ 2083 0000 0C000000 		.4byte	.LVL1
+ 2084 0004 3C000000 		.4byte	.LVL4
+ 2085 0008 0100     		.2byte	0x1
+ 2086 000a 54       		.byte	0x54
+ 2087 000b 00000000 		.4byte	0
+ 2088 000f 00000000 		.4byte	0
+ 2089              	.LLST1:
+ 2090 0013 00000000 		.4byte	.LVL5
+ 2091 0017 0A000000 		.4byte	.LVL6
+ 2092 001b 0100     		.2byte	0x1
+ 2093 001d 50       		.byte	0x50
+ 2094 001e 0A000000 		.4byte	.LVL6
+ 2095 0022 28000000 		.4byte	.LFE35
+ 2096 0026 0400     		.2byte	0x4
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 42
+
+
+ 2097 0028 F3       		.byte	0xf3
+ 2098 0029 01       		.uleb128 0x1
+ 2099 002a 50       		.byte	0x50
+ 2100 002b 9F       		.byte	0x9f
+ 2101 002c 00000000 		.4byte	0
+ 2102 0030 00000000 		.4byte	0
+ 2103              	.LLST2:
+ 2104 0034 DE000000 		.4byte	.LVL37
+ 2105 0038 EC000000 		.4byte	.LVL38
+ 2106 003c 0100     		.2byte	0x1
+ 2107 003e 50       		.byte	0x50
+ 2108 003f EC000000 		.4byte	.LVL38
+ 2109 0043 FA000000 		.4byte	.LVL40
+ 2110 0047 0100     		.2byte	0x1
+ 2111 0049 54       		.byte	0x54
+ 2112 004a 00000000 		.4byte	0
+ 2113 004e 00000000 		.4byte	0
+ 2114              	.LLST3:
+ 2115 0052 16010000 		.4byte	.LVL42
+ 2116 0056 1A010000 		.4byte	.LVL43
+ 2117 005a 0100     		.2byte	0x1
+ 2118 005c 50       		.byte	0x50
+ 2119 005d 1A010000 		.4byte	.LVL43
+ 2120 0061 5C010000 		.4byte	.LFE38
+ 2121 0065 0100     		.2byte	0x1
+ 2122 0067 55       		.byte	0x55
+ 2123 0068 00000000 		.4byte	0
+ 2124 006c 00000000 		.4byte	0
+ 2125              		.section	.debug_aranges,"",%progbits
+ 2126 0000 3C000000 		.4byte	0x3c
+ 2127 0004 0200     		.2byte	0x2
+ 2128 0006 00000000 		.4byte	.Ldebug_info0
+ 2129 000a 04       		.byte	0x4
+ 2130 000b 00       		.byte	0
+ 2131 000c 0000     		.2byte	0
+ 2132 000e 0000     		.2byte	0
+ 2133 0010 00000000 		.4byte	.LFB37
+ 2134 0014 50000000 		.4byte	.LFE37-.LFB37
+ 2135 0018 00000000 		.4byte	.LFB34
+ 2136 001c 14000000 		.4byte	.LFE34-.LFB34
+ 2137 0020 00000000 		.4byte	.LFB35
+ 2138 0024 28000000 		.4byte	.LFE35-.LFB35
+ 2139 0028 00000000 		.4byte	.LFB36
+ 2140 002c 20000000 		.4byte	.LFE36-.LFB36
+ 2141 0030 00000000 		.4byte	.LFB38
+ 2142 0034 5C010000 		.4byte	.LFE38-.LFB38
+ 2143 0038 00000000 		.4byte	0
+ 2144 003c 00000000 		.4byte	0
+ 2145              		.section	.debug_ranges,"",%progbits
+ 2146              	.Ldebug_ranges0:
+ 2147 0000 00000000 		.4byte	.LFB37
+ 2148 0004 50000000 		.4byte	.LFE37
+ 2149 0008 00000000 		.4byte	.LFB34
+ 2150 000c 14000000 		.4byte	.LFE34
+ 2151 0010 00000000 		.4byte	.LFB35
+ 2152 0014 28000000 		.4byte	.LFE35
+ 2153 0018 00000000 		.4byte	.LFB36
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 43
+
+
+ 2154 001c 20000000 		.4byte	.LFE36
+ 2155 0020 00000000 		.4byte	.LFB38
+ 2156 0024 5C010000 		.4byte	.LFE38
+ 2157 0028 00000000 		.4byte	0
+ 2158 002c 00000000 		.4byte	0
+ 2159              		.section	.debug_line,"",%progbits
+ 2160              	.Ldebug_line0:
+ 2161 0000 72020000 		.section	.debug_str,"MS",%progbits,1
+ 2161      0200C801 
+ 2161      00000201 
+ 2161      FB0E0D00 
+ 2161      01010101 
+ 2162              	.LASF84:
+ 2163 0000 6932635F 		.ascii	"i2c_init\000"
+ 2163      696E6974 
  2163      00
- 2164              	.LASF21:
- 2165 048c 64657369 		.ascii	"desiredLux\000"
- 2165      7265644C 
- 2165      757800
- 2166              	.LASF40:
- 2167 0497 44495354 		.ascii	"DIST_ALERT\000"
- 2167      5F414C45 
- 2167      525400
- 2168              	.LASF41:
- 2169 04a2 4C454453 		.ascii	"LEDS\000"
- 2169      00
- 2170              	.LASF28:
- 2171 04a7 67726565 		.ascii	"greenPWMPct\000"
- 2171      6E50574D 
- 2171      50637400 
- 2172              	.LASF15:
- 2173 04b3 63796973 		.ascii	"cyisraddress\000"
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccyy3fNn.s 			page 47
+ 2164              	.LASF69:
+ 2165 0009 696E7365 		.ascii	"insertValue\000"
+ 2165      72745661 
+ 2165      6C756500 
+ 2166              	.LASF68:
+ 2167 0015 72656164 		.ascii	"readLumenSensor\000"
+ 2167      4C756D65 
+ 2167      6E53656E 
+ 2167      736F7200 
+ 2168              	.LASF31:
+ 2169 0025 626C7565 		.ascii	"bluePWMPct\000"
+ 2169      50574D50 
+ 2169      637400
+ 2170              	.LASF20:
+ 2171 0030 43697263 		.ascii	"CircularMean\000"
+ 2171      756C6172 
+ 2171      4D65616E 
+ 2171      00
+ 2172              	.LASF88:
+ 2173 003d 44697374 		.ascii	"DistTrigger_Write\000"
+ 2173      54726967 
+ 2173      6765725F 
+ 2173      57726974 
+ 2173      6500
+ 2174              	.LASF46:
+ 2175 004f 52415445 		.ascii	"RATE\000"
+ 2175      00
+ 2176              	.LASF2:
+ 2177 0054 73686F72 		.ascii	"short int\000"
+ 2177      7420696E 
+ 2177      7400
+ 2178              	.LASF37:
+ 2179 005e 64617461 		.ascii	"data_\000"
+ 2179      5F00
+ 2180              	.LASF49:
+ 2181 0064 696E6372 		.ascii	"incrCtrlFlag\000"
+ 2181      4374726C 
+ 2181      466C6167 
+ 2181      00
+ 2182              	.LASF17:
+ 2183 0071 73697A65 		.ascii	"sizetype\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 44
 
 
- 2173      72616464 
- 2173      72657373 
- 2173      00
- 2174              	.LASF17:
- 2175 04c0 71756575 		.ascii	"queue\000"
- 2175      6500
- 2176              	.LASF38:
- 2177 04c6 44495354 		.ascii	"DIST\000"
- 2177      00
- 2178              	.LASF83:
- 2179 04cb 43794465 		.ascii	"CyDelay\000"
- 2179      6C617900 
- 2180              	.LASF27:
- 2181 04d3 64657369 		.ascii	"desiredTimeDistance\000"
- 2181      72656454 
- 2181      696D6544 
- 2181      69737461 
- 2181      6E636500 
- 2182              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 2183      74797065 
+ 2183      00
+ 2184              	.LASF36:
+ 2185 007a 4E6F6465 		.ascii	"Node\000"
+ 2185      00
+ 2186              	.LASF51:
+ 2187 007f 6D61696E 		.ascii	"main\000"
+ 2187      00
+ 2188              	.LASF61:
+ 2189 0084 64697374 		.ascii	"distAlertTriggered\000"
+ 2189      416C6572 
+ 2189      74547269 
+ 2189      67676572 
+ 2189      656400
+ 2190              	.LASF59:
+ 2191 0097 69326352 		.ascii	"i2cRxBuffer\000"
+ 2191      78427566 
+ 2191      66657200 
+ 2192              	.LASF6:
+ 2193 00a3 6C6F6E67 		.ascii	"long long int\000"
+ 2193      206C6F6E 
+ 2193      6720696E 
+ 2193      7400
+ 2194              	.LASF50:
+ 2195 00b1 4D657472 		.ascii	"Metronome_Interrupt\000"
+ 2195      6F6E6F6D 
+ 2195      655F496E 
+ 2195      74657272 
+ 2195      75707400 
+ 2196              	.LASF85:
+ 2197 00c5 6973456D 		.ascii	"isEmptyQueue\000"
+ 2197      70747951 
+ 2197      75657565 
+ 2197      00
+ 2198              	.LASF74:
+ 2199 00d2 44697374 		.ascii	"DistTimer_Start\000"
+ 2199      54696D65 
+ 2199      725F5374 
+ 2199      61727400 
+ 2200              	.LASF66:
+ 2201 00e2 68616E64 		.ascii	"handler\000"
+ 2201      6C657200 
+ 2202              	.LASF72:
+ 2203 00ea 44454255 		.ascii	"DEBUG_PutString\000"
+ 2203      475F5075 
+ 2203      74537472 
+ 2203      696E6700 
+ 2204              	.LASF60:
+ 2205 00fa 636F6E74 		.ascii	"controlFlags\000"
+ 2205      726F6C46 
+ 2205      6C616773 
+ 2205      00
+ 2206              	.LASF43:
+ 2207 0107 73656E73 		.ascii	"sensor\000"
+ 2207      6F7200
+ 2208              	.LASF65:
+ 2209 010e 44697374 		.ascii	"DistReset_Write\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 45
+
+
+ 2209      52657365 
+ 2209      745F5772 
+ 2209      69746500 
+ 2210              	.LASF38:
+ 2211 011e 6E657874 		.ascii	"next_\000"
+ 2211      5F00
+ 2212              	.LASF83:
+ 2213 0124 71756575 		.ascii	"queue_init\000"
+ 2213      655F696E 
+ 2213      697400
+ 2214              	.LASF12:
+ 2215 012f 666C6F61 		.ascii	"float\000"
+ 2215      7400
+ 2216              	.LASF13:
+ 2217 0135 646F7562 		.ascii	"double\000"
+ 2217      6C6500
+ 2218              	.LASF52:
+ 2219 013c 6563686F 		.ascii	"echoDelay\000"
+ 2219      44656C61 
+ 2219      7900
+ 2220              	.LASF45:
+ 2221 0146 434F554E 		.ascii	"COUNT\000"
+ 2221      5400
+ 2222              	.LASF53:
+ 2223 014c 61637469 		.ascii	"action\000"
+ 2223      6F6E00
+ 2224              	.LASF24:
+ 2225 0153 6D6F7665 		.ascii	"movement\000"
+ 2225      6D656E74 
+ 2225      00
+ 2226              	.LASF67:
+ 2227 015c 5049525F 		.ascii	"PIR_Trig_Read\000"
+ 2227      54726967 
+ 2227      5F526561 
+ 2227      6400
+ 2228              	.LASF32:
+ 2229 016a 6C656450 		.ascii	"ledPower\000"
+ 2229      6F776572 
+ 2229      00
+ 2230              	.LASF48:
+ 2231 0173 44697374 		.ascii	"DistTimer_Interrupt\000"
+ 2231      54696D65 
+ 2231      725F496E 
+ 2231      74657272 
+ 2231      75707400 
+ 2232              	.LASF54:
+ 2233 0187 6C757856 		.ascii	"luxValue\000"
+ 2233      616C7565 
+ 2233      00
+ 2234              	.LASF92:
+ 2235 0190 433A5C55 		.ascii	"C:\\Users\\Simon\\Documents\\GitHub\\E3PRJ3-Gruppe1"
+ 2235      73657273 
+ 2235      5C53696D 
+ 2235      6F6E5C44 
+ 2235      6F63756D 
+ 2236 01be 5C50536F 		.ascii	"\\PSoC\\Sensor-PSoC.cydsn\000"
+ 2236      435C5365 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 46
+
+
+ 2236      6E736F72 
+ 2236      2D50536F 
+ 2236      432E6379 
+ 2237              	.LASF63:
+ 2238 01d6 4D657472 		.ascii	"MetronomeTimer_ReadStatusRegister\000"
+ 2238      6F6E6F6D 
+ 2238      6554696D 
+ 2238      65725F52 
+ 2238      65616453 
+ 2239              	.LASF33:
+ 2240 01f8 44617461 		.ascii	"Data\000"
+ 2240      00
+ 2241              	.LASF1:
+ 2242 01fd 756E7369 		.ascii	"unsigned char\000"
+ 2242      676E6564 
+ 2242      20636861 
+ 2242      7200
+ 2243              	.LASF70:
+ 2244 020b 6765744D 		.ascii	"getMeanValue\000"
+ 2244      65616E56 
+ 2244      616C7565 
+ 2244      00
+ 2245              	.LASF82:
+ 2246 0218 4D657472 		.ascii	"MetronomeISR_StartEx\000"
+ 2246      6F6E6F6D 
+ 2246      65495352 
+ 2246      5F537461 
+ 2246      72744578 
+ 2247              	.LASF90:
+ 2248 022d 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 2248      4320342E 
+ 2248      392E3320 
+ 2248      32303135 
+ 2248      30333033 
+ 2249 0260 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 2249      20726576 
+ 2249      6973696F 
+ 2249      6E203232 
+ 2249      31323230 
+ 2250 0293 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 2250      66756E63 
+ 2250      74696F6E 
+ 2250      2D736563 
+ 2250      74696F6E 
+ 2251              	.LASF80:
+ 2252 02bb 426C7565 		.ascii	"BluePWM_Start\000"
+ 2252      50574D5F 
+ 2252      53746172 
+ 2252      7400
+ 2253              	.LASF62:
+ 2254 02c9 44697374 		.ascii	"DistTimer_ReadCapture\000"
+ 2254      54696D65 
+ 2254      725F5265 
+ 2254      61644361 
+ 2254      70747572 
+ 2255              	.LASF27:
+ 2256 02df 74696D65 		.ascii	"timeDistance\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 47
+
+
+ 2256      44697374 
+ 2256      616E6365 
+ 2256      00
+ 2257              	.LASF64:
+ 2258 02ec 66726F6E 		.ascii	"frontQueue\000"
+ 2258      74517565 
+ 2258      756500
+ 2259              	.LASF81:
+ 2260 02f7 4D657472 		.ascii	"MetronomeTimer_Start\000"
+ 2260      6F6E6F6D 
+ 2260      6554696D 
+ 2260      65725F53 
+ 2260      74617274 
+ 2261              	.LASF0:
+ 2262 030c 7369676E 		.ascii	"signed char\000"
+ 2262      65642063 
+ 2262      68617200 
+ 2263              	.LASF7:
+ 2264 0318 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2264      206C6F6E 
+ 2264      6720756E 
+ 2264      7369676E 
+ 2264      65642069 
+ 2265              	.LASF71:
+ 2266 032f 73707269 		.ascii	"sprintf\000"
+ 2266      6E746600 
+ 2267              	.LASF40:
+ 2268 0337 4C554D45 		.ascii	"LUMEN\000"
+ 2268      4E00
+ 2269              	.LASF8:
+ 2270 033d 756E7369 		.ascii	"unsigned int\000"
+ 2270      676E6564 
+ 2270      20696E74 
+ 2270      00
+ 2271              	.LASF89:
+ 2272 034a 43794465 		.ascii	"CyDelayUs\000"
+ 2272      6C617955 
+ 2272      7300
+ 2273              	.LASF19:
+ 2274 0354 73746172 		.ascii	"start\000"
+ 2274      7400
+ 2275              	.LASF3:
+ 2276 035a 73686F72 		.ascii	"short unsigned int\000"
+ 2276      7420756E 
+ 2276      7369676E 
+ 2276      65642069 
+ 2276      6E7400
+ 2277              	.LASF57:
+ 2278 036d 6261636B 		.ascii	"backOfQueuePtr\000"
+ 2278      4F665175 
+ 2278      65756550 
+ 2278      747200
+ 2279              	.LASF15:
+ 2280 037c 63686172 		.ascii	"char\000"
+ 2280      00
+ 2281              	.LASF26:
+ 2282 0381 64697374 		.ascii	"distance\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 48
+
+
+ 2282      616E6365 
+ 2282      00
+ 2283              	.LASF4:
+ 2284 038a 6C6F6E67 		.ascii	"long int\000"
+ 2284      20696E74 
+ 2284      00
+ 2285              	.LASF47:
+ 2286 0393 464C4147 		.ascii	"FLAG\000"
+ 2286      00
+ 2287              	.LASF75:
+ 2288 0398 44697374 		.ascii	"DistTimerInt_StartEx\000"
+ 2288      54696D65 
+ 2288      72496E74 
+ 2288      5F537461 
+ 2288      72744578 
+ 2289              	.LASF14:
+ 2290 03ad 63686172 		.ascii	"char8\000"
+ 2290      3800
+ 2291              	.LASF76:
+ 2292 03b3 696E6974 		.ascii	"initSensorData\000"
+ 2292      53656E73 
+ 2292      6F724461 
+ 2292      746100
+ 2293              	.LASF9:
+ 2294 03c2 75696E74 		.ascii	"uint8\000"
+ 2294      3800
+ 2295              	.LASF23:
+ 2296 03c8 4C756D65 		.ascii	"LumenMean\000"
+ 2296      6E4D6561 
+ 2296      6E00
+ 2297              	.LASF77:
+ 2298 03d2 696E6974 		.ascii	"initLumenSensor\000"
+ 2298      4C756D65 
+ 2298      6E53656E 
+ 2298      736F7200 
+ 2299              	.LASF55:
+ 2300 03e2 73656E73 		.ascii	"sensorData\000"
+ 2300      6F724461 
+ 2300      746100
+ 2301              	.LASF10:
+ 2302 03ed 75696E74 		.ascii	"uint16\000"
+ 2302      313600
+ 2303              	.LASF30:
+ 2304 03f4 72656450 		.ascii	"redPWMPct\000"
+ 2304      574D5063 
+ 2304      7400
+ 2305              	.LASF56:
+ 2306 03fe 66726F6E 		.ascii	"frontOfQueuePtr\000"
+ 2306      744F6651 
+ 2306      75657565 
+ 2306      50747200 
+ 2307              	.LASF35:
+ 2308 040e 76616C5F 		.ascii	"val_\000"
+ 2308      00
+ 2309              	.LASF79:
+ 2310 0413 52656450 		.ascii	"RedPWM_Start\000"
+ 2310      574D5F53 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 49
+
+
+ 2310      74617274 
+ 2310      00
+ 2311              	.LASF87:
+ 2312 0420 6932635F 		.ascii	"i2c_tx\000"
+ 2312      747800
+ 2313              	.LASF5:
+ 2314 0427 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2314      20756E73 
+ 2314      69676E65 
+ 2314      6420696E 
+ 2314      7400
+ 2315              	.LASF73:
+ 2316 0439 706F7051 		.ascii	"popQueue\000"
+ 2316      75657565 
+ 2316      00
+ 2317              	.LASF44:
+ 2318 0442 6374726C 		.ascii	"ctrl\000"
+ 2318      00
+ 2319              	.LASF78:
+ 2320 0447 47726565 		.ascii	"GreenPWM_Start\000"
+ 2320      6E50574D 
+ 2320      5F537461 
+ 2320      727400
+ 2321              	.LASF34:
+ 2322 0456 636D645F 		.ascii	"cmd_\000"
+ 2322      00
+ 2323              	.LASF11:
+ 2324 045b 75696E74 		.ascii	"uint32\000"
+ 2324      333200
+ 2325              	.LASF25:
+ 2326 0462 6D6F7665 		.ascii	"movementAlertOn\000"
+ 2326      6D656E74 
+ 2326      416C6572 
+ 2326      744F6E00 
+ 2327              	.LASF21:
+ 2328 0472 73656E73 		.ascii	"sensorDataT\000"
+ 2328      6F724461 
+ 2328      74615400 
+ 2329              	.LASF91:
+ 2330 047e 2E5C6D61 		.ascii	".\\main.c\000"
+ 2330      696E2E63 
+ 2330      00
+ 2331              	.LASF22:
+ 2332 0487 64657369 		.ascii	"desiredLux\000"
+ 2332      7265644C 
+ 2332      757800
+ 2333              	.LASF41:
+ 2334 0492 44495354 		.ascii	"DIST_ALERT\000"
+ 2334      5F414C45 
+ 2334      525400
+ 2335              	.LASF42:
+ 2336 049d 4C454453 		.ascii	"LEDS\000"
+ 2336      00
+ 2337              	.LASF93:
+ 2338 04a2 696E6974 		.ascii	"initCtrlFlags\000"
+ 2338      4374726C 
+ 2338      466C6167 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccYdCb0Y.s 			page 50
+
+
+ 2338      7300
+ 2339              	.LASF29:
+ 2340 04b0 67726565 		.ascii	"greenPWMPct\000"
+ 2340      6E50574D 
+ 2340      50637400 
+ 2341              	.LASF16:
+ 2342 04bc 63796973 		.ascii	"cyisraddress\000"
+ 2342      72616464 
+ 2342      72657373 
+ 2342      00
+ 2343              	.LASF18:
+ 2344 04c9 71756575 		.ascii	"queue\000"
+ 2344      6500
+ 2345              	.LASF39:
+ 2346 04cf 44495354 		.ascii	"DIST\000"
+ 2346      00
+ 2347              	.LASF86:
+ 2348 04d4 43794465 		.ascii	"CyDelay\000"
+ 2348      6C617900 
+ 2349              	.LASF58:
+ 2350 04dc 69326354 		.ascii	"i2cTxBuffer\000"
+ 2350      78427566 
+ 2350      66657200 
+ 2351              	.LASF28:
+ 2352 04e8 64657369 		.ascii	"desiredTimeDistance\000"
+ 2352      72656454 
+ 2352      696D6544 
+ 2352      69737461 
+ 2352      6E636500 
+ 2353              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
