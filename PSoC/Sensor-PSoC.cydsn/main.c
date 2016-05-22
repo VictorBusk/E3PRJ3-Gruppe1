@@ -50,6 +50,8 @@ CY_ISR(Metronome_Interrupt)
     MetronomeTimer_ReadStatusRegister();
 }
 
+// Flag: Have we already triggered a "too close" alert?
+uint8 distAlertTriggered = 0;
 // Afstandssensor
 CY_ISR(DistTimer_Interrupt)
 {
@@ -62,8 +64,11 @@ CY_ISR(DistTimer_Interrupt)
     sensorData.distance = (echoDelay + 58/2) / 58;
 
     // Check if we are too close - check done in time domain due to greater resolution
-    if (echoDelay > sensorData.desiredTimeDistance) {
+    if (echoDelay < sensorData.desiredTimeDistance) {
         controlFlags[DIST_ALERT][FLAG] = 1;
+    } else {
+        distAlertTriggered = 0;
+        controlFlags[DIST_ALERT][COUNT] = 0;
     }
 
     // Reset the timer
@@ -119,21 +124,31 @@ int main()
 
         if (controlFlags[DIST_ALERT][FLAG]) {
             controlFlags[DIST_ALERT][FLAG] = 0;
-            handler(cmdDistanceAlert, 0xff);
+            
+            // Have to get two "too close" readings in a row to trigger alert
+            ++(controlFlags[DIST_ALERT][COUNT]);
+            if (!distAlertTriggered && controlFlags[DIST_ALERT][COUNT] >= 2) {
+                distAlertTriggered = 1;
+                handler(cmdDistanceAlert, 0xff);
+            }
         }
         
         // PIR sensor
         if (controlFlags[PIR][FLAG]) {
             controlFlags[PIR][FLAG] = 0;
 
-            // Read the PIR sensor output
-            int tmp = PIR_Trig_Read();
-            // If there is movement now but not before
-            if (tmp && (tmp != sensorData.movement)) {
-                handler(cmdMovementAlert, 0xff);
+            if (sensorData.movementAlertOn) {
+                // Read the PIR sensor output
+                int tmp = PIR_Trig_Read();
+                // If there is movement now but not before
+                if (tmp && (tmp != sensorData.movement)) {
+                    handler(cmdMovementAlert, 0xff);
+                }
+                // Store new value
+                sensorData.movement = tmp;
+            } else {
+                sensorData.movement = 0;
             }
-            // Store new value
-            sensorData.movement = tmp;
         }
 
         // Lumen sensor
