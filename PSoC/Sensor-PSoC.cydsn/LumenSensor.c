@@ -39,15 +39,21 @@ unsigned int readLumenSensor()
     uint8 writeBuf[1];
     unsigned int channel0 = 0;
     unsigned int channel1 = 0;
+    uint32 err = 0;
 
     // Send "read channel 0" command
     writeBuf[0] = 0xAC;
-    LumenCom_I2CMasterWriteBuf(LUMEN_ADDR, writeBuf, 1, LumenCom_I2C_MODE_NO_STOP);
+    err = LumenCom_I2CMasterWriteBuf(LUMEN_ADDR, writeBuf, 1, LumenCom_I2C_MODE_NO_STOP);
+DEBUG_PutHexByte(err);
+DEBUG_PutCRLF();
+
     // Wait for the I2C command to finish transferring
     while(!(LumenCom_I2CMasterStatus() & LumenCom_I2C_MSTAT_XFER_HALT)) {}
     // Read two bytes of data
-    LumenCom_I2CMasterReadBuf(LUMEN_ADDR, readBuf, 2,
+    err = LumenCom_I2CMasterReadBuf(LUMEN_ADDR, readBuf, 2,
         LumenCom_I2C_MODE_REPEAT_START | LumenCom_I2C_MODE_NO_STOP);
+DEBUG_PutHexByte(err);
+DEBUG_PutCRLF();
 
     // Wait for the I2C command to finish transferring
     while(!(LumenCom_I2CMasterStatus() & LumenCom_I2C_MSTAT_XFER_HALT)) {}
@@ -56,12 +62,16 @@ unsigned int readLumenSensor()
 
     // Send "read channel 1" command
     writeBuf[0] = 0xAE;
-    LumenCom_I2CMasterWriteBuf(LUMEN_ADDR, writeBuf, 1,
+    err = LumenCom_I2CMasterWriteBuf(LUMEN_ADDR, writeBuf, 1,
         LumenCom_I2C_MODE_REPEAT_START | LumenCom_I2C_MODE_NO_STOP);
+DEBUG_PutHexByte(err);
+DEBUG_PutCRLF();
     // Wait for the I2C command to finish transferring
     while(!(LumenCom_I2CMasterStatus() & LumenCom_I2C_MSTAT_XFER_HALT)) {}
     // Read two bytes of data
-    LumenCom_I2CMasterReadBuf(LUMEN_ADDR, readBuf, 2, LumenCom_I2C_MODE_REPEAT_START);
+    err = LumenCom_I2CMasterReadBuf(LUMEN_ADDR, readBuf, 2, LumenCom_I2C_MODE_REPEAT_START);
+DEBUG_PutHexByte(err);
+DEBUG_PutCRLF();
 
     // Wait for the I2C command to finish transferring
     while(LumenCom_I2CMasterStatus() & LumenCom_I2C_MSTAT_XFER_INP) {}

@@ -163,6 +163,11 @@ int main()
         if (controlFlags[PIR][FLAG]) {
             controlFlags[PIR][FLAG] = 0;
 
+#ifdef DEBUG_ON
+//            DEBUG_PutHexByte(sensorData.movement);
+//            DEBUG_PutCRLF();
+#endif
+
             if (sensorData.movementAlertOn) {
                 // Read the PIR sensor output
                 int tmp = PIR_Trig_Read();
