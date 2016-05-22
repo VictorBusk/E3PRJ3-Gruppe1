@@ -19,6 +19,7 @@
 #include "z.h"
 
 uint8 calibratedZ = 1;
+uint8 isrStopZ = 0;
 uint8 zFlag = 0;
 uint32 zMax = 3000;
 uint32 zPos;
@@ -64,14 +65,17 @@ void setZPos(uint8 zVal)
     uint32 zDes = 0;
     uint32 zSteps = 0;
     
+    isrStopZ = 0;
+    
     if(calibratedZ == 1)
     {
+        isrStopZ = 0;
         zDes = zVal * zMax / resolution;
         if(zDes < zPos)
         {
             setLed(0,1,0);
             zSteps = zPos - zDes;
-            for(i = 0; i < zSteps; i++)
+            for(i = 0; i < zSteps && isrStopZ == 0; i++)
             {
                 stepZBackwards();
                 zPos--;                
@@ -82,7 +86,7 @@ void setZPos(uint8 zVal)
         {
             setLed(0,1,0);
             zSteps = zDes - zPos;
-            for(i = 0; i < zSteps; i++)
+            for(i = 0; i < zSteps && isrStopZ == 0; i++)
             {
                 stepZForwards();
                 zPos++;                

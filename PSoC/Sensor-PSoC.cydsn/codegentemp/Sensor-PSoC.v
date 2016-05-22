@@ -1,6 +1,6 @@
 // ======================================================================
 // Sensor-PSoC.v generated from TopDesign.cysch
-// 05/21/2016 at 22:04
+// 05/22/2016 at 13:30
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1171,10 +1171,6 @@ module top ;
           wire  Net_381;
           wire  Net_380;
           wire  Net_379;
-          wire  Net_359;
-          wire  Net_358;
-          wire  Net_357;
-          wire  Net_356;
           wire  Net_371;
           wire  Net_370;
           wire  Net_430;

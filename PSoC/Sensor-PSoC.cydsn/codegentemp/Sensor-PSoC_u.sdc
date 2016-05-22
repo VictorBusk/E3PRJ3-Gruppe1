@@ -1,3 +1,3 @@
-# Component constraints for C:\E3PRJ3-Gruppe1\PSoC\Sensor-PSoC.cydsn\TopDesign\TopDesign.cysch
-# Project: C:\E3PRJ3-Gruppe1\PSoC\Sensor-PSoC.cydsn\Sensor-PSoC.cyprj
-# Date: Sat, 21 May 2016 20:04:38 GMT
+# Component constraints for C:\Users\Simon\Documents\GitHub\E3PRJ3-Gruppe1\PSoC\Sensor-PSoC.cydsn\TopDesign\TopDesign.cysch
+# Project: C:\Users\Simon\Documents\GitHub\E3PRJ3-Gruppe1\PSoC\Sensor-PSoC.cydsn\Sensor-PSoC.cyprj
+# Date: Sun, 22 May 2016 11:30:47 GMT

@@ -11,6 +11,8 @@
 */
 #include "SensorData.h"
 
+//#define DEBUG_ON
+
 void initSensorData()
 {
     sensorData.desiredLux = 0;
@@ -18,6 +20,17 @@ void initSensorData()
     sensorData.ledPower = 1;
     sensorData.movementAlertOn = 0;
 
+    
+    // debug
+#ifdef DEBUG_ON
+    sensorData.desiredTimeDistance = 580;
+    sensorData.movementAlertOn = 1;
+    sensorData.ledPower = 1;
+    sensorData.redPWMPct = 255;
+    sensorData.greenPWMPct = 255;
+    sensorData.bluePWMPct = 255;
+#endif
+    
     initCircularMean(&sensorData.LumenMean);
 }
 

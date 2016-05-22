@@ -17,8 +17,8 @@ uint8 i2c_slaveBuffer[I2C_BUFFER_SIZE];
  */
 void i2c_init()
 {
-    I2CM_scl_SetDriveMode(I2CM_scl_DM_RES_UP);
-    I2CM_sda_SetDriveMode(I2CM_sda_DM_RES_UP);
+//    I2CM_scl_SetDriveMode(I2CM_scl_DM_RES_UP);
+//    I2CM_sda_SetDriveMode(I2CM_sda_DM_RES_UP);
   
 
     I2CM_I2CSlaveInitWriteBuf(i2c_slaveBuffer, I2C_BUFFER_SIZE);

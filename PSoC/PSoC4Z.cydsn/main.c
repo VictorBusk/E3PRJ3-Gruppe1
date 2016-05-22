@@ -45,9 +45,7 @@ int main()
                 ; /* Wait till button released */
             }
         }
-                
-        i2c_rx();
-        
+                        
         while(isEmptyQueue() != 1)
         {
             struct Data action;

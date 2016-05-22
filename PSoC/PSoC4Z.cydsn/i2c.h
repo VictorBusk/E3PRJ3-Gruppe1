@@ -20,13 +20,12 @@
 #define I2C_H
     
 #include <project.h>
-#include "handler.h"
 #include "led.h"
 #include "queue.h"
-#include "z.h"
 
 extern void i2c_init(void);
-extern void i2c_rx(void);
+// extern void i2c_rx(void);
+CY_ISR_PROTO(isr_i2c_rx);
 extern void i2c_tx(void);
 
 /* Buffer and packet size */
@@ -44,11 +43,11 @@ extern void i2c_tx(void);
 #define I2C_PACKET_EOP          (0x17u)
 
 /* Command valid status */
-#define STS_CMD_DONE            (0x00u)
-#define STS_CMD_FAIL            (0xFFu)
+#define I2C_STS_CMD_DONE        (0xAAu)
+#define I2C_STS_CMD_FAIL        (0xEEu)
 
-uint8 i2c_txBuffer[I2C_BUFFER_SIZE];
-uint8 i2c_rxBuffer[I2C_BUFFER_SIZE];
+uint8 i2cTxBuffer[I2C_BUFFER_SIZE];
+uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
     
 #endif  // ifndef I2C_H
 /* [] END OF FILE */

@@ -21,23 +21,21 @@
 void handler(uint8 cmd, uint8 val)
 {
     switch (cmd) {
-        case cmdSetZPos : 
+        case CMD_SET_Z_POS : 
             setZPos(val);
             break;
-        case cmdGetZPos :
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (zPos > 0) ? (zPos) : 0xee;
-            i2c_tx();
+        case CMD_GET_Z_POS :
+            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = getZPos();
             break;
-        case cmdGetZMax : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (zMax > 0) ? (zMax) : 0xee;
-            i2c_tx();
+        case CMD_GET_Z_MAX : 
+            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = getZMax();
             break;
-        case cmdStopZ : 
+        case CMD_Z_STP : 
             stopZ();
             break;
-        case cmdCalibrateZ : 
+        case CMD_Z_CAL : 
             calibrateZ();
             break;
         default :

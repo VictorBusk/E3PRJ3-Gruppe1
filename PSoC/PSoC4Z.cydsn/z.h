@@ -31,6 +31,7 @@
 
 extern uint32 zPos;
 extern uint32 zMax;
+extern uint8 isrStopZ;
     
 void z_init(void);
 CY_ISR_PROTO(isr_Z);

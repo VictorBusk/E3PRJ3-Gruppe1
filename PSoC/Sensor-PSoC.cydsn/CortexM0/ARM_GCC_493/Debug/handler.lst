@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -49,22 +49,24 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
   19:.\handler.c   **** #include "handler.h"
   20:.\handler.c   **** #include "SensorData.h"
   21:.\handler.c   **** 
-  22:.\handler.c   **** void handler(uint8 cmd, uint8 val)
-  23:.\handler.c   **** {
-  28              		.loc 1 23 0
+  22:.\handler.c   **** //#define DEBUG_ON
+  23:.\handler.c   **** 
+  24:.\handler.c   **** void handler(uint8 cmd, uint8 val)
+  25:.\handler.c   **** {
+  28              		.loc 1 25 0
   29              		.cfi_startproc
   30              	.LVL0:
   31 0000 10B5     		push	{r4, lr}
   32              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 2
+
+
   33              		.cfi_offset 4, -8
   34              		.cfi_offset 14, -4
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 2
-
-
   35 0002 041C     		mov	r4, r0
-  24:.\handler.c   ****     int tmp;
-  25:.\handler.c   ****     switch (cmd) {
-  36              		.loc 1 25 0
+  26:.\handler.c   ****     int tmp;
+  27:.\handler.c   ****     switch (cmd) {
+  36              		.loc 1 27 0
   37 0004 031C     		mov	r3, r0
   38 0006 303B     		sub	r3, r3, #48
   39 0008 DAB2     		uxtb	r2, r3
@@ -103,204 +105,244 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
   72 0054 3E010000 		.word	.L19
   73              		.section	.text.handler
   74              	.L9:
-  26:.\handler.c   ****         case cmdGetRed : 
-  27:.\handler.c   ****             i2c_txBuffer[1] = cmd;
-  75              		.loc 1 27 0
+  28:.\handler.c   ****         case cmdGetRed : 
+  29:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+  75              		.loc 1 29 0
   76 0018 4D4B     		ldr	r3, .L26+4
   77 001a 5870     		strb	r0, [r3, #1]
-  28:.\handler.c   ****             i2c_txBuffer[2] = sensorData.redPWMPct;
-  78              		.loc 1 28 0
+  30:.\handler.c   ****             i2c_txBuffer[2] = sensorData.redPWMPct;
+  78              		.loc 1 30 0
   79 001c 9522     		mov	r2, #149
   80 001e 4D49     		ldr	r1, .L26+8
   81              	.LVL1:
   82 0020 8A5C     		ldrb	r2, [r1, r2]
   83 0022 9A70     		strb	r2, [r3, #2]
-  29:.\handler.c   ****             i2c_tx();
-  84              		.loc 1 29 0
+  31:.\handler.c   ****             i2c_tx();
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 3
+
+
+  84              		.loc 1 31 0
   85 0024 FFF7FEFF 		bl	i2c_tx
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 3
-
-
   86              	.LVL2:
-  30:.\handler.c   ****             break;
-  87              		.loc 1 30 0
+  32:.\handler.c   **** #ifdef DEBUG_ON
+  33:.\handler.c   ****     DEBUG_PutString("cmdGetRed ");
+  34:.\handler.c   ****     DEBUG_PutHexByte(sensorData.redPWMPct);
+  35:.\handler.c   ****     DEBUG_PutCRLF();
+  36:.\handler.c   **** #endif
+  37:.\handler.c   ****             break;
+  87              		.loc 1 37 0
   88 0028 8EE0     		b	.L1
   89              	.LVL3:
   90              	.L3:
-  31:.\handler.c   ****         case cmdSetRed : 
-  32:.\handler.c   ****             sensorData.redPWMPct = val;
-  91              		.loc 1 32 0
+  38:.\handler.c   ****         case cmdSetRed : 
+  39:.\handler.c   ****             sensorData.redPWMPct = val;
+  91              		.loc 1 39 0
   92 002a 9523     		mov	r3, #149
   93 002c 494A     		ldr	r2, .L26+8
   94 002e D154     		strb	r1, [r2, r3]
-  33:.\handler.c   ****             RedPWM_WriteCompare(sensorData.redPWMPct);            
-  95              		.loc 1 33 0
+  40:.\handler.c   ****             RedPWM_WriteCompare(sensorData.redPWMPct);
+  95              		.loc 1 40 0
   96 0030 081C     		mov	r0, r1
   97              	.LVL4:
   98 0032 FFF7FEFF 		bl	RedPWM_WriteCompare
   99              	.LVL5:
-  34:.\handler.c   ****             break;
- 100              		.loc 1 34 0
+  41:.\handler.c   **** #ifdef DEBUG_ON
+  42:.\handler.c   ****     DEBUG_PutString("cmdSetRed ");
+  43:.\handler.c   ****     DEBUG_PutHexByte(sensorData.redPWMPct);
+  44:.\handler.c   ****     DEBUG_PutCRLF();
+  45:.\handler.c   **** #endif
+  46:.\handler.c   ****             break;
+ 100              		.loc 1 46 0
  101 0036 87E0     		b	.L1
  102              	.LVL6:
  103              	.L10:
-  35:.\handler.c   ****         case cmdGetGreen : 
-  36:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 104              		.loc 1 36 0
+  47:.\handler.c   ****         case cmdGetGreen : 
+  48:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 104              		.loc 1 48 0
  105 0038 454B     		ldr	r3, .L26+4
  106 003a 5870     		strb	r0, [r3, #1]
-  37:.\handler.c   ****             i2c_txBuffer[2] = sensorData.greenPWMPct;
- 107              		.loc 1 37 0
+  49:.\handler.c   ****             i2c_txBuffer[2] = sensorData.greenPWMPct;
+ 107              		.loc 1 49 0
  108 003c 9422     		mov	r2, #148
  109 003e 4549     		ldr	r1, .L26+8
  110              	.LVL7:
  111 0040 8A5C     		ldrb	r2, [r1, r2]
  112 0042 9A70     		strb	r2, [r3, #2]
-  38:.\handler.c   ****             i2c_tx();
- 113              		.loc 1 38 0
+  50:.\handler.c   ****             i2c_tx();
+ 113              		.loc 1 50 0
  114 0044 FFF7FEFF 		bl	i2c_tx
  115              	.LVL8:
-  39:.\handler.c   ****             break;
- 116              		.loc 1 39 0
+  51:.\handler.c   **** #ifdef DEBUG_ON
+  52:.\handler.c   ****     DEBUG_PutString("cmdGetGreen ");
+  53:.\handler.c   ****     DEBUG_PutHexByte(sensorData.greenPWMPct);
+  54:.\handler.c   ****     DEBUG_PutCRLF();
+  55:.\handler.c   **** #endif
+  56:.\handler.c   ****             break;
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 4
+
+
+ 116              		.loc 1 56 0
  117 0048 7EE0     		b	.L1
  118              	.LVL9:
  119              	.L5:
-  40:.\handler.c   ****         case cmdSetGreen : 
-  41:.\handler.c   ****             sensorData.greenPWMPct = val;
- 120              		.loc 1 41 0
+  57:.\handler.c   ****         case cmdSetGreen : 
+  58:.\handler.c   ****             sensorData.greenPWMPct = val;
+ 120              		.loc 1 58 0
  121 004a 9423     		mov	r3, #148
  122 004c 414A     		ldr	r2, .L26+8
  123 004e D154     		strb	r1, [r2, r3]
-  42:.\handler.c   ****             GreenPWM_WriteCompare(sensorData.greenPWMPct);            
- 124              		.loc 1 42 0
+  59:.\handler.c   ****             GreenPWM_WriteCompare(sensorData.greenPWMPct);
+ 124              		.loc 1 59 0
  125 0050 081C     		mov	r0, r1
  126              	.LVL10:
  127 0052 FFF7FEFF 		bl	GreenPWM_WriteCompare
  128              	.LVL11:
-  43:.\handler.c   ****             break;
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 4
-
-
- 129              		.loc 1 43 0
+  60:.\handler.c   **** #ifdef DEBUG_ON
+  61:.\handler.c   ****     DEBUG_PutString("cmdSetGreen ");
+  62:.\handler.c   ****     DEBUG_PutHexByte(sensorData.greenPWMPct);
+  63:.\handler.c   ****     DEBUG_PutCRLF();
+  64:.\handler.c   **** #endif
+  65:.\handler.c   ****             break;
+ 129              		.loc 1 65 0
  130 0056 77E0     		b	.L1
  131              	.LVL12:
  132              	.L11:
-  44:.\handler.c   ****         case cmdGetBlue : 
-  45:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 133              		.loc 1 45 0
+  66:.\handler.c   ****         case cmdGetBlue : 
+  67:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 133              		.loc 1 67 0
  134 0058 3D4B     		ldr	r3, .L26+4
  135 005a 5870     		strb	r0, [r3, #1]
-  46:.\handler.c   ****             i2c_txBuffer[2] = sensorData.bluePWMPct;
- 136              		.loc 1 46 0
+  68:.\handler.c   ****             i2c_txBuffer[2] = sensorData.bluePWMPct;
+ 136              		.loc 1 68 0
  137 005c 9622     		mov	r2, #150
  138 005e 3D49     		ldr	r1, .L26+8
  139              	.LVL13:
  140 0060 8A5C     		ldrb	r2, [r1, r2]
  141 0062 9A70     		strb	r2, [r3, #2]
-  47:.\handler.c   ****             i2c_tx();
- 142              		.loc 1 47 0
+  69:.\handler.c   ****             i2c_tx();
+ 142              		.loc 1 69 0
  143 0064 FFF7FEFF 		bl	i2c_tx
  144              	.LVL14:
-  48:.\handler.c   ****             break;
- 145              		.loc 1 48 0
+  70:.\handler.c   **** #ifdef DEBUG_ON
+  71:.\handler.c   ****     DEBUG_PutString("cmdGetBlue ");
+  72:.\handler.c   ****     DEBUG_PutHexByte(sensorData.bluePWMPct);
+  73:.\handler.c   ****     DEBUG_PutCRLF();
+  74:.\handler.c   **** #endif
+  75:.\handler.c   ****             break;
+ 145              		.loc 1 75 0
  146 0068 6EE0     		b	.L1
  147              	.LVL15:
  148              	.L6:
-  49:.\handler.c   ****         case cmdSetBlue : 
-  50:.\handler.c   ****             sensorData.bluePWMPct = val;
- 149              		.loc 1 50 0
+  76:.\handler.c   ****         case cmdSetBlue : 
+  77:.\handler.c   ****             sensorData.bluePWMPct = val;
+ 149              		.loc 1 77 0
  150 006a 9623     		mov	r3, #150
  151 006c 394A     		ldr	r2, .L26+8
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 5
+
+
  152 006e D154     		strb	r1, [r2, r3]
-  51:.\handler.c   ****             BluePWM_WriteCompare(sensorData.bluePWMPct);            
- 153              		.loc 1 51 0
+  78:.\handler.c   ****             BluePWM_WriteCompare(sensorData.bluePWMPct);
+ 153              		.loc 1 78 0
  154 0070 081C     		mov	r0, r1
  155              	.LVL16:
  156 0072 FFF7FEFF 		bl	BluePWM_WriteCompare
  157              	.LVL17:
-  52:.\handler.c   ****             break;
- 158              		.loc 1 52 0
+  79:.\handler.c   **** #ifdef DEBUG_ON
+  80:.\handler.c   ****     DEBUG_PutString("cmdSetBlue ");
+  81:.\handler.c   ****     DEBUG_PutHexByte(sensorData.bluePWMPct);
+  82:.\handler.c   ****     DEBUG_PutCRLF();
+  83:.\handler.c   **** #endif
+  84:.\handler.c   ****             break;
+ 158              		.loc 1 84 0
  159 0076 67E0     		b	.L1
  160              	.LVL18:
  161              	.L13:
-  53:.\handler.c   **** 
-  54:.\handler.c   ****         case cmdGetPower : 
-  55:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 162              		.loc 1 55 0
+  85:.\handler.c   **** 
+  86:.\handler.c   ****         case cmdGetPower : 
+  87:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 162              		.loc 1 87 0
  163 0078 354B     		ldr	r3, .L26+4
  164 007a 5870     		strb	r0, [r3, #1]
-  56:.\handler.c   ****             i2c_txBuffer[2] = sensorData.ledPower;
- 165              		.loc 1 56 0
+  88:.\handler.c   ****             i2c_txBuffer[2] = sensorData.ledPower;
+ 165              		.loc 1 88 0
  166 007c 9722     		mov	r2, #151
  167 007e 3549     		ldr	r1, .L26+8
  168              	.LVL19:
  169 0080 8A5C     		ldrb	r2, [r1, r2]
  170 0082 9A70     		strb	r2, [r3, #2]
-  57:.\handler.c   ****             i2c_tx();
- 171              		.loc 1 57 0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 5
-
-
+  89:.\handler.c   ****             i2c_tx();
+ 171              		.loc 1 89 0
  172 0084 FFF7FEFF 		bl	i2c_tx
  173              	.LVL20:
-  58:.\handler.c   ****             break;
- 174              		.loc 1 58 0
+  90:.\handler.c   **** #ifdef DEBUG_ON
+  91:.\handler.c   ****     DEBUG_PutString("cmdGetPower ");
+  92:.\handler.c   ****     DEBUG_PutHexByte(sensorData.ledPower);
+  93:.\handler.c   ****     DEBUG_PutCRLF();
+  94:.\handler.c   **** #endif
+  95:.\handler.c   ****             break;
+ 174              		.loc 1 95 0
  175 0088 5EE0     		b	.L1
  176              	.LVL21:
  177              	.L8:
-  59:.\handler.c   ****         case cmdSetPower : 
-  60:.\handler.c   ****             sensorData.ledPower = val;
- 178              		.loc 1 60 0
+  96:.\handler.c   ****         case cmdSetPower : 
+  97:.\handler.c   ****             sensorData.ledPower = val;
+ 178              		.loc 1 97 0
  179 008a 9723     		mov	r3, #151
  180 008c 314A     		ldr	r2, .L26+8
  181 008e D154     		strb	r1, [r2, r3]
-  61:.\handler.c   ****             if (val) {
- 182              		.loc 1 61 0
+  98:.\handler.c   ****             if (val) {
+ 182              		.loc 1 98 0
  183 0090 0029     		cmp	r1, #0
  184 0092 06D0     		beq	.L20
-  62:.\handler.c   ****                 RedPWM_Start();
- 185              		.loc 1 62 0
+  99:.\handler.c   ****                 RedPWM_Start();
+ 185              		.loc 1 99 0
  186 0094 FFF7FEFF 		bl	RedPWM_Start
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 6
+
+
  187              	.LVL22:
-  63:.\handler.c   ****                 GreenPWM_Start();
- 188              		.loc 1 63 0
+ 100:.\handler.c   ****                 GreenPWM_Start();
+ 188              		.loc 1 100 0
  189 0098 FFF7FEFF 		bl	GreenPWM_Start
  190              	.LVL23:
-  64:.\handler.c   ****                 BluePWM_Start();
- 191              		.loc 1 64 0
+ 101:.\handler.c   ****                 BluePWM_Start();
+ 191              		.loc 1 101 0
  192 009c FFF7FEFF 		bl	BluePWM_Start
  193              	.LVL24:
  194 00a0 52E0     		b	.L1
  195              	.LVL25:
  196              	.L20:
-  65:.\handler.c   ****             } else {
-  66:.\handler.c   ****                 RedPWM_Stop();
- 197              		.loc 1 66 0
+ 102:.\handler.c   ****             } else {
+ 103:.\handler.c   ****                 RedPWM_Stop();
+ 197              		.loc 1 103 0
  198 00a2 FFF7FEFF 		bl	RedPWM_Stop
  199              	.LVL26:
-  67:.\handler.c   ****                 GreenPWM_Stop();
- 200              		.loc 1 67 0
+ 104:.\handler.c   ****                 GreenPWM_Stop();
+ 200              		.loc 1 104 0
  201 00a6 FFF7FEFF 		bl	GreenPWM_Stop
  202              	.LVL27:
-  68:.\handler.c   ****                 BluePWM_Stop();
- 203              		.loc 1 68 0
+ 105:.\handler.c   ****                 BluePWM_Stop();
+ 203              		.loc 1 105 0
  204 00aa FFF7FEFF 		bl	BluePWM_Stop
  205              	.LVL28:
  206 00ae 4BE0     		b	.L1
  207              	.LVL29:
  208              	.L12:
-  69:.\handler.c   ****             }
-  70:.\handler.c   ****             break;
-  71:.\handler.c   **** 
-  72:.\handler.c   ****         case cmdGetLumen : 
-  73:.\handler.c   ****             // Scale Lux to 1530 max, range 0-255
-  74:.\handler.c   ****             //  1530 chosen because 1530/255 = 6
-  75:.\handler.c   ****             tmp = (255 * sensorData.lux) / 1530;
- 209              		.loc 1 75 0
+ 106:.\handler.c   ****             }
+ 107:.\handler.c   **** #ifdef DEBUG_ON
+ 108:.\handler.c   ****     DEBUG_PutString("cmdSetPower ");
+ 109:.\handler.c   ****     DEBUG_PutHexByte(sensorData.ledPower);
+ 110:.\handler.c   ****     DEBUG_PutCRLF();
+ 111:.\handler.c   **** #endif
+ 112:.\handler.c   ****             break;
+ 113:.\handler.c   **** 
+ 114:.\handler.c   ****         case cmdGetLumen : 
+ 115:.\handler.c   ****             // Scale Lux to 1530 max, range 0-255
+ 116:.\handler.c   ****             //  1530 chosen because 1530/255 = 6
+ 117:.\handler.c   ****             tmp = (255 * sensorData.lux) / 1530;
+ 209              		.loc 1 117 0
  210 00b0 284B     		ldr	r3, .L26+8
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 6
-
-
  211 00b2 1868     		ldr	r0, [r3]
  212              	.LVL30:
  213 00b4 0302     		lsl	r3, r0, #8
@@ -309,40 +351,48 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  216              	.LVL31:
  217 00ba FFF7FEFF 		bl	__aeabi_uidiv
  218              	.LVL32:
-  76:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 219              		.loc 1 76 0
+ 118:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 219              		.loc 1 118 0
  220 00be 244B     		ldr	r3, .L26+4
  221 00c0 5C70     		strb	r4, [r3, #1]
-  77:.\handler.c   ****             i2c_txBuffer[2] = (uint8)((tmp < 255) ? tmp : 255);
- 222              		.loc 1 77 0
+ 119:.\handler.c   ****             i2c_txBuffer[2] = (uint8)((tmp < 255) ? tmp : 255);
+ 222              		.loc 1 119 0
  223 00c2 FE28     		cmp	r0, #254
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 7
+
+
  224 00c4 01DC     		bgt	.L24
- 225              		.loc 1 77 0 is_stmt 0 discriminator 1
+ 225              		.loc 1 119 0 is_stmt 0 discriminator 1
  226 00c6 C0B2     		uxtb	r0, r0
  227              	.LVL33:
  228 00c8 00E0     		b	.L21
  229              	.LVL34:
  230              	.L24:
- 231              		.loc 1 77 0
+ 231              		.loc 1 119 0
  232 00ca FF20     		mov	r0, #255
  233              	.LVL35:
  234              	.L21:
- 235              		.loc 1 77 0 discriminator 4
+ 235              		.loc 1 119 0 discriminator 4
  236 00cc 204B     		ldr	r3, .L26+4
  237 00ce 9870     		strb	r0, [r3, #2]
-  78:.\handler.c   ****             i2c_tx();
- 238              		.loc 1 78 0 is_stmt 1 discriminator 4
+ 120:.\handler.c   ****             i2c_tx();
+ 238              		.loc 1 120 0 is_stmt 1 discriminator 4
  239 00d0 FFF7FEFF 		bl	i2c_tx
  240              	.LVL36:
-  79:.\handler.c   ****             break;
- 241              		.loc 1 79 0 discriminator 4
+ 121:.\handler.c   **** #ifdef DEBUG_ON
+ 122:.\handler.c   ****     DEBUG_PutString("cmdGetLumen ");
+ 123:.\handler.c   ****     DEBUG_PutHexByte(i2c_txBuffer[2]);
+ 124:.\handler.c   ****     DEBUG_PutCRLF();
+ 125:.\handler.c   **** #endif
+ 126:.\handler.c   ****             break;
+ 241              		.loc 1 126 0 discriminator 4
  242 00d4 38E0     		b	.L1
  243              	.LVL37:
  244              	.L7:
-  80:.\handler.c   ****         case cmdSetLumen : 
-  81:.\handler.c   ****             // Scale Lux to 1530 max, range 0-255
-  82:.\handler.c   ****             sensorData.desiredLux = (val * 1530) / 255;
- 245              		.loc 1 82 0
+ 127:.\handler.c   ****         case cmdSetLumen : 
+ 128:.\handler.c   ****             // Scale Lux to 1530 max, range 0-255
+ 129:.\handler.c   ****             sensorData.desiredLux = (val * 1530) / 255;
+ 245              		.loc 1 129 0
  246 00d6 2048     		ldr	r0, .L26+12
  247              	.LVL38:
  248 00d8 4843     		mul	r0, r1
@@ -352,49 +402,59 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  252              	.LVL40:
  253 00e0 1C4B     		ldr	r3, .L26+8
  254 00e2 5860     		str	r0, [r3, #4]
-  83:.\handler.c   ****             break;
- 255              		.loc 1 83 0
+ 130:.\handler.c   **** #ifdef DEBUG_ON
+ 131:.\handler.c   ****     DEBUG_PutString("cmdSetLumen ");
+ 132:.\handler.c   ****     DEBUG_PutHexByte(sensorData.desiredLux);
+ 133:.\handler.c   ****     DEBUG_PutCRLF();
+ 134:.\handler.c   **** #endif
+ 135:.\handler.c   ****             break;
+ 255              		.loc 1 135 0
  256 00e4 30E0     		b	.L1
  257              	.LVL41:
  258              	.L16:
-  84:.\handler.c   **** 
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 7
-
-
-  85:.\handler.c   ****         case cmdGetDistance : 
-  86:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 259              		.loc 1 86 0
+ 136:.\handler.c   **** 
+ 137:.\handler.c   ****         case cmdGetDistance : 
+ 138:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 259              		.loc 1 138 0
  260 00e6 1A4B     		ldr	r3, .L26+4
  261 00e8 5870     		strb	r0, [r3, #1]
-  87:.\handler.c   ****             i2c_txBuffer[2] = (uint8)((sensorData.distance < 255) ? sensorData.distance : 255);
- 262              		.loc 1 87 0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 8
+
+
+ 139:.\handler.c   ****             i2c_txBuffer[2] = (uint8)((sensorData.distance < 255) ? sensorData.distance : 255);
+ 262              		.loc 1 139 0
  263 00ea 8823     		mov	r3, #136
  264 00ec 194A     		ldr	r2, .L26+8
  265 00ee D358     		ldr	r3, [r2, r3]
  266 00f0 FE2B     		cmp	r3, #254
  267 00f2 01DC     		bgt	.L25
- 268              		.loc 1 87 0 is_stmt 0 discriminator 1
+ 268              		.loc 1 139 0 is_stmt 0 discriminator 1
  269 00f4 DBB2     		uxtb	r3, r3
  270 00f6 00E0     		b	.L22
  271              	.L25:
- 272              		.loc 1 87 0
+ 272              		.loc 1 139 0
  273 00f8 FF23     		mov	r3, #255
  274              	.L22:
- 275              		.loc 1 87 0 discriminator 4
+ 275              		.loc 1 139 0 discriminator 4
  276 00fa 154A     		ldr	r2, .L26+4
  277 00fc 9370     		strb	r3, [r2, #2]
-  88:.\handler.c   ****             i2c_tx();
- 278              		.loc 1 88 0 is_stmt 1 discriminator 4
+ 140:.\handler.c   ****             i2c_tx();
+ 278              		.loc 1 140 0 is_stmt 1 discriminator 4
  279 00fe FFF7FEFF 		bl	i2c_tx
  280              	.LVL42:
-  89:.\handler.c   ****             break;
- 281              		.loc 1 89 0 discriminator 4
+ 141:.\handler.c   **** #ifdef DEBUG_ON
+ 142:.\handler.c   ****     DEBUG_PutString("cmdGetDistance ");
+ 143:.\handler.c   ****     DEBUG_PutHexByte(i2c_txBuffer[2]);
+ 144:.\handler.c   ****     DEBUG_PutCRLF();
+ 145:.\handler.c   **** #endif
+ 146:.\handler.c   ****             break;
+ 281              		.loc 1 146 0 discriminator 4
  282 0102 21E0     		b	.L1
  283              	.LVL43:
  284              	.L14:
-  90:.\handler.c   ****         case cmdSetDistance : 
-  91:.\handler.c   ****             sensorData.desiredTimeDistance = val * 58;
- 285              		.loc 1 91 0
+ 147:.\handler.c   ****         case cmdSetDistance : 
+ 148:.\handler.c   ****             sensorData.desiredTimeDistance = val * 58;
+ 285              		.loc 1 148 0
  286 0104 3A20     		mov	r0, #58
  287              	.LVL44:
  288 0106 4143     		mul	r1, r0
@@ -402,40 +462,50 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  290 0108 9023     		mov	r3, #144
  291 010a 124A     		ldr	r2, .L26+8
  292 010c D150     		str	r1, [r2, r3]
-  92:.\handler.c   ****             break;
- 293              		.loc 1 92 0
+ 149:.\handler.c   **** #ifdef DEBUG_ON
+ 150:.\handler.c   ****     DEBUG_PutString("cmdSetDistance ");
+ 151:.\handler.c   ****     DEBUG_PutHexByte(sensorData.desiredTimeDistance);
+ 152:.\handler.c   ****     DEBUG_PutCRLF();
+ 153:.\handler.c   **** #endif
+ 154:.\handler.c   ****             break;
+ 293              		.loc 1 154 0
  294 010e 1BE0     		b	.L1
  295              	.LVL46:
  296              	.L18:
-  93:.\handler.c   ****         case cmdDistanceAlert : 
-  94:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 297              		.loc 1 94 0
+ 155:.\handler.c   ****         case cmdDistanceAlert : 
+ 156:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 297              		.loc 1 156 0
  298 0110 0F4B     		ldr	r3, .L26+4
  299 0112 5870     		strb	r0, [r3, #1]
-  95:.\handler.c   ****             i2c_txBuffer[2] = val;
- 300              		.loc 1 95 0
+ 157:.\handler.c   ****             i2c_txBuffer[2] = val;
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 9
+
+
+ 300              		.loc 1 157 0
  301 0114 9970     		strb	r1, [r3, #2]
-  96:.\handler.c   ****             i2c_tx();
- 302              		.loc 1 96 0
+ 158:.\handler.c   ****             i2c_tx();
+ 302              		.loc 1 158 0
  303 0116 FFF7FEFF 		bl	i2c_tx
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 8
-
-
  304              	.LVL47:
-  97:.\handler.c   ****             break;
- 305              		.loc 1 97 0
+ 159:.\handler.c   **** #ifdef DEBUG_ON
+ 160:.\handler.c   ****     DEBUG_PutString("cmdDistanceAlert ");
+ 161:.\handler.c   ****     DEBUG_PutHexByte(val);
+ 162:.\handler.c   ****     DEBUG_PutCRLF();
+ 163:.\handler.c   **** #endif
+ 164:.\handler.c   ****             break;
+ 305              		.loc 1 164 0
  306 011a 15E0     		b	.L1
  307              	.LVL48:
  308              	.L17:
-  98:.\handler.c   **** 
-  99:.\handler.c   ****         case cmdGetMovement : 
- 100:.\handler.c   ****             // Return 0xff if there is movement, 0x00 if there is not
- 101:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 309              		.loc 1 101 0
+ 165:.\handler.c   **** 
+ 166:.\handler.c   ****         case cmdGetMovement : 
+ 167:.\handler.c   ****             // Return 0xff if there is movement, 0x00 if there is not
+ 168:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 309              		.loc 1 168 0
  310 011c 0C4B     		ldr	r3, .L26+4
  311 011e 5870     		strb	r0, [r3, #1]
- 102:.\handler.c   ****             i2c_txBuffer[2] = (sensorData.movement) ? 0xff : 0x00;
- 312              		.loc 1 102 0
+ 169:.\handler.c   ****             i2c_txBuffer[2] = (sensorData.movement) ? 0xff : 0x00;
+ 312              		.loc 1 169 0
  313 0120 8423     		mov	r3, #132
  314 0122 0C4A     		ldr	r2, .L26+8
  315 0124 D35C     		ldrb	r3, [r2, r3]
@@ -443,51 +513,66 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  317 0128 00D0     		beq	.L23
  318 012a FF23     		mov	r3, #255
  319              	.L23:
- 320              		.loc 1 102 0 is_stmt 0 discriminator 4
+ 320              		.loc 1 169 0 is_stmt 0 discriminator 4
  321 012c 084A     		ldr	r2, .L26+4
  322 012e 9370     		strb	r3, [r2, #2]
- 103:.\handler.c   ****             i2c_tx();
- 323              		.loc 1 103 0 is_stmt 1 discriminator 4
+ 170:.\handler.c   ****             i2c_tx();
+ 323              		.loc 1 170 0 is_stmt 1 discriminator 4
  324 0130 FFF7FEFF 		bl	i2c_tx
  325              	.LVL49:
- 104:.\handler.c   ****             break;
- 326              		.loc 1 104 0 discriminator 4
+ 171:.\handler.c   **** #ifdef DEBUG_ON
+ 172:.\handler.c   ****     DEBUG_PutString("cmdGetMovement ");
+ 173:.\handler.c   ****     DEBUG_PutHexByte(sensorData.movement);
+ 174:.\handler.c   ****     DEBUG_PutCRLF();
+ 175:.\handler.c   **** #endif
+ 176:.\handler.c   ****             break;
+ 326              		.loc 1 176 0 discriminator 4
  327 0134 08E0     		b	.L1
  328              	.LVL50:
  329              	.L15:
- 105:.\handler.c   ****         case cmdSetMovement : 
- 106:.\handler.c   ****             sensorData.movementAlertOn = val;
- 330              		.loc 1 106 0
+ 177:.\handler.c   ****         case cmdSetMovement : 
+ 178:.\handler.c   ****             sensorData.movementAlertOn = val;
+ 330              		.loc 1 178 0
  331 0136 8523     		mov	r3, #133
  332 0138 064A     		ldr	r2, .L26+8
  333 013a D154     		strb	r1, [r2, r3]
- 107:.\handler.c   ****             break;
- 334              		.loc 1 107 0
+ 179:.\handler.c   **** #ifdef DEBUG_ON
+ 180:.\handler.c   ****     DEBUG_PutString("cmdSetMovement ");
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 10
+
+
+ 181:.\handler.c   ****     DEBUG_PutHexByte(sensorData.movementAlertOn);
+ 182:.\handler.c   ****     DEBUG_PutCRLF();
+ 183:.\handler.c   **** #endif
+ 184:.\handler.c   ****             break;
+ 334              		.loc 1 184 0
  335 013c 04E0     		b	.L1
  336              	.L19:
- 108:.\handler.c   ****         case cmdMovementAlert : 
- 109:.\handler.c   ****             i2c_txBuffer[1] = cmd;
- 337              		.loc 1 109 0
+ 185:.\handler.c   ****         case cmdMovementAlert : 
+ 186:.\handler.c   ****             i2c_txBuffer[1] = cmd;
+ 337              		.loc 1 186 0
  338 013e 044B     		ldr	r3, .L26+4
  339 0140 5870     		strb	r0, [r3, #1]
- 110:.\handler.c   ****             i2c_txBuffer[2] = val;
- 340              		.loc 1 110 0
+ 187:.\handler.c   ****             i2c_txBuffer[2] = val;
+ 340              		.loc 1 187 0
  341 0142 9970     		strb	r1, [r3, #2]
- 111:.\handler.c   ****             i2c_tx();
- 342              		.loc 1 111 0
+ 188:.\handler.c   ****             i2c_tx();
+ 342              		.loc 1 188 0
  343 0144 FFF7FEFF 		bl	i2c_tx
  344              	.LVL51:
  345              	.L1:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 9
-
-
- 112:.\handler.c   ****             break;
- 113:.\handler.c   **** 
- 114:.\handler.c   ****         default :
- 115:.\handler.c   ****             break;
- 116:.\handler.c   ****     }
- 117:.\handler.c   **** }
- 346              		.loc 1 117 0
+ 189:.\handler.c   **** #ifdef DEBUG_ON
+ 190:.\handler.c   ****     DEBUG_PutString("cmdMovementAlert ");
+ 191:.\handler.c   ****     DEBUG_PutHexByte(val);
+ 192:.\handler.c   ****     DEBUG_PutCRLF();
+ 193:.\handler.c   **** #endif
+ 194:.\handler.c   ****             break;
+ 195:.\handler.c   **** 
+ 196:.\handler.c   ****         default :
+ 197:.\handler.c   ****             break;
+ 198:.\handler.c   ****     }
+ 199:.\handler.c   **** }
+ 346              		.loc 1 199 0
  347              		@ sp needed
  348 0148 10BD     		pop	{r4, pc}
  349              	.L27:
@@ -513,6 +598,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  369              		.file 5 ".\\SensorData.h"
  370              		.file 6 ".\\i2c.h"
  371              		.file 7 "Generated_Source\\PSoC4/RedPWM.h"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 11
+
+
  372              		.file 8 "Generated_Source\\PSoC4/GreenPWM.h"
  373              		.file 9 "Generated_Source\\PSoC4/BluePWM.h"
  374              		.section	.debug_info,"",%progbits
@@ -522,10 +610,10 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  378 0006 00000000 		.4byte	.Ldebug_abbrev0
  379 000a 04       		.byte	0x4
  380 000b 01       		.uleb128 0x1
- 381 000c DC010000 		.4byte	.LASF51
+ 381 000c F9010000 		.4byte	.LASF51
  382 0010 01       		.byte	0x1
- 383 0011 92010000 		.4byte	.LASF52
- 384 0015 57000000 		.4byte	.LASF53
+ 383 0011 AF010000 		.4byte	.LASF52
+ 384 0015 66000000 		.4byte	.LASF53
  385 0019 00000000 		.4byte	.Ldebug_ranges0+0
  386 001d 00000000 		.4byte	0
  387 0021 00000000 		.4byte	.Ldebug_line0
@@ -536,34 +624,31 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  392 002c 02       		.uleb128 0x2
  393 002d 01       		.byte	0x1
  394 002e 08       		.byte	0x8
- 395 002f C4000000 		.4byte	.LASF1
+ 395 002f E1000000 		.4byte	.LASF1
  396 0033 02       		.uleb128 0x2
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 10
-
-
  397 0034 02       		.byte	0x2
  398 0035 05       		.byte	0x5
- 399 0036 7F020000 		.4byte	.LASF2
+ 399 0036 9C020000 		.4byte	.LASF2
  400 003a 02       		.uleb128 0x2
  401 003b 02       		.byte	0x2
  402 003c 07       		.byte	0x7
- 403 003d E4000000 		.4byte	.LASF3
+ 403 003d 01010000 		.4byte	.LASF3
  404 0041 02       		.uleb128 0x2
  405 0042 04       		.byte	0x4
  406 0043 05       		.byte	0x5
- 407 0044 C2020000 		.4byte	.LASF4
+ 407 0044 DF020000 		.4byte	.LASF4
  408 0048 02       		.uleb128 0x2
  409 0049 04       		.byte	0x4
  410 004a 07       		.byte	0x7
- 411 004b D2000000 		.4byte	.LASF5
+ 411 004b EF000000 		.4byte	.LASF5
  412 004f 02       		.uleb128 0x2
  413 0050 08       		.byte	0x8
  414 0051 05       		.byte	0x5
- 415 0052 C4010000 		.4byte	.LASF6
+ 415 0052 E1010000 		.4byte	.LASF6
  416 0056 02       		.uleb128 0x2
  417 0057 08       		.byte	0x8
  418 0058 07       		.byte	0x7
- 419 0059 6B010000 		.4byte	.LASF7
+ 419 0059 88010000 		.4byte	.LASF7
  420 005d 03       		.uleb128 0x3
  421 005e 04       		.byte	0x4
  422 005f 05       		.byte	0x5
@@ -571,36 +656,36 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  424 0064 02       		.uleb128 0x2
  425 0065 04       		.byte	0x4
  426 0066 07       		.byte	0x7
- 427 0067 4A010000 		.4byte	.LASF8
+ 427 0067 67010000 		.4byte	.LASF8
  428 006b 04       		.uleb128 0x4
- 429 006c AC020000 		.4byte	.LASF9
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 12
+
+
+ 429 006c C9020000 		.4byte	.LASF9
  430 0070 02       		.byte	0x2
  431 0071 3801     		.2byte	0x138
  432 0073 2C000000 		.4byte	0x2c
  433 0077 04       		.uleb128 0x4
- 434 0078 36010000 		.4byte	.LASF10
+ 434 0078 53010000 		.4byte	.LASF10
  435 007c 02       		.byte	0x2
  436 007d 3A01     		.2byte	0x13a
  437 007f 48000000 		.4byte	0x48
  438 0083 02       		.uleb128 0x2
  439 0084 04       		.byte	0x4
  440 0085 04       		.byte	0x4
- 441 0086 BE000000 		.4byte	.LASF11
+ 441 0086 DB000000 		.4byte	.LASF11
  442 008a 02       		.uleb128 0x2
  443 008b 08       		.byte	0x8
  444 008c 04       		.byte	0x4
- 445 008d 0E010000 		.4byte	.LASF12
+ 445 008d 2B010000 		.4byte	.LASF12
  446 0091 02       		.uleb128 0x2
  447 0092 01       		.byte	0x1
  448 0093 08       		.byte	0x8
- 449 0094 CB020000 		.4byte	.LASF13
+ 449 0094 E8020000 		.4byte	.LASF13
  450 0098 02       		.uleb128 0x2
  451 0099 04       		.byte	0x4
  452 009a 07       		.byte	0x7
- 453 009b A6010000 		.4byte	.LASF14
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 11
-
-
+ 453 009b C3010000 		.4byte	.LASF14
  454 009f 05       		.uleb128 0x5
  455 00a0 2D000000 		.4byte	.LASF17
  456 00a4 08       		.byte	0x8
@@ -608,13 +693,13 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  458 00a6 1A       		.byte	0x1a
  459 00a7 C4000000 		.4byte	0xc4
  460 00ab 06       		.uleb128 0x6
- 461 00ac D7010000 		.4byte	.LASF15
+ 461 00ac F4010000 		.4byte	.LASF15
  462 00b0 03       		.byte	0x3
  463 00b1 1C       		.byte	0x1c
  464 00b2 5D000000 		.4byte	0x5d
  465 00b6 00       		.byte	0
  466 00b7 06       		.uleb128 0x6
- 467 00b8 D2010000 		.4byte	.LASF16
+ 467 00b8 EF010000 		.4byte	.LASF16
  468 00bc 03       		.byte	0x3
  469 00bd 1D       		.byte	0x1d
  470 00be 5D000000 		.4byte	0x5d
@@ -633,7 +718,10 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  483 00d7 9F000000 		.4byte	0x9f
  484 00db 00       		.byte	0
  485 00dc 06       		.uleb128 0x6
- 486 00dd BE010000 		.4byte	.LASF20
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 13
+
+
+ 486 00dd DB010000 		.4byte	.LASF20
  487 00e1 03       		.byte	0x3
  488 00e2 23       		.byte	0x23
  489 00e3 E9000000 		.4byte	0xe9
@@ -643,24 +731,21 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  493 00ea 04       		.byte	0x4
  494 00eb C4000000 		.4byte	0xc4
  495 00ef 05       		.uleb128 0x5
- 496 00f0 01010000 		.4byte	.LASF21
+ 496 00f0 1E010000 		.4byte	.LASF21
  497 00f4 7C       		.byte	0x7c
  498 00f5 04       		.byte	0x4
  499 00f6 0E       		.byte	0xe
  500 00f7 20010000 		.4byte	0x120
  501 00fb 06       		.uleb128 0x6
- 502 00fc A4000000 		.4byte	.LASF22
+ 502 00fc C1000000 		.4byte	.LASF22
  503 0100 04       		.byte	0x4
  504 0101 0F       		.byte	0xf
  505 0102 20010000 		.4byte	0x120
  506 0106 00       		.byte	0
  507 0107 06       		.uleb128 0x6
- 508 0108 80000000 		.4byte	.LASF23
+ 508 0108 57000000 		.4byte	.LASF23
  509 010c 04       		.byte	0x4
  510 010d 10       		.byte	0x10
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 12
-
-
  511 010e 2C000000 		.4byte	0x2c
  512 0112 78       		.byte	0x78
  513 0113 08       		.uleb128 0x8
@@ -678,7 +763,7 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  525 012e 1D       		.byte	0x1d
  526 012f 00       		.byte	0
  527 0130 05       		.uleb128 0x5
- 528 0131 FF020000 		.4byte	.LASF24
+ 528 0131 1C030000 		.4byte	.LASF24
  529 0135 98       		.byte	0x98
  530 0136 05       		.byte	0x5
  531 0137 13       		.byte	0x13
@@ -693,43 +778,43 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  540 0149 40000000 		.4byte	.LASF25
  541 014d 05       		.byte	0x5
  542 014e 16       		.byte	0x16
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 14
+
+
  543 014f 64000000 		.4byte	0x64
  544 0153 04       		.byte	0x4
  545 0154 06       		.uleb128 0x6
- 546 0155 D0020000 		.4byte	.LASF26
+ 546 0155 ED020000 		.4byte	.LASF26
  547 0159 05       		.byte	0x5
  548 015a 17       		.byte	0x17
  549 015b EF000000 		.4byte	0xef
  550 015f 08       		.byte	0x8
  551 0160 06       		.uleb128 0x6
- 552 0161 6A020000 		.4byte	.LASF27
+ 552 0161 87020000 		.4byte	.LASF27
  553 0165 05       		.byte	0x5
  554 0166 1A       		.byte	0x1a
  555 0167 6B000000 		.4byte	0x6b
  556 016b 84       		.byte	0x84
  557 016c 06       		.uleb128 0x6
- 558 016d B2020000 		.4byte	.LASF28
+ 558 016d CF020000 		.4byte	.LASF28
  559 0171 05       		.byte	0x5
  560 0172 1B       		.byte	0x1b
  561 0173 6B000000 		.4byte	0x6b
  562 0177 85       		.byte	0x85
  563 0178 06       		.uleb128 0x6
- 564 0179 AA000000 		.4byte	.LASF29
+ 564 0179 C7000000 		.4byte	.LASF29
  565 017d 05       		.byte	0x5
  566 017e 1E       		.byte	0x1e
  567 017f 5D000000 		.4byte	0x5d
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 13
-
-
  568 0183 88       		.byte	0x88
  569 0184 06       		.uleb128 0x6
- 570 0185 F2020000 		.4byte	.LASF30
+ 570 0185 0F030000 		.4byte	.LASF30
  571 0189 05       		.byte	0x5
  572 018a 1F       		.byte	0x1f
  573 018b 5D000000 		.4byte	0x5d
  574 018f 8C       		.byte	0x8c
  575 0190 06       		.uleb128 0x6
- 576 0191 22010000 		.4byte	.LASF31
+ 576 0191 3F010000 		.4byte	.LASF31
  577 0195 05       		.byte	0x5
  578 0196 20       		.byte	0x20
  579 0197 5D000000 		.4byte	0x5d
@@ -741,28 +826,31 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  585 01a3 6B000000 		.4byte	0x6b
  586 01a7 94       		.byte	0x94
  587 01a8 06       		.uleb128 0x6
- 588 01a9 F7000000 		.4byte	.LASF33
+ 588 01a9 14010000 		.4byte	.LASF33
  589 01ad 05       		.byte	0x5
  590 01ae 24       		.byte	0x24
  591 01af 6B000000 		.4byte	0x6b
  592 01b3 95       		.byte	0x95
  593 01b4 06       		.uleb128 0x6
- 594 01b5 B3000000 		.4byte	.LASF34
+ 594 01b5 D0000000 		.4byte	.LASF34
  595 01b9 05       		.byte	0x5
  596 01ba 25       		.byte	0x25
  597 01bb 6B000000 		.4byte	0x6b
  598 01bf 96       		.byte	0x96
  599 01c0 06       		.uleb128 0x6
- 600 01c1 86000000 		.4byte	.LASF35
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 15
+
+
+ 600 01c1 5D000000 		.4byte	.LASF35
  601 01c5 05       		.byte	0x5
  602 01c6 26       		.byte	0x26
  603 01c7 6B000000 		.4byte	0x6b
  604 01cb 97       		.byte	0x97
  605 01cc 00       		.byte	0
  606 01cd 0B       		.uleb128 0xb
- 607 01ce 9E010000 		.4byte	.LASF54
+ 607 01ce BB010000 		.4byte	.LASF54
  608 01d2 01       		.byte	0x1
- 609 01d3 16       		.byte	0x16
+ 609 01d3 18       		.byte	0x18
  610 01d4 00000000 		.4byte	.LFB34
  611 01d8 5C010000 		.4byte	.LFE34-.LFB34
  612 01dc 01       		.uleb128 0x1
@@ -771,22 +859,19 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  615 01e2 0C       		.uleb128 0xc
  616 01e3 636D6400 		.ascii	"cmd\000"
  617 01e7 01       		.byte	0x1
- 618 01e8 16       		.byte	0x16
+ 618 01e8 18       		.byte	0x18
  619 01e9 6B000000 		.4byte	0x6b
  620 01ed 00000000 		.4byte	.LLST0
  621 01f1 0C       		.uleb128 0xc
  622 01f2 76616C00 		.ascii	"val\000"
  623 01f6 01       		.byte	0x1
- 624 01f7 16       		.byte	0x16
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 14
-
-
+ 624 01f7 18       		.byte	0x18
  625 01f8 6B000000 		.4byte	0x6b
  626 01fc 98010000 		.4byte	.LLST1
  627 0200 0D       		.uleb128 0xd
  628 0201 746D7000 		.ascii	"tmp\000"
  629 0205 01       		.byte	0x1
- 630 0206 18       		.byte	0x18
+ 630 0206 1A       		.byte	0x1a
  631 0207 5D000000 		.4byte	0x5d
  632 020b 30030000 		.4byte	.LLST2
  633 020f 0E       		.uleb128 0xe
@@ -813,6 +898,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  654 024e 0E       		.uleb128 0xe
  655 024f 98000000 		.4byte	.LVL22
  656 0253 54030000 		.4byte	0x354
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 16
+
+
  657 0257 0E       		.uleb128 0xe
  658 0258 9C000000 		.4byte	.LVL23
  659 025c 5C030000 		.4byte	0x35c
@@ -838,9 +926,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  679 0297 1A010000 		.4byte	.LVL47
  680 029b 17030000 		.4byte	0x317
  681 029f 0E       		.uleb128 0xe
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 15
-
-
  682 02a0 34010000 		.4byte	.LVL49
  683 02a4 17030000 		.4byte	0x317
  684 02a8 0E       		.uleb128 0xe
@@ -848,7 +933,7 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  686 02ad 17030000 		.4byte	0x317
  687 02b1 00       		.byte	0
  688 02b2 0F       		.uleb128 0xf
- 689 02b3 82010000 		.4byte	.LASF36
+ 689 02b3 9F010000 		.4byte	.LASF36
  690 02b7 03       		.byte	0x3
  691 02b8 26       		.byte	0x26
  692 02b9 E9000000 		.4byte	0xe9
@@ -856,7 +941,7 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  694 02be 03       		.byte	0x3
  695 02bf 00000000 		.4byte	frontOfQueuePtr
  696 02c3 0F       		.uleb128 0xf
- 697 02c4 89020000 		.4byte	.LASF37
+ 697 02c4 A6020000 		.4byte	.LASF37
  698 02c8 03       		.byte	0x3
  699 02c9 27       		.byte	0x27
  700 02ca E9000000 		.4byte	0xe9
@@ -871,15 +956,18 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  709 02e2 03       		.byte	0x3
  710 02e3 00       		.byte	0
  711 02e4 0F       		.uleb128 0xf
- 712 02e5 57010000 		.4byte	.LASF38
+ 712 02e5 74010000 		.4byte	.LASF38
  713 02e9 06       		.byte	0x6
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 17
+
+
  714 02ea 30       		.byte	0x30
  715 02eb D4020000 		.4byte	0x2d4
  716 02ef 05       		.uleb128 0x5
  717 02f0 03       		.byte	0x3
  718 02f1 00000000 		.4byte	i2c_txBuffer
  719 02f5 0F       		.uleb128 0xf
- 720 02f6 E5020000 		.4byte	.LASF39
+ 720 02f6 02030000 		.4byte	.LASF39
  721 02fa 06       		.byte	0x6
  722 02fb 31       		.byte	0x31
  723 02fc D4020000 		.4byte	0x2d4
@@ -887,7 +975,7 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  725 0301 03       		.byte	0x3
  726 0302 00000000 		.4byte	i2c_rxBuffer
  727 0306 0F       		.uleb128 0xf
- 728 0307 DA020000 		.4byte	.LASF40
+ 728 0307 F7020000 		.4byte	.LASF40
  729 030b 05       		.byte	0x5
  730 030c 27       		.byte	0x27
  731 030d 30010000 		.4byte	0x130
@@ -895,14 +983,11 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  733 0312 03       		.byte	0x3
  734 0313 00000000 		.4byte	sensorData
  735 0317 10       		.uleb128 0x10
- 736 0318 64010000 		.4byte	.LASF44
+ 736 0318 81010000 		.4byte	.LASF44
  737 031c 06       		.byte	0x6
  738 031d 1C       		.byte	0x1c
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 16
-
-
  739 031e 11       		.uleb128 0x11
- 740 031f 98020000 		.4byte	.LASF41
+ 740 031f B5020000 		.4byte	.LASF41
  741 0323 07       		.byte	0x7
  742 0324 5501     		.2byte	0x155
  743 0326 30030000 		.4byte	0x330
@@ -918,7 +1003,7 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  753 033d 77000000 		.4byte	0x77
  754 0341 00       		.byte	0
  755 0342 11       		.uleb128 0x11
- 756 0343 8F000000 		.4byte	.LASF43
+ 756 0343 AC000000 		.4byte	.LASF43
  757 0347 09       		.byte	0x9
  758 0348 5501     		.2byte	0x155
  759 034a 54030000 		.4byte	0x354
@@ -926,27 +1011,30 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  761 034f 77000000 		.4byte	0x77
  762 0353 00       		.byte	0
  763 0354 13       		.uleb128 0x13
- 764 0355 3D010000 		.4byte	.LASF45
+ 764 0355 5A010000 		.4byte	.LASF45
  765 0359 07       		.byte	0x7
  766 035a 3201     		.2byte	0x132
  767 035c 13       		.uleb128 0x13
- 768 035d AF010000 		.4byte	.LASF46
+ 768 035d CC010000 		.4byte	.LASF46
  769 0361 08       		.byte	0x8
  770 0362 3201     		.2byte	0x132
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 18
+
+
  771 0364 13       		.uleb128 0x13
  772 0365 32000000 		.4byte	.LASF47
  773 0369 09       		.byte	0x9
  774 036a 3201     		.2byte	0x132
  775 036c 13       		.uleb128 0x13
- 776 036d 73020000 		.4byte	.LASF48
+ 776 036d 90020000 		.4byte	.LASF48
  777 0371 07       		.byte	0x7
  778 0372 3301     		.2byte	0x133
  779 0374 13       		.uleb128 0x13
- 780 0375 0B030000 		.4byte	.LASF49
+ 780 0375 28030000 		.4byte	.LASF49
  781 0379 08       		.byte	0x8
  782 037a 3301     		.2byte	0x133
  783 037c 13       		.uleb128 0x13
- 784 037d 15010000 		.4byte	.LASF50
+ 784 037d 32010000 		.4byte	.LASF50
  785 0381 09       		.byte	0x9
  786 0382 3301     		.2byte	0x133
  787 0384 00       		.byte	0
@@ -958,9 +1046,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  793 0003 25       		.uleb128 0x25
  794 0004 0E       		.uleb128 0xe
  795 0005 13       		.uleb128 0x13
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 17
-
-
  796 0006 0B       		.uleb128 0xb
  797 0007 03       		.uleb128 0x3
  798 0008 0E       		.uleb128 0xe
@@ -993,6 +1078,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  825 0023 3E       		.uleb128 0x3e
  826 0024 0B       		.uleb128 0xb
  827 0025 03       		.uleb128 0x3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 19
+
+
  828 0026 08       		.uleb128 0x8
  829 0027 00       		.byte	0
  830 0028 00       		.byte	0
@@ -1018,9 +1106,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  850 003c 0B       		.uleb128 0xb
  851 003d 3A       		.uleb128 0x3a
  852 003e 0B       		.uleb128 0xb
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 18
-
-
  853 003f 3B       		.uleb128 0x3b
  854 0040 0B       		.uleb128 0xb
  855 0041 01       		.uleb128 0x1
@@ -1053,6 +1138,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  882 005c 00       		.byte	0
  883 005d 08       		.uleb128 0x8
  884 005e 0D       		.uleb128 0xd
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 20
+
+
  885 005f 00       		.byte	0
  886 0060 03       		.uleb128 0x3
  887 0061 08       		.uleb128 0x8
@@ -1078,9 +1166,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  907 0075 0A       		.uleb128 0xa
  908 0076 21       		.uleb128 0x21
  909 0077 00       		.byte	0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 19
-
-
  910 0078 49       		.uleb128 0x49
  911 0079 13       		.uleb128 0x13
  912 007a 2F       		.uleb128 0x2f
@@ -1113,6 +1198,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  939 0096 00       		.byte	0
  940 0097 00       		.byte	0
  941 0098 0C       		.uleb128 0xc
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 21
+
+
  942 0099 05       		.uleb128 0x5
  943 009a 00       		.byte	0
  944 009b 03       		.uleb128 0x3
@@ -1138,9 +1226,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  964 00af 0B       		.uleb128 0xb
  965 00b0 49       		.uleb128 0x49
  966 00b1 13       		.uleb128 0x13
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 20
-
-
  967 00b2 02       		.uleb128 0x2
  968 00b3 17       		.uleb128 0x17
  969 00b4 00       		.byte	0
@@ -1173,6 +1258,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  996 00d1 00       		.byte	0
  997 00d2 10       		.uleb128 0x10
  998 00d3 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 22
+
+
  999 00d4 00       		.byte	0
  1000 00d5 3F       		.uleb128 0x3f
  1001 00d6 19       		.uleb128 0x19
@@ -1198,9 +1286,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1021 00ea 3A       		.uleb128 0x3a
  1022 00eb 0B       		.uleb128 0xb
  1023 00ec 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 21
-
-
  1024 00ed 05       		.uleb128 0x5
  1025 00ee 27       		.uleb128 0x27
  1026 00ef 19       		.uleb128 0x19
@@ -1233,6 +1318,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1053 010a 3C       		.uleb128 0x3c
  1054 010b 19       		.uleb128 0x19
  1055 010c 00       		.byte	0
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 23
+
+
  1056 010d 00       		.byte	0
  1057 010e 00       		.byte	0
  1058              		.section	.debug_loc,"",%progbits
@@ -1258,9 +1346,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1078 002c 0400     		.2byte	0x4
  1079 002e F3       		.byte	0xf3
  1080 002f 01       		.uleb128 0x1
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 22
-
-
  1081 0030 50       		.byte	0x50
  1082 0031 9F       		.byte	0x9f
  1083 0032 38000000 		.4byte	.LVL6
@@ -1293,6 +1378,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1110 0073 6A000000 		.4byte	.LVL15
  1111 0077 0400     		.2byte	0x4
  1112 0079 F3       		.byte	0xf3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 24
+
+
  1113 007a 01       		.uleb128 0x1
  1114 007b 50       		.byte	0x50
  1115 007c 9F       		.byte	0x9f
@@ -1318,9 +1406,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1135 00ac 01       		.uleb128 0x1
  1136 00ad 50       		.byte	0x50
  1137 00ae 9F       		.byte	0x9f
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 23
-
-
  1138 00af 8A000000 		.4byte	.LVL21
  1139 00b3 97000000 		.4byte	.LVL22-1
  1140 00b7 0100     		.2byte	0x1
@@ -1353,6 +1438,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1167 00f6 F3       		.byte	0xf3
  1168 00f7 01       		.uleb128 0x1
  1169 00f8 50       		.byte	0x50
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 25
+
+
  1170 00f9 9F       		.byte	0x9f
  1171 00fa D6000000 		.4byte	.LVL37
  1172 00fe D8000000 		.4byte	.LVL38
@@ -1378,9 +1466,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1192 012b 9F       		.byte	0x9f
  1193 012c 04010000 		.4byte	.LVL43
  1194 0130 06010000 		.4byte	.LVL44
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 24
-
-
  1195 0134 0100     		.2byte	0x1
  1196 0136 50       		.byte	0x50
  1197 0137 06010000 		.4byte	.LVL44
@@ -1413,6 +1498,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1224 0175 50       		.byte	0x50
  1225 0176 9F       		.byte	0x9f
  1226 0177 36010000 		.4byte	.LVL50
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 26
+
+
  1227 017b 47010000 		.4byte	.LVL51-1
  1228 017f 0100     		.2byte	0x1
  1229 0181 50       		.byte	0x50
@@ -1438,9 +1526,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1249 01af 51       		.byte	0x51
  1250 01b0 9F       		.byte	0x9f
  1251 01b1 2A000000 		.4byte	.LVL3
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 25
-
-
  1252 01b5 35000000 		.4byte	.LVL5-1
  1253 01b9 0100     		.2byte	0x1
  1254 01bb 51       		.byte	0x51
@@ -1473,6 +1558,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1281 01f9 01       		.uleb128 0x1
  1282 01fa 51       		.byte	0x51
  1283 01fb 9F       		.byte	0x9f
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 27
+
+
  1284 01fc 58000000 		.4byte	.LVL12
  1285 0200 60000000 		.4byte	.LVL13
  1286 0204 0100     		.2byte	0x1
@@ -1498,9 +1586,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1306 022e 78000000 		.4byte	.LVL18
  1307 0232 80000000 		.4byte	.LVL19
  1308 0236 0100     		.2byte	0x1
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 26
-
-
  1309 0238 51       		.byte	0x51
  1310 0239 80000000 		.4byte	.LVL19
  1311 023d 8A000000 		.4byte	.LVL21
@@ -1533,6 +1618,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1338 0278 9F       		.byte	0x9f
  1339 0279 B0000000 		.4byte	.LVL29
  1340 027d BA000000 		.4byte	.LVL31
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 28
+
+
  1341 0281 0100     		.2byte	0x1
  1342 0283 51       		.byte	0x51
  1343 0284 BA000000 		.4byte	.LVL31
@@ -1558,9 +1646,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1363 02b3 0100     		.2byte	0x1
  1364 02b5 51       		.byte	0x51
  1365 02b6 01010000 		.4byte	.LVL42-1
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 27
-
-
  1366 02ba 04010000 		.4byte	.LVL43
  1367 02be 0400     		.2byte	0x4
  1368 02c0 F3       		.byte	0xf3
@@ -1593,6 +1678,9 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1395 02fa 33010000 		.4byte	.LVL49-1
  1396 02fe 0100     		.2byte	0x1
  1397 0300 51       		.byte	0x51
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 29
+
+
  1398 0301 33010000 		.4byte	.LVL49-1
  1399 0305 36010000 		.4byte	.LVL50
  1400 0309 0400     		.2byte	0x4
@@ -1618,9 +1706,6 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1420 0334 C8000000 		.4byte	.LVL33
  1421 0338 0100     		.2byte	0x1
  1422 033a 50       		.byte	0x50
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 28
-
-
  1423 033b CA000000 		.4byte	.LVL34
  1424 033f CC000000 		.4byte	.LVL35
  1425 0343 0100     		.2byte	0x1
@@ -1647,12 +1732,15 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1446 000c 00000000 		.4byte	0
  1447              		.section	.debug_line,"",%progbits
  1448              	.Ldebug_line0:
- 1449 0000 36010000 		.section	.debug_str,"MS",%progbits,1
+ 1449 0000 3A010000 		.section	.debug_str,"MS",%progbits,1
  1449      0200AB00 
  1449      00000201 
  1449      FB0E0D00 
  1449      01010101 
  1450              	.LASF42:
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 30
+
+
  1451 0000 47726565 		.ascii	"GreenPWM_WriteCompare\000"
  1451      6E50574D 
  1451      5F577269 
@@ -1678,238 +1766,243 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 1
  1461      7400
  1462              	.LASF25:
  1463 0040 64657369 		.ascii	"desiredLux\000"
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 29
-
-
  1463      7265644C 
  1463      757800
  1464              	.LASF32:
  1465 004b 67726565 		.ascii	"greenPWMPct\000"
  1465      6E50574D 
  1465      50637400 
- 1466              	.LASF53:
- 1467 0057 433A5C45 		.ascii	"C:\\E3PRJ3-Gruppe1\\PSoC\\Sensor-PSoC.cydsn\000"
- 1467      3350524A 
- 1467      332D4772 
- 1467      75707065 
- 1467      315C5053 
- 1468              	.LASF23:
- 1469 0080 73746172 		.ascii	"start\000"
- 1469      7400
- 1470              	.LASF35:
- 1471 0086 6C656450 		.ascii	"ledPower\000"
- 1471      6F776572 
- 1471      00
- 1472              	.LASF43:
- 1473 008f 426C7565 		.ascii	"BluePWM_WriteCompare\000"
- 1473      50574D5F 
- 1473      57726974 
- 1473      65436F6D 
- 1473      70617265 
- 1474              	.LASF22:
- 1475 00a4 71756575 		.ascii	"queue\000"
- 1475      6500
- 1476              	.LASF29:
- 1477 00aa 64697374 		.ascii	"distance\000"
- 1477      616E6365 
- 1477      00
- 1478              	.LASF34:
- 1479 00b3 626C7565 		.ascii	"bluePWMPct\000"
- 1479      50574D50 
- 1479      637400
- 1480              	.LASF11:
- 1481 00be 666C6F61 		.ascii	"float\000"
- 1481      7400
- 1482              	.LASF1:
- 1483 00c4 756E7369 		.ascii	"unsigned char\000"
- 1483      676E6564 
- 1483      20636861 
- 1483      7200
- 1484              	.LASF5:
- 1485 00d2 6C6F6E67 		.ascii	"long unsigned int\000"
- 1485      20756E73 
- 1485      69676E65 
- 1485      6420696E 
- 1485      7400
- 1486              	.LASF3:
- 1487 00e4 73686F72 		.ascii	"short unsigned int\000"
- 1487      7420756E 
- 1487      7369676E 
- 1487      65642069 
- 1487      6E7400
- 1488              	.LASF33:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 30
+ 1466              	.LASF23:
+ 1467 0057 73746172 		.ascii	"start\000"
+ 1467      7400
+ 1468              	.LASF35:
+ 1469 005d 6C656450 		.ascii	"ledPower\000"
+ 1469      6F776572 
+ 1469      00
+ 1470              	.LASF53:
+ 1471 0066 433A5C55 		.ascii	"C:\\Users\\Simon\\Documents\\GitHub\\E3PRJ3-Gruppe1"
+ 1471      73657273 
+ 1471      5C53696D 
+ 1471      6F6E5C44 
+ 1471      6F63756D 
+ 1472 0094 5C50536F 		.ascii	"\\PSoC\\Sensor-PSoC.cydsn\000"
+ 1472      435C5365 
+ 1472      6E736F72 
+ 1472      2D50536F 
+ 1472      432E6379 
+ 1473              	.LASF43:
+ 1474 00ac 426C7565 		.ascii	"BluePWM_WriteCompare\000"
+ 1474      50574D5F 
+ 1474      57726974 
+ 1474      65436F6D 
+ 1474      70617265 
+ 1475              	.LASF22:
+ 1476 00c1 71756575 		.ascii	"queue\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 31
 
 
- 1489 00f7 72656450 		.ascii	"redPWMPct\000"
- 1489      574D5063 
- 1489      7400
- 1490              	.LASF21:
- 1491 0101 43697263 		.ascii	"CircularMean\000"
- 1491      756C6172 
- 1491      4D65616E 
- 1491      00
- 1492              	.LASF12:
- 1493 010e 646F7562 		.ascii	"double\000"
- 1493      6C6500
- 1494              	.LASF50:
- 1495 0115 426C7565 		.ascii	"BluePWM_Stop\000"
- 1495      50574D5F 
- 1495      53746F70 
- 1495      00
- 1496              	.LASF31:
- 1497 0122 64657369 		.ascii	"desiredTimeDistance\000"
- 1497      72656454 
- 1497      696D6544 
- 1497      69737461 
- 1497      6E636500 
- 1498              	.LASF10:
- 1499 0136 75696E74 		.ascii	"uint32\000"
- 1499      333200
- 1500              	.LASF45:
- 1501 013d 52656450 		.ascii	"RedPWM_Start\000"
- 1501      574D5F53 
- 1501      74617274 
- 1501      00
- 1502              	.LASF8:
- 1503 014a 756E7369 		.ascii	"unsigned int\000"
- 1503      676E6564 
- 1503      20696E74 
- 1503      00
- 1504              	.LASF38:
- 1505 0157 6932635F 		.ascii	"i2c_txBuffer\000"
- 1505      74784275 
- 1505      66666572 
- 1505      00
- 1506              	.LASF44:
- 1507 0164 6932635F 		.ascii	"i2c_tx\000"
- 1507      747800
- 1508              	.LASF7:
- 1509 016b 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1509      206C6F6E 
- 1509      6720756E 
- 1509      7369676E 
- 1509      65642069 
- 1510              	.LASF36:
- 1511 0182 66726F6E 		.ascii	"frontOfQueuePtr\000"
- 1511      744F6651 
- 1511      75657565 
- 1511      50747200 
- 1512              	.LASF52:
- 1513 0192 2E5C6861 		.ascii	".\\handler.c\000"
- 1513      6E646C65 
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 31
+ 1476      6500
+ 1477              	.LASF29:
+ 1478 00c7 64697374 		.ascii	"distance\000"
+ 1478      616E6365 
+ 1478      00
+ 1479              	.LASF34:
+ 1480 00d0 626C7565 		.ascii	"bluePWMPct\000"
+ 1480      50574D50 
+ 1480      637400
+ 1481              	.LASF11:
+ 1482 00db 666C6F61 		.ascii	"float\000"
+ 1482      7400
+ 1483              	.LASF1:
+ 1484 00e1 756E7369 		.ascii	"unsigned char\000"
+ 1484      676E6564 
+ 1484      20636861 
+ 1484      7200
+ 1485              	.LASF5:
+ 1486 00ef 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1486      20756E73 
+ 1486      69676E65 
+ 1486      6420696E 
+ 1486      7400
+ 1487              	.LASF3:
+ 1488 0101 73686F72 		.ascii	"short unsigned int\000"
+ 1488      7420756E 
+ 1488      7369676E 
+ 1488      65642069 
+ 1488      6E7400
+ 1489              	.LASF33:
+ 1490 0114 72656450 		.ascii	"redPWMPct\000"
+ 1490      574D5063 
+ 1490      7400
+ 1491              	.LASF21:
+ 1492 011e 43697263 		.ascii	"CircularMean\000"
+ 1492      756C6172 
+ 1492      4D65616E 
+ 1492      00
+ 1493              	.LASF12:
+ 1494 012b 646F7562 		.ascii	"double\000"
+ 1494      6C6500
+ 1495              	.LASF50:
+ 1496 0132 426C7565 		.ascii	"BluePWM_Stop\000"
+ 1496      50574D5F 
+ 1496      53746F70 
+ 1496      00
+ 1497              	.LASF31:
+ 1498 013f 64657369 		.ascii	"desiredTimeDistance\000"
+ 1498      72656454 
+ 1498      696D6544 
+ 1498      69737461 
+ 1498      6E636500 
+ 1499              	.LASF10:
+ 1500 0153 75696E74 		.ascii	"uint32\000"
+ 1500      333200
+ 1501              	.LASF45:
+ 1502 015a 52656450 		.ascii	"RedPWM_Start\000"
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 32
 
 
- 1513      722E6300 
- 1514              	.LASF54:
- 1515 019e 68616E64 		.ascii	"handler\000"
- 1515      6C657200 
- 1516              	.LASF14:
- 1517 01a6 73697A65 		.ascii	"sizetype\000"
- 1517      74797065 
- 1517      00
- 1518              	.LASF46:
- 1519 01af 47726565 		.ascii	"GreenPWM_Start\000"
- 1519      6E50574D 
- 1519      5F537461 
- 1519      727400
- 1520              	.LASF20:
- 1521 01be 6E657874 		.ascii	"next_\000"
- 1521      5F00
- 1522              	.LASF6:
- 1523 01c4 6C6F6E67 		.ascii	"long long int\000"
- 1523      206C6F6E 
- 1523      6720696E 
- 1523      7400
- 1524              	.LASF16:
- 1525 01d2 76616C5F 		.ascii	"val_\000"
- 1525      00
- 1526              	.LASF15:
- 1527 01d7 636D645F 		.ascii	"cmd_\000"
- 1527      00
- 1528              	.LASF51:
- 1529 01dc 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1529      4320342E 
- 1529      392E3320 
- 1529      32303135 
- 1529      30333033 
- 1530 020f 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 1530      20726576 
- 1530      6973696F 
- 1530      6E203232 
- 1530      31323230 
- 1531 0242 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1531      66756E63 
- 1531      74696F6E 
- 1531      2D736563 
- 1531      74696F6E 
- 1532              	.LASF27:
- 1533 026a 6D6F7665 		.ascii	"movement\000"
- 1533      6D656E74 
- 1533      00
- 1534              	.LASF48:
- 1535 0273 52656450 		.ascii	"RedPWM_Stop\000"
- 1535      574D5F53 
- 1535      746F7000 
- 1536              	.LASF2:
- 1537 027f 73686F72 		.ascii	"short int\000"
- 1537      7420696E 
- 1537      7400
- 1538              	.LASF37:
- 1539 0289 6261636B 		.ascii	"backOfQueuePtr\000"
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccKE59A3.s 			page 32
+ 1502      574D5F53 
+ 1502      74617274 
+ 1502      00
+ 1503              	.LASF8:
+ 1504 0167 756E7369 		.ascii	"unsigned int\000"
+ 1504      676E6564 
+ 1504      20696E74 
+ 1504      00
+ 1505              	.LASF38:
+ 1506 0174 6932635F 		.ascii	"i2c_txBuffer\000"
+ 1506      74784275 
+ 1506      66666572 
+ 1506      00
+ 1507              	.LASF44:
+ 1508 0181 6932635F 		.ascii	"i2c_tx\000"
+ 1508      747800
+ 1509              	.LASF7:
+ 1510 0188 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1510      206C6F6E 
+ 1510      6720756E 
+ 1510      7369676E 
+ 1510      65642069 
+ 1511              	.LASF36:
+ 1512 019f 66726F6E 		.ascii	"frontOfQueuePtr\000"
+ 1512      744F6651 
+ 1512      75657565 
+ 1512      50747200 
+ 1513              	.LASF52:
+ 1514 01af 2E5C6861 		.ascii	".\\handler.c\000"
+ 1514      6E646C65 
+ 1514      722E6300 
+ 1515              	.LASF54:
+ 1516 01bb 68616E64 		.ascii	"handler\000"
+ 1516      6C657200 
+ 1517              	.LASF14:
+ 1518 01c3 73697A65 		.ascii	"sizetype\000"
+ 1518      74797065 
+ 1518      00
+ 1519              	.LASF46:
+ 1520 01cc 47726565 		.ascii	"GreenPWM_Start\000"
+ 1520      6E50574D 
+ 1520      5F537461 
+ 1520      727400
+ 1521              	.LASF20:
+ 1522 01db 6E657874 		.ascii	"next_\000"
+ 1522      5F00
+ 1523              	.LASF6:
+ 1524 01e1 6C6F6E67 		.ascii	"long long int\000"
+ 1524      206C6F6E 
+ 1524      6720696E 
+ 1524      7400
+ 1525              	.LASF16:
+ 1526 01ef 76616C5F 		.ascii	"val_\000"
+ 1526      00
+ 1527              	.LASF15:
+ 1528 01f4 636D645F 		.ascii	"cmd_\000"
+ 1528      00
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 33
 
 
- 1539      4F665175 
- 1539      65756550 
- 1539      747200
- 1540              	.LASF41:
- 1541 0298 52656450 		.ascii	"RedPWM_WriteCompare\000"
- 1541      574D5F57 
- 1541      72697465 
- 1541      436F6D70 
- 1541      61726500 
- 1542              	.LASF9:
- 1543 02ac 75696E74 		.ascii	"uint8\000"
- 1543      3800
- 1544              	.LASF28:
- 1545 02b2 6D6F7665 		.ascii	"movementAlertOn\000"
- 1545      6D656E74 
- 1545      416C6572 
- 1545      744F6E00 
- 1546              	.LASF4:
- 1547 02c2 6C6F6E67 		.ascii	"long int\000"
- 1547      20696E74 
- 1547      00
- 1548              	.LASF13:
- 1549 02cb 63686172 		.ascii	"char\000"
- 1549      00
- 1550              	.LASF26:
- 1551 02d0 4C756D65 		.ascii	"LumenMean\000"
- 1551      6E4D6561 
- 1551      6E00
- 1552              	.LASF40:
- 1553 02da 73656E73 		.ascii	"sensorData\000"
- 1553      6F724461 
- 1553      746100
- 1554              	.LASF39:
- 1555 02e5 6932635F 		.ascii	"i2c_rxBuffer\000"
- 1555      72784275 
- 1555      66666572 
- 1555      00
- 1556              	.LASF30:
- 1557 02f2 74696D65 		.ascii	"timeDistance\000"
- 1557      44697374 
- 1557      616E6365 
- 1557      00
- 1558              	.LASF24:
- 1559 02ff 73656E73 		.ascii	"sensorDataT\000"
- 1559      6F724461 
- 1559      74615400 
- 1560              	.LASF49:
- 1561 030b 47726565 		.ascii	"GreenPWM_Stop\000"
- 1561      6E50574D 
- 1561      5F53746F 
- 1561      7000
- 1562              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 1529              	.LASF51:
+ 1530 01f9 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1530      4320342E 
+ 1530      392E3320 
+ 1530      32303135 
+ 1530      30333033 
+ 1531 022c 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1531      20726576 
+ 1531      6973696F 
+ 1531      6E203232 
+ 1531      31323230 
+ 1532 025f 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1532      66756E63 
+ 1532      74696F6E 
+ 1532      2D736563 
+ 1532      74696F6E 
+ 1533              	.LASF27:
+ 1534 0287 6D6F7665 		.ascii	"movement\000"
+ 1534      6D656E74 
+ 1534      00
+ 1535              	.LASF48:
+ 1536 0290 52656450 		.ascii	"RedPWM_Stop\000"
+ 1536      574D5F53 
+ 1536      746F7000 
+ 1537              	.LASF2:
+ 1538 029c 73686F72 		.ascii	"short int\000"
+ 1538      7420696E 
+ 1538      7400
+ 1539              	.LASF37:
+ 1540 02a6 6261636B 		.ascii	"backOfQueuePtr\000"
+ 1540      4F665175 
+ 1540      65756550 
+ 1540      747200
+ 1541              	.LASF41:
+ 1542 02b5 52656450 		.ascii	"RedPWM_WriteCompare\000"
+ 1542      574D5F57 
+ 1542      72697465 
+ 1542      436F6D70 
+ 1542      61726500 
+ 1543              	.LASF9:
+ 1544 02c9 75696E74 		.ascii	"uint8\000"
+ 1544      3800
+ 1545              	.LASF28:
+ 1546 02cf 6D6F7665 		.ascii	"movementAlertOn\000"
+ 1546      6D656E74 
+ 1546      416C6572 
+ 1546      744F6E00 
+ 1547              	.LASF4:
+ 1548 02df 6C6F6E67 		.ascii	"long int\000"
+ 1548      20696E74 
+ 1548      00
+ 1549              	.LASF13:
+ 1550 02e8 63686172 		.ascii	"char\000"
+ 1550      00
+ 1551              	.LASF26:
+ 1552 02ed 4C756D65 		.ascii	"LumenMean\000"
+ 1552      6E4D6561 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\cceYLEiT.s 			page 34
+
+
+ 1552      6E00
+ 1553              	.LASF40:
+ 1554 02f7 73656E73 		.ascii	"sensorData\000"
+ 1554      6F724461 
+ 1554      746100
+ 1555              	.LASF39:
+ 1556 0302 6932635F 		.ascii	"i2c_rxBuffer\000"
+ 1556      72784275 
+ 1556      66666572 
+ 1556      00
+ 1557              	.LASF30:
+ 1558 030f 74696D65 		.ascii	"timeDistance\000"
+ 1558      44697374 
+ 1558      616E6365 
+ 1558      00
+ 1559              	.LASF24:
+ 1560 031c 73656E73 		.ascii	"sensorDataT\000"
+ 1560      6F724461 
+ 1560      74615400 
+ 1561              	.LASF49:
+ 1562 0328 47726565 		.ascii	"GreenPWM_Stop\000"
+ 1562      6E50574D 
+ 1562      5F53746F 
+ 1562      7000
+ 1563              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
