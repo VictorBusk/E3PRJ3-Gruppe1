@@ -46,11 +46,11 @@ CY_ISR(isr_i2c_rx)
       {
         if(i2cRxBuffer[I2C_PACKET_CMD_POS] == CMD_SET_X_POS)
         {
-            interruptX = 1;   
+            isrStopX = 1;   
         }
         else if(i2cRxBuffer[I2C_PACKET_CMD_POS] == CMD_SET_Y_POS)
         {
-            interruptY = 1;   
+            isrStopY = 1;   
         }
         
         struct Data action;

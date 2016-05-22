@@ -22,6 +22,8 @@ uint8 calibratedX = 1;
 uint8 calibratedY = 1;
 uint8 interruptX = 0;
 uint8 interruptY = 0;
+uint8 isrStopX = 0;
+uint8 isrStopY = 0;
 uint8 xFlag = 0;
 uint8 yFlag = 0;
 uint32 xMax = 3460;
@@ -139,6 +141,8 @@ void setXPos(uint8 xVal)
     uint32 xDes = 0;
     uint32 xSteps = 0;
     
+    isrStopX = 0;
+    
     if(calibratedX == 1)
     {
         xDes = xVal * xMax / resolution;
@@ -148,7 +152,7 @@ void setXPos(uint8 xVal)
             setLed(0,1,0);
             xFlag = 1;
             xSteps = xPos - xDes;
-            for(i = 0; i < xSteps && interruptX == 0u; i++)
+            for(i = 0; i < xSteps && isrStopX == 0u; i++)
             {
                 stepXBackwards();
                 xPos--;
@@ -166,7 +170,7 @@ void setXPos(uint8 xVal)
             setLed(0,1,0);
             xFlag = 0;
             xSteps = xDes - xPos;
-            for(i = 0; i < xSteps && interruptX == 0u; i++)
+            for(i = 0; i < xSteps && isrStopX == 0u; i++)
             {
                 stepXForwards();
                 xPos++;                
@@ -192,6 +196,8 @@ void setYPos(uint8 yVal)
     uint32 yDes = 0;
     uint32 ySteps = 0;
     
+    isrStopY = 0;
+    
     if(calibratedY == 1)
     {
         yDes = yVal * yMax / resolution;
@@ -200,7 +206,7 @@ void setYPos(uint8 yVal)
             interruptY = 0;
             setLed(0,1,0);
             ySteps = yPos - yDes;
-            for(i = 0; i < ySteps && interruptY == 0u; i++)
+            for(i = 0; i < ySteps && isrStopY == 0u; i++)
             {
                 stepYBackwards();
                 yPos--;                
@@ -217,7 +223,7 @@ void setYPos(uint8 yVal)
             setLed(0,1,0);
             yFlag = 0;
             ySteps = yDes - yPos;
-            for(i = 0; i < ySteps && interruptY == 0u; i++)
+            for(i = 0; i < ySteps && isrStopY == 0u; i++)
             {
                 stepYForwards();
                 yPos++;                
