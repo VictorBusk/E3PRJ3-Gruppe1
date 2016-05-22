@@ -19,15 +19,15 @@
 #include "handler.h"
 #include "SensorData.h"
 
-//#define DEBUG_ON
+#define DEBUG_ON
 
 void handler(uint8 cmd, uint8 val)
 {
     int tmp;
     switch (cmd) {
         case cmdGetRed : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = sensorData.redPWMPct;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = sensorData.redPWMPct;
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetRed ");
@@ -45,8 +45,8 @@ void handler(uint8 cmd, uint8 val)
 #endif
             break;
         case cmdGetGreen : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = sensorData.greenPWMPct;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = sensorData.greenPWMPct;
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetGreen ");
@@ -64,8 +64,8 @@ void handler(uint8 cmd, uint8 val)
 #endif
             break;
         case cmdGetBlue : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = sensorData.bluePWMPct;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = sensorData.bluePWMPct;
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetBlue ");
@@ -84,8 +84,8 @@ void handler(uint8 cmd, uint8 val)
             break;
 
         case cmdGetPower : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = sensorData.ledPower;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = sensorData.ledPower;
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetPower ");
@@ -115,12 +115,12 @@ void handler(uint8 cmd, uint8 val)
             // Scale Lux to 1530 max, range 0-255
             //  1530 chosen because 1530/255 = 6
             tmp = (255 * sensorData.lux) / 1530;
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (uint8)((tmp < 255) ? tmp : 255);
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = (uint8)((tmp < 255) ? tmp : 255);
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetLumen ");
-    DEBUG_PutHexByte(i2c_txBuffer[2]);
+    DEBUG_PutHexByte(i2cTxBuffer[2]);
     DEBUG_PutCRLF();
 #endif
             break;
@@ -135,12 +135,12 @@ void handler(uint8 cmd, uint8 val)
             break;
 
         case cmdGetDistance : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (uint8)((sensorData.distance < 255) ? sensorData.distance : 255);
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = (uint8)((sensorData.distance < 255) ? sensorData.distance : 255);
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetDistance ");
-    DEBUG_PutHexByte(i2c_txBuffer[2]);
+    DEBUG_PutHexByte(i2cTxBuffer[2]);
     DEBUG_PutCRLF();
 #endif
             break;
@@ -153,8 +153,8 @@ void handler(uint8 cmd, uint8 val)
 #endif
             break;
         case cmdDistanceAlert : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = val;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = val;
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdDistanceAlert ");
@@ -165,8 +165,8 @@ void handler(uint8 cmd, uint8 val)
 
         case cmdGetMovement : 
             // Return 0xff if there is movement, 0x00 if there is not
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = (sensorData.movement) ? 0xff : 0x00;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = (sensorData.movement) ? 0xff : 0x00;
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetMovement ");
@@ -183,8 +183,8 @@ void handler(uint8 cmd, uint8 val)
 #endif
             break;
         case cmdMovementAlert : 
-            i2c_txBuffer[1] = cmd;
-            i2c_txBuffer[2] = val;
+            i2cTxBuffer[1] = cmd;
+            i2cTxBuffer[2] = val;
             i2c_tx();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdMovementAlert ");

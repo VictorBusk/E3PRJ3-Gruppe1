@@ -53,6 +53,8 @@
 #include "I2CS_I2C_PVT.h"
 #include "I2CS_PVT.h"
 #include "I2CS_BOOT.h"
+#include "DEBUG.h"
+#include "DEBUG_PVT.h"
 #include "LumenCom_SCBCLK.h"
 #include "LumenCom_sda.h"
 #include "LumenCom_sda_aliases.h"
