@@ -34,7 +34,7 @@ extern void spi_tx(uint8 data);
 #define SPI_PACKET_SOP      (0x01u) /*!< SPI start of packet value. @ingroup SPI */ 
 #define SPI_PACKET_EOP      (0x17u) /*!< SPI end of packet value. @ingroup SPI */
 #define SPI_STS_CMD_DONE    (0xAAu) /*!< SPI status command done. @ingroup SPI */
-#define SPI_STS_CMD_FAIL    (0xEEu) /*!< SPI status command fail. @ingroup SPI */
+#define SPI_STS_CMD_FAIL    (0xAEu) /*!< SPI status command fail. @ingroup SPI */
 
 #endif  // ifndef SPI_H
 /* [] END OF FILE */

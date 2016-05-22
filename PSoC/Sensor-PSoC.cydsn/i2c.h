@@ -24,8 +24,8 @@
 #include "queue.h"
 
 extern void i2c_init(void);
-extern void i2c_rx(void);
-// CY_ISR_PROTO(isr_i2c_rx);
+//extern void i2c_rx(void);
+CY_ISR_PROTO(isr_i2c_rx);
 extern void i2c_tx(void);
 
 /* Buffer and packet size */

@@ -127,7 +127,6 @@ int main()
     for(;;)
     {
         // Handle communication with PSoC4Master
-        i2c_rx();
         while(isEmptyQueue() != 1)
         {
             struct Data action;
@@ -135,7 +134,6 @@ int main()
             handler(action.cmd_, action.val_);
             popQueue();
         }
-        CyDelay(50);
         i2c_tx();
         
         // Afstandssensor

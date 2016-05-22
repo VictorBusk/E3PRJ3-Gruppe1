@@ -36,29 +36,33 @@ void i2c_setPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
   }
   else
   {
-    setLed(1,0,0,255);
+    setLed(1,0,0,50);
   }
 }
 
 void i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8* i2cVal)
 {
-    uint8 i2cRxCmd;
-  if(i2c_tx(i2cAddr, i2cCmd, *i2cVal) == I2C_STS_CMD_DONE)
+  uint8 i2cTxSTS;
+  uint8 i2cRxCmd;
+  
+  i2cTxSTS = i2c_tx(i2cAddr, i2cCmd, *i2cVal);
+  if(i2cTxSTS == I2C_STS_CMD_DONE)
   {
     setLed(0,0,1,50);
   }
   else
   {
-    setLed(1,0,0,255);
+    setLed(1,0,0,50);
   }
-  
-  if(i2c_rx(i2cAddr, &i2cRxCmd, i2cVal) == i2cCmd)
+  setLed(0,0,0,50);
+  i2c_rx(i2cAddr, &i2cRxCmd, i2cVal);
+  if(i2cRxCmd == i2cCmd)
   {
     setLed(0,1,0,50);
   }
   else
   {
-    setLed(1,0,0,255);
+    setLed(1,0,0,50);
   }
 }
 

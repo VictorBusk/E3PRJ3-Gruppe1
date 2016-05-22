@@ -66,27 +66,6 @@ CY_ISR(isr_i2c_rx)
   }
 }
 
-//void i2c_rx()
-//{
-//    if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_WR_CMPLT))
-//    {
-//        if(I2C_BUFFER_SIZE == I2CS_I2CSlaveGetWriteBufSize())
-//        {
-//            if((i2cRxBuffer[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxBuffer[I2C_PACKET_EOP_POS] == I2C_PACKET_EOP))
-//            {
-//                struct Data action;
-//                action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
-//                action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
-//                
-//                pushQueue(action);
-//            }
-//        }
-//
-//      I2CS_I2CSlaveClearWriteBuf();
-//      I2CS_I2CSlaveClearWriteStatus();
-//    }
-//}
-
 void i2c_tx()
 {
     if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_RD_CMPLT))

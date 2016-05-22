@@ -83,6 +83,38 @@ static uint8 gVal = 0;
  */
 static uint8 bVal = 0;
 
+/*!
+ *  @brief      Value of the lummen.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 lummenVal = 0xEA;
+
+/*!
+ *  @brief      Value of the power.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 powerVal = 0xEA;
+
+/*!
+ *  @brief      Value of the distance.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 distanceVal = 0xEA;
+
+/*!
+ *  @brief      Value of the movememt.
+ *  @private
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+static uint8 movememtVal = 0xEA;
+
 /***************************************
  *       Public methods
  ***************************************/
@@ -96,9 +128,7 @@ static uint8 bVal = 0;
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void handler(uint8 cmd, uint8 val)
-{
-    uint8 rxVal = 0;
-    
+{    
     switch (cmd)
     {
         case 0x01 :
@@ -115,6 +145,15 @@ void handler(uint8 cmd, uint8 val)
             i2c_getPacket(PSoC_Sensor, CMD_GET_RED_VAL, &rVal);
             i2c_getPacket(PSoC_Sensor, CMD_GET_BLUE_VAL, &gVal);
             i2c_getPacket(PSoC_Sensor, CMD_GET_GREEN_VAL, &bVal);
+            break;
+        case 0x04 :
+            i2c_getPacket(PSoC_Sensor, CMD_GET_LUMEN_VAL, &lummenVal);
+            CyDelay(150);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_POWER_STS, &powerVal);
+            CyDelay(150);
+            i2c_getPacket(PSoC_Sensor, CMD_SET_DISTANCE_STS, &distanceVal);
+            CyDelay(150);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_MOVEMENT_STS, &movememtVal);
             break;
         case CMD_SET_X_POS :
             i2c_setPacket(PSoC_XY, cmd, val);
@@ -186,10 +225,10 @@ void handler(uint8 cmd, uint8 val)
             spi_tx(bVal);
             break;
         case CMD_GET_LUMEN_VAL :
-            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
+            spi_tx(lummenVal);
             break;
         case CMD_GET_POWER_STS :
-            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
+            spi_tx(powerVal);
             break;
         case CMD_SET_DISTANCE_STS :
             i2c_setPacket(PSoC_Sensor, cmd, val);
@@ -198,10 +237,10 @@ void handler(uint8 cmd, uint8 val)
             i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
         case CMD_GET_DISTANCE_STS :
-            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
+            spi_tx(distanceVal);
             break;
         case CMD_GET_MOVEMENT_STS :
-            i2c_getPacket(PSoC_Sensor, cmd, &rxVal);
+            spi_tx(movememtVal);
             break;
         case CMD_DISTANCE_ALRT :
             handler(CMD_X_STP, val);

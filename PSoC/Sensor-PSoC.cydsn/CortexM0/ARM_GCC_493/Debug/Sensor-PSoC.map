@@ -216,6 +216,7 @@ Discarded input sections
                 0x00000000       0x2c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
  .text.CySoftwareReset
                 0x00000000       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+ .text.CyDelay  0x00000000       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
  .text.CySysLvdEnable
                 0x00000000       0x44 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
  .text.CyDelayFreq
@@ -692,8 +693,6 @@ Discarded input sections
                 0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
  .text.I2CS_SetTxFifoLevel
                 0x00000000       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
- .text.I2CS_SetCustomInterruptHandler
-                0x00000000        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
  .text          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
  .data          0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
  .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
@@ -857,7 +856,7 @@ END GROUP
                 0x00000001                cy_project_type_bootloader = (appl_start == 0x0)?0x1:0x0
                 0x00000000                cy_project_type_app_for_stack_and_copier = (CY_APP_FOR_STACK_AND_COPIER == 0x1)?0x1:0x0
 
-.text           0x00000000     0x30c2
+.text           0x00000000     0x30aa
  CREATE_OBJECT_SYMBOLS
                 0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
  *(.romvectors)
@@ -888,25 +887,26 @@ END GROUP
  .text.Metronome_Interrupt
                 0x00000344       0x20 .\CortexM0\ARM_GCC_493\Debug\main.o
                 0x00000344                Metronome_Interrupt
- .text.main     0x00000364      0x160 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .text.main     0x00000364      0x154 .\CortexM0\ARM_GCC_493\Debug\main.o
                 0x00000364                main
  .text.initCircularMean
-                0x000004c4       0x20 .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
-                0x000004c4                initCircularMean
+                0x000004b8       0x20 .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
+                0x000004b8                initCircularMean
  .text.insertValue
-                0x000004e4       0x2c .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
-                0x000004e4                insertValue
+                0x000004d8       0x2c .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
+                0x000004d8                insertValue
  .text.getMeanValue
-                0x00000510       0x2c .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
-                0x00000510                getMeanValue
+                0x00000504       0x2c .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
+                0x00000504                getMeanValue
  .text.CalculateLux
-                0x0000053c      0x158 .\CortexM0\ARM_GCC_493\Debug\lux.o
-                0x0000053c                CalculateLux
+                0x00000530      0x158 .\CortexM0\ARM_GCC_493\Debug\lux.o
+                0x00000530                CalculateLux
+ .text.isr_i2c_rx
+                0x00000688       0x40 .\CortexM0\ARM_GCC_493\Debug\i2c.o
+                0x00000688                isr_i2c_rx
  .text.i2c_init
-                0x00000694       0x30 .\CortexM0\ARM_GCC_493\Debug\i2c.o
-                0x00000694                i2c_init
- .text.i2c_rx   0x000006c4       0x40 .\CortexM0\ARM_GCC_493\Debug\i2c.o
-                0x000006c4                i2c_rx
+                0x000006c8       0x3c .\CortexM0\ARM_GCC_493\Debug\i2c.o
+                0x000006c8                i2c_init
  .text.i2c_tx   0x00000704       0x14 .\CortexM0\ARM_GCC_493\Debug\i2c.o
                 0x00000704                i2c_tx
  .text.queue_init
@@ -972,360 +972,361 @@ END GROUP
  .text.CyIntSetPriority
                 0x00000cf8       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
                 0x00000cf8                CyIntSetPriority
- .text.CyDelay  0x00000d44       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
-                0x00000d44                CyDelay
  .text.CyDelayUs
-                0x00000d74       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
-                0x00000d74                CyDelayUs
+                0x00000d44       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+                0x00000d44                CyDelayUs
  .text.CySysClkWriteImoFreq
-                0x00000d88      0x164 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
-                0x00000d88                CySysClkWriteImoFreq
+                0x00000d58      0x164 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+                0x00000d58                CySysClkWriteImoFreq
  .text.CySysWdtLocked
-                0x00000eec       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+                0x00000ebc       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
  .text.CySysWdtLock
-                0x00000f00       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
-                0x00000f00                CySysWdtLock
+                0x00000ed0       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+                0x00000ed0                CySysWdtLock
  .text.CySysWdtUnlock
-                0x00000f1c       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
-                0x00000f1c                CySysWdtUnlock
+                0x00000eec       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+                0x00000eec                CySysWdtUnlock
  .text.CySysWdtClearInterrupt
-                0x00000f4c       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
-                0x00000f4c                CySysWdtClearInterrupt
+                0x00000f1c       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+                0x00000f1c                CySysWdtClearInterrupt
  .text.CySysWdtIsr
-                0x00000f98       0xa4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
-                0x00000f98                CySysWdtIsr
+                0x00000f68       0xa4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+                0x00000f68                CySysWdtIsr
  .text.DistTimer_SetInterruptMode
-                0x0000103c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x0000103c                DistTimer_SetInterruptMode
+                0x0000100c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x0000100c                DistTimer_SetInterruptMode
  .text.DistTimer_ReadStatusRegister
-                0x00001048        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x00001048                DistTimer_ReadStatusRegister
+                0x00001018        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x00001018                DistTimer_ReadStatusRegister
  .text.DistTimer_WritePeriod
-                0x00001054        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x00001054                DistTimer_WritePeriod
+                0x00001024        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x00001024                DistTimer_WritePeriod
  .text.DistTimer_ReadCapture
-                0x00001060        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x00001060                DistTimer_ReadCapture
+                0x00001030        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x00001030                DistTimer_ReadCapture
  .text.DistTimer_WriteCounter
-                0x0000106c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x0000106c                DistTimer_WriteCounter
+                0x0000103c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x0000103c                DistTimer_WriteCounter
  .text.DistTimer_ClearFIFO
-                0x00001078       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x00001078                DistTimer_ClearFIFO
+                0x00001048       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x00001048                DistTimer_ClearFIFO
  .text.DistTimer_Init
-                0x0000108c       0x38 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x0000108c                DistTimer_Init
+                0x0000105c       0x38 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x0000105c                DistTimer_Init
  .text.DistTimer_Start
-                0x000010c4       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                0x000010c4                DistTimer_Start
+                0x00001094       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                0x00001094                DistTimer_Start
  .text.DistTimerInt_SetVector
-                0x000010e0        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
-                0x000010e0                DistTimerInt_SetVector
+                0x000010b0        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+                0x000010b0                DistTimerInt_SetVector
  .text.DistTimerInt_SetPriority
-                0x000010ec       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
-                0x000010ec                DistTimerInt_SetPriority
+                0x000010bc       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+                0x000010bc                DistTimerInt_SetPriority
  .text.DistTimerInt_Enable
-                0x0000110c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
-                0x0000110c                DistTimerInt_Enable
+                0x000010dc        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+                0x000010dc                DistTimerInt_Enable
  .text.DistTimerInt_Disable
-                0x00001118        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
-                0x00001118                DistTimerInt_Disable
+                0x000010e8        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+                0x000010e8                DistTimerInt_Disable
  .text.DistTimerInt_StartEx
-                0x00001124       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
-                0x00001124                DistTimerInt_StartEx
+                0x000010f4       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+                0x000010f4                DistTimerInt_StartEx
  .text.PIR_Trig_Read
-                0x00001140       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
-                0x00001140                PIR_Trig_Read
+                0x00001110       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
+                0x00001110                PIR_Trig_Read
  .text.MetronomeISR_SetVector
-                0x00001150        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
-                0x00001150                MetronomeISR_SetVector
+                0x00001120        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+                0x00001120                MetronomeISR_SetVector
  .text.MetronomeISR_SetPriority
-                0x0000115c       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
-                0x0000115c                MetronomeISR_SetPriority
+                0x0000112c       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+                0x0000112c                MetronomeISR_SetPriority
  .text.MetronomeISR_Enable
-                0x00001180        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
-                0x00001180                MetronomeISR_Enable
+                0x00001150        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+                0x00001150                MetronomeISR_Enable
  .text.MetronomeISR_Disable
-                0x0000118c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
-                0x0000118c                MetronomeISR_Disable
+                0x0000115c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+                0x0000115c                MetronomeISR_Disable
  .text.MetronomeISR_StartEx
-                0x00001198       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
-                0x00001198                MetronomeISR_StartEx
+                0x00001168       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+                0x00001168                MetronomeISR_StartEx
  .text.MetronomeTimer_Enable
-                0x000011b4       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x000011b4                MetronomeTimer_Enable
+                0x00001184       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x00001184                MetronomeTimer_Enable
  .text.MetronomeTimer_SetInterruptMode
-                0x000011c4        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x000011c4                MetronomeTimer_SetInterruptMode
+                0x00001194        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x00001194                MetronomeTimer_SetInterruptMode
  .text.MetronomeTimer_ReadStatusRegister
-                0x000011d0        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x000011d0                MetronomeTimer_ReadStatusRegister
+                0x000011a0        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x000011a0                MetronomeTimer_ReadStatusRegister
  .text.MetronomeTimer_WritePeriod
-                0x000011dc        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x000011dc                MetronomeTimer_WritePeriod
+                0x000011ac        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x000011ac                MetronomeTimer_WritePeriod
  .text.MetronomeTimer_ReadCapture
-                0x000011e8        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x000011e8                MetronomeTimer_ReadCapture
+                0x000011b8        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x000011b8                MetronomeTimer_ReadCapture
  .text.MetronomeTimer_WriteCounter
-                0x000011f4        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x000011f4                MetronomeTimer_WriteCounter
+                0x000011c4        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x000011c4                MetronomeTimer_WriteCounter
  .text.MetronomeTimer_ClearFIFO
-                0x00001200       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x00001200                MetronomeTimer_ClearFIFO
+                0x000011d0       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x000011d0                MetronomeTimer_ClearFIFO
  .text.MetronomeTimer_Init
-                0x00001214       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x00001214                MetronomeTimer_Init
+                0x000011e4       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x000011e4                MetronomeTimer_Init
  .text.MetronomeTimer_Start
-                0x00001244       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                0x00001244                MetronomeTimer_Start
+                0x00001214       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                0x00001214                MetronomeTimer_Start
  .text.DistReset_Write
-                0x00001264       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
-                0x00001264                DistReset_Write
+                0x00001234       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
+                0x00001234                DistReset_Write
  .text.DistTrigger_Write
-                0x0000127c       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
-                0x0000127c                DistTrigger_Write
+                0x0000124c       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
+                0x0000124c                DistTrigger_Write
  .text.DEBUG_PutString
-                0x00001294       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
-                0x00001294                DEBUG_PutString
+                0x00001264       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+                0x00001264                DEBUG_PutString
  .text.DEBUG_PutHexByte
-                0x000012b0       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
-                0x000012b0                DEBUG_PutHexByte
+                0x00001280       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+                0x00001280                DEBUG_PutHexByte
  .text.DEBUG_PutCRLF
-                0x000012d0       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
-                0x000012d0                DEBUG_PutCRLF
- .text          0x000012e0       0xe0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
-                0x000012e0                DEBUG_PutChar
+                0x000012a0       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+                0x000012a0                DEBUG_PutCRLF
+ *fill*         0x000012b0       0x10 
+ .text          0x000012c0       0xe0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
+                0x000012c0                DEBUG_PutChar
  .text.LumenCom_ScbEnableIntr
-                0x000013c0        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+                0x000013a0        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
  .text.LumenCom_Init
-                0x000013cc        0x8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
-                0x000013cc                LumenCom_Init
+                0x000013ac        0x8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+                0x000013ac                LumenCom_Init
  .text.LumenCom_Enable
-                0x000013d4       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
-                0x000013d4                LumenCom_Enable
+                0x000013b4       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+                0x000013b4                LumenCom_Enable
  .text.LumenCom_Start
-                0x000013ec       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
-                0x000013ec                LumenCom_Start
+                0x000013cc       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+                0x000013cc                LumenCom_Start
  .text.LumenCom_I2CInit
-                0x0000140c       0xcc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
-                0x0000140c                LumenCom_I2CInit
+                0x000013ec       0xcc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
+                0x000013ec                LumenCom_I2CInit
  .text.LumenCom_I2CMasterStatus
-                0x000014d8       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
-                0x000014d8                LumenCom_I2CMasterStatus
+                0x000014b8       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+                0x000014b8                LumenCom_I2CMasterStatus
  .text.LumenCom_I2CReStartGeneration
-                0x00001508       0x90 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
-                0x00001508                LumenCom_I2CReStartGeneration
+                0x000014e8       0x90 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+                0x000014e8                LumenCom_I2CReStartGeneration
  .text.LumenCom_I2CMasterWriteBuf
-                0x00001598       0xec .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
-                0x00001598                LumenCom_I2CMasterWriteBuf
+                0x00001578       0xec .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+                0x00001578                LumenCom_I2CMasterWriteBuf
  .text.LumenCom_I2CMasterReadBuf
-                0x00001684       0xfc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
-                0x00001684                LumenCom_I2CMasterReadBuf
+                0x00001664       0xfc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+                0x00001664                LumenCom_I2CMasterReadBuf
  .text.LumenCom_sda_SetDriveMode
-                0x00001780       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
-                0x00001780                LumenCom_sda_SetDriveMode
+                0x00001760       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
+                0x00001760                LumenCom_sda_SetDriveMode
  .text.LumenCom_sda_Read
-                0x00001794       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
-                0x00001794                LumenCom_sda_Read
+                0x00001774       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
+                0x00001774                LumenCom_sda_Read
  .text.LumenCom_scl_SetDriveMode
-                0x000017a4       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
-                0x000017a4                LumenCom_scl_SetDriveMode
+                0x00001784       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
+                0x00001784                LumenCom_scl_SetDriveMode
  .text.LumenCom_scl_Write
-                0x000017b8       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
-                0x000017b8                LumenCom_scl_Write
+                0x00001798       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
+                0x00001798                LumenCom_scl_Write
  .text.LumenCom_scl_Read
-                0x000017d0       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
-                0x000017d0                LumenCom_scl_Read
+                0x000017b0       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
+                0x000017b0                LumenCom_scl_Read
  .text.GreenPWM_Stop
-                0x000017e0       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x000017e0                GreenPWM_Stop
+                0x000017c0       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x000017c0                GreenPWM_Stop
  .text.GreenPWM_WriteCounter
-                0x000017fc       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x000017fc                GreenPWM_WriteCounter
+                0x000017dc       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x000017dc                GreenPWM_WriteCounter
  .text.GreenPWM_WritePeriod
-                0x0000180c       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x0000180c                GreenPWM_WritePeriod
+                0x000017ec       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x000017ec                GreenPWM_WritePeriod
  .text.GreenPWM_WriteCompare
-                0x0000181c       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x0000181c                GreenPWM_WriteCompare
+                0x000017fc       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x000017fc                GreenPWM_WriteCompare
  .text.GreenPWM_TriggerCommand
-                0x0000182c       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x0000182c                GreenPWM_TriggerCommand
+                0x0000180c       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x0000180c                GreenPWM_TriggerCommand
  .text.GreenPWM_Enable
-                0x00001848       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x00001848                GreenPWM_Enable
+                0x00001828       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x00001828                GreenPWM_Enable
  .text.GreenPWM_SetInterruptMode
-                0x0000186c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x0000186c                GreenPWM_SetInterruptMode
+                0x0000184c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x0000184c                GreenPWM_SetInterruptMode
  .text.GreenPWM_Init
-                0x00001878       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x00001878                GreenPWM_Init
+                0x00001858       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x00001858                GreenPWM_Init
  .text.GreenPWM_Start
-                0x000018c4       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                0x000018c4                GreenPWM_Start
+                0x000018a4       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                0x000018a4                GreenPWM_Start
  .text.RedPWM_Stop
-                0x000018e4       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x000018e4                RedPWM_Stop
+                0x000018c4       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x000018c4                RedPWM_Stop
  .text.RedPWM_WriteCounter
-                0x00001900       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x00001900                RedPWM_WriteCounter
+                0x000018e0       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x000018e0                RedPWM_WriteCounter
  .text.RedPWM_WritePeriod
-                0x00001910       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x00001910                RedPWM_WritePeriod
+                0x000018f0       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x000018f0                RedPWM_WritePeriod
  .text.RedPWM_WriteCompare
-                0x00001920       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x00001920                RedPWM_WriteCompare
+                0x00001900       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x00001900                RedPWM_WriteCompare
  .text.RedPWM_TriggerCommand
-                0x00001930       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x00001930                RedPWM_TriggerCommand
+                0x00001910       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x00001910                RedPWM_TriggerCommand
  .text.RedPWM_Enable
-                0x0000194c       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x0000194c                RedPWM_Enable
+                0x0000192c       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x0000192c                RedPWM_Enable
  .text.RedPWM_SetInterruptMode
-                0x00001970        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x00001970                RedPWM_SetInterruptMode
+                0x00001950        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x00001950                RedPWM_SetInterruptMode
  .text.RedPWM_Init
-                0x0000197c       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x0000197c                RedPWM_Init
+                0x0000195c       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x0000195c                RedPWM_Init
  .text.RedPWM_Start
-                0x000019c8       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                0x000019c8                RedPWM_Start
+                0x000019a8       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                0x000019a8                RedPWM_Start
  .text.BluePWM_Stop
-                0x000019e8       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x000019e8                BluePWM_Stop
+                0x000019c8       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x000019c8                BluePWM_Stop
  .text.BluePWM_WriteCounter
-                0x00001a04       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001a04                BluePWM_WriteCounter
+                0x000019e4       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x000019e4                BluePWM_WriteCounter
  .text.BluePWM_WritePeriod
-                0x00001a14       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001a14                BluePWM_WritePeriod
+                0x000019f4       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x000019f4                BluePWM_WritePeriod
  .text.BluePWM_WriteCompare
-                0x00001a24       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001a24                BluePWM_WriteCompare
+                0x00001a04       0x10 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x00001a04                BluePWM_WriteCompare
  .text.BluePWM_TriggerCommand
-                0x00001a34       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001a34                BluePWM_TriggerCommand
+                0x00001a14       0x1c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x00001a14                BluePWM_TriggerCommand
  .text.BluePWM_Enable
-                0x00001a50       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001a50                BluePWM_Enable
+                0x00001a30       0x24 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x00001a30                BluePWM_Enable
  .text.BluePWM_SetInterruptMode
-                0x00001a74        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001a74                BluePWM_SetInterruptMode
+                0x00001a54        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x00001a54                BluePWM_SetInterruptMode
  .text.BluePWM_Init
-                0x00001a80       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001a80                BluePWM_Init
+                0x00001a60       0x4c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x00001a60                BluePWM_Init
  .text.BluePWM_Start
-                0x00001acc       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                0x00001acc                BluePWM_Start
+                0x00001aac       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                0x00001aac                BluePWM_Start
  .text.I2CS_ScbEnableIntr
-                0x00001aec        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+                0x00001acc        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
  .text.I2CS_Init
-                0x00001af8        0x8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
-                0x00001af8                I2CS_Init
+                0x00001ad8        0x8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+                0x00001ad8                I2CS_Init
  .text.I2CS_Enable
-                0x00001b00       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
-                0x00001b00                I2CS_Enable
+                0x00001ae0       0x18 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+                0x00001ae0                I2CS_Enable
  .text.I2CS_Start
-                0x00001b18       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
-                0x00001b18                I2CS_Start
+                0x00001af8       0x20 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+                0x00001af8                I2CS_Start
+ .text.I2CS_SetCustomInterruptHandler
+                0x00001b18        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+                0x00001b18                I2CS_SetCustomInterruptHandler
  .text.I2CS_I2CSlaveNackGeneration
-                0x00001b38       0x3c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
-                0x00001b38                I2CS_I2CSlaveNackGeneration
+                0x00001b24       0x3c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+                0x00001b24                I2CS_I2CSlaveNackGeneration
  .text.I2CS_I2CInit
-                0x00001b74       0xd8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
-                0x00001b74                I2CS_I2CInit
+                0x00001b60       0xd8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
+                0x00001b60                I2CS_I2CInit
  .text.I2CS_I2CSlaveStatus
-                0x00001c4c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001c4c                I2CS_I2CSlaveStatus
+                0x00001c38        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001c38                I2CS_I2CSlaveStatus
  .text.I2CS_I2CSlaveClearReadStatus
-                0x00001c58       0x28 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001c58                I2CS_I2CSlaveClearReadStatus
+                0x00001c44       0x28 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001c44                I2CS_I2CSlaveClearReadStatus
  .text.I2CS_I2CSlaveClearWriteStatus
-                0x00001c80       0x28 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001c80                I2CS_I2CSlaveClearWriteStatus
+                0x00001c6c       0x28 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001c6c                I2CS_I2CSlaveClearWriteStatus
  .text.I2CS_I2CSlaveInitReadBuf
-                0x00001ca8       0x3c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001ca8                I2CS_I2CSlaveInitReadBuf
+                0x00001c94       0x3c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001c94                I2CS_I2CSlaveInitReadBuf
  .text.I2CS_I2CSlaveInitWriteBuf
-                0x00001ce4       0x34 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001ce4                I2CS_I2CSlaveInitWriteBuf
+                0x00001cd0       0x34 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001cd0                I2CS_I2CSlaveInitWriteBuf
  .text.I2CS_I2CSlaveGetWriteBufSize
-                0x00001d18        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001d18                I2CS_I2CSlaveGetWriteBufSize
+                0x00001d04        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001d04                I2CS_I2CSlaveGetWriteBufSize
  .text.I2CS_I2CSlaveClearReadBuf
-                0x00001d24        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001d24                I2CS_I2CSlaveClearReadBuf
+                0x00001d10        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001d10                I2CS_I2CSlaveClearReadBuf
  .text.I2CS_I2CSlaveClearWriteBuf
-                0x00001d30        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                0x00001d30                I2CS_I2CSlaveClearWriteBuf
- *fill*         0x00001d3c        0x4 
- .text          0x00001d40       0x28 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
-                0x00001d40                CyDelayCycles
-                0x00001d54                CyEnterCriticalSection
-                0x00001d5c                CyExitCriticalSection
+                0x00001d1c        0xc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                0x00001d1c                I2CS_I2CSlaveClearWriteBuf
+ .text          0x00001d28       0x28 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
+                0x00001d28                CyDelayCycles
+                0x00001d3c                CyEnterCriticalSection
+                0x00001d44                CyExitCriticalSection
  .text.LumenCom_I2C_ISR
-                0x00001d68      0x3a0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
-                0x00001d68                LumenCom_I2C_ISR
+                0x00001d50      0x3a0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
+                0x00001d50                LumenCom_I2C_ISR
  .text.I2CS_I2C_ISR
-                0x00002108      0x418 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
-                0x00002108                I2CS_I2C_ISR
- .text          0x00002520      0x120 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
-                0x00002520                __aeabi_uidiv
-                0x00002520                __udivsi3
-                0x0000262c                __aeabi_uidivmod
- .text          0x00002640      0x1e0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_divsi3.o)
-                0x00002640                __divsi3
-                0x00002640                __aeabi_idiv
-                0x0000280c                __aeabi_idivmod
- .text          0x00002820        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_dvmd_tls.o)
-                0x00002820                __aeabi_idiv0
-                0x00002820                __aeabi_ldiv0
- .text.__errno  0x00002824        0xc c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
-                0x00002824                __errno
+                0x000020f0      0x418 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
+                0x000020f0                I2CS_I2C_ISR
+ .text          0x00002508      0x120 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_udivsi3.o)
+                0x00002508                __aeabi_uidiv
+                0x00002508                __udivsi3
+                0x00002614                __aeabi_uidivmod
+ .text          0x00002628      0x1e0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_divsi3.o)
+                0x00002628                __divsi3
+                0x00002628                __aeabi_idiv
+                0x000027f4                __aeabi_idivmod
+ .text          0x00002808        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m\libgcc.a(_dvmd_tls.o)
+                0x00002808                __aeabi_idiv0
+                0x00002808                __aeabi_ldiv0
+ .text.__errno  0x0000280c        0xc c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+                0x0000280c                __errno
  .text.__libc_init_array
-                0x00002830       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
-                0x00002830                __libc_init_array
- .text.malloc   0x0000287c       0x14 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-malloc.o)
-                0x0000287c                malloc
- .text.free     0x00002890       0x14 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-malloc.o)
-                0x00002890                free
- .text.memset   0x000028a4       0x10 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
-                0x000028a4                memset
- .text._free_r  0x000028b4       0x8c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-freer.o)
-                0x000028b4                _free_r
+                0x00002818       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+                0x00002818                __libc_init_array
+ .text.malloc   0x00002864       0x14 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-malloc.o)
+                0x00002864                malloc
+ .text.free     0x00002878       0x14 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-malloc.o)
+                0x00002878                free
+ .text.memset   0x0000288c       0x10 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+                0x0000288c                memset
+ .text._free_r  0x0000289c       0x8c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-freer.o)
+                0x0000289c                _free_r
  .text._malloc_r
-                0x00002940       0xb0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-mallocr.o)
-                0x00002940                _malloc_r
- .text._sbrk_r  0x000029f0       0x24 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-sbrkr.o)
-                0x000029f0                _sbrk_r
- .text.sprintf  0x00002a14       0x44 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-sprintf.o)
-                0x00002a14                siprintf
-                0x00002a14                sprintf
+                0x00002928       0xb0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-mallocr.o)
+                0x00002928                _malloc_r
+ .text._sbrk_r  0x000029d8       0x24 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-sbrkr.o)
+                0x000029d8                _sbrk_r
+ .text.sprintf  0x000029fc       0x44 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-sprintf.o)
+                0x000029fc                siprintf
+                0x000029fc                sprintf
  .text.__ssputs_r
-                0x00002a58       0xc0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x00002a58                __ssputs_r
+                0x00002a40       0xc0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x00002a40                __ssputs_r
  .text._svfprintf_r
-                0x00002b18      0x1ec c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-svfprintf.o)
-                0x00002b18                _svfiprintf_r
-                0x00002b18                _svfprintf_r
+                0x00002b00      0x1ec c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x00002b00                _svfiprintf_r
+                0x00002b00                _svfprintf_r
  .text._printf_common
-                0x00002d04       0xdc c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00002d04                _printf_common
+                0x00002cec       0xdc c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00002cec                _printf_common
  .text._printf_i
-                0x00002de0      0x230 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x00002de0                _printf_i
- .text.memchr   0x00003010       0x16 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memchr.o)
-                0x00003010                memchr
- .text.memcpy   0x00003026       0x12 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy.o)
-                0x00003026                memcpy
- .text.memmove  0x00003038       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memmove.o)
-                0x00003038                memmove
+                0x00002dc8      0x230 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00002dc8                _printf_i
+ .text.memchr   0x00002ff8       0x16 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memchr.o)
+                0x00002ff8                memchr
+ .text.memcpy   0x0000300e       0x12 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy.o)
+                0x0000300e                memcpy
+ .text.memmove  0x00003020       0x28 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memmove.o)
+                0x00003020                memmove
  .text._realloc_r
-                0x00003060       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-reallocr.o)
-                0x00003060                _realloc_r
+                0x00003048       0x4c c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-reallocr.o)
+                0x00003048                _realloc_r
  .text._malloc_usable_size_r
-                0x000030ac       0x16 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-msizer.o)
-                0x000030ac                _malloc_usable_size_r
+                0x00003094       0x16 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-msizer.o)
+                0x00003094                _malloc_usable_size_r
  *(.plt)
  *(.gnu.warning)
  *(.glue_7t)
@@ -1338,92 +1339,92 @@ END GROUP
  *(.ARM.extab* .gnu.linkonce.armextab.*)
  *(.gcc_except_table)
 
-.v4_bx          0x000030c4        0x0
+.v4_bx          0x000030ac        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x000030c4        0x0
+.iplt           0x000030ac        0x0
  .iplt          0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x000030c4        0x4
+.eh_frame       0x000030ac        0x4
  *(.eh_frame)
- .eh_frame      0x000030c4        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
- .eh_frame      0x000030c4        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtend.o
-                0x000030c8                PROVIDE (__exidx_start, .)
+ .eh_frame      0x000030ac        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
+ .eh_frame      0x000030ac        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtend.o
+                0x000030b0                PROVIDE (__exidx_start, .)
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x000030c8                __exidx_end = .
+                0x000030b0                __exidx_end = .
 
-.rodata         0x000030c8      0x498
+.rodata         0x000030b0      0x498
  *(.rodata .rodata.* .gnu.linkonce.r.*)
  .rodata.str1.4
-                0x000030c8       0x14 .\CortexM0\ARM_GCC_493\Debug\main.o
- .rodata        0x000030dc       0x58 .\CortexM0\ARM_GCC_493\Debug\handler.o
+                0x000030b0       0x14 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .rodata        0x000030c4       0x58 .\CortexM0\ARM_GCC_493\Debug\handler.o
  .rodata.str1.4
-                0x00003134       0xf8 .\CortexM0\ARM_GCC_493\Debug\handler.o
- .rodata        0x0000322c      0x284 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
- .rodata        0x000034b0       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
-                0x000034b0                cyImoFreqMhz2Reg
- .rodata        0x000034e0       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+                0x0000311c       0xf8 .\CortexM0\ARM_GCC_493\Debug\handler.o
+ .rodata        0x00003214      0x284 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
+ .rodata        0x00003498       0x30 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+                0x00003498                cyImoFreqMhz2Reg
+ .rodata        0x000034c8       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
  .rodata.str1.1
-                0x000034f4        0x2 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                0x000034dc        0x2 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
  .rodata.str1.1
-                0x000034f6       0x11 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-svfprintf.o)
+                0x000034de       0x11 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-svfprintf.o)
  .rodata.str1.1
-                0x00003507       0x22 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
-                0x0000352c                . = ALIGN (0x4)
- *fill*         0x00003529        0x3 
+                0x000034ef       0x22 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-vfprintf_i.o)
+                0x00003514                . = ALIGN (0x4)
+ *fill*         0x00003511        0x3 
  *(.init)
- .init          0x0000352c        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
-                0x0000352c                _init
- .init          0x00003530        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
-                0x00003538                . = ALIGN (0x4)
-                0x00003538                __preinit_array_start = .
+ .init          0x00003514        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
+                0x00003514                _init
+ .init          0x00003518        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
+                0x00003520                . = ALIGN (0x4)
+                0x00003520                __preinit_array_start = .
  *(.preinit_array)
-                0x00003538                __preinit_array_end = .
-                0x00003538                . = ALIGN (0x4)
-                0x00003538                __init_array_start = .
+                0x00003520                __preinit_array_end = .
+                0x00003520                . = ALIGN (0x4)
+                0x00003520                __init_array_start = .
  *(SORT(.init_array.*))
  *(.init_array)
- .init_array    0x00003538        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
- .init_array    0x0000353c        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
-                0x00003540                __init_array_end = .
-                0x00003540                . = ALIGN (0x4)
+ .init_array    0x00003520        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
+ .init_array    0x00003524        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+                0x00003528                __init_array_end = .
+                0x00003528                . = ALIGN (0x4)
  *(.fini)
- .fini          0x00003540        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
-                0x00003540                _fini
- .fini          0x00003544        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
-                0x0000354c                . = ALIGN (0x4)
-                0x0000354c                __fini_array_start = .
+ .fini          0x00003528        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crti.o
+                0x00003528                _fini
+ .fini          0x0000352c        0x8 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtn.o
+                0x00003534                . = ALIGN (0x4)
+                0x00003534                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x0000354c        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
+ .fini_array    0x00003534        0x4 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x00003550                __fini_array_end = .
-                0x00003550                . = ALIGN (0x4)
+                0x00003538                __fini_array_end = .
+                0x00003538                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x00003550                . = ALIGN (0x4)
+                0x00003538                . = ALIGN (0x4)
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x00003550                . = ALIGN (0x4)
-                0x00003550                __cy_regions = .
-                0x00003550        0x4 LONG 0x3560 __cy_region_init_ram
-                0x00003554        0x4 LONG 0x200000c8 __cy_region_start_data
-                0x00003558        0x4 LONG 0xa0 __cy_region_init_size_ram
-                0x0000355c        0x4 LONG 0x158 __cy_region_zero_size_ram
-                0x00003560                __cy_regions_end = .
-                0x00003560                . = ALIGN (0x8)
-                0x00003560                _etext = .
+                0x00003538                . = ALIGN (0x4)
+                0x00003538                __cy_regions = .
+                0x00003538        0x4 LONG 0x3548 __cy_region_init_ram
+                0x0000353c        0x4 LONG 0x200000c8 __cy_region_start_data
+                0x00003540        0x4 LONG 0xa0 __cy_region_init_size_ram
+                0x00003544        0x4 LONG 0x158 __cy_region_zero_size_ram
+                0x00003548                __cy_regions_end = .
+                0x00003548                . = ALIGN (0x8)
+                0x00003548                _etext = .
 
 .cy_checksum_exclude
-                0x00003560        0x0
+                0x00003548        0x0
  *(.cy_checksum_exclude)
 
 .ramvectors     0x20000000       0xc0
@@ -1436,7 +1437,7 @@ END GROUP
  *(.noinit)
  .noinit        0x200000c0        0x4 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
 
-.data           0x200000c8       0xa0 load address 0x00003560
+.data           0x200000c8       0xa0 load address 0x00003548
                 0x200000c8                __cy_region_start_data = .
  *(.jcr)
  .jcr           0x200000c8        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
@@ -1469,10 +1470,10 @@ END GROUP
  *(.ram)
                 0x20000168                _edata = .
 
-.igot.plt       0x20000168        0x0 load address 0x00003600
+.igot.plt       0x20000168        0x0 load address 0x000035e8
  .igot.plt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
 
-.bss            0x20000168      0x158 load address 0x00003600
+.bss            0x20000168      0x158 load address 0x000035e8
                 0x20000168                PROVIDE (__bss_start__, .)
  *(.shbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
@@ -1549,11 +1550,11 @@ END GROUP
                 0x200002c0                __end = .
                 0x200002c0                PROVIDE (end, .)
                 0x200002c0                PROVIDE (__bss_end__, .)
-                0x00003560                __cy_region_init_ram = LOADADDR (.data)
+                0x00003548                __cy_region_init_ram = LOADADDR (.data)
                 0x000000a0                __cy_region_init_size_ram = (_edata - ADDR (.data))
                 0x00000158                __cy_region_zero_size_ram = (_end - _edata)
 
-.heap           0x200002c0       0x80 load address 0x00003600
+.heap           0x200002c0       0x80 load address 0x000035e8
                 0x200002c0                . = _end
                 0x20000340                . = (. + 0x80)
  *fill*         0x200002c0       0x80 
@@ -1593,7 +1594,7 @@ END GROUP
                 0x90600000        0x4 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
                 0x90600000                cy_meta_chipprotect
 
-.rel.dyn        0x00003600        0x0 load address 0x90600004
+.rel.dyn        0x000035e8        0x0 load address 0x90600004
  .rel.iplt      0x00000000        0x0 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/armv6-m/crtbegin.o
 
 .stab
@@ -1692,122 +1693,122 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x8307
+.debug_info     0x00000000     0x82c6
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x7c4 .\CortexM0\ARM_GCC_493\Debug\main.o
- .debug_info    0x000007c4      0x127 .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
- .debug_info    0x000008eb      0x11e .\CortexM0\ARM_GCC_493\Debug\lux.o
- .debug_info    0x00000a09      0x2d8 .\CortexM0\ARM_GCC_493\Debug\i2c.o
- .debug_info    0x00000ce1      0x2ec .\CortexM0\ARM_GCC_493\Debug\queue.o
- .debug_info    0x00000fcd      0x68c .\CortexM0\ARM_GCC_493\Debug\handler.o
- .debug_info    0x00001659      0x1c3 .\CortexM0\ARM_GCC_493\Debug\SensorData.o
- .debug_info    0x0000181c      0x31b .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
- .debug_info    0x00001b37       0xfe .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
- .debug_info    0x00001c35      0x38e .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_info    0x00001fc3      0x3be .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
- .debug_info    0x00002381      0xad1 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
- .debug_info    0x00002e52      0xc23 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
- .debug_info    0x00003a75      0x2f0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
- .debug_info    0x00003d65      0x300 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
- .debug_info    0x00004065      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
- .debug_info    0x00004202      0x300 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
- .debug_info    0x00004502      0x2cc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
- .debug_info    0x000047ce      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
- .debug_info    0x0000496b      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
- .debug_info    0x00004b08      0x2c6 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
- .debug_info    0x00004dce       0x96 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
- .debug_info    0x00004e64      0x2a9 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
- .debug_info    0x0000510d      0x1ab .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
- .debug_info    0x000052b8      0x685 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
- .debug_info    0x0000593d      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
- .debug_info    0x00005ada      0x19b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
- .debug_info    0x00005c75      0x903 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
- .debug_info    0x00006578      0x903 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
- .debug_info    0x00006e7b      0x903 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
- .debug_info    0x0000777e      0x2a9 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
- .debug_info    0x00007a27      0x1a5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
- .debug_info    0x00007bcc      0x38b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
- .debug_info    0x00007f57       0x96 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
- .debug_info    0x00007fed      0x18d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
- .debug_info    0x0000817a      0x18d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
+ .debug_info    0x00000000      0x78e .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_info    0x0000078e      0x127 .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
+ .debug_info    0x000008b5      0x11e .\CortexM0\ARM_GCC_493\Debug\lux.o
+ .debug_info    0x000009d3      0x307 .\CortexM0\ARM_GCC_493\Debug\i2c.o
+ .debug_info    0x00000cda      0x2ec .\CortexM0\ARM_GCC_493\Debug\queue.o
+ .debug_info    0x00000fc6      0x68c .\CortexM0\ARM_GCC_493\Debug\handler.o
+ .debug_info    0x00001652      0x1c3 .\CortexM0\ARM_GCC_493\Debug\SensorData.o
+ .debug_info    0x00001815      0x31b .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
+ .debug_info    0x00001b30       0xfe .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+ .debug_info    0x00001c2e      0x38e .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_info    0x00001fbc      0x3be .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
+ .debug_info    0x0000237a      0xad1 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+ .debug_info    0x00002e4b      0xc23 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+ .debug_info    0x00003a6e      0x2f0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+ .debug_info    0x00003d5e      0x300 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+ .debug_info    0x0000405e      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
+ .debug_info    0x000041fb      0x300 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+ .debug_info    0x000044fb      0x2cc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+ .debug_info    0x000047c7      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
+ .debug_info    0x00004964      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
+ .debug_info    0x00004b01      0x2c6 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+ .debug_info    0x00004dc7       0x79 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
+ .debug_info    0x00004e40      0x2a9 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+ .debug_info    0x000050e9      0x1ab .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
+ .debug_info    0x00005294      0x685 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+ .debug_info    0x00005919      0x19d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
+ .debug_info    0x00005ab6      0x19b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
+ .debug_info    0x00005c51      0x903 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+ .debug_info    0x00006554      0x903 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+ .debug_info    0x00006e57      0x903 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+ .debug_info    0x0000775a      0x2a9 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+ .debug_info    0x00007a03      0x1a5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
+ .debug_info    0x00007ba8      0x38b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+ .debug_info    0x00007f33       0x79 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
+ .debug_info    0x00007fac      0x18d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
+ .debug_info    0x00008139      0x18d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
 
-.debug_abbrev   0x00000000     0x298d
+.debug_abbrev   0x00000000     0x2994
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x257 .\CortexM0\ARM_GCC_493\Debug\main.o
  .debug_abbrev  0x00000257       0xfc .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
  .debug_abbrev  0x00000353       0xaf .\CortexM0\ARM_GCC_493\Debug\lux.o
- .debug_abbrev  0x00000402      0x11e .\CortexM0\ARM_GCC_493\Debug\i2c.o
- .debug_abbrev  0x00000520      0x16a .\CortexM0\ARM_GCC_493\Debug\queue.o
- .debug_abbrev  0x0000068a      0x142 .\CortexM0\ARM_GCC_493\Debug\handler.o
- .debug_abbrev  0x000007cc       0xd9 .\CortexM0\ARM_GCC_493\Debug\SensorData.o
- .debug_abbrev  0x000008a5      0x137 .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
- .debug_abbrev  0x000009dc       0x5d .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
- .debug_abbrev  0x00000a39      0x1d5 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_abbrev  0x00000c0e      0x1de .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
- .debug_abbrev  0x00000dec      0x20d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
- .debug_abbrev  0x00000ff9      0x226 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
- .debug_abbrev  0x0000121f      0x154 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
- .debug_abbrev  0x00001373      0x1b4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
- .debug_abbrev  0x00001527       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
- .debug_abbrev  0x000015ef      0x1b4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
- .debug_abbrev  0x000017a3      0x145 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
- .debug_abbrev  0x000018e8       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
- .debug_abbrev  0x000019b0       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
- .debug_abbrev  0x00001a78      0x110 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
- .debug_abbrev  0x00001b88       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
- .debug_abbrev  0x00001b9c      0x15b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
- .debug_abbrev  0x00001cf7       0xf3 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
- .debug_abbrev  0x00001dea      0x17c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
- .debug_abbrev  0x00001f66       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
- .debug_abbrev  0x0000202e       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
- .debug_abbrev  0x000020f6      0x133 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
- .debug_abbrev  0x00002229      0x133 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
- .debug_abbrev  0x0000235c      0x133 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
- .debug_abbrev  0x0000248f      0x15b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
- .debug_abbrev  0x000025ea       0xf3 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
- .debug_abbrev  0x000026dd      0x170 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
- .debug_abbrev  0x0000284d       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
- .debug_abbrev  0x00002861       0x88 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
- .debug_abbrev  0x000028e9       0xa4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
+ .debug_abbrev  0x00000402      0x125 .\CortexM0\ARM_GCC_493\Debug\i2c.o
+ .debug_abbrev  0x00000527      0x16a .\CortexM0\ARM_GCC_493\Debug\queue.o
+ .debug_abbrev  0x00000691      0x142 .\CortexM0\ARM_GCC_493\Debug\handler.o
+ .debug_abbrev  0x000007d3       0xd9 .\CortexM0\ARM_GCC_493\Debug\SensorData.o
+ .debug_abbrev  0x000008ac      0x137 .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
+ .debug_abbrev  0x000009e3       0x5d .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+ .debug_abbrev  0x00000a40      0x1d5 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_abbrev  0x00000c15      0x1de .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
+ .debug_abbrev  0x00000df3      0x20d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+ .debug_abbrev  0x00001000      0x226 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+ .debug_abbrev  0x00001226      0x154 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+ .debug_abbrev  0x0000137a      0x1b4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+ .debug_abbrev  0x0000152e       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
+ .debug_abbrev  0x000015f6      0x1b4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+ .debug_abbrev  0x000017aa      0x145 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+ .debug_abbrev  0x000018ef       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
+ .debug_abbrev  0x000019b7       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
+ .debug_abbrev  0x00001a7f      0x110 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+ .debug_abbrev  0x00001b8f       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
+ .debug_abbrev  0x00001ba3      0x15b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+ .debug_abbrev  0x00001cfe       0xf3 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
+ .debug_abbrev  0x00001df1      0x17c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+ .debug_abbrev  0x00001f6d       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
+ .debug_abbrev  0x00002035       0xc8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
+ .debug_abbrev  0x000020fd      0x133 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+ .debug_abbrev  0x00002230      0x133 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+ .debug_abbrev  0x00002363      0x133 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+ .debug_abbrev  0x00002496      0x15b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+ .debug_abbrev  0x000025f1       0xf3 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
+ .debug_abbrev  0x000026e4      0x170 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+ .debug_abbrev  0x00002854       0x14 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x00002868       0x88 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
+ .debug_abbrev  0x000028f0       0xa4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
 
-.debug_line     0x00000000     0x373b
+.debug_line     0x00000000     0x3739
  *(.debug_line)
- .debug_line    0x00000000      0x276 .\CortexM0\ARM_GCC_493\Debug\main.o
- .debug_line    0x00000276       0xa4 .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
- .debug_line    0x0000031a       0x7f .\CortexM0\ARM_GCC_493\Debug\lux.o
- .debug_line    0x00000399       0xbb .\CortexM0\ARM_GCC_493\Debug\i2c.o
- .debug_line    0x00000454      0x1ce .\CortexM0\ARM_GCC_493\Debug\queue.o
- .debug_line    0x00000622      0x19a .\CortexM0\ARM_GCC_493\Debug\handler.o
- .debug_line    0x000007bc       0x90 .\CortexM0\ARM_GCC_493\Debug\SensorData.o
- .debug_line    0x0000084c       0xeb .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
- .debug_line    0x00000937       0x53 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
- .debug_line    0x0000098a      0x248 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
- .debug_line    0x00000bd2      0x17b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
- .debug_line    0x00000d4d      0x44b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
- .debug_line    0x00001198      0x3fe .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
- .debug_line    0x00001596      0x18f .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
- .debug_line    0x00001725      0x16d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
- .debug_line    0x00001892       0xc2 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
- .debug_line    0x00001954      0x171 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
- .debug_line    0x00001ac5      0x184 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
- .debug_line    0x00001c49       0xc3 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
- .debug_line    0x00001d0c       0xc5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
- .debug_line    0x00001dd1       0xee .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
- .debug_line    0x00001ebf       0xa0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
- .debug_line    0x00001f5f      0x166 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
- .debug_line    0x000020c5       0xc7 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
- .debug_line    0x0000218c      0x2e5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
- .debug_line    0x00002471       0xc6 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
- .debug_line    0x00002537       0xc5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
- .debug_line    0x000025fc      0x383 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
- .debug_line    0x0000297f      0x381 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
- .debug_line    0x00002d00      0x382 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
- .debug_line    0x00003082      0x15e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
- .debug_line    0x000031e0       0xc0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
- .debug_line    0x000032a0      0x156 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
- .debug_line    0x000033f6       0x69 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
- .debug_line    0x0000345f      0x18f .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
- .debug_line    0x000035ee      0x14d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
+ .debug_line    0x00000000      0x273 .\CortexM0\ARM_GCC_493\Debug\main.o
+ .debug_line    0x00000273       0xa4 .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
+ .debug_line    0x00000317       0x7f .\CortexM0\ARM_GCC_493\Debug\lux.o
+ .debug_line    0x00000396       0xbc .\CortexM0\ARM_GCC_493\Debug\i2c.o
+ .debug_line    0x00000452      0x1ce .\CortexM0\ARM_GCC_493\Debug\queue.o
+ .debug_line    0x00000620      0x19a .\CortexM0\ARM_GCC_493\Debug\handler.o
+ .debug_line    0x000007ba       0x90 .\CortexM0\ARM_GCC_493\Debug\SensorData.o
+ .debug_line    0x0000084a       0xeb .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
+ .debug_line    0x00000935       0x53 .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+ .debug_line    0x00000988      0x248 .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+ .debug_line    0x00000bd0      0x17b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
+ .debug_line    0x00000d4b      0x44b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+ .debug_line    0x00001196      0x3fe .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+ .debug_line    0x00001594      0x18f .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+ .debug_line    0x00001723      0x16d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+ .debug_line    0x00001890       0xc2 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
+ .debug_line    0x00001952      0x171 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+ .debug_line    0x00001ac3      0x184 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+ .debug_line    0x00001c47       0xc3 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
+ .debug_line    0x00001d0a       0xc5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
+ .debug_line    0x00001dcf       0xee .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+ .debug_line    0x00001ebd       0xa0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG_AsmGnu.o)
+ .debug_line    0x00001f5d      0x166 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+ .debug_line    0x000020c3       0xc7 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
+ .debug_line    0x0000218a      0x2e5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+ .debug_line    0x0000246f       0xc6 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
+ .debug_line    0x00002535       0xc5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
+ .debug_line    0x000025fa      0x383 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+ .debug_line    0x0000297d      0x381 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+ .debug_line    0x00002cfe      0x382 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+ .debug_line    0x00003080      0x15e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+ .debug_line    0x000031de       0xc0 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
+ .debug_line    0x0000329e      0x156 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+ .debug_line    0x000033f4       0x69 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyBootAsmGnu.o)
+ .debug_line    0x0000345d      0x18f .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
+ .debug_line    0x000035ec      0x14d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
 
 .debug_frame    0x00000000     0x2690
  *(.debug_frame)
@@ -1864,76 +1865,76 @@ END GROUP
  .debug_frame   0x00002640       0x30 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-reallocr.o)
  .debug_frame   0x00002670       0x20 c:/program files (x86)/cypress/psoc creator/3.3/psoc creator/import/gnu/arm/4.9.3/bin/../lib/gcc/arm-none-eabi/4.9.3/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-nano-msizer.o)
 
-.debug_str      0x00000000     0x2f2e
+.debug_str      0x00000000     0x2f5b
  *(.debug_str)
- .debug_str     0x00000000      0x4b2 .\CortexM0\ARM_GCC_493\Debug\main.o
-                                0x503 (size before relaxing)
- .debug_str     0x000004b2       0x27 .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
+ .debug_str     0x00000000      0x47f .\CortexM0\ARM_GCC_493\Debug\main.o
+                                0x4d0 (size before relaxing)
+ .debug_str     0x0000047f       0x6d .\CortexM0\ARM_GCC_493\Debug\CircularMean.o
                                 0x144 (size before relaxing)
- .debug_str     0x000004d9       0x4d .\CortexM0\ARM_GCC_493\Debug\lux.o
-                                0x145 (size before relaxing)
- .debug_str     0x00000526       0xf1 .\CortexM0\ARM_GCC_493\Debug\i2c.o
-                                0x2e6 (size before relaxing)
- .debug_str     0x00000617       0x5d .\CortexM0\ARM_GCC_493\Debug\queue.o
-                                0x24f (size before relaxing)
- .debug_str     0x00000674       0x91 .\CortexM0\ARM_GCC_493\Debug\handler.o
-                                0x369 (size before relaxing)
- .debug_str     0x00000705        0xf .\CortexM0\ARM_GCC_493\Debug\SensorData.o
-                                0x25a (size before relaxing)
- .debug_str     0x00000714       0xb2 .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
-                                0x278 (size before relaxing)
- .debug_str     0x000007c6       0x5b .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
-                                0x1d4 (size before relaxing)
- .debug_str     0x00000821      0x14a .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
-                                0x2fb (size before relaxing)
- .debug_str     0x0000096b       0xf5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
-                                0x2cc (size before relaxing)
- .debug_str     0x00000a60      0x48a .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
-                                0x68f (size before relaxing)
- .debug_str     0x00000eea      0x476 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
-                                0x659 (size before relaxing)
- .debug_str     0x00001360      0x1bc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
-                                0x394 (size before relaxing)
- .debug_str     0x0000151c      0x144 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
-                                0x346 (size before relaxing)
- .debug_str     0x00001660       0xb4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
-                                0x251 (size before relaxing)
- .debug_str     0x00001714      0x135 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
-                                0x346 (size before relaxing)
- .debug_str     0x00001849      0x1cb .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
-                                0x3ca (size before relaxing)
- .debug_str     0x00001a14       0x95 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
-                                0x258 (size before relaxing)
- .debug_str     0x00001aa9       0xa1 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
-                                0x266 (size before relaxing)
- .debug_str     0x00001b4a       0xe8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
-                                0x2aa (size before relaxing)
- .debug_str     0x00001c32      0x15e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
-                                0x31e (size before relaxing)
- .debug_str     0x00001d90       0x7b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
-                                0x264 (size before relaxing)
- .debug_str     0x00001e0b      0x27e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
-                                0x4db (size before relaxing)
- .debug_str     0x00002089       0x8e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
-                                0x26d (size before relaxing)
- .debug_str     0x00002117       0x7b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
-                                0x26d (size before relaxing)
- .debug_str     0x00002192      0x42c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
-                                0x629 (size before relaxing)
- .debug_str     0x000025be      0x326 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
-                                0x5d5 (size before relaxing)
- .debug_str     0x000028e4      0x34d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
-                                0x5ff (size before relaxing)
- .debug_str     0x00002c31      0x105 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
-                                0x2e2 (size before relaxing)
- .debug_str     0x00002d36       0x76 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
+ .debug_str     0x000004ec       0x4d .\CortexM0\ARM_GCC_493\Debug\lux.o
+                                0x128 (size before relaxing)
+ .debug_str     0x00000539      0x122 .\CortexM0\ARM_GCC_493\Debug\i2c.o
+                                0x2ec (size before relaxing)
+ .debug_str     0x0000065b       0x5d .\CortexM0\ARM_GCC_493\Debug\queue.o
+                                0x232 (size before relaxing)
+ .debug_str     0x000006b8       0x91 .\CortexM0\ARM_GCC_493\Debug\handler.o
+                                0x34c (size before relaxing)
+ .debug_str     0x00000749        0xf .\CortexM0\ARM_GCC_493\Debug\SensorData.o
+                                0x23d (size before relaxing)
+ .debug_str     0x00000758       0xb2 .\CortexM0\ARM_GCC_493\Debug\LumenSensor.o
+                                0x25b (size before relaxing)
+ .debug_str     0x0000080a       0x5b .\CortexM0\ARM_GCC_493\Debug\cymetadata.o
+                                0x1b7 (size before relaxing)
+ .debug_str     0x00000865      0x14a .\CortexM0\ARM_GCC_493\Debug\Cm0Start.o
+                                0x2de (size before relaxing)
+ .debug_str     0x000009af       0xf5 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(cyfitter_cfg.o)
+                                0x2af (size before relaxing)
+ .debug_str     0x00000aa4      0x492 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLib.o)
+                                0x672 (size before relaxing)
+ .debug_str     0x00000f36      0x476 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(CyLFClk.o)
+                                0x63c (size before relaxing)
+ .debug_str     0x000013ac      0x1bc .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimer.o)
+                                0x377 (size before relaxing)
+ .debug_str     0x00001568      0x144 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTimerInt.o)
+                                0x329 (size before relaxing)
+ .debug_str     0x000016ac       0xb4 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(PIR_Trig.o)
+                                0x234 (size before relaxing)
+ .debug_str     0x00001760      0x135 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeISR.o)
+                                0x329 (size before relaxing)
+ .debug_str     0x00001895      0x1cb .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(MetronomeTimer.o)
+                                0x3ad (size before relaxing)
+ .debug_str     0x00001a60       0x95 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistReset.o)
+                                0x23b (size before relaxing)
+ .debug_str     0x00001af5       0xa1 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DistTrigger.o)
+                                0x249 (size before relaxing)
+ .debug_str     0x00001b96       0xe8 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(DEBUG.o)
+                                0x28d (size before relaxing)
+ .debug_str     0x00001c7e      0x15e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom.o)
+                                0x301 (size before relaxing)
+ .debug_str     0x00001ddc       0x7b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C.o)
+                                0x247 (size before relaxing)
+ .debug_str     0x00001e57      0x27e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_MASTER.o)
+                                0x4be (size before relaxing)
+ .debug_str     0x000020d5       0x8e .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_sda.o)
                                 0x250 (size before relaxing)
- .debug_str     0x00002dac       0xfa .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
-                                0x3c3 (size before relaxing)
- .debug_str     0x00002ea6       0x53 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
-                                0x2e5 (size before relaxing)
- .debug_str     0x00002ef9       0x35 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
-                                0x2ba (size before relaxing)
+ .debug_str     0x00002163       0x7b .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_scl.o)
+                                0x250 (size before relaxing)
+ .debug_str     0x000021de      0x42c .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(GreenPWM.o)
+                                0x60c (size before relaxing)
+ .debug_str     0x0000260a      0x326 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(RedPWM.o)
+                                0x5b8 (size before relaxing)
+ .debug_str     0x00002930      0x34d .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(BluePWM.o)
+                                0x5e2 (size before relaxing)
+ .debug_str     0x00002c7d       0xe6 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS.o)
+                                0x2c5 (size before relaxing)
+ .debug_str     0x00002d63       0x76 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C.o)
+                                0x233 (size before relaxing)
+ .debug_str     0x00002dd9       0xfa .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_SLAVE.o)
+                                0x3a6 (size before relaxing)
+ .debug_str     0x00002ed3       0x53 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(LumenCom_I2C_INT.o)
+                                0x2c8 (size before relaxing)
+ .debug_str     0x00002f26       0x35 .\CortexM0\ARM_GCC_493\Debug\Sensor-PSoC.a(I2CS_I2C_INT.o)
+                                0x29d (size before relaxing)
 
 .debug_loc      0x00000000     0x3a1a
  *(.debug_loc)

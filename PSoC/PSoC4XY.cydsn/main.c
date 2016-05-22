@@ -46,8 +46,6 @@ int main()
                 ; /* Wait till button released */
             }
         }
-        
-//        i2c_rx();
       
         if(isEmptyQueue() != 1)
         {
@@ -57,9 +55,7 @@ int main()
             popQueue();
         }
         
-        CyDelay(50);
-        
-        i2c_tx();
+//        i2c_tx();
     }
 }
 
