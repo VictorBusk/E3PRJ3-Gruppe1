@@ -1,5 +1,5 @@
 -- Project:   Sensor-PSoC
--- Generated: 05/22/2016 14:27:35
+-- Generated: 05/22/2016 16:29:36
 -- PSoC Creator  3.3 CP2
 
 ENTITY \Sensor-PSoC\ IS
@@ -74,9 +74,9 @@ ARCHITECTURE __DEFAULT__ OF \Sensor-PSoC\ IS
     SIGNAL Net_790 : bit;
     SIGNAL Net_791 : bit;
     SIGNAL Net_792 : bit;
-    SIGNAL Net_797 : bit;
-    SIGNAL Net_799 : bit;
-    SIGNAL Net_800 : bit;
+    SIGNAL Net_830 : bit;
+    SIGNAL Net_832 : bit;
+    SIGNAL Net_833 : bit;
     SIGNAL Net_9 : bit;
     SIGNAL PIR_Trig(0)__PA : bit;
     SIGNAL RedPin(0)__PA : bit;
@@ -2064,7 +2064,7 @@ BEGIN
         GENERIC MAP(
             int_type => "10")
         PORT MAP(
-            interrupt => Net_797,
+            interrupt => Net_830,
             clock => ClockBlock_HFCLK);
 
     \I2CS:SCB\:m0s8scbcell
@@ -2073,7 +2073,7 @@ BEGIN
             scb_mode => 0)
         PORT MAP(
             clock => \I2CS:Net_847_ff2\,
-            interrupt => Net_797,
+            interrupt => Net_830,
             rx => open,
             tx => \I2CS:Net_1062\,
             cts => open,
@@ -2091,8 +2091,8 @@ BEGIN
             sclk_s => open,
             scl => \I2CS:Net_580\,
             sda => \I2CS:Net_581\,
-            tx_req => Net_800,
-            rx_req => Net_799);
+            tx_req => Net_833,
+            rx_req => Net_832);
 
     \DistTimer:TimerUDB:capture_last\:macrocell
         GENERIC MAP(

@@ -1,6 +1,6 @@
 // ======================================================================
 // Sensor-PSoC.v generated from TopDesign.cysch
-// 05/22/2016 at 14:27
+// 05/22/2016 at 16:29
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1207,10 +1207,10 @@ endmodule
 // top
 module top ;
 
-          wire  Net_800;
-          wire  Net_799;
-          wire  Net_798;
-          wire  Net_797;
+          wire  Net_833;
+          wire  Net_832;
+          wire  Net_831;
+          wire  Net_830;
           wire  Net_772;
           wire  Net_633;
           wire  Net_771;
@@ -1912,10 +1912,10 @@ module top ;
 	assign tmpOE__BluePin_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
     SCB_P4_v3_10_6 I2CS (
-        .interrupt(Net_797),
+        .interrupt(Net_830),
         .clock(1'b0),
-        .rx_tr_out(Net_799),
-        .tx_tr_out(Net_800));
+        .rx_tr_out(Net_832),
+        .tx_tr_out(Net_833));
 
     SW_Tx_UART_v1_50_7 DEBUG ();
 
