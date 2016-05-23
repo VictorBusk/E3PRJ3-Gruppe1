@@ -1,14 +1,15 @@
-/* ========================================
+/*!
+ *  @file        Handler.c
+ *  @brief       Main file for Sensor-PSoC
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
+ *  Contains the main loop and control structure for the Sensor-PSoC.
+ *  The main control is the Metronome timer which generates an interrupt every
+ *      half second. This interrupt then increases a set of counters which, in
+ *      turn, set flags when the counters overflow. This allows us to define
+ *      periodic events that trigger on integer multiple of half seconds.
+
+ *  @author      Simon Nejmann (19981127@uni.au.dk)
+ */
 #include <project.h>
 #include <stdio.h>
 #include "SensorData.h"
@@ -17,14 +18,13 @@
 #include "i2c.h"
 #include "queue.h"
 
-#define DEBUG_ON
+/*! Debug define. Comment out to suppress debug prints */
+//#define DEBUG_ON
 
-#ifdef DEBUG_ON
-uint8 t = 0;
-#endif
+void scaleLedPWM();
 
 // Main loop control stuff
-enum sensor {DIST, LUMEN, PIR, DIST_ALERT, LEDS};
+enum sensor {DIST, LUMEN, PIR, DIST_ALERT, MOVE_ALERT};
 enum ctrl {COUNT, RATE, FLAG};
 char controlFlags[5][3] = {
     {1,-1, 0},
@@ -39,10 +39,7 @@ void initCtrlFlags()
     controlFlags[LUMEN][RATE] = 2;
     controlFlags[PIR][RATE] = 1;
 
-    // debug
-#ifdef DEBUG_ON
-//    controlFlags[LEDS][RATE] = 1;
-#endif
+    controlFlags[MOVE_ALERT][RATE] = 1;
 }
 void incrCtrlFlag(enum sensor se)
 {
@@ -59,10 +56,10 @@ CY_ISR(Metronome_Interrupt)
     incrCtrlFlag(DIST);
     incrCtrlFlag(LUMEN);
     incrCtrlFlag(PIR);
+    // Not DIST_ALERT
+    incrCtrlFlag(MOVE_ALERT);
 
-    //debug
 #ifdef DEBUG_ON
-    incrCtrlFlag(LEDS);
 //    DEBUG_PutString("Beat\r\n");
 #endif
 }
@@ -72,8 +69,8 @@ uint8 distAlertTriggered = 0;
 // Afstandssensor
 CY_ISR(DistTimer_Interrupt)
 {
-    // Calculate distance from delay. Basic formula: cm = micro-seconds / 58
-    //  Timer counts down from 2^16, so start at 2^16 and subtract timer.
+    //  Calculate distance from delay. Basic formula: cm = micro-seconds / 58
+    //      Timer counts down from 2^16, so start at 2^16 and subtract timer.
     int echoDelay = (1<<16) - DistTimer_ReadCapture();
 
     //  Integer calculations means everything gets rounded down, so add
@@ -85,6 +82,7 @@ CY_ISR(DistTimer_Interrupt)
         controlFlags[DIST_ALERT][FLAG] = 1;
     } else {
         distAlertTriggered = 0;
+        DistInterruptPin_Write(0);
         controlFlags[DIST_ALERT][COUNT] = 0;
     }
 
@@ -113,9 +111,9 @@ int main()
     initLumenSensor();
 
     // LED PWM
-    GreenPWM_Start();
-    RedPWM_Start();
-    BluePWM_Start();
+//    GreenPWM_Start();
+//    RedPWM_Start();
+//    BluePWM_Start();
     
     // Main command loop
     initCtrlFlags();
@@ -155,6 +153,7 @@ int main()
                 // Set counter to fixed value - keeps it high but prevents overflow
                 controlFlags[DIST_ALERT][COUNT] = 10;
                 distAlertTriggered = 1;
+                DistInterruptPin_Write(1);
                 handler(cmdDistanceAlert, 0xff);
             }
         }
@@ -177,30 +176,24 @@ int main()
             }
         }
 
-        //debug
-#ifdef DEBUG_ON
-//        if (controlFlags[LEDS][FLAG]) {
-//            controlFlags[LEDS][FLAG] = 0;
-//
-//            DEBUG_PutHexByte(sensorData.movement);
-//            DEBUG_PutCRLF();
-//
-//            t = !t;
-//            if (//t) {
-//                sensorData.movementAlertOn && sensorData.movement) {
-//                RedPWM_Start();
-//                GreenPWM_Start();
-//                BluePWM_Start();
-//                RedPWM_WriteCompare(sensorData.redPWMPct);
-//                GreenPWM_WriteCompare(sensorData.greenPWMPct);
-//                BluePWM_WriteCompare(sensorData.bluePWMPct);
-//            } else {
-//                RedPWM_Stop();
-//                GreenPWM_Stop();
-//                BluePWM_Stop();
-//            }
-//        }
-#endif
+        if (controlFlags[MOVE_ALERT][FLAG]) {
+            controlFlags[MOVE_ALERT][FLAG] = 0;
+
+            if (sensorData.movementAlertOn && sensorData.movement) {
+                sensorData.ledPower = 1;
+                RedPWM_Start();
+                GreenPWM_Start();
+                BluePWM_Start();
+                RedPWM_WriteCompare(sensorData.redPWMPct);
+                GreenPWM_WriteCompare(sensorData.greenPWMPct);
+                BluePWM_WriteCompare(sensorData.bluePWMPct);
+            } else {
+                sensorData.ledPower = 0;
+                RedPWM_Stop();
+                GreenPWM_Stop();
+                BluePWM_Stop();
+            }
+        }
 
         // Lumen sensor
         if (controlFlags[LUMEN][FLAG]) {
@@ -211,6 +204,10 @@ int main()
             insertValue(&sensorData.LumenMean, luxValue);
             sensorData.lux = getMeanValue(&sensorData.LumenMean);
 
+            if (sensorData.ledPower && sensorData.desiredLux != 0) {
+                scaleLedPWM();
+            }
+            
 #ifdef DEBUG_ON
             char bla[15];
             sprintf(bla, "Lux: %i, mean: %i\n\r", luxValue, sensorData.lux);
@@ -220,4 +217,23 @@ int main()
     }
 }
 
-/* [] END OF FILE */
+void scaleLedPWM()
+{
+    // Work in scaled units since the LedPWMs also use the 0-255 range
+    uint8 luxFF = scaleLuxToFF(sensorData.lux);
+    uint8 luxDesFF = scaleLuxToFF(sensorData.desiredLux);
+    int16 delta = luxDesFF - luxFF;
+
+    // Keep delta in check - don't want light-levels jumping too much
+    delta = (delta > 10) ? 10 : delta;
+    delta = (delta < -10) ? -10 : delta;
+    
+    // Scale LEDs by delta
+    sensorData.redPWMPct += delta;
+    sensorData.greenPWMPct += delta;
+    sensorData.bluePWMPct += delta;
+
+    RedPWM_WriteCompare(sensorData.redPWMPct);
+    GreenPWM_WriteCompare(sensorData.greenPWMPct);
+    BluePWM_WriteCompare(sensorData.bluePWMPct);
+}
