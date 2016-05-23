@@ -5,6 +5,7 @@
  */
 #include "SensorData.h"
 
+/*! Debug define. Comment out to suppress debug prints */
 //#define DEBUG_ON
 
 /*!

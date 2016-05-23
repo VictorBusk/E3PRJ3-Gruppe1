@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -33,73 +33,74 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
    5:.\SensorData.c ****  */
    6:.\SensorData.c **** #include "SensorData.h"
    7:.\SensorData.c **** 
-   8:.\SensorData.c **** //#define DEBUG_ON
-   9:.\SensorData.c **** 
-  10:.\SensorData.c **** /*!
-  11:.\SensorData.c ****  *  @brief      Initializes the SensorData struct parts that need initial values
-  12:.\SensorData.c ****  *  @public
-  13:.\SensorData.c ****  *  @memberof   SensorData
-  14:.\SensorData.c ****  * @author      Simon Nejmann (19981127@uni.au.dk)
-  15:.\SensorData.c ****  */
-  16:.\SensorData.c **** void initSensorData()
-  17:.\SensorData.c **** {
-  26              		.loc 1 17 0
+   8:.\SensorData.c **** /*! Debug define. Comment out to suppress debug prints */
+   9:.\SensorData.c **** //#define DEBUG_ON
+  10:.\SensorData.c **** 
+  11:.\SensorData.c **** /*!
+  12:.\SensorData.c ****  *  @brief      Initializes the SensorData struct parts that need initial values
+  13:.\SensorData.c ****  *  @public
+  14:.\SensorData.c ****  *  @memberof   SensorData
+  15:.\SensorData.c ****  * @author      Simon Nejmann (19981127@uni.au.dk)
+  16:.\SensorData.c ****  */
+  17:.\SensorData.c **** void initSensorData()
+  18:.\SensorData.c **** {
+  26              		.loc 1 18 0
   27              		.cfi_startproc
   28 0000 08B5     		push	{r3, lr}
   29              		.cfi_def_cfa_offset 8
   30              		.cfi_offset 3, -8
   31              		.cfi_offset 14, -4
-  18:.\SensorData.c ****     sensorData.desiredLux = 0;
-  32              		.loc 1 18 0
+  19:.\SensorData.c ****     sensorData.desiredLux = 0;
+  32              		.loc 1 19 0
   33 0002 0948     		ldr	r0, .L2
   34 0004 0023     		mov	r3, #0
   35 0006 4360     		str	r3, [r0, #4]
-  19:.\SensorData.c ****     sensorData.desiredTimeDistance = 0;
-  36              		.loc 1 19 0
+  20:.\SensorData.c ****     sensorData.desiredTimeDistance = 0;
+  36              		.loc 1 20 0
   37 0008 8C22     		mov	r2, #140
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 2
+
+
   38 000a 8350     		str	r3, [r0, r2]
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 2
-
-
-  20:.\SensorData.c **** 
-  21:.\SensorData.c ****     sensorData.movementAlertOn = 0;
-  39              		.loc 1 21 0
+  21:.\SensorData.c **** 
+  22:.\SensorData.c ****     sensorData.movementAlertOn = 0;
+  39              		.loc 1 22 0
   40 000c 073A     		sub	r2, r2, #7
   41 000e 8354     		strb	r3, [r0, r2]
-  22:.\SensorData.c ****     
-  23:.\SensorData.c ****     sensorData.ledPower = 0;
-  42              		.loc 1 23 0
+  23:.\SensorData.c ****     
+  24:.\SensorData.c ****     sensorData.ledPower = 0;
+  42              		.loc 1 24 0
   43 0010 0E32     		add	r2, r2, #14
   44 0012 8354     		strb	r3, [r0, r2]
-  24:.\SensorData.c ****     sensorData.redPWMPct = 0;
-  45              		.loc 1 24 0
+  25:.\SensorData.c ****     sensorData.redPWMPct = 0;
+  45              		.loc 1 25 0
   46 0014 023A     		sub	r2, r2, #2
   47 0016 8354     		strb	r3, [r0, r2]
-  25:.\SensorData.c ****     sensorData.greenPWMPct = 0;
-  48              		.loc 1 25 0
+  26:.\SensorData.c ****     sensorData.greenPWMPct = 0;
+  48              		.loc 1 26 0
   49 0018 013A     		sub	r2, r2, #1
   50 001a 8354     		strb	r3, [r0, r2]
-  26:.\SensorData.c ****     sensorData.bluePWMPct = 0;
-  51              		.loc 1 26 0
+  27:.\SensorData.c ****     sensorData.bluePWMPct = 0;
+  51              		.loc 1 27 0
   52 001c 0232     		add	r2, r2, #2
   53 001e 8354     		strb	r3, [r0, r2]
-  27:.\SensorData.c **** 
-  28:.\SensorData.c **** #ifdef DEBUG_ON
-  29:.\SensorData.c ****     sensorData.desiredTimeDistance = 580;
-  30:.\SensorData.c ****     sensorData.movementAlertOn = 1;
-  31:.\SensorData.c ****     sensorData.ledPower = 1;
-  32:.\SensorData.c ****     sensorData.redPWMPct = 255;
-  33:.\SensorData.c ****     sensorData.greenPWMPct = 255;
-  34:.\SensorData.c ****     sensorData.bluePWMPct = 255;
-  35:.\SensorData.c **** #endif
-  36:.\SensorData.c ****     
-  37:.\SensorData.c ****     initCircularMean(&sensorData.LumenMean);
-  54              		.loc 1 37 0
+  28:.\SensorData.c **** 
+  29:.\SensorData.c **** #ifdef DEBUG_ON
+  30:.\SensorData.c ****     sensorData.desiredTimeDistance = 580;
+  31:.\SensorData.c ****     sensorData.movementAlertOn = 1;
+  32:.\SensorData.c ****     sensorData.ledPower = 1;
+  33:.\SensorData.c ****     sensorData.redPWMPct = 255;
+  34:.\SensorData.c ****     sensorData.greenPWMPct = 255;
+  35:.\SensorData.c ****     sensorData.bluePWMPct = 255;
+  36:.\SensorData.c **** #endif
+  37:.\SensorData.c ****     
+  38:.\SensorData.c ****     initCircularMean(&sensorData.LumenMean);
+  54              		.loc 1 38 0
   55 0020 0830     		add	r0, r0, #8
   56 0022 FFF7FEFF 		bl	initCircularMean
   57              	.LVL0:
-  38:.\SensorData.c **** }
-  58              		.loc 1 38 0
+  39:.\SensorData.c **** }
+  58              		.loc 1 39 0
   59              		@ sp needed
   60 0026 08BD     		pop	{r3, pc}
   61              	.L3:
@@ -117,10 +118,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
   73              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
   74              		.section	.debug_info,"",%progbits
   75              	.Ldebug_info0:
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 3
+
+
   76 0000 B3010000 		.4byte	0x1b3
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 3
-
-
   77 0004 0400     		.2byte	0x4
   78 0006 00000000 		.4byte	.Ldebug_abbrev0
   79 000a 04       		.byte	0x4
@@ -177,10 +178,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  130 0070 04       		.byte	0x4
  131 0071 3801     		.2byte	0x138
  132 0073 2C000000 		.4byte	0x2c
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 4
+
+
  133 0077 02       		.uleb128 0x2
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 4
-
-
  134 0078 04       		.byte	0x4
  135 0079 04       		.byte	0x4
  136 007a A4000000 		.4byte	.LASF9
@@ -237,10 +238,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  187 00e0 07       		.uleb128 0x7
  188 00e1 6C757800 		.ascii	"lux\000"
  189 00e5 03       		.byte	0x3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 5
+
+
  190 00e6 12       		.byte	0x12
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 5
-
-
  191 00e7 64000000 		.4byte	0x64
  192 00eb 00       		.byte	0
  193 00ec 06       		.uleb128 0x6
@@ -297,10 +298,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  244 0152 21       		.byte	0x21
  245 0153 6B000000 		.4byte	0x6b
  246 0157 92       		.byte	0x92
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 6
+
+
  247 0158 06       		.uleb128 0x6
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 6
-
-
  248 0159 24000000 		.4byte	.LASF26
  249 015d 03       		.byte	0x3
  250 015e 22       		.byte	0x22
@@ -310,7 +311,7 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  254 0165 0A       		.uleb128 0xa
  255 0166 1D010000 		.4byte	.LASF31
  256 016a 01       		.byte	0x1
- 257 016b 10       		.byte	0x10
+ 257 016b 11       		.byte	0x11
  258 016c 00000000 		.4byte	.LFB34
  259 0170 2C000000 		.4byte	.LFE34-.LFB34
  260 0174 01       		.uleb128 0x1
@@ -357,10 +358,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  301 0005 13       		.uleb128 0x13
  302 0006 0B       		.uleb128 0xb
  303 0007 03       		.uleb128 0x3
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 7
+
+
  304 0008 0E       		.uleb128 0xe
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 7
-
-
  305 0009 1B       		.uleb128 0x1b
  306 000a 0E       		.uleb128 0xe
  307 000b 55       		.uleb128 0x55
@@ -417,10 +418,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  358 003e 0B       		.uleb128 0xb
  359 003f 3B       		.uleb128 0x3b
  360 0040 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 8
+
+
  361 0041 01       		.uleb128 0x1
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 8
-
-
  362 0042 13       		.uleb128 0x13
  363 0043 00       		.byte	0
  364 0044 00       		.byte	0
@@ -477,10 +478,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  415 0077 01       		.byte	0x1
  416 0078 3F       		.uleb128 0x3f
  417 0079 19       		.uleb128 0x19
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 9
+
+
  418 007a 03       		.uleb128 0x3
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 9
-
-
  419 007b 0E       		.uleb128 0xe
  420 007c 3A       		.uleb128 0x3a
  421 007d 0B       		.uleb128 0xb
@@ -537,10 +538,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  472 00b6 2E       		.uleb128 0x2e
  473 00b7 01       		.byte	0x1
  474 00b8 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 10
+
+
  475 00b9 19       		.uleb128 0x19
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 10
-
-
  476 00ba 03       		.uleb128 0x3
  477 00bb 0E       		.uleb128 0xe
  478 00bc 3A       		.uleb128 0x3a
@@ -597,10 +598,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  527      00000201 
  527      FB0E0D00 
  527      01010101 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 11
+
+
  528              	.LASF17:
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 11
-
-
  529 0000 64657369 		.ascii	"desiredLux\000"
  529      7265644C 
  529      757800
@@ -657,10 +658,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  552 00b6 756E7369 		.ascii	"unsigned char\000"
  552      676E6564 
  552      20636861 
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 12
+
+
  552      7200
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 12
-
-
  553              	.LASF5:
  554 00c4 6C6F6E67 		.ascii	"long unsigned int\000"
  554      20756E73 
@@ -717,10 +718,10 @@ ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 1
  576 0159 71756575 		.ascii	"queue\000"
  576      6500
  577              	.LASF6:
+ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccclKOYb.s 			page 13
+
+
  578 015f 6C6F6E67 		.ascii	"long long int\000"
-ARM GAS  C:\Users\Simon\AppData\Local\Temp\ccoSUip3.s 			page 13
-
-
  578      206C6F6E 
  578      6720696E 
  578      7400

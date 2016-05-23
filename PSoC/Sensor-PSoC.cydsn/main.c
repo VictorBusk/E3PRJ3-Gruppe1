@@ -18,7 +18,8 @@
 #include "i2c.h"
 #include "queue.h"
 
-#define DEBUG_ON
+/*! Debug define. Comment out to suppress debug prints */
+//#define DEBUG_ON
 
 void scaleLedPWM();
 
