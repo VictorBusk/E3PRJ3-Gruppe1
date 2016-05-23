@@ -18,6 +18,7 @@
 void initLumenSensor()
 {
     uint8 writeBuf[2];
+    uint32 err;
     
     // Add internal pull-up resistors on the SCL and SDA lines
     LumenCom_scl_SetDriveMode(LumenCom_scl_DM_RES_UP);
@@ -27,8 +28,7 @@ void initLumenSensor()
     // Send command to sensor:
     writeBuf[0] = 0x80; // Highest bit set = command, low bits 0000 = control register
     writeBuf[1] = 0x03; // Power up sensor
-    LumenCom_I2CMasterWriteBuf(LUMEN_ADDR, writeBuf, 2, LumenCom_I2C_MODE_COMPLETE_XFER);
-
+    err = LumenCom_I2CMasterWriteBuf(LUMEN_ADDR, writeBuf, 2, LumenCom_I2C_MODE_COMPLETE_XFER);
     // Wait for the I2C command to finish transferring:
     while(LumenCom_I2CMasterStatus() & LumenCom_I2C_MSTAT_XFER_INP) {}
 }

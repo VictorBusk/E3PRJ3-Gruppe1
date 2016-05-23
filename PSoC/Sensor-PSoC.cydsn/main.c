@@ -7,7 +7,7 @@
  *      half second. This interrupt then increases a set of counters which, in
  *      turn, set flags when the counters overflow. This allows us to define
  *      periodic events that trigger on integer multiple of half seconds.
-
+ *
  *  @author      Simon Nejmann (19981127@uni.au.dk)
  */
 #include <project.h>
@@ -20,6 +20,7 @@
 
 /*! Debug define. Comment out to suppress debug prints */
 #define DEBUG_ON
+char bla[150];
 
 void scaleLedPWM();
 
@@ -54,7 +55,7 @@ CY_ISR(Metronome_Interrupt)
     MetronomeTimer_ReadStatusRegister();
 
     incrCtrlFlag(DIST);
-    incrCtrlFlag(LUMEN);
+//    incrCtrlFlag(LUMEN);
     incrCtrlFlag(PIR);
     // Not DIST_ALERT
     incrCtrlFlag(MOVE_ALERT);
@@ -90,7 +91,6 @@ CY_ISR(DistTimer_Interrupt)
     DistReset_Write(1);
 
 #ifdef DEBUG_ON
-//    char bla[15];
 //    sprintf(bla, "Dist: %i\n\r", sensorData.distance);
 //    DEBUG_PutString(bla);
 #endif
@@ -108,28 +108,31 @@ int main()
     DistTimerInt_StartEx(DistTimer_Interrupt);
     
     // Lumen sensor
-    initLumenSensor();
+//    initLumenSensor();
 
     // LED PWM
-//    GreenPWM_Start();
-//    RedPWM_Start();
-//    BluePWM_Start();
+    GreenPWM_Start();
+    RedPWM_Start();
+    BluePWM_Start();
     
     // Main command loop
     initCtrlFlags();
     MetronomeTimer_Start();
     MetronomeISR_StartEx(Metronome_Interrupt);
-    queue_init();
+    queue_init(6u);
     i2c_init();
 
     for(;;)
     {
         // Handle communication with PSoC4Master
-        while(isEmptyQueue() != 1)
-        {
+        i2c_rx();
+        if(isEmptyQueue() != 1)
+        {   char queue[25];
             struct Data action;
             action = frontQueue();
             handler(action.cmd_, action.val_);
+            sprintf(queue, "Queue: %i Cmd: %i Cal: %i\n\r", queueCount_,action.cmd_, action.val_);
+            DEBUG_PutString(queue);
             popQueue();
         }
         i2c_tx();
@@ -149,7 +152,7 @@ int main()
             
             // Have to get two "too close" readings in a row to trigger alert
             ++(controlFlags[DIST_ALERT][COUNT]);
-            if (!distAlertTriggered && controlFlags[DIST_ALERT][COUNT] >= 2) {
+            if (!distAlertTriggered && controlFlags[DIST_ALERT][COUNT] >= 1) {
                 // Set counter to fixed value - keeps it high but prevents overflow
                 controlFlags[DIST_ALERT][COUNT] = 10;
                 distAlertTriggered = 1;
@@ -179,19 +182,21 @@ int main()
         if (controlFlags[MOVE_ALERT][FLAG]) {
             controlFlags[MOVE_ALERT][FLAG] = 0;
 
-            if (sensorData.movementAlertOn && sensorData.movement) {
-                sensorData.ledPower = 1;
-                RedPWM_Start();
-                GreenPWM_Start();
-                BluePWM_Start();
-                RedPWM_WriteCompare(sensorData.redPWMPct);
-                GreenPWM_WriteCompare(sensorData.greenPWMPct);
-                BluePWM_WriteCompare(sensorData.bluePWMPct);
-            } else {
-                sensorData.ledPower = 0;
-                RedPWM_Stop();
-                GreenPWM_Stop();
-                BluePWM_Stop();
+            if (sensorData.movementAlertOn) {
+                if (sensorData.movement) {
+                    sensorData.ledPower = 1;
+                    RedPWM_Start();
+                    GreenPWM_Start();
+                    BluePWM_Start();
+                    RedPWM_WriteCompare(sensorData.redPWMPct);
+                    GreenPWM_WriteCompare(sensorData.greenPWMPct);
+                    BluePWM_WriteCompare(sensorData.bluePWMPct);
+                } else {
+                    sensorData.ledPower = 0;
+                    RedPWM_Stop();
+                    GreenPWM_Stop();
+                    BluePWM_Stop();
+                }
             }
         }
 
@@ -209,8 +214,7 @@ int main()
             }
             
 #ifdef DEBUG_ON
-            char bla[15];
-            sprintf(bla, "Lux: %i, mean: %i\n\r", luxValue, sensorData.lux);
+            sprintf(bla, "Lux: %u, mean: %i\n\r", luxValue, sensorData.lux);
             DEBUG_PutString(bla);
 #endif
         }
@@ -228,7 +232,13 @@ void scaleLedPWM()
     delta = (delta > 10) ? 10 : delta;
     delta = (delta < -10) ? -10 : delta;
     
-    // Scale LEDs by delta
+#ifdef DEBUG_ON
+    sprintf(bla, "Delta: %i, RGB: %i, %i, %i\n\r", delta,
+        sensorData.redPWMPct, sensorData.greenPWMPct, sensorData.bluePWMPct);
+    DEBUG_PutString(bla);
+#endif
+
+// Scale LEDs by delta
     sensorData.redPWMPct += delta;
     sensorData.greenPWMPct += delta;
     sensorData.bluePWMPct += delta;

@@ -34,6 +34,7 @@ void handler(uint8 cmd, uint8 val)
             sensorData.redPWMPct = val;
             RedPWM_WriteCompare(sensorData.redPWMPct);
             RedPWM_Start();
+            sensorData.ledPower = 1;
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetRed ");
     DEBUG_PutHexByte(sensorData.redPWMPct);
@@ -53,6 +54,7 @@ void handler(uint8 cmd, uint8 val)
             sensorData.greenPWMPct = val;
             GreenPWM_WriteCompare(sensorData.greenPWMPct);
             GreenPWM_Start();
+            sensorData.ledPower = 1;
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetGreen ");
     DEBUG_PutHexByte(sensorData.greenPWMPct);
@@ -72,6 +74,7 @@ void handler(uint8 cmd, uint8 val)
             sensorData.bluePWMPct = val;
             BluePWM_WriteCompare(sensorData.bluePWMPct);
             BluePWM_Start();
+            sensorData.ledPower = 1;
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetBlue ");
     DEBUG_PutHexByte(sensorData.bluePWMPct);
