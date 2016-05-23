@@ -17,6 +17,7 @@
 */
 
 #include <project.h>
+#include "data.h"
 #include "handler.h"
 #include "i2c.h"
 #include "led.h"
@@ -27,9 +28,14 @@ int main()
 {
     CyGlobalIntEnable;
 
-    queue_init();
+    data_init();
+    queue_init(6u);
     z_init();
     i2c_init();
+    
+    setLed(0,1,0);
+    CyDelay(100);
+    setLed(0,0,0);
     
     for(;;)
     {
@@ -45,8 +51,10 @@ int main()
                 ; /* Wait till button released */
             }
         }
-                        
-        while(isEmptyQueue() != 1)
+        
+        i2c_rx();
+        
+        if(isEmptyQueue() != 1)
         {
             struct Data action;
             action = frontQueue();

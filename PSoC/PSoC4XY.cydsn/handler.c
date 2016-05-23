@@ -17,6 +17,9 @@
 */
 
 #include "handler.h"
+#include "data.h"
+#include "i2c.h"
+#include "xy.h"
 
 void handler(uint8 cmd, uint8 val)
 {
@@ -29,25 +32,19 @@ void handler(uint8 cmd, uint8 val)
             break;
         case CMD_GET_X_POS :
             i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
-            i2cTxBuffer[I2C_PACKET_VAL_POS] = getXPos();
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = (uint8)((resolution * dataXY.xPos) / dataXY.xMax + 1);
+            i2c_tx();
             break;
         case CMD_GET_Y_POS :
             i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
-            i2cTxBuffer[I2C_PACKET_VAL_POS] = getYPos();
-            break;
-        case CMD_GET_X_MAX:
-            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
-            i2cTxBuffer[I2C_PACKET_VAL_POS] = getXMax();
-            break;
-        case CMD_GET_Y_MAX :
-            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
-            i2cTxBuffer[I2C_PACKET_VAL_POS] = getYMax();
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = (uint8)((resolution * dataXY.yPos) / dataXY.yMax + 1);
+            i2c_tx();
             break;
         case CMD_X_STP:
-            stopX();
+            dataXY.isrStopX = 1;
             break;
         case CMD_Y_STP:
-            stopY();
+            dataXY.isrStopY = 1;
             break;
         case CMD_X_CAL:
             calibrateX();

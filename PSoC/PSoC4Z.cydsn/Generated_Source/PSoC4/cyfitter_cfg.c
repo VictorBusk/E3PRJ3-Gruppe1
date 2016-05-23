@@ -123,7 +123,7 @@ static void CyClockStartupError(uint8 errorCode)
 }
 #endif
 
-#define CY_CFG_BASE_ADDR_COUNT 5u
+#define CY_CFG_BASE_ADDR_COUNT 2u
 CYPACKED typedef struct
 {
 	uint8 offset;
@@ -268,22 +268,20 @@ void cyfitter_cfg(void)
 	CY_SET_REG8((void *)CYREG_UDB_UDBIF_INT_CLK_CTL, 0x01u);
 	{
 		static const uint32 CYCODE cy_cfg_addr_table[] = {
-			0x400F3301u, /* Base address: 0x400F3300 Count: 1 */
-			0x400F4002u, /* Base address: 0x400F4000 Count: 2 */
-			0x400F4102u, /* Base address: 0x400F4100 Count: 2 */
-			0x400F4202u, /* Base address: 0x400F4200 Count: 2 */
-			0x400F4301u, /* Base address: 0x400F4300 Count: 1 */
+			0x400F4006u, /* Base address: 0x400F4000 Count: 6 */
+			0x400F4103u, /* Base address: 0x400F4100 Count: 3 */
 		};
 
 		static const cy_cfg_addrvalue_t CYCODE cy_cfg_data_table[] = {
-			{0xEEu, 0x02u},
-			{0x6Fu, 0x08u},
+			{0x07u, 0x10u},
+			{0x6Bu, 0x40u},
+			{0x6Fu, 0x10u},
+			{0xC0u, 0x20u},
 			{0xDAu, 0x80u},
-			{0xAFu, 0x08u},
-			{0xEEu, 0x40u},
-			{0x0Fu, 0x40u},
-			{0xC2u, 0x04u},
-			{0xAFu, 0x40u},
+			{0xDCu, 0x20u},
+			{0x03u, 0x40u},
+			{0x9Fu, 0x40u},
+			{0xC0u, 0x10u},
 		};
 
 
@@ -327,10 +325,10 @@ void cyfitter_cfg(void)
 		CY_SET_XTND_REG32((void CYFAR *)(CYDEV_UDB_PA3_BASE), 0x00990000u);
 
 		/* INT_SELECT Starting address: CYDEV_CPUSS_INTR_SELECT */
-		CY_SET_XTND_REG32((void CYFAR *)(CYREG_CPUSS_INTR_SELECT), 0x00000001u);
+		CY_SET_XTND_REG32((void CYFAR *)(CYREG_CPUSS_INTR_SELECT), 0x00000005u);
 
 		/* INT_CONFIG Starting address: CYDEV_UDB_INT_CFG */
-		CY_SET_XTND_REG32((void CYFAR *)(CYREG_UDB_INT_CFG), 0x00000002u);
+		CY_SET_XTND_REG32((void CYFAR *)(CYREG_UDB_INT_CFG), 0x00000006u);
 
 		/* Enable digital routing */
 		CY_SET_XTND_REG8((void *)CYREG_UDB_UDBIF_BANK_CTL, CY_GET_XTND_REG8((void *)CYREG_UDB_UDBIF_BANK_CTL) | 0x02u);
@@ -343,14 +341,14 @@ void cyfitter_cfg(void)
 	/* Perform second pass device configuration. These items must be configured in specific order after the regular configuration is done. */
 	/* IOPINS0_0 Starting address: CYDEV_PRT0_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT0_BASE), 0x0000008Cu);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x00400D80u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT0_PC), 0x00400D90u);
 
 	/* IOPINS0_1 Starting address: CYDEV_PRT1_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYDEV_PRT1_BASE), 0x00000040u);
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT1_PC), 0x00180000u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT1_PC), 0x00180002u);
 
 	/* IOPINS0_2 Starting address: CYDEV_PRT2_BASE */
-	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT2_PC), 0x00010DB6u);
+	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT2_PC), 0x00000DB6u);
 
 	/* IOPINS0_3 Starting address: CYDEV_PRT3_BASE */
 	CY_SET_XTND_REG32((void CYFAR *)(CYREG_PRT3_PC), 0x00000D80u);

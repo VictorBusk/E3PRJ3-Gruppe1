@@ -1,5 +1,5 @@
 -- Project:   PSoC4Z
--- Generated: 05/22/2016 15:00:07
+-- Generated: 05/23/2016 15:46:49
 -- PSoC Creator  3.3 CP2
 
 ENTITY PSoC4Z IS
@@ -14,7 +14,8 @@ ENTITY PSoC4Z IS
         LED_Red(0)_PAD : OUT std_ulogic;
         LED_Green(0)_PAD : OUT std_ulogic;
         LED_Blue(0)_PAD : OUT std_ulogic;
-        SW2(0)_PAD : IN std_ulogic);
+        SW2(0)_PAD : IN std_ulogic;
+        S_interrupt(0)_PAD : IN std_ulogic);
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDDD OF __DEFAULT__ : ENTITY IS 3.3e0;
 END PSoC4Z;
@@ -34,12 +35,14 @@ ARCHITECTURE __DEFAULT__ OF PSoC4Z IS
     SIGNAL Net_1 : bit;
     SIGNAL Net_11 : bit;
     SIGNAL Net_12 : bit;
+    SIGNAL Net_13 : bit;
     SIGNAL Net_9 : bit;
     SIGNAL Pin_1a_Z(0)__PA : bit;
     SIGNAL Pin_1b_Z(0)__PA : bit;
     SIGNAL Pin_2a_Z(0)__PA : bit;
     SIGNAL Pin_2b_Z(0)__PA : bit;
     SIGNAL SW2(0)__PA : bit;
+    SIGNAL S_interrupt(0)__PA : bit;
     SIGNAL Z_interrupt(0)__PA : bit;
     SIGNAL \I2CS:Net_1053\ : bit;
     SIGNAL \I2CS:Net_1055\ : bit;
@@ -75,7 +78,7 @@ ARCHITECTURE __DEFAULT__ OF PSoC4Z IS
     ATTRIBUTE lib_model OF Pin_2b_Z(0) : LABEL IS "iocell4";
     ATTRIBUTE Location OF Pin_2b_Z(0) : LABEL IS "P2[0]";
     ATTRIBUTE lib_model OF Z_interrupt(0) : LABEL IS "iocell5";
-    ATTRIBUTE Location OF Z_interrupt(0) : LABEL IS "P2[5]";
+    ATTRIBUTE Location OF Z_interrupt(0) : LABEL IS "P1[0]";
     ATTRIBUTE lib_model OF \I2CS:sda(0)\ : LABEL IS "iocell6";
     ATTRIBUTE Location OF \I2CS:sda(0)\ : LABEL IS "P4[1]";
     ATTRIBUTE lib_model OF \I2CS:scl(0)\ : LABEL IS "iocell7";
@@ -88,9 +91,12 @@ ARCHITECTURE __DEFAULT__ OF PSoC4Z IS
     ATTRIBUTE Location OF LED_Blue(0) : LABEL IS "P0[3]";
     ATTRIBUTE lib_model OF SW2(0) : LABEL IS "iocell11";
     ATTRIBUTE Location OF SW2(0) : LABEL IS "P0[7]";
-    ATTRIBUTE Location OF interrupt_Z : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
+    ATTRIBUTE lib_model OF S_interrupt(0) : LABEL IS "iocell12";
+    ATTRIBUTE Location OF S_interrupt(0) : LABEL IS "P0[1]";
+    ATTRIBUTE Location OF interrupt_Z : LABEL IS "[IntrContainer=(0)][IntrId=(2)]";
     ATTRIBUTE Location OF \I2CS:SCB_IRQ\ : LABEL IS "[IntrContainer=(0)][IntrId=(10)]";
     ATTRIBUTE Location OF \I2CS:SCB\ : LABEL IS "F(SCB,0)";
+    ATTRIBUTE Location OF interrupt_S : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
     COMPONENT interrupt
         PORT (
             interrupt : IN std_ulogic;
@@ -666,7 +672,7 @@ BEGIN
             invert_out_clock => 0,
             invert_out_clock_en => 0,
             invert_out_reset => 0,
-            io_voltage => "",
+            io_voltage => "3",
             layout_mode => "CONTIGUOUS",
             oe_conn => "0",
             oe_reset => 0,
@@ -1284,9 +1290,100 @@ BEGIN
             out_clock_en => '1',
             out_reset => '0');
 
+    S_interrupt:logicalport
+        GENERIC MAP(
+            drive_mode => "010",
+            ibuf_enabled => "1",
+            id => "694c1808-fcc0-420a-8ef8-ea37f8f22b0c",
+            init_dr_st => "0",
+            input_buffer_sel => "00",
+            input_clk_en => 0,
+            input_sync => "0",
+            input_sync_mode => "0",
+            intr_mode => "00",
+            invert_in_clock => 0,
+            invert_in_clock_en => 0,
+            invert_in_reset => 0,
+            invert_out_clock => 0,
+            invert_out_clock_en => 0,
+            invert_out_reset => 0,
+            io_voltage => "",
+            layout_mode => "CONTIGUOUS",
+            oe_conn => "0",
+            oe_reset => 0,
+            oe_sync => "0",
+            output_clk_en => 0,
+            output_clock_mode => "0",
+            output_conn => "0",
+            output_mode => "0",
+            output_reset => 0,
+            output_sync => "0",
+            ovt_hyst_trim => "0",
+            ovt_needed => "0",
+            ovt_slew_control => "00",
+            pa_in_clock => -1,
+            pa_in_clock_en => -1,
+            pa_in_reset => -1,
+            pa_out_clock => -1,
+            pa_out_clock_en => -1,
+            pa_out_reset => -1,
+            pin_aliases => "",
+            pin_mode => "I",
+            por_state => 4,
+            port_alias_group => "",
+            port_alias_required => 0,
+            sio_group_cnt => 0,
+            sio_hifreq => "00000000",
+            sio_hyst => "1",
+            sio_ibuf => "00000000",
+            sio_info => "00",
+            sio_obuf => "00000000",
+            sio_refsel => "00000000",
+            sio_vohsel => "00000000",
+            sio_vtrip => "00000000",
+            slew_rate => "0",
+            spanning => 0,
+            sw_only => 0,
+            use_annotation => "0",
+            vtrip => "00",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0)
+        PORT MAP(
+            in_clock_en => open,
+            in_reset => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    S_interrupt(0):iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "S_interrupt",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000101")
+        PORT MAP(
+            pa_out => S_interrupt(0)__PA,
+            oe => open,
+            fb => Net_13,
+            pad_in => S_interrupt(0)_PAD,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
     interrupt_Z:interrupt
         GENERIC MAP(
-            int_type => "10")
+            int_type => "00")
         PORT MAP(
             interrupt => Net_1,
             clock => ClockBlock_HFCLK);
@@ -1324,5 +1421,12 @@ BEGIN
             sda => \I2CS:Net_581\,
             tx_req => Net_12,
             rx_req => Net_11);
+
+    interrupt_S:interrupt
+        GENERIC MAP(
+            int_type => "00")
+        PORT MAP(
+            interrupt => Net_13,
+            clock => ClockBlock_HFCLK);
 
 END __DEFAULT__;

@@ -20,12 +20,9 @@
 #define I2C_H
     
 #include <project.h>
-#include "led.h"
-#include "queue.h"
 
 extern void i2c_init(void);
-// extern void i2c_rx(void);
-CY_ISR_PROTO(isr_i2c_rx);
+extern void i2c_rx(void);
 extern void i2c_tx(void);
 
 /* Buffer and packet size */
@@ -39,8 +36,8 @@ extern void i2c_tx(void);
 #define I2C_PACKET_EOP_POS      (3u)
 
 /* Start and end of packet markers */
-#define I2C_PACKET_SOP          (0x01u)
-#define I2C_PACKET_EOP          (0x17u)
+#define I2C_PACKET_SOP          (0xBEu)
+#define I2C_PACKET_EOP          (0xEFu)
 
 /* Command valid status */
 #define I2C_STS_CMD_DONE        (0xAAu)

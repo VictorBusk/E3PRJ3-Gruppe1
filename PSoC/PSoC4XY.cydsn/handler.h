@@ -20,10 +20,6 @@
 #define HANDLER_H
     
 #include <project.h>
-#include "i2c.h"
-#include "led.h"
-#include "queue.h"
-#include "xy.h"
     
 extern void handler(uint8 cmd, uint8 val);
 
@@ -32,8 +28,6 @@ extern void handler(uint8 cmd, uint8 val);
 #define CMD_SET_Y_POS (0x11u)
 #define CMD_GET_X_POS (0x12u)
 #define CMD_GET_Y_POS (0x13u)
-#define CMD_GET_X_MAX (0x14u)
-#define CMD_GET_Y_MAX (0x15u)
 #define CMD_X_STP (0x16u)
 #define CMD_Y_STP (0x17u)
 #define CMD_X_CAL (0x18u)

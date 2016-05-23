@@ -6,6 +6,8 @@
 #include "i2c.h"
 #include "led.h"
 #include "queue.h"
+#include "lcd.h"
+#include <stdio.h>
 
 uint8 i2c_slaveBuffer[I2C_BUFFER_SIZE];
 
@@ -17,10 +19,9 @@ uint8 i2c_slaveBuffer[I2C_BUFFER_SIZE];
  */
 void i2c_init()
 {
-//    I2CM_scl_SetDriveMode(I2CM_scl_DM_RES_UP);
-//    I2CM_sda_SetDriveMode(I2CM_sda_DM_RES_UP);
+    I2CM_scl_SetDriveMode(I2CM_scl_DM_RES_UP);
+    I2CM_sda_SetDriveMode(I2CM_sda_DM_RES_UP);
   
-
     I2CM_I2CSlaveInitWriteBuf(i2c_slaveBuffer, I2C_BUFFER_SIZE);
     I2CM_I2CSlaveClearWriteBuf();
     I2CM_I2CSlaveClearWriteStatus();
@@ -30,40 +31,58 @@ void i2c_init()
 
 void i2c_setPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
 {
+    int status;
+    char lcd[12];
   if(i2c_tx(i2cAddr, i2cCmd, i2cVal) == I2C_STS_CMD_DONE)
   {
+    status = 1;
     setLed(0,0,1,50);
   }
   else
   {
+    status = 0;
     setLed(1,0,0,50);
   }
+  sprintf(lcd, "I>%2.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)i2cVal, status);
+  lcd_newline(lcd);
+  setLed(0,0,0,50);
 }
 
 void i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8* i2cVal)
 {
+  int status;
   uint8 i2cTxSTS;
   uint8 i2cRxCmd;
+  char lcd[12];
   
   i2cTxSTS = i2c_tx(i2cAddr, i2cCmd, *i2cVal);
   if(i2cTxSTS == I2C_STS_CMD_DONE)
   {
+    status = 1;
     setLed(0,0,1,50);
   }
   else
   {
+    status = 0;
     setLed(1,0,0,50);
   }
-  setLed(0,0,0,50);
+  sprintf(lcd, "I> %1.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)i2cVal, status);
+  lcd_newline(lcd);
+
   i2c_rx(i2cAddr, &i2cRxCmd, i2cVal);
   if(i2cRxCmd == i2cCmd)
   {
+    status = 1;
     setLed(0,1,0,50);
   }
   else
   {
+    status = 0;
     setLed(1,0,0,50);
   }
+  setLed(0,0,0,50);
+  sprintf(lcd, ">I %1.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)i2cVal, status);
+  lcd_newline(lcd);
 }
 
 /*!
@@ -95,9 +114,7 @@ uint8 i2c_tx(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
     {
       i2cTxStatus = I2C_STS_CMD_DONE;
     }
-    
   }
-  I2CM_I2CMasterClearWriteBuf();
   (void) I2CM_I2CMasterClearStatus();
 
   return i2cTxStatus;
@@ -133,7 +150,6 @@ uint8 i2c_rx(uint8 i2cRxAddr, uint8* i2cRxCmd, uint8* i2cRxVal)
             }
         }
     }
-    I2CM_I2CMasterClearReadBuf();
     (void) I2CM_I2CMasterClearStatus();
   
     return i2cRxStatus;

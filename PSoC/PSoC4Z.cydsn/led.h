@@ -20,10 +20,6 @@
 #define LED_H
     
 #include <project.h>
-#include "handler.h"
-#include "i2c.h"
-#include "queue.h"
-#include "z.h"
     
 void setLed(uint8 red, uint8 green, uint8 blue);
 

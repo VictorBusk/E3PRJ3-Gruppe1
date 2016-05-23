@@ -17,16 +17,13 @@
 */
 
 #include "z.h"
-
-uint8 calibratedZ = 1;
-uint8 isrStopZ = 0;
-uint8 zFlag = 0;
-uint32 zMax = 3000;
-uint32 zPos;
+#include "data.h"
+#include "led.h"
 
 void z_init()
 {
     interrupt_Z_StartEx(isr_Z);
+    interrupt_S_StartEx(isr_S);
 }
 
 CY_ISR(isr_Z)
@@ -39,23 +36,47 @@ CY_ISR(isr_Z)
     {
         stepZForwards();   
     }
-    zFlag = 1;
+    dataZ.zFlag = 1;
     setLed(0,0,0);
     interrupt_Z_ClearPending();
     interrupt_Z_Enable();
 }
 
+CY_ISR(isr_S)
+{
+    interrupt_S_Disable();
+    uint32 i;
+    stopZ();
+    setLed(0,0,1);
+    for(i = 0; i < interruptSteps; i++)
+    {
+        stepZBackwards();   
+    }
+    dataZ.zFlag = 0;
+    setLed(0,0,0);
+    interrupt_S_ClearPending();
+    interrupt_S_Enable();
+}
+
 void calibrateZ()
 {
-    calibratedZ = 0;
-    zFlag = 0;
-    while(interrupt_Z_GetState() == 1 && zFlag == 0)
+    dataZ.calibratedZ = 0;
+    dataZ.zFlag = 0;
+    dataZ.zMax = 0;
+    
+    while(interrupt_Z_GetState() == 1 && dataZ.zFlag == 0)
     {
         setLed(1,0,0);
         stepZBackwards();
     }
-    zPos = 0;
-    calibratedZ = 1;
+    while(interrupt_Z_GetState() == 1 && dataZ.zFlag == 1)
+    {
+        setLed(1,0,0);
+        stepZForwards();
+        dataZ.zMax++;
+    }
+    dataZ.zPos = dataZ.zMax;
+    dataZ.calibratedZ = 1;
     setLed(0,0,0);
 }
 
@@ -65,31 +86,31 @@ void setZPos(uint8 zVal)
     uint32 zDes = 0;
     uint32 zSteps = 0;
     
-    isrStopZ = 0;
+    dataZ.isrStopZ = 0;
     
-    if(calibratedZ == 1)
+    if(dataZ.calibratedZ == 1)
     {
-        isrStopZ = 0;
-        zDes = zVal * zMax / resolution;
-        if(zDes < zPos)
+        dataZ.isrStopZ = 0;
+        zDes = zVal * dataZ.zMax / resolution;
+        if(zDes < dataZ.zPos)
         {
             setLed(0,1,0);
-            zSteps = zPos - zDes;
-            for(i = 0; i < zSteps && isrStopZ == 0; i++)
+            zSteps = dataZ.zPos - zDes;
+            for(i = 0; i < zSteps && dataZ.isrStopZ == 0; i++)
             {
                 stepZBackwards();
-                zPos--;                
+                dataZ.zPos--;                
             }
             setLed(0,0,0);
         }
-        else if(zDes > zPos)
+        else if(zDes > dataZ.zPos)
         {
             setLed(0,1,0);
-            zSteps = zDes - zPos;
-            for(i = 0; i < zSteps && isrStopZ == 0; i++)
+            zSteps = zDes - dataZ.zPos;
+            for(i = 0; i < zSteps && dataZ.isrStopZ == 0; i++)
             {
                 stepZForwards();
-                zPos++;                
+                dataZ.zPos++;                
             }
             setLed(0,0,0);
         }
@@ -100,17 +121,6 @@ void setZPos(uint8 zVal)
         setZPos(zVal);
     }
 }
-
-uint8 getZPos()
-{
-    return zPos;   
-}
-
-uint8 getZMax()
-{
-    return zMax;   
-}
-
 
 void stepZForwards()
 {

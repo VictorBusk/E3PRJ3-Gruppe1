@@ -17,17 +17,22 @@
 */
 
 #include <project.h>
+#include "data.h"
 #include "handler.h"
 #include "i2c.h"
 #include "led.h"
 #include "queue.h"
 #include "spi.h"
+#include "Nokia5110LCD.h"
+#include "lcd.h"
 
 int main()
 {
+    data_init();
     queue_init(6u);
     spi_init();
     i2c_init();
+    LCD_Init();
     
     setLed(1,0,0,150);
     setLed(0,1,0,150);
@@ -43,7 +48,10 @@ int main()
         {
             struct Data action;
             action = frontQueue();
-            handler(action.cmd_, action.val_);
+            if(action.cmd_ != 0)
+            {
+                handler(action.cmd_, action.val_);
+            }
             popQueue();
         }
     }

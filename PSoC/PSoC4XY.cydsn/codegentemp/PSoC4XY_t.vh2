@@ -1,5 +1,5 @@
 -- Project:   C:\E3PRJ3-Gruppe1\PSoC\PSoC4XY.cydsn\PSoC4XY.cyprj
--- Generated: 05/22/2016 18:57:41
+-- Generated: 05/23/2016 15:45:27
 -- PSoC Creator  3.3 CP2
 
 ENTITY PSoC4XY IS
@@ -78,25 +78,25 @@ ARCHITECTURE __DEFAULT__ OF PSoC4XY IS
     ATTRIBUTE Location OF ClockGenBlock : LABEL IS "F(CLK_GEN,0)";
     ATTRIBUTE Location OF ClockBlock : LABEL IS "F(Clock,0)";
     ATTRIBUTE lib_model OF Pin_1a_X(0) : LABEL IS "iocell1";
-    ATTRIBUTE Location OF Pin_1a_X(0) : LABEL IS "P2[0]";
+    ATTRIBUTE Location OF Pin_1a_X(0) : LABEL IS "P2[4]";
     ATTRIBUTE lib_model OF Pin_2a_X(0) : LABEL IS "iocell2";
-    ATTRIBUTE Location OF Pin_2a_X(0) : LABEL IS "P2[2]";
+    ATTRIBUTE Location OF Pin_2a_X(0) : LABEL IS "P0[0]";
     ATTRIBUTE lib_model OF Pin_1b_X(0) : LABEL IS "iocell3";
-    ATTRIBUTE Location OF Pin_1b_X(0) : LABEL IS "P2[1]";
+    ATTRIBUTE Location OF Pin_1b_X(0) : LABEL IS "P2[5]";
     ATTRIBUTE lib_model OF Pin_2b_X(0) : LABEL IS "iocell4";
-    ATTRIBUTE Location OF Pin_2b_X(0) : LABEL IS "P2[3]";
+    ATTRIBUTE Location OF Pin_2b_X(0) : LABEL IS "P0[1]";
     ATTRIBUTE lib_model OF Pin_1a_Y(0) : LABEL IS "iocell5";
-    ATTRIBUTE Location OF Pin_1a_Y(0) : LABEL IS "P2[4]";
+    ATTRIBUTE Location OF Pin_1a_Y(0) : LABEL IS "P2[0]";
     ATTRIBUTE lib_model OF Pin_2a_Y(0) : LABEL IS "iocell6";
-    ATTRIBUTE Location OF Pin_2a_Y(0) : LABEL IS "P0[0]";
+    ATTRIBUTE Location OF Pin_2a_Y(0) : LABEL IS "P2[2]";
     ATTRIBUTE lib_model OF Pin_1b_Y(0) : LABEL IS "iocell7";
-    ATTRIBUTE Location OF Pin_1b_Y(0) : LABEL IS "P2[5]";
+    ATTRIBUTE Location OF Pin_1b_Y(0) : LABEL IS "P2[1]";
     ATTRIBUTE lib_model OF Pin_2b_Y(0) : LABEL IS "iocell8";
-    ATTRIBUTE Location OF Pin_2b_Y(0) : LABEL IS "P0[1]";
+    ATTRIBUTE Location OF Pin_2b_Y(0) : LABEL IS "P2[3]";
     ATTRIBUTE lib_model OF X_interrupt(0) : LABEL IS "iocell9";
-    ATTRIBUTE Location OF X_interrupt(0) : LABEL IS "P1[0]";
+    ATTRIBUTE Location OF X_interrupt(0) : LABEL IS "P1[1]";
     ATTRIBUTE lib_model OF Y_interrupt(0) : LABEL IS "iocell10";
-    ATTRIBUTE Location OF Y_interrupt(0) : LABEL IS "P1[1]";
+    ATTRIBUTE Location OF Y_interrupt(0) : LABEL IS "P1[0]";
     ATTRIBUTE lib_model OF \I2CS:sda(0)\ : LABEL IS "iocell11";
     ATTRIBUTE Location OF \I2CS:sda(0)\ : LABEL IS "P4[1]";
     ATTRIBUTE lib_model OF \I2CS:scl(0)\ : LABEL IS "iocell12";
@@ -1048,7 +1048,7 @@ BEGIN
             invert_out_clock => 0,
             invert_out_clock_en => 0,
             invert_out_reset => 0,
-            io_voltage => "",
+            io_voltage => "3",
             layout_mode => "CONTIGUOUS",
             oe_conn => "0",
             oe_reset => 0,
@@ -1139,7 +1139,7 @@ BEGIN
             invert_out_clock => 0,
             invert_out_clock_en => 0,
             invert_out_reset => 0,
-            io_voltage => "",
+            io_voltage => "3",
             layout_mode => "CONTIGUOUS",
             oe_conn => "0",
             oe_reset => 0,
@@ -1759,14 +1759,14 @@ BEGIN
 
     interrupt_X:interrupt
         GENERIC MAP(
-            int_type => "10")
+            int_type => "00")
         PORT MAP(
             interrupt => Net_3,
             clock => ClockBlock_HFCLK);
 
     interrupt_Y:interrupt
         GENERIC MAP(
-            int_type => "10")
+            int_type => "00")
         PORT MAP(
             interrupt => Net_4,
             clock => ClockBlock_HFCLK);

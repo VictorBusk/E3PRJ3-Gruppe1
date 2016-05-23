@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC4XY.v generated from TopDesign.cysch
-// 05/22/2016 at 18:57
+// 05/23/2016 at 15:45
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1073,7 +1073,7 @@ module top ;
 		  .invert_out_clock(0),
 		  .invert_out_clock_en(0),
 		  .invert_out_reset(0),
-		  .io_voltage(""),
+		  .io_voltage("3"),
 		  .layout_mode("CONTIGUOUS"),
 		  .oe_conn(1'b0),
 		  .oe_reset(0),
@@ -1147,7 +1147,7 @@ module top ;
 		  .invert_out_clock(0),
 		  .invert_out_clock_en(0),
 		  .invert_out_reset(0),
-		  .io_voltage(""),
+		  .io_voltage("3"),
 		  .layout_mode("CONTIGUOUS"),
 		  .oe_conn(1'b0),
 		  .oe_reset(0),
@@ -1203,14 +1203,14 @@ module top ;
 
 
 	cy_isr_v1_0
-		#(.int_type(2'b10))
+		#(.int_type(2'b00))
 		interrupt_X
 		 (.int_signal(Net_3));
 
 
 
 	cy_isr_v1_0
-		#(.int_type(2'b10))
+		#(.int_type(2'b00))
 		interrupt_Y
 		 (.int_signal(Net_4));
 

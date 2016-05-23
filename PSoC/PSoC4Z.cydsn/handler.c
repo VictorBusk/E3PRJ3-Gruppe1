@@ -17,6 +17,9 @@
 */
 
 #include "handler.h"
+#include "data.h"
+#include "i2c.h"
+#include "z.h"
 
 void handler(uint8 cmd, uint8 val)
 {
@@ -26,14 +29,10 @@ void handler(uint8 cmd, uint8 val)
             break;
         case CMD_GET_Z_POS :
             i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
-            i2cTxBuffer[I2C_PACKET_VAL_POS] = getZPos();
-            break;
-        case CMD_GET_Z_MAX : 
-            i2cTxBuffer[I2C_PACKET_CMD_POS] = cmd;
-            i2cTxBuffer[I2C_PACKET_VAL_POS] = getZMax();
+            i2cTxBuffer[I2C_PACKET_VAL_POS] = (uint8)((resolution * dataZ.zPos) / dataZ.zMax + 1);;
             break;
         case CMD_Z_STP : 
-            stopZ();
+            dataZ.isrStopZ = 1;
             break;
         case CMD_Z_CAL : 
             calibrateZ();

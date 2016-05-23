@@ -20,25 +20,16 @@
 #define Z_H
     
 #include <project.h>
-#include "handler.h"
-#include "i2c.h"
-#include "led.h"
-#include "queue.h"
 
 #define stepDelay (3u)
 #define interruptSteps (50u)
 #define resolution (255u) 
-
-extern uint32 zPos;
-extern uint32 zMax;
-extern uint8 isrStopZ;
     
 void z_init(void);
 CY_ISR_PROTO(isr_Z);
+CY_ISR_PROTO(isr_S);
 void calibrateZ(void);
 void setZPos(uint8 zVal);
-uint8 getZPos(void);
-uint8 getZMax(void);
 void stepZForwards(void);
 void stepZBackwards(void);
 void stopZ(void);

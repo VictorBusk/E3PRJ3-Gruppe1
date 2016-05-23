@@ -2,7 +2,7 @@
 --	Conversion of PSoC4XY.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Sun May 22 18:57:39 2016
+--	Mon May 23 15:45:25 2016
 --
 
 USE cypress.cypress.all;
@@ -716,7 +716,7 @@ X_interrupt:cy_psoc3_pins_v1_10
 		invert_out_clock=>'0',
 		invert_out_clock_en=>'0',
 		invert_out_reset=>'0',
-		io_voltage=>"",
+		io_voltage=>"3",
 		layout_mode=>"CONTIGUOUS",
 		output_conn=>"0",
 		output_sync=>"0",
@@ -786,7 +786,7 @@ Y_interrupt:cy_psoc3_pins_v1_10
 		invert_out_clock=>'0',
 		invert_out_clock_en=>'0',
 		invert_out_reset=>'0',
-		io_voltage=>"",
+		io_voltage=>"3",
 		layout_mode=>"CONTIGUOUS",
 		output_conn=>"0",
 		output_sync=>"0",
@@ -842,10 +842,10 @@ Y_interrupt:cy_psoc3_pins_v1_10
 		out_reset=>zero,
 		interrupt=>tmpINTERRUPT_0__Y_interrupt_net_0);
 interrupt_X:cy_isr_v1_0
-	GENERIC MAP(int_type=>"10")
+	GENERIC MAP(int_type=>"00")
 	PORT MAP(int_signal=>Net_3);
 interrupt_Y:cy_isr_v1_0
-	GENERIC MAP(int_type=>"10")
+	GENERIC MAP(int_type=>"00")
 	PORT MAP(int_signal=>Net_4);
 \I2CS:SCBCLK\:cy_clock_v1_0
 	GENERIC MAP(cy_registers=>"",

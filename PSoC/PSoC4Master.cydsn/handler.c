@@ -4,116 +4,11 @@
  * @author      Jeppe Stærk (201271201@uni.au.dk)
  */
 #include "handler.h"
+#include "data.h"
 #include "i2c.h"
 #include "spi.h"
-
-/***************************************
- *       Private attributes
- ***************************************/
-
-/*!
- *  @brief      Value of the X position.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 xPos = 0;
-
-/*!
- *  @brief      Value of the X maximum.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 xMax = 0;
-
-/*!
- *  @brief      Value of the Y position.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 yPos = 0;
-
-/*!
- *  @brief      Value of the Y maximum.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 yMax = 0;
-
-/*!
- *  @brief      Value of the Z position.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 zPos = 0;
-
-/*!
- *  @brief      Value of the Z maximum.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 zMax = 0;
-
-/*!
- *  @brief      Value of the blue led.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 rVal = 0;
-
-/*!
- *  @brief      Value of the green led.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 gVal = 0;
-
-/*!
- *  @brief      Value of the blue led.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 bVal = 0;
-
-/*!
- *  @brief      Value of the lummen.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 lummenVal = 0xEA;
-
-/*!
- *  @brief      Value of the power.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 powerVal = 0xEA;
-
-/*!
- *  @brief      Value of the distance.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 distanceVal = 0xEA;
-
-/*!
- *  @brief      Value of the movememt.
- *  @private
- *  @memberof   Handler
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-static uint8 movememtVal = 0xEA;
+#include "lcd.h"
+#include <stdio.h>
 
 /***************************************
  *       Public methods
@@ -129,31 +24,26 @@ static uint8 movememtVal = 0xEA;
  */
 void handler(uint8 cmd, uint8 val)
 {    
+//    char str[10];
+//    sprintf(str, "C: %d V: %d", (int)cmd, (int)val);
+//    lcd_newline(str);
     switch (cmd)
     {
         case 0x01 :
-            i2c_getPacket(PSoC_XY, CMD_GET_X_POS, &xPos);
-            i2c_getPacket(PSoC_XY, CMD_GET_Y_POS, &yPos);
-            i2c_getPacket(PSoC_Z, CMD_GET_Z_POS, &zPos);
-            break;
-        case 0x02 :
-            i2c_getPacket(PSoC_XY, CMD_GET_X_MAX, &xMax);
-            i2c_getPacket(PSoC_XY, CMD_GET_Y_MAX, &yMax);
-            i2c_getPacket(PSoC_Z, CMD_GET_Z_MAX, &zMax);
+            i2c_getPacket(PSoC_XY, CMD_GET_X_POS, &dataMaster.xVal);
+            i2c_getPacket(PSoC_XY, CMD_GET_Y_POS, &dataMaster.yVal);
+            i2c_getPacket(PSoC_Z, CMD_GET_Z_POS, &dataMaster.zVal);
             break;
         case 0x03 :
-            i2c_getPacket(PSoC_Sensor, CMD_GET_RED_VAL, &rVal);
-            i2c_getPacket(PSoC_Sensor, CMD_GET_BLUE_VAL, &gVal);
-            i2c_getPacket(PSoC_Sensor, CMD_GET_GREEN_VAL, &bVal);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_RED_VAL, &dataMaster.rVal);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_BLUE_VAL, &dataMaster.gVal);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_GREEN_VAL, &dataMaster.bVal);
             break;
         case 0x04 :
-            i2c_getPacket(PSoC_Sensor, CMD_GET_LUMEN_VAL, &lummenVal);
-            CyDelay(150);
-            i2c_getPacket(PSoC_Sensor, CMD_GET_POWER_STS, &powerVal);
-            CyDelay(150);
-            i2c_getPacket(PSoC_Sensor, CMD_SET_DISTANCE_STS, &distanceVal);
-            CyDelay(150);
-            i2c_getPacket(PSoC_Sensor, CMD_GET_MOVEMENT_STS, &movememtVal);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_LUMEN_VAL, &dataMaster.lumenVal);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_POWER_STS, &dataMaster.powerVal);
+            i2c_getPacket(PSoC_Sensor, CMD_SET_DISTANCE_STS, &dataMaster.distanceVal);
+            i2c_getPacket(PSoC_Sensor, CMD_GET_MOVEMENT_STS, &dataMaster.movementVal);
             break;
         case CMD_SET_X_POS :
             i2c_setPacket(PSoC_XY, cmd, val);
@@ -162,16 +52,16 @@ void handler(uint8 cmd, uint8 val)
             i2c_setPacket(PSoC_XY, cmd, val);
             break;
         case CMD_GET_X_POS :
-            spi_tx(xPos);
+            spi_tx(dataMaster.xVal);
             break;
         case CMD_GET_Y_POS :
-            spi_tx(yPos);
+            spi_tx(dataMaster.yVal);
             break;
         case CMD_GET_X_MAX :
-            spi_tx(xMax);
+            spi_tx(0xEE);
             break;
         case CMD_GET_Y_MAX :
-            spi_tx(yMax);
+            spi_tx(0xEE);
             break;
         case CMD_X_STP :
             i2c_setPacket(PSoC_XY, cmd, val);
@@ -189,10 +79,10 @@ void handler(uint8 cmd, uint8 val)
             i2c_setPacket(PSoC_Z, cmd, val);
             break;
         case CMD_GET_Z_POS :
-            spi_tx(zPos);
+            spi_tx(dataMaster.zVal);
             break;
         case CMD_GET_Z_MAX :
-            spi_tx(zMax);
+            spi_tx(0xEE);
             break;
         case CMD_Z_STP :
             i2c_setPacket(PSoC_Z, cmd, val);
@@ -216,19 +106,19 @@ void handler(uint8 cmd, uint8 val)
             i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
         case CMD_GET_RED_VAL :
-            spi_tx(rVal);
+            spi_tx(dataMaster.rVal);
             break;
         case CMD_GET_GREEN_VAL :
-            spi_tx(gVal);
+            spi_tx(dataMaster.gVal);
             break;
         case CMD_GET_BLUE_VAL :
-            spi_tx(bVal);
+            spi_tx(dataMaster.bVal);
             break;
         case CMD_GET_LUMEN_VAL :
-            spi_tx(lummenVal);
+            spi_tx(dataMaster.lumenVal);
             break;
         case CMD_GET_POWER_STS :
-            spi_tx(powerVal);
+            spi_tx(dataMaster.powerVal);
             break;
         case CMD_SET_DISTANCE_STS :
             i2c_setPacket(PSoC_Sensor, cmd, val);
@@ -237,10 +127,10 @@ void handler(uint8 cmd, uint8 val)
             i2c_setPacket(PSoC_Sensor, cmd, val);
             break;
         case CMD_GET_DISTANCE_STS :
-            spi_tx(distanceVal);
+            spi_tx(dataMaster.distanceVal);
             break;
         case CMD_GET_MOVEMENT_STS :
-            spi_tx(movememtVal);
+            spi_tx(dataMaster.movementVal);
             break;
         case CMD_DISTANCE_ALRT :
             handler(CMD_X_STP, val);

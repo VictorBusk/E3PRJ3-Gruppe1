@@ -17,19 +17,8 @@
 */
 
 #include "xy.h"
-
-uint8 calibratedX = 1;
-uint8 calibratedY = 1;
-uint8 interruptX = 0;
-uint8 interruptY = 0;
-uint8 isrStopX = 0;
-uint8 isrStopY = 0;
-uint8 xFlag = 0;
-uint8 yFlag = 0;
-uint32 xMax = 3460;
-uint32 xPos = 0;
-uint32 yMax = 1475;
-uint32 yPos = 0;
+#include "data.h"
+#include "led.h"
 
 void xy_init()
 {
@@ -40,27 +29,31 @@ void xy_init()
 CY_ISR(isr_X)
 {
     interrupt_X_Disable();
-    uint32 i;
-    interruptX = 1;
-    stopX();
-    setLed(0,0,1);
-    if(xFlag == 0)
+    
+    uint32 i; 
+    
+    dataXY.interruptX = 1;
+
+    if(dataXY.xFlag == 0)
     {
+        setLed(0,0,1);
         for(i = 0; i < interruptSteps; i++)
         {
             stepXBackwards();   
         }
-        xFlag = 1;
+        dataXY.xFlag = 1;
     }
-    else
+    else if(dataXY.xFlag == 1)
     {
+        setLed(0,0,1);
         for(i = 0; i < interruptSteps; i++)
         {
             stepXForwards();   
         }
-        xFlag = 0;
+        dataXY.xFlag = 0;
     }
     setLed(0,0,0);
+    
     interrupt_X_ClearPending();
     interrupt_X_Enable();
 }
@@ -68,71 +61,81 @@ CY_ISR(isr_X)
 CY_ISR(isr_Y)
 {
     interrupt_Y_Disable();
+    
     uint32 i;
-    interruptY = 1;
-    stopY();
-    setLed(0,0,1);
-    if(yFlag == 0)
+
+    dataXY.interruptY = 1;
+
+    if(dataXY.yFlag == 0)
     {
+        setLed(0,0,1);
         for(i = 0; i < interruptSteps; i++)
         {
             stepYBackwards();   
         }
-        yFlag = 1;
+        dataXY.yFlag = 1;
     }
-    else if(yFlag == 1)
+    else if(dataXY.yFlag == 1)
     {
+        setLed(0,0,1);
         for(i = 0; i < interruptSteps; i++)
         {
             stepYForwards();   
         }
-        yFlag = 0;
+        dataXY.yFlag = 0;
     }
     setLed(0,0,0);
+    
     interrupt_Y_ClearPending();
     interrupt_Y_Enable();
 }
 
 void calibrateX()
 {
-    xFlag = 0;
-    xMax = 0;
-    while(interrupt_X_GetState() == 1 && xFlag == 0)
+    dataXY.calibratedX = 0;
+    dataXY.xFlag = 0;
+    dataXY.xMax = 0;
+    
+    while(interrupt_X_GetState() == 1 && dataXY.xFlag == 0)
     {
         setLed(1,0,0);
         stepXForwards();
     }
-    while(interrupt_X_GetState() == 1 && xFlag == 1)
+    while(interrupt_X_GetState() == 1 && dataXY.xFlag == 1)
     {
         setLed(1,0,0);
         stepXBackwards();
-        xMax++;
+        dataXY.xMax++;
     }
-    xPos = 0;
-    xMax = xMax - interruptSteps;
-    calibratedX = 1;
     setLed(0,0,0);
+        
+    dataXY.xPos = 0;
+    dataXY.xMax = dataXY.xMax - interruptSteps;
+    dataXY.calibratedX = 1;
 }
 
 void calibrateY()
 {
-    yFlag = 0;
-    yMax = 0;
-    while(interrupt_Y_GetState() == 1 && yFlag == 0)
+    dataXY.calibratedX = 0;
+    dataXY.yFlag = 0;
+    dataXY.yMax = 0;
+    
+    while(interrupt_Y_GetState() == 1 && dataXY.yFlag == 0)
     {
         setLed(1,0,0);
         stepYForwards();
     }
-    while(interrupt_Y_GetState() == 1 && yFlag == 1)
+    while(interrupt_Y_GetState() == 1 && dataXY.yFlag == 1)
     {
         setLed(1,0,0);
         stepYBackwards();
-        yMax++;
+        dataXY.yMax++;
     }
-    yPos = 0;
-    yMax = yMax - interruptSteps;
-    calibratedY = 1;
     setLed(0,0,0);
+    
+    dataXY.yPos = 0;
+    dataXY.yMax = dataXY.yMax - interruptSteps;
+    dataXY.calibratedY = 1;
 }
 
 void setXPos(uint8 xVal)
@@ -141,43 +144,42 @@ void setXPos(uint8 xVal)
     uint32 xDes = 0;
     uint32 xSteps = 0;
     
-    isrStopX = 0;
+    dataXY.isrStopX = 0;
     
-    if(calibratedX == 1)
+    if(dataXY.calibratedX == 1)
     {
-        xDes = xVal * xMax / resolution;
-        if(xDes < xPos)
+        xDes = xVal * dataXY.xMax / resolution;
+        if(xDes < dataXY.xPos)
         {
-            interruptX = 0;
             setLed(0,1,0);
-            xFlag = 1;
-            xSteps = xPos - xDes;
-            for(i = 0; i < xSteps && isrStopX == 0u; i++)
+            dataXY.interruptX = 0;
+            dataXY.xFlag = 1;
+            xSteps = dataXY.xPos - xDes;
+            for(i = 0; i < xSteps && dataXY.isrStopX == 0u; i++)
             {
                 stepXBackwards();
-                xPos--;
+                dataXY.xPos--;
             }
-            if(interruptX == 1u)
+            if(dataXY.interruptX == 1u)
             {
-                xPos = 0;
+                dataXY.xPos = 0;
             }
-            interruptX = 0;
             setLed(0,0,0);
         }
-        else if(xDes > xPos)
+        else if(xDes > dataXY.xPos)
         {
-            interruptX = 0;
             setLed(0,1,0);
-            xFlag = 0;
-            xSteps = xDes - xPos;
-            for(i = 0; i < xSteps && isrStopX == 0u; i++)
+            dataXY.interruptX = 0;
+            dataXY.xFlag = 0;
+            xSteps = xDes - dataXY.xPos;
+            for(i = 0; i < xSteps && dataXY.isrStopX == 0u; i++)
             {
                 stepXForwards();
-                xPos++;                
+                dataXY.xPos++;                
             }
-            if(interruptX == 1u)
+            if(dataXY.interruptX == 1u)
             {
-                xPos = xMax;
+                dataXY.xPos = dataXY.xMax;
             }
             setLed(0,0,0);
         }
@@ -187,7 +189,7 @@ void setXPos(uint8 xVal)
         calibrateX();
         setXPos(xVal);
     }
-    interruptX = 0;
+    dataXY.interruptX = 0;
 }
 
 void setYPos(uint8 yVal)
@@ -196,41 +198,41 @@ void setYPos(uint8 yVal)
     uint32 yDes = 0;
     uint32 ySteps = 0;
     
-    isrStopY = 0;
+    dataXY.isrStopY = 0;
     
-    if(calibratedY == 1)
+    if(dataXY.calibratedY == 1)
     {
-        yDes = yVal * yMax / resolution;
-        if(yDes < yPos)
+        yDes = yVal * dataXY.yMax / resolution;
+        if(yDes < dataXY.yPos)
         {
-            interruptY = 0;
             setLed(0,1,0);
-            ySteps = yPos - yDes;
-            for(i = 0; i < ySteps && isrStopY == 0u; i++)
+            dataXY.interruptY = 0;
+            ySteps = dataXY.yPos - yDes;
+            for(i = 0; i < ySteps && dataXY.isrStopY == 0u; i++)
             {
                 stepYBackwards();
-                yPos--;                
+                dataXY.yPos--;                
             }
-            if(interruptY == 1u)
+            if(dataXY.interruptY == 1u)
             {
-                yPos = yPos + interruptSteps;
+                dataXY.yPos = dataXY.yPos + interruptSteps;
             }
             setLed(0,0,0);
         }
-        else if(yDes > yPos)
+        else if(yDes > dataXY.yPos)
         {
-            interruptY = 0;
             setLed(0,1,0);
-            yFlag = 0;
-            ySteps = yDes - yPos;
-            for(i = 0; i < ySteps && isrStopY == 0u; i++)
+            dataXY.interruptY = 0;
+            dataXY.yFlag = 0;
+            ySteps = yDes - dataXY.yPos;
+            for(i = 0; i < ySteps && dataXY.isrStopY == 0u; i++)
             {
                 stepYForwards();
-                yPos++;                
+                dataXY.yPos++;                
             }
-            if(interruptY == 1u)
+            if(dataXY.interruptY == 1u)
             {
-                yPos = yPos - interruptSteps;
+                dataXY.yPos = dataXY.yPos - interruptSteps;
             }
             setLed(0,0,0);
         }
@@ -240,27 +242,7 @@ void setYPos(uint8 yVal)
         calibrateY();
         setYPos(yVal);
     }
-    interruptY = 0;
-}
-
-uint8 getXPos()
-{
-    return (uint8)(resolution / xMax * xPos);   
-}
-
-uint8 getYPos()
-{
-    return (uint8)(resolution / yMax * yPos);   
-}
-
-uint8 getXMax()
-{
-    return xMax;   
-}
-
-uint8 getYMax()
-{
-    return yMax;   
+    dataXY.interruptY = 0;
 }
 
 void stepXForwards()

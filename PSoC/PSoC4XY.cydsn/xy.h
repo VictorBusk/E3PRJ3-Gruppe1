@@ -20,23 +20,10 @@
 #define XY_H
     
 #include <project.h>
-#include "handler.h"
-#include "i2c.h"
-#include "led.h"
-#include "queue.h"
 
 #define stepDelay (3u)
 #define interruptSteps (50u)
 #define resolution (255u) 
-    
-extern uint32 xMax;
-extern uint32 xPos;
-extern uint32 yMax;
-extern uint32 yPos;
-extern uint8 interruptX;
-extern uint8 interruptY;
-extern uint8 isrStopX;
-extern uint8 isrStopY;
     
 void xy_init(void);
 CY_ISR_PROTO(isr_X);
@@ -45,10 +32,6 @@ void calibrateX(void);
 void calibrateY(void);
 void setXPos(uint8 xVal);
 void setYPos(uint8 yVal);
-uint8 getXPos(void);
-uint8 getYPos(void);
-uint8 getXMax(void);
-uint8 getYMax(void);
 void stepXForwards(void);
 void stepXBackwards(void);
 void stopX(void);

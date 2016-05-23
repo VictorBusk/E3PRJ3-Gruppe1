@@ -4,8 +4,9 @@
  *  @author      Jeppe Stærk (201271201@uni.au.dk)
  */
 #include "spi.h"
-#include "led.h"
 #include "queue.h"
+#include "lcd.h"
+#include <stdio.h>
 
 /*!
  *  @brief      Initialize SPI slave
@@ -30,28 +31,36 @@ void spi_init()
  */
 CY_ISR(isr_spi_rx)
 {
+    char lcd[12];
     uint16 spiRxBuffer[SPI_PACKET_SIZE];
     struct Data spiRxAction;
     
-    while (SPI_PACKET_SIZE != SPIS_SpiUartGetRxBufferSize())
-    {
-    }
+//    while (SPI_PACKET_SIZE != SPIS_SpiUartGetRxBufferSize())
+//    {
+//    }
     
-    if (0u != SPIS_SpiUartGetRxBufferSize())
+//    if (SPI_PACKET_SIZE == SPIS_SpiUartGetRxBufferSize())
+//    {
+    
+    spiRxBuffer[SPI_PACKET_DATA_POS] = SPIS_SpiUartReadRxData();
+    if(spiRxBuffer[SPI_PACKET_DATA_POS] > 0)
     {
-        spiRxBuffer[SPI_PACKET_DATA_POS] = SPIS_SpiUartReadRxData();
         spiRxAction.val_ = spiRxBuffer[SPI_PACKET_DATA_POS] & 0xff;
         spiRxAction.cmd_ = (spiRxBuffer[SPI_PACKET_DATA_POS] >> 8);
         pushQueue(spiRxAction);
-    }
-    
-    uint16 dummyBuffer[1] = {SPI_STS_CMD_FAIL};
-    if (SPI_PACKET_SIZE == SPIS_SpiUartGetRxBufferSize())
-    {
-        SPIS_SpiUartClearRxBuffer();
-
-        SPIS_SpiUartPutArray(dummyBuffer, SPI_PACKET_SIZE);
-    }
+        
+        sprintf(lcd, ">S %4x %2x", (int)spiRxAction.cmd_, (int)spiRxAction.cmd_);
+        lcd_newline(lcd);
+    }    
+//    }
+//    
+//    uint16 dummyBuffer[SPI_PACKET_SIZE] = {SPI_STS_CMD_FAIL};
+//    if (SPI_PACKET_SIZE == SPIS_SpiUartGetRxBufferSize())
+//    {
+//        SPIS_SpiUartClearRxBuffer();
+//
+//        SPIS_SpiUartPutArray(dummyBuffer, SPI_PACKET_SIZE);
+//    }
     SPIS_ClearRxInterruptSource(SPIS_GetRxInterruptSource());
 }
 

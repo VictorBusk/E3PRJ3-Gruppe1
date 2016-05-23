@@ -1,52 +1,42 @@
-/* ========================================
- *
- * File: queue.h
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author: Jeppe Stærk
- * Matriculation number: 201271201
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ * @file        queue.h
+ * @brief       A queue for incoming commands
+ * @author      Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #ifndef QUEUE_H
 #define QUEUE_H
-
+    
 #include <project.h>
-#include <stdio.h>
-#include <stdlib.h>
 
+/*!
+ *  @class Queue
+ */
+   
+/***************************************
+*       Public data types
+***************************************/
+
+/*!
+ *  @brief      Struct to contain a command and value
+ *  @public
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 struct Data
 {
-  int cmd_;
-  int val_;
+  int cmd_;         /**< Command stored in queue */
+  int val_;         /**< Value stored in queue */
 };
 
-struct Node
-{
-  struct Data data_;
-  struct Node* next_;
-};
+/***************************************
+*       Public methods            
+***************************************/
 
-struct Node* frontOfQueuePtr;
-struct Node* backOfQueuePtr;
-
-extern void queue_init(void);
+extern void queue_init(uint8 queueSize);
 extern void pushQueue(const struct Data data);
 extern void popQueue(void);
 extern struct Data frontQueue(void);
 extern int isEmptyQueue(void);
 
-void headInsert(struct Node** headPtr, const struct Data data);
-void headRemove(struct Node** headPtr);
-void backInsert(struct Node** backPtr, const struct Data data);
 
 #endif  // ifndef QUEUE_H
 /* [] END OF FILE */
