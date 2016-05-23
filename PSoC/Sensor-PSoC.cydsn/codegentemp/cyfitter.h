@@ -157,15 +157,15 @@
 #define I2CS_sda__SHIFT 1
 
 /* DEBUG_tx */
-#define DEBUG_tx__0__DM__MASK 0x07u
-#define DEBUG_tx__0__DM__SHIFT 0
+#define DEBUG_tx__0__DM__MASK 0x38u
+#define DEBUG_tx__0__DM__SHIFT 3
 #define DEBUG_tx__0__DR CYREG_PRT1_DR
 #define DEBUG_tx__0__HSIOM CYREG_HSIOM_PORT_SEL1
-#define DEBUG_tx__0__HSIOM_MASK 0x0000000Fu
-#define DEBUG_tx__0__HSIOM_SHIFT 0u
+#define DEBUG_tx__0__HSIOM_MASK 0x000000F0u
+#define DEBUG_tx__0__HSIOM_SHIFT 4u
 #define DEBUG_tx__0__INTCFG CYREG_PRT1_INTCFG
 #define DEBUG_tx__0__INTSTAT CYREG_PRT1_INTSTAT
-#define DEBUG_tx__0__MASK 0x01u
+#define DEBUG_tx__0__MASK 0x02u
 #define DEBUG_tx__0__PA__CFG0 CYREG_UDB_PA1_CFG0
 #define DEBUG_tx__0__PA__CFG1 CYREG_UDB_PA1_CFG1
 #define DEBUG_tx__0__PA__CFG10 CYREG_UDB_PA1_CFG10
@@ -185,11 +185,11 @@
 #define DEBUG_tx__0__PC2 CYREG_PRT1_PC2
 #define DEBUG_tx__0__PORT 1u
 #define DEBUG_tx__0__PS CYREG_PRT1_PS
-#define DEBUG_tx__0__SHIFT 0
+#define DEBUG_tx__0__SHIFT 1
 #define DEBUG_tx__DR CYREG_PRT1_DR
 #define DEBUG_tx__INTCFG CYREG_PRT1_INTCFG
 #define DEBUG_tx__INTSTAT CYREG_PRT1_INTSTAT
-#define DEBUG_tx__MASK 0x01u
+#define DEBUG_tx__MASK 0x02u
 #define DEBUG_tx__PA__CFG0 CYREG_UDB_PA1_CFG0
 #define DEBUG_tx__PA__CFG1 CYREG_UDB_PA1_CFG1
 #define DEBUG_tx__PA__CFG10 CYREG_UDB_PA1_CFG10
@@ -209,7 +209,7 @@
 #define DEBUG_tx__PC2 CYREG_PRT1_PC2
 #define DEBUG_tx__PORT 1u
 #define DEBUG_tx__PS CYREG_PRT1_PS
-#define DEBUG_tx__SHIFT 0
+#define DEBUG_tx__SHIFT 1
 
 /* RedPWM_cy_m0s8_tcpwm_1 */
 #define RedPWM_cy_m0s8_tcpwm_1__CC CYREG_TCPWM_CNT2_CC

@@ -19,7 +19,7 @@
 #include "queue.h"
 
 /*! Debug define. Comment out to suppress debug prints */
-//#define DEBUG_ON
+#define DEBUG_ON
 
 void scaleLedPWM();
 

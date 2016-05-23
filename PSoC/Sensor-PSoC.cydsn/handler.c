@@ -9,7 +9,7 @@
 #include "LumenSensor.h"
 
 /*! Debug define. Comment out to suppress debug prints */
-//#define DEBUG_ON
+#define DEBUG_ON
 
 /*!
  *  @brief      Communication handler for the Sensor-PSoC
@@ -33,6 +33,7 @@ void handler(uint8 cmd, uint8 val)
         case cmdSetRed : 
             sensorData.redPWMPct = val;
             RedPWM_WriteCompare(sensorData.redPWMPct);
+            RedPWM_Start();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetRed ");
     DEBUG_PutHexByte(sensorData.redPWMPct);
@@ -51,6 +52,7 @@ void handler(uint8 cmd, uint8 val)
         case cmdSetGreen : 
             sensorData.greenPWMPct = val;
             GreenPWM_WriteCompare(sensorData.greenPWMPct);
+            GreenPWM_Start();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetGreen ");
     DEBUG_PutHexByte(sensorData.greenPWMPct);
@@ -69,6 +71,7 @@ void handler(uint8 cmd, uint8 val)
         case cmdSetBlue : 
             sensorData.bluePWMPct = val;
             BluePWM_WriteCompare(sensorData.bluePWMPct);
+            BluePWM_Start();
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetBlue ");
     DEBUG_PutHexByte(sensorData.bluePWMPct);
