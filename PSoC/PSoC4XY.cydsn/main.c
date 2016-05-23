@@ -54,7 +54,6 @@ int main()
         }
         
         i2c_rx();
-        
         while(isEmptyQueue() != 1)
         {
             struct Data action;

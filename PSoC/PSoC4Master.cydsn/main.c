@@ -26,6 +26,7 @@
 #include "Nokia5110LCD.h"
 #include "lcd.h"
 
+
 int main()
 {
     data_init();
@@ -33,17 +34,21 @@ int main()
     spi_init();
     i2c_init();
     LCD_Init();
+    DEBUG_Start();
     
     setLed(1,0,0,150);
     setLed(0,1,0,150);
     setLed(0,0,1,150);
     
+    DEBUG_PutCRLF();
+    DEBUG_PutString("===== Initializing PSoC Master =====");
+    DEBUG_PutCRLF();
     CyGlobalIntEnable; /* Enable global interrupts. */
 
     for(;;)
     {
         setLed(0,0,0,0);
-        
+
         while(isEmptyQueue() != 1)
         {
             struct Data action;

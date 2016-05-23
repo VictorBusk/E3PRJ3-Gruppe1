@@ -54,6 +54,8 @@
 #include "LED_Blue_aliases.h"
 #include "SW2.h"
 #include "SW2_aliases.h"
+#include "DEBUG.h"
+#include "DEBUG_PVT.h"
 #include "I2CS_SCBCLK.h"
 #include "I2CS_sda.h"
 #include "I2CS_sda_aliases.h"

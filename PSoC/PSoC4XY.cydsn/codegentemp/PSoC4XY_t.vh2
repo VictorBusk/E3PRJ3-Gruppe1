@@ -1,5 +1,5 @@
 -- Project:   C:\E3PRJ3-Gruppe1\PSoC\PSoC4XY.cydsn\PSoC4XY.cyprj
--- Generated: 05/23/2016 15:45:27
+-- Generated: 05/23/2016 23:18:26
 -- PSoC Creator  3.3 CP2
 
 ENTITY PSoC4XY IS
@@ -19,7 +19,8 @@ ENTITY PSoC4XY IS
         LED_Red(0)_PAD : OUT std_ulogic;
         LED_Green(0)_PAD : OUT std_ulogic;
         LED_Blue(0)_PAD : OUT std_ulogic;
-        SW2(0)_PAD : IN std_ulogic);
+        SW2(0)_PAD : IN std_ulogic;
+        \DEBUG:tx(0)_PAD\ : OUT std_ulogic);
     ATTRIBUTE voltage_VDDA OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDDD OF __DEFAULT__ : ENTITY IS 3.3e0;
 END PSoC4XY;
@@ -52,6 +53,7 @@ ARCHITECTURE __DEFAULT__ OF PSoC4XY IS
     SIGNAL SW2(0)__PA : bit;
     SIGNAL X_interrupt(0)__PA : bit;
     SIGNAL Y_interrupt(0)__PA : bit;
+    SIGNAL \\\DEBUG:tx(0)\\__PA\ : bit;
     SIGNAL \I2CS:Net_1053\ : bit;
     SIGNAL \I2CS:Net_1055\ : bit;
     SIGNAL \I2CS:Net_1059\ : bit;
@@ -109,6 +111,8 @@ ARCHITECTURE __DEFAULT__ OF PSoC4XY IS
     ATTRIBUTE Location OF LED_Blue(0) : LABEL IS "P0[3]";
     ATTRIBUTE lib_model OF SW2(0) : LABEL IS "iocell16";
     ATTRIBUTE Location OF SW2(0) : LABEL IS "P0[7]";
+    ATTRIBUTE lib_model OF \DEBUG:tx(0)\ : LABEL IS "iocell17";
+    ATTRIBUTE Location OF \DEBUG:tx(0)\ : LABEL IS "P0[4]";
     ATTRIBUTE Location OF interrupt_X : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
     ATTRIBUTE Location OF interrupt_Y : LABEL IS "[IntrContainer=(0)][IntrId=(2)]";
     ATTRIBUTE Location OF \I2CS:SCB_IRQ\ : LABEL IS "[IntrContainer=(0)][IntrId=(10)]";
@@ -1750,6 +1754,96 @@ BEGIN
             pa_out => SW2(0)__PA,
             oe => open,
             pad_in => SW2(0)_PAD,
+            in_clock => open,
+            in_clock_en => '1',
+            in_reset => '0',
+            out_clock => open,
+            out_clock_en => '1',
+            out_reset => '0');
+
+    \DEBUG:tx\:logicalport
+        GENERIC MAP(
+            drive_mode => "110",
+            ibuf_enabled => "1",
+            id => "10d13746-7fed-4b89-8921-4b7bd4bcfe17/52f31aa9-2f0a-497d-9a1f-1424095e13e6",
+            init_dr_st => "1",
+            input_buffer_sel => "00",
+            input_clk_en => 0,
+            input_sync => "1",
+            input_sync_mode => "0",
+            intr_mode => "00",
+            invert_in_clock => 0,
+            invert_in_clock_en => 0,
+            invert_in_reset => 0,
+            invert_out_clock => 0,
+            invert_out_clock_en => 0,
+            invert_out_reset => 0,
+            io_voltage => "",
+            layout_mode => "CONTIGUOUS",
+            oe_conn => "0",
+            oe_reset => 0,
+            oe_sync => "0",
+            output_clk_en => 0,
+            output_clock_mode => "0",
+            output_conn => "0",
+            output_mode => "0",
+            output_reset => 0,
+            output_sync => "0",
+            ovt_hyst_trim => "0",
+            ovt_needed => "0",
+            ovt_slew_control => "00",
+            pa_in_clock => -1,
+            pa_in_clock_en => -1,
+            pa_in_reset => -1,
+            pa_out_clock => -1,
+            pa_out_clock_en => -1,
+            pa_out_reset => -1,
+            pin_aliases => "",
+            pin_mode => "O",
+            por_state => 4,
+            port_alias_group => "",
+            port_alias_required => 0,
+            sio_group_cnt => 0,
+            sio_hifreq => "00000000",
+            sio_hyst => "1",
+            sio_ibuf => "00000000",
+            sio_info => "00",
+            sio_obuf => "00000000",
+            sio_refsel => "00000000",
+            sio_vohsel => "00000000",
+            sio_vtrip => "00000000",
+            slew_rate => "0",
+            spanning => 0,
+            sw_only => 0,
+            use_annotation => "0",
+            vtrip => "10",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0)
+        PORT MAP(
+            in_clock_en => open,
+            in_reset => open,
+            out_clock_en => open,
+            out_reset => open);
+
+    \DEBUG:tx(0)\:iocell
+        GENERIC MAP(
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "\DEBUG:tx\",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => \\\DEBUG:tx(0)\\__PA\,
+            oe => open,
+            pad_in => \DEBUG:tx(0)_PAD\,
             in_clock => open,
             in_clock_en => '1',
             in_reset => '0',

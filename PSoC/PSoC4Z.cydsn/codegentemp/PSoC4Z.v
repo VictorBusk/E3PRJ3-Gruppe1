@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC4Z.v generated from TopDesign.cysch
-// 05/23/2016 at 15:46
+// 05/23/2016 at 18:05
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1167,7 +1167,7 @@ module top ;
 
 	cy_psoc3_pins_v1_10
 		#(.id("694c1808-fcc0-420a-8ef8-ea37f8f22b0c"),
-		  .drive_mode(3'b010),
+		  .drive_mode(3'b001),
 		  .ibuf_enabled(1'b1),
 		  .init_dr_st(1'b0),
 		  .input_clk_en(0),

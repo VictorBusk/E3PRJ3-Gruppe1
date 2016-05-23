@@ -14,6 +14,7 @@
  ***************************************/
 
 extern void spi_init(void);
+extern void spi_rx(void);
 CY_ISR_PROTO(isr_spi_rx);
 extern void spi_tx(uint8 data);
 

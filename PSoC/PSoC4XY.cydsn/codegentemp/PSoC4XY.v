@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC4XY.v generated from TopDesign.cysch
-// 05/23/2016 at 15:45
+// 05/23/2016 at 23:18
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -436,6 +436,90 @@ module SCB_P4_v3_10_0 (
 
 	// Device_VM4 (cy_virtualmux_v1_0)
 	assign uncfg_rx_irq = Net_1028;
+
+
+
+endmodule
+
+// SW_Tx_UART_v1_50(BaudRate=9600, PinAssignmentMethod=1, CY_API_CALLBACK_HEADER_INCLUDE=#include "cyapicallbacks.h", CY_COMPONENT_NAME=SW_Tx_UART_v1_50, CY_CONTROL_FILE=<:default:>, CY_DATASHEET_FILE=<:default:>, CY_FITTER_NAME=DEBUG, CY_INSTANCE_SHORT_NAME=DEBUG, CY_MAJOR_VERSION=1, CY_MINOR_VERSION=50, CY_REMOVE=false, CY_SUPPRESS_API_GEN=false, CY_VERSION=PSoC Creator  3.3 CP2, INSTANCE_NAME=DEBUG, )
+module SW_Tx_UART_v1_50_1 ;
+
+
+
+	wire [0:0] tmpOE__tx_net;
+	wire [0:0] tmpFB_0__tx_net;
+	wire [0:0] tmpIO_0__tx_net;
+	wire [0:0] tmpINTERRUPT_0__tx_net;
+	electrical [0:0] tmpSIOVREF__tx_net;
+
+	cy_psoc3_pins_v1_10
+		#(.id("10d13746-7fed-4b89-8921-4b7bd4bcfe17/52f31aa9-2f0a-497d-9a1f-1424095e13e6"),
+		  .drive_mode(3'b110),
+		  .ibuf_enabled(1'b1),
+		  .init_dr_st(1'b1),
+		  .input_clk_en(0),
+		  .input_sync(1'b1),
+		  .input_sync_mode(1'b0),
+		  .intr_mode(2'b00),
+		  .invert_in_clock(0),
+		  .invert_in_clock_en(0),
+		  .invert_in_reset(0),
+		  .invert_out_clock(0),
+		  .invert_out_clock_en(0),
+		  .invert_out_reset(0),
+		  .io_voltage(""),
+		  .layout_mode("CONTIGUOUS"),
+		  .oe_conn(1'b0),
+		  .oe_reset(0),
+		  .oe_sync(1'b0),
+		  .output_clk_en(0),
+		  .output_clock_mode(1'b0),
+		  .output_conn(1'b0),
+		  .output_mode(1'b0),
+		  .output_reset(0),
+		  .output_sync(1'b0),
+		  .pa_in_clock(-1),
+		  .pa_in_clock_en(-1),
+		  .pa_in_reset(-1),
+		  .pa_out_clock(-1),
+		  .pa_out_clock_en(-1),
+		  .pa_out_reset(-1),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .por_state(4),
+		  .sio_group_cnt(0),
+		  .sio_hyst(1'b1),
+		  .sio_ibuf(""),
+		  .sio_info(2'b00),
+		  .sio_obuf(""),
+		  .sio_refsel(""),
+		  .sio_vtrip(""),
+		  .sio_hifreq(""),
+		  .sio_vohsel(""),
+		  .slew_rate(1'b0),
+		  .spanning(0),
+		  .use_annotation(1'b0),
+		  .vtrip(2'b10),
+		  .width(1),
+		  .ovt_hyst_trim(1'b0),
+		  .ovt_needed(1'b0),
+		  .ovt_slew_control(2'b00),
+		  .input_buffer_sel(2'b00))
+		tx
+		 (.oe(tmpOE__tx_net),
+		  .y({1'b0}),
+		  .fb({tmpFB_0__tx_net[0:0]}),
+		  .io({tmpIO_0__tx_net[0:0]}),
+		  .siovref(tmpSIOVREF__tx_net),
+		  .interrupt({tmpINTERRUPT_0__tx_net[0:0]}),
+		  .in_clock({1'b0}),
+		  .in_clock_en({1'b1}),
+		  .in_reset({1'b0}),
+		  .out_clock({1'b0}),
+		  .out_clock_en({1'b1}),
+		  .out_reset({1'b0}));
+
+	assign tmpOE__tx_net = (`CYDEV_CHIP_MEMBER_USED == `CYDEV_CHIP_MEMBER_3A && `CYDEV_CHIP_REVISION_USED < `CYDEV_CHIP_REVISION_3A_ES3) ? ~{1'b1} : {1'b1};
 
 
 
@@ -1540,6 +1624,8 @@ module top ;
     defparam GND_1.comp_name = "Gnd_v1_0";
     defparam GND_1.port_names = "T1";
     defparam GND_1.width = 1;
+
+    SW_Tx_UART_v1_50_1 DEBUG ();
 
 
 

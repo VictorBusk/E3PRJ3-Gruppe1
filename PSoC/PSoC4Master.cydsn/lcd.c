@@ -28,6 +28,7 @@ void lcd_newline(char* characters)
     
     strcpy(lineStr[5], characters);
     
+    LCD_Clear();
     for(i = 0; i < 6; i++)
     {
        LCD_gotoXY(0,i);

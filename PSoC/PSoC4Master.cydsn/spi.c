@@ -3,6 +3,8 @@
  *  @brief       SPI comunication
  *  @author      Jeppe Stærk (201271201@uni.au.dk)
  */
+#include "data.h"
+#include "handler.h"
 #include "spi.h"
 #include "queue.h"
 #include "lcd.h"
@@ -23,24 +25,11 @@ void spi_init()
     SPIS_Start();
 }
 
-/*!
- *  @brief      ISR for SPI slave rx
- *  @public
- *  @memberof   Spi
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-CY_ISR(isr_spi_rx)
+void spi_rx()
 {
     char lcd[12];
     uint16 spiRxBuffer[SPI_PACKET_SIZE];
     struct Data spiRxAction;
-    
-//    while (SPI_PACKET_SIZE != SPIS_SpiUartGetRxBufferSize())
-//    {
-//    }
-    
-//    if (SPI_PACKET_SIZE == SPIS_SpiUartGetRxBufferSize())
-//    {
     
     spiRxBuffer[SPI_PACKET_DATA_POS] = SPIS_SpiUartReadRxData();
     if(spiRxBuffer[SPI_PACKET_DATA_POS] > 0)
@@ -49,19 +38,99 @@ CY_ISR(isr_spi_rx)
         spiRxAction.cmd_ = (spiRxBuffer[SPI_PACKET_DATA_POS] >> 8);
         pushQueue(spiRxAction);
         
-        sprintf(lcd, ">S %4x %2x", (int)spiRxAction.cmd_, (int)spiRxAction.cmd_);
+        sprintf(lcd, ">S %4x %2x %1d", (int)spiRxAction.cmd_, (int)spiRxAction.cmd_, queueCount_);
         lcd_newline(lcd);
-    }    
-//    }
-//    
-//    uint16 dummyBuffer[SPI_PACKET_SIZE] = {SPI_STS_CMD_FAIL};
-//    if (SPI_PACKET_SIZE == SPIS_SpiUartGetRxBufferSize())
-//    {
-//        SPIS_SpiUartClearRxBuffer();
-//
-//        SPIS_SpiUartPutArray(dummyBuffer, SPI_PACKET_SIZE);
-//    }
+        
+        DEBUG_PutString(">S: cmd: ");
+        DEBUG_PutHexByte(spiRxAction.cmd_);
+        DEBUG_PutString(" val: ");
+        DEBUG_PutHexByte(spiRxAction.val_);
+        DEBUG_PutCRLF();
+    }
+    SPIS_SpiUartClearRxBuffer();
+}
+
+/*!
+ *  @brief      ISR for SPI slave rx
+ *  @public
+ *  @memberof   Spi
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+CY_ISR(isr_spi_rx)
+{
+    SPIS_DisableInt();
+    char lcd[12];
+    uint16 spiRxBuffer[SPI_PACKET_SIZE];
+    uint16 spiTxBuffer[SPI_PACKET_SIZE];
+    struct Data spiRxAction;
+    
+    while(SPIS_SpiUartGetRxBufferSize() > 0)
+    {
+        spiRxBuffer[SPI_PACKET_DATA_POS] = SPIS_SpiUartReadRxData();
+        spiRxAction.val_ = spiRxBuffer[SPI_PACKET_DATA_POS] & 0xff;
+        spiRxAction.cmd_ = (spiRxBuffer[SPI_PACKET_DATA_POS] >> 8);
+        
+        if(spiRxBuffer[SPI_PACKET_DATA_POS] == 0xBADA)
+        {
+            sprintf(lcd, "S> %x",spiTxBuffer[SPI_PACKET_DATA_POS]);
+            lcd_newline(lcd);
+            
+            DEBUG_PutString("S>: val: ");
+            DEBUG_PutHexByte(spiTxBuffer[SPI_PACKET_DATA_POS]);
+            DEBUG_PutCRLF();
+        }
+        else
+        {
+            sprintf(lcd, ">S %4x %2x %1d", (int)spiRxAction.cmd_, (int)spiRxAction.val_, queueCount_);
+            lcd_newline(lcd);
+            
+            DEBUG_PutString(">S: cmd: ");
+            DEBUG_PutHexByte(spiRxAction.cmd_);
+            DEBUG_PutString(" val: ");
+            DEBUG_PutHexByte(spiRxAction.val_);
+            DEBUG_PutCRLF();
+            DEBUG_PutCRLF();
+            
+            switch(spiRxAction.cmd_) {
+                case CMD_GET_X_POS :
+                    SPIS_SpiUartClearTxBuffer();
+                    spiTxBuffer[SPI_PACKET_DATA_POS] = (uint16)dataMaster.xVal;
+                    SPIS_SpiUartPutArray(spiTxBuffer, SPI_PACKET_SIZE);
+                    break;
+                case CMD_GET_Y_POS :
+                    SPIS_SpiUartClearTxBuffer();
+                    spiTxBuffer[SPI_PACKET_DATA_POS] = (uint16)dataMaster.yVal;
+                    SPIS_SpiUartPutArray(spiTxBuffer, SPI_PACKET_SIZE);
+                    break;
+                case CMD_GET_Z_POS :
+                    SPIS_SpiUartClearTxBuffer();
+                    spiTxBuffer[SPI_PACKET_DATA_POS] = (uint16)dataMaster.zVal;
+                    SPIS_SpiUartPutArray(spiTxBuffer, SPI_PACKET_SIZE);
+                    break;
+                case CMD_GET_RED_VAL :
+                    SPIS_SpiUartClearTxBuffer();
+                    spiTxBuffer[SPI_PACKET_DATA_POS] = (uint16)dataMaster.rVal;
+                    SPIS_SpiUartPutArray(spiTxBuffer, SPI_PACKET_SIZE);
+                    break;
+                case CMD_GET_GREEN_VAL :
+                    SPIS_SpiUartClearTxBuffer();
+                    spiTxBuffer[SPI_PACKET_DATA_POS] = (uint16)dataMaster.gVal;
+                    SPIS_SpiUartPutArray(spiTxBuffer, SPI_PACKET_SIZE);
+                    break;
+                case CMD_GET_BLUE_VAL :
+                    SPIS_SpiUartClearTxBuffer();
+                    spiTxBuffer[SPI_PACKET_DATA_POS] = (uint16)dataMaster.bVal;
+                    SPIS_SpiUartPutArray(spiTxBuffer, SPI_PACKET_SIZE);
+                    break;
+                default :
+                    pushQueue(spiRxAction);
+                break;
+            }
+        }
+    }
+
     SPIS_ClearRxInterruptSource(SPIS_GetRxInterruptSource());
+    SPIS_EnableInt();
 }
 
 /*!

@@ -49,7 +49,7 @@ static struct Node* backOfQueuePtr_;
  *  @memberof   Queue
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
-static uint8 queueCount_;
+uint8 queueCount_;
 
 /*!
  *  @brief      Maximum elements in queue
@@ -100,19 +100,35 @@ void pushQueue(const struct Data data)
 {
   if(queueCount_<queueMax_)
   {
-  if(isEmptyQueue() != 1)
-  {
-    backInsert(&backOfQueuePtr_, data);
-    backOfQueuePtr_ = backOfQueuePtr_->next_;
-    queueCount_++;
-  }
+    if(isEmptyQueue() != 1)
+    {
+      backInsert(&backOfQueuePtr_, data);
+      backOfQueuePtr_ = backOfQueuePtr_->next_;
+      queueCount_++;
+    }
     else
     {
       headInsert(&frontOfQueuePtr_, data);
       backOfQueuePtr_ = frontOfQueuePtr_;
       queueCount_++;
     }
+    DEBUG_PutString("Q+: count: ");
+    DEBUG_PutHexByte(queueCount_);
+    DEBUG_PutString(" cmd: ");
+    DEBUG_PutHexByte(data.cmd_);
+    DEBUG_PutString(" val: ");
+    DEBUG_PutHexByte(data.val_);
+    DEBUG_PutCRLF();
+    DEBUG_PutCRLF();
   }
+  else
+  {
+    DEBUG_PutString("Q~: ERROR! Queue FULL!!! count: ");
+    DEBUG_PutHexByte(queueCount_);
+    DEBUG_PutCRLF();
+    DEBUG_PutCRLF();
+  }
+  
 }
 
 /**
@@ -129,6 +145,10 @@ void popQueue()
   {
     backOfQueuePtr_ = NULL;
   }
+  DEBUG_PutString("-Q: count: ");
+  DEBUG_PutHexByte(queueCount_);
+  DEBUG_PutCRLF();
+  DEBUG_PutCRLF();
 }
 
 /*!
@@ -140,6 +160,9 @@ void popQueue()
  */
 struct Data frontQueue()
 {
+  DEBUG_PutString("Q=: count: ");
+  DEBUG_PutHexByte(queueCount_);
+  DEBUG_PutCRLF();
   return frontOfQueuePtr_->data_;
 }
 

@@ -1,14 +1,12 @@
 /*******************************************************************************
 * File Name: Gnd.c  
-* Version 1.90
+* Version 2.20
 *
 * Description:
 *  This file contains API to enable firmware control of a Pins component.
 *
-* Note:
-*
 ********************************************************************************
-* Copyright 2008-2012, Cypress Semiconductor Corporation.  All rights reserved.
+* Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions, 
 * disclaimers, and limitations in the end user license agreement accompanying 
 * the software package with which this file was provided.
@@ -17,29 +15,100 @@
 #include "cytypes.h"
 #include "Gnd.h"
 
-#define SetP4PinDriveMode(shift, mode)  \
+
+#if defined(Gnd__PC)
+    #define Gnd_SetP4PinDriveMode(shift, mode)  \
     do { \
         Gnd_PC =   (Gnd_PC & \
-                                (uint32)(~(uint32)(Gnd_DRIVE_MODE_IND_MASK << (Gnd_DRIVE_MODE_BITS * (shift))))) | \
-                                (uint32)((uint32)(mode) << (Gnd_DRIVE_MODE_BITS * (shift))); \
+                                (uint32)(~(uint32)(Gnd_DRIVE_MODE_IND_MASK << \
+                                (Gnd_DRIVE_MODE_BITS * (shift))))) | \
+                                (uint32)((uint32)(mode) << \
+                                (Gnd_DRIVE_MODE_BITS * (shift))); \
     } while (0)
+#else
+    #if (CY_PSOC4_4200L)
+        #define Gnd_SetP4PinDriveMode(shift, mode)  \
+        do { \
+            Gnd_USBIO_CTRL_REG = (Gnd_USBIO_CTRL_REG & \
+                                    (uint32)(~(uint32)(Gnd_DRIVE_MODE_IND_MASK << \
+                                    (Gnd_DRIVE_MODE_BITS * (shift))))) | \
+                                    (uint32)((uint32)(mode) << \
+                                    (Gnd_DRIVE_MODE_BITS * (shift))); \
+        } while (0)
+    #endif
+#endif
+  
+
+#if defined(Gnd__PC) || (CY_PSOC4_4200L) 
+    /*******************************************************************************
+    * Function Name: Gnd_SetDriveMode
+    ****************************************************************************//**
+    *
+    * \brief Sets the drive mode for each of the Pins component's pins.
+    * 
+    * <b>Note</b> This affects all pins in the Pins component instance. Use the
+    * Per-Pin APIs if you wish to control individual pin's drive modes.
+    *
+    * <b>Note</b> USBIOs have limited drive functionality. Refer to the Drive Mode
+    * parameter for more information.
+    *
+    * \param mode
+    *  Mode for the selected signals. Valid options are documented in 
+    *  \ref driveMode.
+    *
+    * \return
+    *  None
+    *
+    * \sideeffect
+    *  If you use read-modify-write operations that are not atomic, the ISR can
+    *  cause corruption of this function. An ISR that interrupts this function 
+    *  and performs writes to the Pins component Drive Mode registers can cause 
+    *  corrupted port data. To avoid this issue, you should either use the Per-Pin
+    *  APIs (primary method) or disable interrupts around this function.
+    *
+    * \funcusage
+    *  \snippet Gnd_SUT.c usage_Gnd_SetDriveMode
+    *******************************************************************************/
+    void Gnd_SetDriveMode(uint8 mode)
+    {
+		Gnd_SetP4PinDriveMode(Gnd__0__SHIFT, mode);
+    }
+#endif
 
 
 /*******************************************************************************
 * Function Name: Gnd_Write
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Assign a new value to the digital port's data output register.  
+* \brief Writes the value to the physical port (data output register), masking
+*  and shifting the bits appropriately. 
 *
-* Parameters:  
-*  prtValue:  The value to be assigned to the Digital Port. 
+* The data output register controls the signal applied to the physical pin in 
+* conjunction with the drive mode parameter. This function avoids changing 
+* other bits in the port by using the appropriate method (read-modify-write or
+* bit banding).
 *
-* Return: 
+* <b>Note</b> This function should not be used on a hardware digital output pin 
+* as it is driven by the hardware signal attached to it.
+*
+* \param value
+*  Value to write to the component instance.
+*
+* \return 
 *  None 
-*  
+*
+* \sideeffect
+*  If you use read-modify-write operations that are not atomic; the Interrupt 
+*  Service Routines (ISR) can cause corruption of this function. An ISR that 
+*  interrupts this function and performs writes to the Pins component data 
+*  register can cause corrupted port data. To avoid this issue, you should 
+*  either use the Per-Pin APIs (primary method) or disable interrupts around 
+*  this function.
+*
+* \funcusage
+*  \snippet Gnd_SUT.c usage_Gnd_Write
 *******************************************************************************/
-void Gnd_Write(uint8 value) 
+void Gnd_Write(uint8 value)
 {
     uint8 drVal = (uint8)(Gnd_DR & (uint8)(~Gnd_MASK));
     drVal = (drVal | ((uint8)(value << Gnd_SHIFT) & Gnd_MASK));
@@ -48,44 +117,23 @@ void Gnd_Write(uint8 value)
 
 
 /*******************************************************************************
-* Function Name: Gnd_SetDriveMode
-********************************************************************************
-*
-* Summary:
-*  Change the drive mode on the pins of the port.
-* 
-* Parameters:  
-*  mode:  Change the pins to this drive mode.
-*
-* Return: 
-*  None
-*
-*******************************************************************************/
-void Gnd_SetDriveMode(uint8 mode) 
-{
-	SetP4PinDriveMode(Gnd__0__SHIFT, mode);
-}
-
-
-/*******************************************************************************
 * Function Name: Gnd_Read
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Read the current value on the pins of the Digital Port in right justified 
-*  form.
+* \brief Reads the associated physical port (pin status register) and masks 
+*  the required bits according to the width and bit position of the component
+*  instance. 
 *
-* Parameters:  
-*  None 
+* The pin's status register returns the current logic level present on the 
+* physical pin.
 *
-* Return: 
-*  Returns the current value of the Digital Port as a right justified number
-*  
-* Note:
-*  Macro Gnd_ReadPS calls this function. 
-*  
+* \return 
+*  The current value for the pins in the component as a right justified number.
+*
+* \funcusage
+*  \snippet Gnd_SUT.c usage_Gnd_Read  
 *******************************************************************************/
-uint8 Gnd_Read(void) 
+uint8 Gnd_Read(void)
 {
     return (uint8)((Gnd_PS & Gnd_MASK) >> Gnd_SHIFT);
 }
@@ -93,50 +141,104 @@ uint8 Gnd_Read(void)
 
 /*******************************************************************************
 * Function Name: Gnd_ReadDataReg
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
-*  Read the current value assigned to a Digital Port's data output register
+* \brief Reads the associated physical port's data output register and masks 
+*  the correct bits according to the width and bit position of the component 
+*  instance. 
 *
-* Parameters:  
-*  None 
+* The data output register controls the signal applied to the physical pin in 
+* conjunction with the drive mode parameter. This is not the same as the 
+* preferred Gnd_Read() API because the 
+* Gnd_ReadDataReg() reads the data register instead of the status 
+* register. For output pins this is a useful function to determine the value 
+* just written to the pin.
 *
-* Return: 
-*  Returns the current value assigned to the Digital Port's data output register
-*  
+* \return 
+*  The current value of the data register masked and shifted into a right 
+*  justified number for the component instance.
+*
+* \funcusage
+*  \snippet Gnd_SUT.c usage_Gnd_ReadDataReg 
 *******************************************************************************/
-uint8 Gnd_ReadDataReg(void) 
+uint8 Gnd_ReadDataReg(void)
 {
     return (uint8)((Gnd_DR & Gnd_MASK) >> Gnd_SHIFT);
 }
 
 
-/* If Interrupts Are Enabled for this Pins component */ 
-#if defined(Gnd_INTSTAT) 
+/*******************************************************************************
+* Function Name: Gnd_SetInterruptMode
+****************************************************************************//**
+*
+* \brief Configures the interrupt mode for each of the Pins component's
+*  pins. Alternatively you may set the interrupt mode for all the pins
+*  specified in the Pins component.
+*
+*  <b>Note</b> The interrupt is port-wide and therefore any enabled pin
+*  interrupt may trigger it.
+*
+* \param position
+*  The pin position as listed in the Pins component. You may OR these to be 
+*  able to configure the interrupt mode of multiple pins within a Pins 
+*  component. Or you may use Gnd_INTR_ALL to configure the
+*  interrupt mode of all the pins in the Pins component.       
+*  - Gnd_0_INTR       (First pin in the list)
+*  - Gnd_1_INTR       (Second pin in the list)
+*  - ...
+*  - Gnd_INTR_ALL     (All pins in Pins component)
+*
+* \param mode
+*  Interrupt mode for the selected pins. Valid options are documented in
+*  \ref intrMode.
+*
+* \return 
+*  None
+*  
+* \sideeffect
+*  It is recommended that the interrupt be disabled before calling this 
+*  function to avoid unintended interrupt requests. Note that the interrupt
+*  type is port wide, and therefore will trigger for any enabled pin on the 
+*  port.
+*
+* \funcusage
+*  \snippet Gnd_SUT.c usage_Gnd_SetInterruptMode
+*******************************************************************************/
+void Gnd_SetInterruptMode(uint16 position, uint16 mode)
+{
+    uint32 intrCfg;
+    
+    intrCfg =  Gnd_INTCFG & (uint32)(~(uint32)position);
+    Gnd_INTCFG = intrCfg | ((uint32)position & (uint32)mode);
+}
 
-    /*******************************************************************************
-    * Function Name: Gnd_ClearInterrupt
-    ********************************************************************************
-    *
-    * Summary:
-    *  Clears any active interrupts attached to port and returns the value of the 
-    *  interrupt status register.
-    *
-    * Parameters:  
-    *  None 
-    *
-    * Return: 
-    *  Returns the value of the interrupt status register
-    *  
-    *******************************************************************************/
-    uint8 Gnd_ClearInterrupt(void) 
-    {
-		uint8 maskedStatus = (uint8)(Gnd_INTSTAT & Gnd_MASK);
-		Gnd_INTSTAT = maskedStatus;
-        return maskedStatus >> Gnd_SHIFT;
-    }
 
-#endif /* If Interrupts Are Enabled for this Pins component */ 
+/*******************************************************************************
+* Function Name: Gnd_ClearInterrupt
+****************************************************************************//**
+*
+* \brief Clears any active interrupts attached with the component and returns 
+*  the value of the interrupt status register allowing determination of which
+*  pins generated an interrupt event.
+*
+* \return 
+*  The right-shifted current value of the interrupt status register. Each pin 
+*  has one bit set if it generated an interrupt event. For example, bit 0 is 
+*  for pin 0 and bit 1 is for pin 1 of the Pins component.
+*  
+* \sideeffect
+*  Clears all bits of the physical port's interrupt status register, not just
+*  those associated with the Pins component.
+*
+* \funcusage
+*  \snippet Gnd_SUT.c usage_Gnd_ClearInterrupt
+*******************************************************************************/
+uint8 Gnd_ClearInterrupt(void)
+{
+	uint8 maskedStatus = (uint8)(Gnd_INTSTAT & Gnd_MASK);
+	Gnd_INTSTAT = maskedStatus;
+    return maskedStatus >> Gnd_SHIFT;
+}
 
 
 /* [] END OF FILE */

@@ -36,6 +36,8 @@ extern void pushQueue(const struct Data data);
 extern void popQueue(void);
 extern struct Data frontQueue(void);
 extern int isEmptyQueue(void);
+extern uint8 queueCount_;
+
 
 
 #endif  // ifndef QUEUE_H

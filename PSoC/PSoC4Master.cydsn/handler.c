@@ -27,6 +27,12 @@ void handler(uint8 cmd, uint8 val)
 //    char str[10];
 //    sprintf(str, "C: %d V: %d", (int)cmd, (int)val);
 //    lcd_newline(str);
+  DEBUG_PutString("H=: cmd: ");
+  DEBUG_PutHexByte(cmd);
+  DEBUG_PutString(" val: ");
+  DEBUG_PutHexByte(val);
+  DEBUG_PutCRLF();
+
     switch (cmd)
     {
         case 0x01 :

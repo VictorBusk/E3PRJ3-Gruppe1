@@ -24,6 +24,7 @@
 extern void i2c_init(void);
 extern void i2c_rx(void);
 extern void i2c_tx(void);
+CY_ISR_PROTO(isr_i2c_rx);
 
 /* Buffer and packet size */
 #define I2C_BUFFER_SIZE         (4u)

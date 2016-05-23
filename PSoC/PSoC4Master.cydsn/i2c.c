@@ -31,20 +31,25 @@ void i2c_init()
 
 void i2c_setPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
 {
-    int status;
     char lcd[12];
   if(i2c_tx(i2cAddr, i2cCmd, i2cVal) == I2C_STS_CMD_DONE)
   {
-    status = 1;
     setLed(0,0,1,50);
   }
   else
   {
-    status = 0;
     setLed(1,0,0,50);
   }
-  sprintf(lcd, "I>%2.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)i2cVal, status);
+  sprintf(lcd, "I>%2.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)i2cVal, queueCount_);
   lcd_newline(lcd);
+
+  DEBUG_PutString("I>: addr: ");
+  DEBUG_PutHexByte(i2cAddr);
+  DEBUG_PutString(" cmd: ");
+  DEBUG_PutHexByte(i2cCmd);
+  DEBUG_PutString(" val: ");
+  DEBUG_PutHexByte(i2cVal);
+  DEBUG_PutCRLF();
   setLed(0,0,0,50);
 }
 
@@ -66,8 +71,16 @@ void i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8* i2cVal)
     status = 0;
     setLed(1,0,0,50);
   }
-  sprintf(lcd, "I> %1.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)i2cVal, status);
+  sprintf(lcd, "I> %1.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)*i2cVal, status);
   lcd_newline(lcd);
+
+  DEBUG_PutString("I>: addr: ");
+  DEBUG_PutHexByte(i2cAddr);
+  DEBUG_PutString(" cmd: ");
+  DEBUG_PutHexByte(i2cCmd);
+  DEBUG_PutString(" val: ");
+  DEBUG_PutHexByte(*i2cVal);
+  DEBUG_PutCRLF();
 
   i2c_rx(i2cAddr, &i2cRxCmd, i2cVal);
   if(i2cRxCmd == i2cCmd)
@@ -81,8 +94,16 @@ void i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8* i2cVal)
     setLed(1,0,0,50);
   }
   setLed(0,0,0,50);
+
   sprintf(lcd, ">I %1.1x %2.2x %2.2x %1.1d", (int)i2cAddr, (int)i2cCmd, (int)i2cVal, status);
   lcd_newline(lcd);
+  DEBUG_PutString(">I: addr: ");
+  DEBUG_PutHexByte(i2cAddr);
+  DEBUG_PutString(" cmd: ");
+  DEBUG_PutHexByte(i2cCmd);
+  DEBUG_PutString(" val: ");
+  DEBUG_PutHexByte(*i2cVal);
+  DEBUG_PutCRLF();
 }
 
 /*!
