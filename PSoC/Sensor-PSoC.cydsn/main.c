@@ -55,7 +55,7 @@ CY_ISR(Metronome_Interrupt)
     MetronomeTimer_ReadStatusRegister();
 
     incrCtrlFlag(DIST);
-//    incrCtrlFlag(LUMEN);
+    incrCtrlFlag(LUMEN);
     incrCtrlFlag(PIR);
     // Not DIST_ALERT
     incrCtrlFlag(MOVE_ALERT);
@@ -108,7 +108,7 @@ int main()
     DistTimerInt_StartEx(DistTimer_Interrupt);
     
     // Lumen sensor
-//    initLumenSensor();
+    initLumenSensor();
 
     // LED PWM
     GreenPWM_Start();
