@@ -1,29 +1,25 @@
-/* ========================================
- *
- * File: handler.c
- * Description: 
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- * 
- * Author: 
- * Matriculation number: 
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
-*/
+/*!
+ *  @file        Handler.c
+ *  @brief       Communication handler for the Sensor-PSoC (to PSoC4Master)
+ *  @author      Simon Nejmann (19981127@uni.au.dk)
+ */
 
 #include "handler.h"
 #include "SensorData.h"
+#include "LumenSensor.h"
 
+/*! Debug define. Comment out to suppress debug prints */
 #define DEBUG_ON
 
+/*!
+ *  @brief      Communication handler for the Sensor-PSoC
+ *  @param[in]  cmd The command to be executed
+ *  @param[in]  val Optional command argument
+ *  @public
+ *  @author      Simon Nejmann (19981127@uni.au.dk)
+ */
 void handler(uint8 cmd, uint8 val)
 {
-    int tmp;
     switch (cmd) {
         case cmdGetRed : 
             i2cTxBuffer[1] = cmd;
@@ -108,11 +104,8 @@ void handler(uint8 cmd, uint8 val)
             break;
 
         case cmdGetLumen : 
-            // Scale Lux to 1530 max, range 0-255
-            //  1530 chosen because 1530/255 = 6
-            tmp = (255 * sensorData.lux) / 1530;
             i2cTxBuffer[1] = cmd;
-            i2cTxBuffer[2] = (uint8)((tmp < 255) ? tmp : 255);
+            i2cTxBuffer[2] = scaleLuxToFF(sensorData.lux);
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdGetLumen ");
     DEBUG_PutHexByte(i2cTxBuffer[2]);
@@ -120,8 +113,7 @@ void handler(uint8 cmd, uint8 val)
 #endif
             break;
         case cmdSetLumen : 
-            // Scale Lux to 1530 max, range 0-255
-            sensorData.desiredLux = (val * 1530) / 255;
+            sensorData.desiredLux = scaleFFtoLux(val);
 #ifdef DEBUG_ON
     DEBUG_PutString("cmdSetLumen ");
     DEBUG_PutHexByte(sensorData.desiredLux);
@@ -188,4 +180,3 @@ void handler(uint8 cmd, uint8 val)
             break;
     }
 }
-/* [] END OF FILE */

@@ -55,6 +55,8 @@
 #include "I2CS_BOOT.h"
 #include "DEBUG.h"
 #include "DEBUG_PVT.h"
+#include "DistInterruptPin.h"
+#include "DistInterruptPin_aliases.h"
 #include "LumenCom_SCBCLK.h"
 #include "LumenCom_sda.h"
 #include "LumenCom_sda_aliases.h"

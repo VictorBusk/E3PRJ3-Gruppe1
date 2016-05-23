@@ -1,18 +1,21 @@
-/*
- * CircularMean.c
+/*!
+ *  @file        CircularMean.h
+ *  @brief       Circular buffer used for calculating the average of a series of values.
+ *  Queue is circular and can contain BUF_SIZE elements.
+ *      start points to the next element to overwrite.
+ *      num is the number of items inserted - it grows to BUF_SIZE and then stays there.
  *
- *  Author: Simon
+ *  @author      Simon Nejmann (19981127@uni.au.dk)
  */
 
 #include "CircularMean.h"
 
-/*
-    Queue is circular and can contain BUF_SIZE elements
-        start points to the next element to overwrite
-        num is the number of items inserted - it grows to BUF_SIZE and then stays there
-*/
-
-// Initialize a CircularMean struct
+/*!
+ *  @brief      Initialize a CircularMean struct
+ *  @param[in]  buf Pointer to the CircularMean to initialize
+ *  @public
+ *  @author     Simon Nejmann (19981127@uni.au.dk)
+ */
 void initCircularMean(struct CircularMean *buf)
 {
     int i;
@@ -23,7 +26,13 @@ void initCircularMean(struct CircularMean *buf)
 	buf->num = 0;
 }
 
-// Insert char in the end of the queue
+/*!
+ *  @brief      Insert value, possibly overwriting oldest entry
+ *  @param[in]  buf Pointer to the CircularMean to insert into
+ *  @param[in]  val Value to insert
+ *  @public
+ *  @author     Simon Nejmann (19981127@uni.au.dk)
+ */
 void insertValue(struct CircularMean *buf, int val)
 {
     buf->queue[buf->start] = val;
@@ -34,7 +43,13 @@ void insertValue(struct CircularMean *buf, int val)
     }
 }
 
-// Get the mean value of all the ints in the queue
+/*!
+ *  @brief      Get the average value of all the ints in the buffer
+ *  @param[in]  buf Pointer to the CircularMean
+ *  @param[out] The average value calculated
+ *  @public
+ *  @author     Simon Nejmann (19981127@uni.au.dk)
+ */
 int getMeanValue(struct CircularMean *buf)
 {
     if (buf->num == 0)
@@ -47,5 +62,3 @@ int getMeanValue(struct CircularMean *buf)
 
     return temp / buf->num;
 }
-
-/* [] END OF FILE */

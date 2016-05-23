@@ -16,6 +16,12 @@
  * ========================================
 */
 
+/*!
+ *  @file        Handler.h
+ *  @class       Handler
+ *  @brief       Communication handler for the Sensor-PSoC
+ *  @author      Jeppe Stærk (201271201@uni.au.dk)
+ */
 #ifndef HANDLER_H
 #define HANDLER_H
     

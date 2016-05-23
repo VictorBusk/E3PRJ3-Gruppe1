@@ -1,3 +1,9 @@
+/*!
+ * @file        lux.c
+ * @brief       Code copied from the "TSL2561 Light-to-digital converter" datasheet
+ * @author      TAOS, Inc.
+ */
+
 //****************************************************************************
 //
 // Copyright ? 2004−2005 TAOS, Inc.

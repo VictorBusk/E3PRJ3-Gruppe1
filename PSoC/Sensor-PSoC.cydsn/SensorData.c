@@ -1,27 +1,30 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
+/*!
+ * @file        SensorData.c
+ * @brief       Container for sensor data
+ * @author      Simon Nejmann (19981127@uni.au.dk)
+ */
 #include "SensorData.h"
 
 //#define DEBUG_ON
 
+/*!
+ *  @brief      Initializes the SensorData struct parts that need initial values
+ *  @public
+ *  @memberof   SensorData
+ * @author      Simon Nejmann (19981127@uni.au.dk)
+ */
 void initSensorData()
 {
     sensorData.desiredLux = 0;
     sensorData.desiredTimeDistance = 0;
-    sensorData.ledPower = 1;
-    sensorData.movementAlertOn = 0;
 
+    sensorData.movementAlertOn = 0;
     
-    // debug
+    sensorData.ledPower = 0;
+    sensorData.redPWMPct = 0;
+    sensorData.greenPWMPct = 0;
+    sensorData.bluePWMPct = 0;
+
 #ifdef DEBUG_ON
     sensorData.desiredTimeDistance = 580;
     sensorData.movementAlertOn = 1;
@@ -33,5 +36,3 @@ void initSensorData()
     
     initCircularMean(&sensorData.LumenMean);
 }
-
-/* [] END OF FILE */
