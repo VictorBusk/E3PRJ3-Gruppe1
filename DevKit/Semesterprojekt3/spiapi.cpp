@@ -1,11 +1,27 @@
+/*!
+ * @file        spiapi.cpp
+ * @brief       Handles spi communication
+ * @author      Victor Busk (201409557@post.au.dk)
+ */
+
 #include "spiapi.h"
 
+/*!
+ *  @brief      Initializes spiapi constructor
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
+
 SPIapi::SPIapi()
-{
+{}
 
-}
+/*!
+ *  @brief      Return the negative of the command if sending error occurs
+ *  @param[in]  cmd   Command to be handled.
+ *  @param[in]  val   Value to pass along with the command.
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
-int SPIapi::setPacket(unsigned char* cmd, unsigned char* value) const
+int SPIapi::setPacket(const unsigned char* cmd, unsigned char* value) const
 {
     int err;
 
@@ -14,6 +30,13 @@ int SPIapi::setPacket(unsigned char* cmd, unsigned char* value) const
 
     return 0;
 }
+
+/*!
+ *  @brief      Return the negative of the command if receiving error occurs
+ *  @param[in]  cmd   Command to be handled.
+ *  @param[in]  val   Value to pass along with the command.
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 int SPIapi::getPacket(unsigned char* cmd, unsigned int* value)
 {
@@ -25,7 +48,14 @@ int SPIapi::getPacket(unsigned char* cmd, unsigned int* value)
     return 0;
 }
 
-int SPIapi::sendPacket(unsigned char* cmd, unsigned char* data) const
+/*!
+ *  @brief      Sending value to the holder of the chosen command
+ *  @param[in]  cmd   Command to be handled.
+ *  @param[in]  val   Value to pass along with the command.
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
+
+int SPIapi::sendPacket(const unsigned char* cmd, unsigned char* data) const
 {
     int err, fp, txLen;
     unsigned int txPacket;
@@ -54,6 +84,13 @@ int SPIapi::sendPacket(unsigned char* cmd, unsigned char* data) const
 
     return 0;
 }
+
+/*!
+ *  @brief      Receiving value to the holder of the chosen command
+ *  @param[in]  cmd   Command to be handled.
+ *  @param[in]  val   Value to pass along with the command.
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 int SPIapi::receivePacket(unsigned char* cmd, unsigned int* data)
 {
@@ -97,3 +134,5 @@ int SPIapi::receivePacket(unsigned char* cmd, unsigned int* data)
 
     return 0;
 }
+
+/* [] END OF FILE */

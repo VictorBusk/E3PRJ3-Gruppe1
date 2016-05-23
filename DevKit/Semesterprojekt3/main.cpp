@@ -1,5 +1,10 @@
-#include "position.h"
-#include "plannerdialog.h"
+/*!
+ * @file        main.cpp
+ * @brief       Start application by showing maindisplay-UI
+ * @author      Victor Busk (201409557@post.au.dk)
+ */
+
+#include "maindisplay.h"
 
 int main(int argc, char *argv[])
 {

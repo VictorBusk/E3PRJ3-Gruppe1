@@ -381,11 +381,11 @@ void QVirtualKeyboard::buttonC4Function(void) // Contrôle le bouton C4 - Espace
 
 
 
-void QVirtualKeyboard::buttonC5Function(void) // Contrôle le bouton C5
-{
-    this->hide();
-    return;
-}
+//void QVirtualKeyboard::buttonC5Function(void) // Contrôle le bouton C5
+//{
+//    this->hide();
+//    return;
+//}
 
 
 

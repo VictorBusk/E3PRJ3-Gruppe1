@@ -10,13 +10,11 @@ class Light : public QWidget
 
 public:
     explicit Light(QWidget *parent = 0);
-    QColor color;
-
 
 private slots:
 
 private:
-    QColor rgbColor;
+
 };
 
 #endif // LIGHT_H
