@@ -19,7 +19,7 @@ SOURCES += main.cpp\
     planner.cpp \
     spiapi.cpp \
     QVirtualKeyboard.cpp \
-    sensor.cpp
+    settings.cpp
 
 HEADERS  += \
     plannerdialog.h \

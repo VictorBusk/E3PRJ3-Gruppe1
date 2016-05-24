@@ -39,6 +39,7 @@ private slots:
     void on_distanceChanged();
     void on_movementChanged();
     void on_lumenChanged();
+    void on_calButton_pressed();
 
 private:
     Ui::MainDisplay *ui;
