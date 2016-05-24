@@ -17,7 +17,7 @@
 void initSensorData()
 {
     sensorData.desiredLux = 0;
-    sensorData.desiredTimeDistance = 0;
+    sensorData.desiredTimeDistance = 580;
 
     sensorData.movementAlertOn = 0;
     
@@ -27,7 +27,6 @@ void initSensorData()
     sensorData.bluePWMPct = 0;
 
 #ifdef DEBUG_ON
-    sensorData.desiredTimeDistance = 580;
     sensorData.desiredLux = 0;
     sensorData.movementAlertOn = 1;
     sensorData.ledPower = 1;
