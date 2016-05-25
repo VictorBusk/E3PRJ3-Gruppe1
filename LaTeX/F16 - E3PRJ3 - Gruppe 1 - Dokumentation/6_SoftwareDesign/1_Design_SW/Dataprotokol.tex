@@ -1,0 +1,319 @@
+% 6.1.1 Dataprotokol
+\subsection{Dataprotokol}
+
+\subsubsection{Kommandoer}
+
+Igennem hele systemet benyttes os af 8-bit hex kommandoer jf. tabel \ref{tab:kommandoTabel}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|l|l|l|l|l|l|}
+    \hline
+        \textbf{Hex} &
+        \textbf{Kommando} &
+        \textbf{Parameter} &
+        \textbf{Retur værdi} &
+        \textbf{Fra enhed} &
+        \textbf{Til enhed} &
+        \textbf{Interface}\\
+    \hline
+        0x11 &
+        setX &
+        unsigned char &
+        ingen &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x12 &
+        setY &
+        unsigned char &
+        ingen &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x13 &
+        setZ &
+        unsigned char &
+        ingen &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x21 &
+        setR &
+        unsigned char &
+        ingen &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x22 &
+        setG &
+        unsigned char &
+        ingen &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x23 &
+        setB &
+        unsigned char &
+        ingen &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x31 &
+        getX &
+        ingen &
+        unsigned char* &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x32 &
+        getY &
+        ingen &
+        unsigned char* &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x33 &
+        getZ &
+        ingen &
+        unsigned char* &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x41 &
+        getR &
+        ingen &
+        unsigned char* &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x62 &
+        getG &
+        ingen &
+        unsigned char* &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x43 &
+        getB &
+        ingen &
+        unsigned char* &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x50 &
+        cmdCalibrate &
+        ingen &
+        ingen &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x51 &
+        cmdStatus &
+        ingen &
+        unsigned char* &
+        DevKit &
+        PSoC Master &
+        SPI \\
+    \hline
+        0x60 &
+        cmdDistanceAlert &
+        ingen &
+        ingen &
+        PSoC Sensor &
+        PSoC Master &
+        I2C \\
+    \hline
+        0x70 &
+        cmdCalibrate &
+        ingen &
+        ingen &
+        PSoC Master &
+        PSoC XY &
+        I2C \\
+    \hline
+        0x71 &
+        setX &
+        unsigned char &
+        ingen &
+        PSoC Master &
+        PSoC XY &
+        I2C \\
+    \hline
+        0x72 &
+        setY &
+        unsigned char &
+        ingen &
+        PSoC Master &
+        PSoC XY &
+        I2C \\
+    \hline
+        0x75 &
+        getX &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC XY &
+        I2C \\
+    \hline
+        0x76 &
+        getY &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC XY &
+        I2C \\
+    \hline
+        0x77 &
+        getXMax &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC XY &
+        I2C \\
+    \hline
+        0x78 &
+        getYMax &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC XY &
+        I2C \\
+    \hline
+        0x80 &
+        cmdCalibrate &
+        ingen &
+        ingen &
+        PSoC Master &
+        PSoC Z &
+        I2C \\
+    \hline
+        0x81 &
+        setZ &
+        unsigned char &
+        ingen &
+        PSoC Master &
+        PSoC Z &
+        I2C \\
+    \hline
+        0x85 &
+        getZ &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC Z &
+        I2C \\
+    \hline
+        0x86 &
+        getZMax &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC Z &
+        I2C \\
+    \hline
+        0x89 &
+        cmdDistanceAlert &
+        ingen &
+        ingen &
+        PSoC Master &
+        PSoC Z &
+        I2C \\
+    \hline
+        0x90 &
+        cmdCalibrate &
+        ingen &
+        ingen &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x91 &
+        setR &
+        unsigned char &
+        ingen &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x92 &
+        setG &
+        unsigned char &
+        ingen &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x93 &
+        setB &
+        unsigned char &
+        ingen &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x94 &
+        setLumen &
+        unsigned char &
+        ingen &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x95 &
+        getPower &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x96 &
+        getR &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x97 &
+        getG &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x98 &
+        getB &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+        0x99 &
+        getLumen &
+        ingen &
+        unsigned char* &
+        PSoC Master &
+        PSoC Sensor &
+        I2C \\
+    \hline
+    \end{tabular}
+    \caption{Kommandoer tabel}
+    \label{tab:kommandoTabel}
+\end{table}

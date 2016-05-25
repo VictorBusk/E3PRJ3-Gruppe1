@@ -1,0 +1,15 @@
+\section{Analyse}
+
+I udviklingen af projektet har vi haft flere overvejelser med hensyn til forskellige design muligheder. For eksempel har vores projekt brug for at vide hvor langt de forskellige motorer har kørt, og der har været flere forskellige forslag i diskussion om hvordan det skulle realiseres. Nogle af de muligheder der blev drøftet var: Ultrasoniske afstandssensore på vognene, lineære position sensorer, optiske sensorer der aflæser stregkoder. Men i sidste ende faldt valget på det der blev opfattet som det enkleste at implementere: Steppermotorer.
+
+\subsection{Motorvalg}
+
+Som nævnt blev det besluttet at bruge steppermotorer for at gøre positioneringen nemmere. Derefter blev de specifikke motorer udvalgt efter krav om at de skulle være tilgængelige i Embedded Stock, skulle kunne køre på 5V forsyning, og helst være så simple at montere på vores prototype som muligt.
+
+\subsection{sensorer}
+
+De fleste valg af sensorer blev meget simple, da Embedded Stock kun havde en enkelt model af de typer vi skulle bruge. Men da de tilgængelige sensorer opfyldte projektets basale krav blev det vurderet at ikke var pengene værd at indkøbe nye typer.
+
+Både PIR\footnote{Passive infrared - bevægelsessensor} sensor model og afstandssensor model blev valgt ved at det var de eneste tilgængelige i Embedded Stock.
+
+Derimod var der flere forskellige modeller af lumen sensorer tilgængelig, og TSL2561 blev valgt efter gennemlæsning af datablade, som beskrevet i \cite{documentation}. Kort opsummeret blev TSL2561 udvalgt på grund af at den havde et fornuftigt frekvensrespons i det synlige spektrum og at den brugte I2C protokollen.

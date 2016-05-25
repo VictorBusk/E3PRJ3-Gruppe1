@@ -1,0 +1,60 @@
+\subsection{UC1: Kalibrer system}
+
+\begin{center} \centering
+	\begin{longtable}{|p{6cm}|p{8cm}|}
+	\hline
+		\multicolumn{2}{|l|}{\textbf{UC1: Kalibrer system}} \\\hline
+		\endfirsthead
+		
+		\multicolumn{2}{l}{...fortsat fra forrige side} \\ \hline 
+		\multicolumn{2}{|l|}{\textbf{UC1: Kalibrer system}} \\\hline
+		\endhead	
+		
+		\multicolumn{2}{r}{fortsættes på næste side...} \\
+        \endfoot
+        \endlastfoot
+
+        \textbf{Mål}								
+            & Systemet bliver kalibreret og klar til brug.
+        \\ \hline
+        \textbf{Initialisering}					
+            & Brugeren trykker på ”Kalibrer” på touchskærmen.
+        \\ \hline
+        \textbf{Aktører og Stakeholders}			
+            & Bruger.
+        \\ \hline
+        \textbf{Referencer}						
+            & Ingen.
+        \\ \hline
+        \textbf{Antal af samtidige hændelser}	
+            & Ingen.
+        \\ \hline
+        \textbf{Forudsætning}					
+            & Systemet er tændt og funktionsdygtigt.
+        \\ \hline
+        \textbf{Efterfølgende tilstand}			
+            & Systemet er kalibreret og klar til brug.
+        \\ \hline
+        \textbf{Hovedforløb}						
+            & 
+            \begin{enumerate}
+                \item Bruger trykker ”Kalibrer” på touchskærmen
+                \item Z-Motor kører i top.
+                \item Z-Motor registrerer når den rammer switchen i top, og sætter Z-værdien til nul på Z-PSoC'en
+                \item X-motorerne kører i bund i den ene ende af skinnerne i loftet, og derefter til modsatte ende.
+                \item Antal steps det tager X-motorerne at køre fra en ende til den anden gemmes på X-PSoC'en.
+                \item Y-motoren kører i bund i den ene ende af skinnen, hvorefter den kører til den modsatte ende.
+                \item Antal steps det tager Y-motorerne at køre fra en ende til den anden gemmes på Y-PSoC'en.
+                \item Systemet er nu kalibreret og viser beskeden “Kalibrering udført” på touchskærmen.
+            \end{enumerate}
+        \\ \hline
+        \textbf{Undtagelser}						
+            & [Generel undtagelse 1: Kalibrering fejler]
+            \begin{enumerate}
+			    \item System stopper motorer
+			    \item System viser beskeden “Kalibrering fejlet, tilkald tekniker” på touchskærmen.
+		    \end{enumerate}
+        \\ \hline
+	\end{longtable}
+	\label{UC1} 
+\end{center}

@@ -1,0 +1,61 @@
+%TC:ignore
+\input{preamble}
+\raggedbottom
+
+\addbibresource{Referenceliste.bib}
+\immediate\write18{texcount -merge -char main.tex -out=char.sum}
+\immediate\write18{texcount -merge main.tex -out=word.sum}
+
+\begin{document}
+%TC:endignore
+
+% 0. Resumé
+\include{00_Resume_Abstract/Resume}
+
+% 0. Abstract
+\include{00_Resume_Abstract/Abstract}
+
+\tableofcontents*
+
+% 1. Forord
+\include{01_Forord/Forord}
+
+% 2. Indledning
+\include{02_Indledning/Indledning}
+
+% 3. Krav
+\include{03_Krav/Krav}
+
+% 4. Afgrænsning
+\include{04_Afgraensning/Afgraensning}
+
+% 5. Realisering
+\include{05_Realisering/Realisering}
+
+% 6. Resultater
+\include{06_Resultater/Resultater}
+
+% 7. Diskussion af resultater
+\include{07_Diskussion_af_resultater/Diskussion_af_resultater}
+
+% 8. Fremtidigt arbejde
+\include{08_Fremtidigt_arbejde/Fremtidigt_arbejde}
+
+% 9. Konklusion
+\include{09_Konklusion/Konklusion}
+
+% 10. Referenceliste
+\include{10_Referenceliste/Referenceliste}
+
+\printbibliography[heading=bibintoc,title={Referenceliste}]
+\clearpage
+
+%TC:ignore
+\verbatiminput{char.sum}
+\clearpage
+
+\verbatiminput{word.sum}
+\clearpage
+
+\end{document}
+%TC:endignore

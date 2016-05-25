@@ -1,0 +1,75 @@
+\section{Protokol}
+
+En del data skal flyttes mellem DevKit, PSoC-Master med SPI og mellem PSoC-Master og PSoC-XY, PSoC-Z og PSoC-Sensor med I2C. Her følger beskrivelsen af hvordan kommunikationen over hhv. SPI og I2C forgår.
+
+\subsection{SPI}
+
+Opsætning er som følger:
+\begin{itemize}
+    \item Hastighed: 1 MHz
+    \item SPI mode: 3 (CPOL 1 - CPHA 1)
+    \item Antal bits: 16
+\end{itemize}
+
+Hastigheden er valgt på baggrund af Hal Exercise7\footnote{Hardware abstraktioner. Exercise 7: LDD with SPI. Øvelse med SPI Kommunikation}, PSoC kan dog køre med op til 8 MHz, men der er valgt en lavere hastighed da det vil give en større stabilitet.
+
+\subsubsection{Kommandoer til SPI}
+
+\subsection{I2C}
+
+\begin{table}[H]
+\caption{Master sender en commando og tilhørende værdi}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+\multicolumn{8}{|c|}{1. Byte} & ACK & \multicolumn{8}{|c|}{2. Byte} & ACK \\
+\hline 
+\textbf{7} & \textbf{6} & \textbf{5} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{0} & \textbf{} & \textbf{7} & \textbf{6} & \textbf{5} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{0} & \textbf{} \\
+\hline 
+MSB & & & & & & & LSB & & \multicolumn{8}{|c|}{Most signifiant  byte} & \\ 
+\hline
+\multicolumn{8}{|c|}{1. Byte send to slave} & by & \multicolumn{8}{|c|}{2. Byte send to slave} & by \\
+\hline
+\multicolumn{7}{|c|}{Adress slave} & R/W & slave & \multicolumn{8}{|c|}{Command send to slave} & slave\\
+\hline \hline
+\multicolumn{8}{|c|}{3. Byte} & ACK & \multicolumn{8}{|c|}{4. Byte} & ACK \\
+\hline
+\textbf{7} & \textbf{6} & \textbf{5} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{0} & \textbf{} & \textbf{7} & \textbf{6} & \textbf{5} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{0} & \textbf{} \\
+\hline
+\multicolumn{8}{|c|}{} & & \multicolumn{8}{|c|}{} & \\
+\hline
+\multicolumn{8}{|c|}{Data send to slave} & by & \multicolumn{8}{|c|}{Data send to slave} & by \\
+\hline
+\multicolumn{8}{|c|}{3. Byte send to slave} & slave & \multicolumn{8}{|c|}{4. Byte send to slave} & slave \\
+\hline \hline
+\multicolumn{8}{|c|}{5. Byte} & ACK & \multicolumn{8}{|c|}{} & \\
+\hline
+\textbf{7} & \textbf{6} & \textbf{5} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{0} & \textbf{} & \multicolumn{8}{|c|}{} & \textbf{} \\
+\hline
+\multicolumn{8}{|c|}{Least signifiant  byte} & & \multicolumn{8}{|c|}{} & \\
+\hline
+\multicolumn{8}{|c|}{Data send to slave} & by & \multicolumn{8}{|c|}{} & \\
+\hline
+\multicolumn{8}{|c|}{5. Byte send to slave} & slave & \multicolumn{8}{|c|}{} & \\
+\hline
+\end{tabular}
+\label{tabel:I2CMasterData}
+\end{table} 
+
+\begin{table}[H]
+\caption{2. Master modtager data}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{7} & \textbf{6} & \textbf{5} & \textbf{4} & \textbf{3} & \textbf{2} & \textbf{1} & \textbf{0}\\ 
+\hline 
+MSB & & & & & & & LSB \\ 
+\hline
+\multicolumn{8}{|c|}{Byte read from slave} \\
+\hline
+\end{tabular}
+\label{tabel:I2CMasterCommando}
+\end{table} 
+
+Efter hver modtaget byte sender masteren en ACK til slaven ved at sætte SDA lav og generere en clock-puls. Herefter overtager slaven igen SDA.
+Efter sidste modtaget byte, sender masteren i stedet STOP ved at sætte SCL høj og derefter SDA høj og bussen er derefter frigivet igen.
