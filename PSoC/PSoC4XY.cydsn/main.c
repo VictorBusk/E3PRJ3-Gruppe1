@@ -33,10 +33,16 @@ int main()
     xy_init();
     i2c_init();
     
+    DEBUG_PutCRLF();
+    DEBUG_PutString("===== Initializing PSoC XY =====");
+    DEBUG_PutCRLF();
+    
     setLed(0,1,0);
     CyDelay(100);
     setLed(0,0,0);
     
+    xy_start();
+
     for(;;)
     {
         if(SW2_Read() == 0u)
@@ -53,7 +59,6 @@ int main()
             }
         }
         
-        i2c_rx();
         while(isEmptyQueue() != 1)
         {
             struct Data action;

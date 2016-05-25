@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC4Master.v generated from TopDesign.cysch
-// 05/24/2016 at 01:49
+// 05/24/2016 at 14:08
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -1306,10 +1306,10 @@ module top ;
           wire  Net_12;
           wire  Net_11;
           wire  Net_10;
+    electrical  Net_833;
     electrical  Net_828;
     electrical  Net_826;
     electrical  Net_827;
-    electrical  Net_342;
     electrical  Net_300;
     electrical  Net_380;
     electrical  Net_353;
@@ -1362,7 +1362,7 @@ module top ;
             Net_753,
             Net_754,
             Net_561,
-            Net_342,
+            Net_833,
             Net_567,
             Net_832,
             Net_831,
@@ -1384,7 +1384,7 @@ module top ;
 
     cy_annotation_universal_v1_0 I2C_BUS (
         .connect({
-            Net_342,
+            Net_833,
             Net_760,
             Net_761,
             Net_762,
@@ -2053,7 +2053,7 @@ module top ;
         .Terminal_44(Net_339),
         .Terminal_45(Net_561),
         .Terminal_46(Net_831),
-        .Terminal_47(Net_342),
+        .Terminal_47(Net_833),
         .Terminal_48(Net_789),
         .Terminal_49(Net_558),
         .Terminal_50(Net_546),

@@ -26,6 +26,7 @@
 #define resolution (255u) 
     
 void xy_init(void);
+void xy_start(void);
 CY_ISR_PROTO(isr_X);
 CY_ISR_PROTO(isr_Y);
 void calibrateX(void);

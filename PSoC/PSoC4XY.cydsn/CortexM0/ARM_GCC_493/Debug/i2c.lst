@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 1
 
 
    1              		.cpu cortex-m0
@@ -17,14 +17,14 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.isr_i2c_rx,"ax",%progbits
+  17              		.section	.text.I2CS_I2C_ISR_ExitCallback,"ax",%progbits
   18              		.align	2
-  19              		.global	isr_i2c_rx
+  19              		.global	I2CS_I2C_ISR_ExitCallback
   20              		.code	16
   21              		.thumb_func
-  22              		.type	isr_i2c_rx, %function
-  23              	isr_i2c_rx:
-  24              	.LFB37:
+  22              		.type	I2CS_I2C_ISR_ExitCallback, %function
+  23              	I2CS_I2C_ISR_ExitCallback:
+  24              	.LFB34:
   25              		.file 1 ".\\i2c.c"
    1:.\i2c.c       **** /* ========================================
    2:.\i2c.c       ****  *
@@ -45,1768 +45,1844 @@ ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 1
   17:.\i2c.c       **** */
   18:.\i2c.c       **** 
   19:.\i2c.c       **** #include "i2c.h"
-  20:.\i2c.c       **** #include "data.h"
-  21:.\i2c.c       **** #include "handler.h"
-  22:.\i2c.c       **** #include "led.h"
-  23:.\i2c.c       **** #include "queue.h"
-  24:.\i2c.c       **** 
-  25:.\i2c.c       **** uint8 i2cTxBuffer[I2C_BUFFER_SIZE] = {I2C_PACKET_SOP, I2C_STS_CMD_FAIL, I2C_STS_CMD_FAIL, I2C_PACKE
-  26:.\i2c.c       **** uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
-  27:.\i2c.c       **** 
-  28:.\i2c.c       **** void i2c_init()
-  29:.\i2c.c       **** {
-  30:.\i2c.c       ****     I2CS_I2CSlaveInitReadBuf(i2cTxBuffer, I2C_BUFFER_SIZE);
-  31:.\i2c.c       ****     I2CS_I2CSlaveClearReadBuf();
-  32:.\i2c.c       ****     I2CS_I2CSlaveClearReadStatus();
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 2
-
-
-  33:.\i2c.c       ****     
-  34:.\i2c.c       ****     I2CS_I2CSlaveInitWriteBuf(i2cRxBuffer, I2C_BUFFER_SIZE);
-  35:.\i2c.c       ****     I2CS_I2CSlaveClearWriteBuf();
-  36:.\i2c.c       ****     I2CS_I2CSlaveClearWriteStatus();
-  37:.\i2c.c       ****     
-  38:.\i2c.c       ****     I2CS_SetCustomInterruptHandler(isr_i2c_rx);
-  39:.\i2c.c       ****     I2CS_SetSlaveInterruptMode(I2CS_INTR_SLAVE_I2C_WRITE_STOP);
-  40:.\i2c.c       ****   
-  41:.\i2c.c       ****     I2CS_Start();
-  42:.\i2c.c       **** }
-  43:.\i2c.c       **** 
-  44:.\i2c.c       **** void i2c_rx()
-  45:.\i2c.c       **** {
-  46:.\i2c.c       ****   if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_WR_CMPLT))
-  47:.\i2c.c       ****   {
-  48:.\i2c.c       ****     setLed(0,0,1);
-  49:.\i2c.c       ****     if(I2C_BUFFER_SIZE == I2CS_I2CSlaveGetWriteBufSize())
-  50:.\i2c.c       ****     {
-  51:.\i2c.c       ****       if((i2cRxBuffer[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxBuffer[I2C_PACKET_EOP_POS] ==
-  52:.\i2c.c       ****       {
-  53:.\i2c.c       ****         setLed(0,1,0);
-  54:.\i2c.c       ****         struct Data action;
-  55:.\i2c.c       ****         
-  56:.\i2c.c       ****         action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
-  57:.\i2c.c       ****         action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
-  58:.\i2c.c       ****         
-  59:.\i2c.c       ****         pushQueue(action);
-  60:.\i2c.c       ****       }
-  61:.\i2c.c       ****       else
-  62:.\i2c.c       ****       {
-  63:.\i2c.c       ****         setLed(1,0,0);
-  64:.\i2c.c       ****       }
-  65:.\i2c.c       ****     }
-  66:.\i2c.c       ****     I2CS_I2CSlaveClearWriteBuf();
-  67:.\i2c.c       ****     (void) I2CS_I2CSlaveClearWriteStatus();
-  68:.\i2c.c       ****     setLed(0,0,0);
-  69:.\i2c.c       ****   }
-  70:.\i2c.c       **** }
-  71:.\i2c.c       **** 
-  72:.\i2c.c       **** void i2c_tx()
-  73:.\i2c.c       **** {
-  74:.\i2c.c       ****     if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_RD_CMPLT))
-  75:.\i2c.c       ****     {
-  76:.\i2c.c       ****         I2CS_I2CSlaveClearReadBuf();
-  77:.\i2c.c       ****         (void) I2CS_I2CSlaveClearReadStatus();   
-  78:.\i2c.c       ****     }   
-  79:.\i2c.c       **** }
-  80:.\i2c.c       **** 
-  81:.\i2c.c       **** CY_ISR(isr_i2c_rx)
-  82:.\i2c.c       **** {
-  26              		.loc 1 82 0
+  20:.\i2c.c       **** #include "cyapicallbacks.h"
+  21:.\i2c.c       **** #include "data.h"
+  22:.\i2c.c       **** #include "handler.h"
+  23:.\i2c.c       **** #include "led.h"
+  24:.\i2c.c       **** #include "queue.h"
+  25:.\i2c.c       **** 
+  26:.\i2c.c       **** uint8 i2cTxBuffer[I2C_BUFFER_SIZE] = {I2C_PACKET_SOP, I2C_STS_CMD_FAIL, I2C_STS_CMD_FAIL, I2C_PACKE
+  27:.\i2c.c       **** uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
+  28:.\i2c.c       **** 
+  29:.\i2c.c       **** void I2CS_I2C_ISR_ExitCallback()
+  30:.\i2c.c       **** {
+  26              		.loc 1 30 0
   27              		.cfi_startproc
-  28 0000 00B5     		push	{lr}
-  29              		.cfi_def_cfa_offset 4
-  30              		.cfi_offset 14, -4
-  31 0002 83B0     		sub	sp, sp, #12
-  32              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 3
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 2
 
 
-  83:.\i2c.c       ****     if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_WR_CMPLT))
-  33              		.loc 1 83 0
-  34 0004 FFF7FEFF 		bl	I2CS_I2CSlaveStatus
-  35              	.LVL0:
-  36 0008 C306     		lsl	r3, r0, #27
-  37 000a 36D4     		bmi	.L2
-  38 000c 3DE0     		b	.L3
-  39              	.L10:
-  84:.\i2c.c       ****     {
-  85:.\i2c.c       ****         while(I2CS_I2CSlaveGetWriteBufSize() > 0)
-  86:.\i2c.c       ****         {
-  87:.\i2c.c       ****             setLed(0,0,1);
-  40              		.loc 1 87 0
-  41 000e 0020     		mov	r0, #0
-  42 0010 0021     		mov	r1, #0
-  43 0012 0122     		mov	r2, #1
-  44 0014 FFF7FEFF 		bl	setLed
-  45              	.LVL1:
-  88:.\i2c.c       ****             if(I2C_BUFFER_SIZE == I2CS_I2CSlaveGetWriteBufSize())
-  46              		.loc 1 88 0
-  47 0018 FFF7FEFF 		bl	I2CS_I2CSlaveGetWriteBufSize
-  48              	.LVL2:
-  49 001c 0428     		cmp	r0, #4
-  50 001e 27D1     		bne	.L4
-  89:.\i2c.c       ****             {
-  90:.\i2c.c       ****                 if((i2cRxBuffer[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxBuffer[I2C_PACKET_E
-  51              		.loc 1 90 0
-  52 0020 1D4B     		ldr	r3, .L12
-  53 0022 1B78     		ldrb	r3, [r3]
-  54 0024 BE2B     		cmp	r3, #190
-  55 0026 1ED1     		bne	.L5
-  56              		.loc 1 90 0 is_stmt 0 discriminator 1
-  57 0028 1B4B     		ldr	r3, .L12
-  58 002a DB78     		ldrb	r3, [r3, #3]
-  59 002c EF2B     		cmp	r3, #239
-  60 002e 1AD1     		bne	.L5
-  61              	.LBB2:
-  91:.\i2c.c       ****                 {
-  92:.\i2c.c       ****                     struct Data action;
-  93:.\i2c.c       ****                     setLed(0,1,0);
-  62              		.loc 1 93 0 is_stmt 1
-  63 0030 0020     		mov	r0, #0
-  64 0032 0121     		mov	r1, #1
-  65 0034 0022     		mov	r2, #0
-  66 0036 FFF7FEFF 		bl	setLed
-  67              	.LVL3:
-  94:.\i2c.c       ****                     
-  95:.\i2c.c       ****                     switch(i2cRxBuffer[I2C_PACKET_CMD_POS]) {
-  68              		.loc 1 95 0
-  69 003a 174B     		ldr	r3, .L12
-  70 003c 5878     		ldrb	r0, [r3, #1]
-  71 003e 1028     		cmp	r0, #16
-  72 0040 02D0     		beq	.L7
-  73 0042 1128     		cmp	r0, #17
-  74 0044 04D0     		beq	.L8
-  75 0046 07E0     		b	.L11
-  76              	.L7:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 4
+  28 0000 10B5     		push	{r4, lr}
+  29              		.cfi_def_cfa_offset 8
+  30              		.cfi_offset 4, -8
+  31              		.cfi_offset 14, -4
+  32 0002 82B0     		sub	sp, sp, #8
+  33              		.cfi_def_cfa_offset 16
+  31:.\i2c.c       ****     if(I2CS_I2CSlaveGetWriteBufSize() == I2C_BUFFER_SIZE)
+  34              		.loc 1 31 0
+  35 0004 FFF7FEFF 		bl	I2CS_I2CSlaveGetWriteBufSize
+  36              	.LVL0:
+  37 0008 0428     		cmp	r0, #4
+  38 000a 54D1     		bne	.L1
+  39              	.LBB2:
+  32:.\i2c.c       ****     {
+  33:.\i2c.c       ****         DEBUG_PutCRLF();
+  40              		.loc 1 33 0
+  41 000c FFF7FEFF 		bl	DEBUG_PutCRLF
+  42              	.LVL1:
+  34:.\i2c.c       ****         DEBUG_PutString("** isr exit callback **");
+  43              		.loc 1 34 0
+  44 0010 2A48     		ldr	r0, .L8
+  45 0012 FFF7FEFF 		bl	DEBUG_PutString
+  46              	.LVL2:
+  35:.\i2c.c       ****         DEBUG_PutCRLF();
+  47              		.loc 1 35 0
+  48 0016 FFF7FEFF 		bl	DEBUG_PutCRLF
+  49              	.LVL3:
+  36:.\i2c.c       ****         DEBUG_PutString("I> i2cRxBuffer[0]: ");
+  50              		.loc 1 36 0
+  51 001a 2948     		ldr	r0, .L8+4
+  52 001c FFF7FEFF 		bl	DEBUG_PutString
+  53              	.LVL4:
+  37:.\i2c.c       ****         DEBUG_PutHexByte(i2cRxBuffer[0]);
+  54              		.loc 1 37 0
+  55 0020 284C     		ldr	r4, .L8+8
+  56 0022 2078     		ldrb	r0, [r4]
+  57 0024 FFF7FEFF 		bl	DEBUG_PutHexByte
+  58              	.LVL5:
+  38:.\i2c.c       ****         DEBUG_PutString(" [1]: ");
+  59              		.loc 1 38 0
+  60 0028 2748     		ldr	r0, .L8+12
+  61 002a FFF7FEFF 		bl	DEBUG_PutString
+  62              	.LVL6:
+  39:.\i2c.c       ****         DEBUG_PutHexByte(i2cRxBuffer[1]);
+  63              		.loc 1 39 0
+  64 002e 6078     		ldrb	r0, [r4, #1]
+  65 0030 FFF7FEFF 		bl	DEBUG_PutHexByte
+  66              	.LVL7:
+  40:.\i2c.c       ****         DEBUG_PutString(" [2]: ");
+  67              		.loc 1 40 0
+  68 0034 2548     		ldr	r0, .L8+16
+  69 0036 FFF7FEFF 		bl	DEBUG_PutString
+  70              	.LVL8:
+  41:.\i2c.c       ****         DEBUG_PutHexByte(i2cRxBuffer[2]);
+  71              		.loc 1 41 0
+  72 003a A078     		ldrb	r0, [r4, #2]
+  73 003c FFF7FEFF 		bl	DEBUG_PutHexByte
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 3
 
 
-  96:.\i2c.c       ****                         case CMD_SET_X_POS :
-  97:.\i2c.c       ****                             dataXY.isrStopX = 1;
-  77              		.loc 1 97 0
-  78 0048 0122     		mov	r2, #1
-  79 004a 144B     		ldr	r3, .L12+4
-  80 004c 1A71     		strb	r2, [r3, #4]
-  98:.\i2c.c       ****                             break;
-  81              		.loc 1 98 0
-  82 004e 0FE0     		b	.L4
-  83              	.L8:
-  99:.\i2c.c       ****                         case CMD_SET_Y_POS :
- 100:.\i2c.c       ****                             dataXY.isrStopY = 1;
-  84              		.loc 1 100 0
-  85 0050 0122     		mov	r2, #1
-  86 0052 124B     		ldr	r3, .L12+4
-  87 0054 5A71     		strb	r2, [r3, #5]
- 101:.\i2c.c       ****                             break;
-  88              		.loc 1 101 0
-  89 0056 0BE0     		b	.L4
-  90              	.L11:
- 102:.\i2c.c       ****                         default :                      
- 103:.\i2c.c       ****                             action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
-  91              		.loc 1 103 0
-  92 0058 0090     		str	r0, [sp]
- 104:.\i2c.c       ****                             action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
-  93              		.loc 1 104 0
-  94 005a 0F4B     		ldr	r3, .L12
-  95 005c 9978     		ldrb	r1, [r3, #2]
-  96 005e 0191     		str	r1, [sp, #4]
- 105:.\i2c.c       ****                             pushQueue(action);
-  97              		.loc 1 105 0
-  98 0060 FFF7FEFF 		bl	pushQueue
-  99              	.LVL4:
- 100              	.LBE2:
-  91:.\i2c.c       ****                     struct Data action;
- 101              		.loc 1 91 0
- 102 0064 04E0     		b	.L4
- 103              	.L5:
- 106:.\i2c.c       ****                             break;                    
- 107:.\i2c.c       ****                     }
- 108:.\i2c.c       ****                 }
- 109:.\i2c.c       ****                  else
- 110:.\i2c.c       ****                 {
- 111:.\i2c.c       ****                     setLed(1,0,0);
- 104              		.loc 1 111 0
- 105 0066 0120     		mov	r0, #1
- 106 0068 0021     		mov	r1, #0
- 107 006a 0022     		mov	r2, #0
- 108 006c FFF7FEFF 		bl	setLed
- 109              	.LVL5:
- 110              	.L4:
- 112:.\i2c.c       ****                 }
- 113:.\i2c.c       ****             }
- 114:.\i2c.c       ****             setLed(0,0,0);
- 111              		.loc 1 114 0
- 112 0070 0020     		mov	r0, #0
- 113 0072 0021     		mov	r1, #0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 5
+  74              	.LVL9:
+  42:.\i2c.c       ****         DEBUG_PutString(" [3]: ");
+  75              		.loc 1 42 0
+  76 0040 2348     		ldr	r0, .L8+20
+  77 0042 FFF7FEFF 		bl	DEBUG_PutString
+  78              	.LVL10:
+  43:.\i2c.c       ****         DEBUG_PutHexByte(i2cRxBuffer[3]);
+  79              		.loc 1 43 0
+  80 0046 E078     		ldrb	r0, [r4, #3]
+  81 0048 FFF7FEFF 		bl	DEBUG_PutHexByte
+  82              	.LVL11:
+  44:.\i2c.c       ****         DEBUG_PutString(" buffer size: ");
+  83              		.loc 1 44 0
+  84 004c 2148     		ldr	r0, .L8+24
+  85 004e FFF7FEFF 		bl	DEBUG_PutString
+  86              	.LVL12:
+  45:.\i2c.c       ****         DEBUG_PutHexByte(I2CS_I2CSlaveGetWriteBufSize());
+  87              		.loc 1 45 0
+  88 0052 FFF7FEFF 		bl	I2CS_I2CSlaveGetWriteBufSize
+  89              	.LVL13:
+  90 0056 C0B2     		uxtb	r0, r0
+  91 0058 FFF7FEFF 		bl	DEBUG_PutHexByte
+  92              	.LVL14:
+  46:.\i2c.c       ****         DEBUG_PutCRLF();
+  93              		.loc 1 46 0
+  94 005c FFF7FEFF 		bl	DEBUG_PutCRLF
+  95              	.LVL15:
+  47:.\i2c.c       ****         
+  48:.\i2c.c       ****         struct Data action;
+  49:.\i2c.c       ****         action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
+  96              		.loc 1 49 0
+  97 0060 6378     		ldrb	r3, [r4, #1]
+  98 0062 0093     		str	r3, [sp]
+  50:.\i2c.c       ****         action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
+  99              		.loc 1 50 0
+ 100 0064 A278     		ldrb	r2, [r4, #2]
+ 101 0066 0192     		str	r2, [sp, #4]
+  51:.\i2c.c       ****     
+  52:.\i2c.c       ****         switch(i2cRxBuffer[I2C_PACKET_CMD_POS]) {
+ 102              		.loc 1 52 0
+ 103 0068 102B     		cmp	r3, #16
+ 104 006a 02D0     		beq	.L4
+ 105 006c 112B     		cmp	r3, #17
+ 106 006e 0DD0     		beq	.L5
+ 107 0070 19E0     		b	.L7
+ 108              	.L4:
+  53:.\i2c.c       ****             case CMD_SET_X_POS :                            
+  54:.\i2c.c       ****                 dataXY.isrStopX = 1;
+ 109              		.loc 1 54 0
+ 110 0072 0122     		mov	r2, #1
+ 111 0074 184B     		ldr	r3, .L8+28
+ 112 0076 1A71     		strb	r2, [r3, #4]
+  55:.\i2c.c       ****                 DEBUG_PutString(") isrStopX = 1");
+ 113              		.loc 1 55 0
+ 114 0078 1848     		ldr	r0, .L8+32
+ 115 007a FFF7FEFF 		bl	DEBUG_PutString
+ 116              	.LVL16:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 4
 
 
- 114 0074 0022     		mov	r2, #0
- 115 0076 FFF7FEFF 		bl	setLed
- 116              	.LVL6:
- 117              	.L2:
-  85:.\i2c.c       ****         {
- 118              		.loc 1 85 0
- 119 007a FFF7FEFF 		bl	I2CS_I2CSlaveGetWriteBufSize
- 120              	.LVL7:
- 121 007e 0028     		cmp	r0, #0
- 122 0080 C5D1     		bne	.L10
- 115:.\i2c.c       ****         }
- 116:.\i2c.c       ****         I2CS_I2CSlaveClearWriteBuf();
- 123              		.loc 1 116 0
- 124 0082 FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteBuf
- 125              	.LVL8:
- 117:.\i2c.c       ****         (void) I2CS_I2CSlaveClearWriteStatus();
- 126              		.loc 1 117 0
- 127 0086 FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteStatus
- 128              	.LVL9:
- 129              	.L3:
- 118:.\i2c.c       ****     }
- 119:.\i2c.c       ****     
- 120:.\i2c.c       ****     I2CS_ClearSlaveInterruptSource(I2CS_GetSlaveInterruptMode());
- 130              		.loc 1 120 0
- 131 008a 054B     		ldr	r3, .L12+8
- 132 008c 1A68     		ldr	r2, [r3]
- 133 008e 054B     		ldr	r3, .L12+12
- 134 0090 1A60     		str	r2, [r3]
- 121:.\i2c.c       **** }
- 135              		.loc 1 121 0
- 136 0092 03B0     		add	sp, sp, #12
- 137              		@ sp needed
- 138 0094 00BD     		pop	{pc}
- 139              	.L13:
- 140 0096 C046     		.align	2
- 141              	.L12:
- 142 0098 00000000 		.word	i2cRxBuffer
- 143 009c 00000000 		.word	dataXY
- 144 00a0 480F0640 		.word	1074138952
- 145 00a4 400F0640 		.word	1074138944
- 146              		.cfi_endproc
- 147              	.LFE37:
- 148              		.size	isr_i2c_rx, .-isr_i2c_rx
- 149              		.section	.text.i2c_init,"ax",%progbits
- 150              		.align	2
- 151              		.global	i2c_init
- 152              		.code	16
- 153              		.thumb_func
- 154              		.type	i2c_init, %function
- 155              	i2c_init:
- 156              	.LFB34:
-  29:.\i2c.c       ****     I2CS_I2CSlaveInitReadBuf(i2cTxBuffer, I2C_BUFFER_SIZE);
- 157              		.loc 1 29 0
- 158              		.cfi_startproc
- 159 0000 08B5     		push	{r3, lr}
- 160              		.cfi_def_cfa_offset 8
- 161              		.cfi_offset 3, -8
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 6
+  56:.\i2c.c       ****                 DEBUG_PutCRLF();
+ 117              		.loc 1 56 0
+ 118 007e FFF7FEFF 		bl	DEBUG_PutCRLF
+ 119              	.LVL17:
+  57:.\i2c.c       ****                 pushQueue(action);
+ 120              		.loc 1 57 0
+ 121 0082 0098     		ldr	r0, [sp]
+ 122 0084 0199     		ldr	r1, [sp, #4]
+ 123 0086 FFF7FEFF 		bl	pushQueue
+ 124              	.LVL18:
+  58:.\i2c.c       ****                 break;
+ 125              		.loc 1 58 0
+ 126 008a 10E0     		b	.L6
+ 127              	.L5:
+  59:.\i2c.c       ****             case CMD_SET_Y_POS :
+  60:.\i2c.c       ****                 dataXY.isrStopY = 1;
+ 128              		.loc 1 60 0
+ 129 008c 0122     		mov	r2, #1
+ 130 008e 124B     		ldr	r3, .L8+28
+ 131 0090 5A71     		strb	r2, [r3, #5]
+  61:.\i2c.c       ****                 DEBUG_PutString(") isrStopY = 1");
+ 132              		.loc 1 61 0
+ 133 0092 1348     		ldr	r0, .L8+36
+ 134 0094 FFF7FEFF 		bl	DEBUG_PutString
+ 135              	.LVL19:
+  62:.\i2c.c       ****                 DEBUG_PutCRLF();
+ 136              		.loc 1 62 0
+ 137 0098 FFF7FEFF 		bl	DEBUG_PutCRLF
+ 138              	.LVL20:
+  63:.\i2c.c       ****                 pushQueue(action);
+ 139              		.loc 1 63 0
+ 140 009c 0098     		ldr	r0, [sp]
+ 141 009e 0199     		ldr	r1, [sp, #4]
+ 142 00a0 FFF7FEFF 		bl	pushQueue
+ 143              	.LVL21:
+  64:.\i2c.c       ****                 break;
+ 144              		.loc 1 64 0
+ 145 00a4 03E0     		b	.L6
+ 146              	.L7:
+  65:.\i2c.c       ****             default :                      
+  66:.\i2c.c       ****                 pushQueue(action);
+ 147              		.loc 1 66 0
+ 148 00a6 0098     		ldr	r0, [sp]
+ 149 00a8 0199     		ldr	r1, [sp, #4]
+ 150 00aa FFF7FEFF 		bl	pushQueue
+ 151              	.LVL22:
+ 152              	.L6:
+  67:.\i2c.c       ****                 break;
+  68:.\i2c.c       ****         }
+  69:.\i2c.c       ****         I2CS_I2CSlaveClearWriteBuf();
+ 153              		.loc 1 69 0
+ 154 00ae FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteBuf
+ 155              	.LVL23:
+  70:.\i2c.c       ****         (void) I2CS_I2CSlaveClearWriteStatus();
+ 156              		.loc 1 70 0
+ 157 00b2 FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteStatus
+ 158              	.LVL24:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 5
 
 
- 162              		.cfi_offset 14, -4
-  30:.\i2c.c       ****     I2CS_I2CSlaveClearReadBuf();
- 163              		.loc 1 30 0
- 164 0002 0C48     		ldr	r0, .L15
- 165 0004 0421     		mov	r1, #4
- 166 0006 FFF7FEFF 		bl	I2CS_I2CSlaveInitReadBuf
- 167              	.LVL10:
-  31:.\i2c.c       ****     I2CS_I2CSlaveClearReadStatus();
- 168              		.loc 1 31 0
- 169 000a FFF7FEFF 		bl	I2CS_I2CSlaveClearReadBuf
- 170              	.LVL11:
-  32:.\i2c.c       ****     
- 171              		.loc 1 32 0
- 172 000e FFF7FEFF 		bl	I2CS_I2CSlaveClearReadStatus
- 173              	.LVL12:
-  34:.\i2c.c       ****     I2CS_I2CSlaveClearWriteBuf();
- 174              		.loc 1 34 0
- 175 0012 0948     		ldr	r0, .L15+4
- 176 0014 0421     		mov	r1, #4
- 177 0016 FFF7FEFF 		bl	I2CS_I2CSlaveInitWriteBuf
- 178              	.LVL13:
-  35:.\i2c.c       ****     I2CS_I2CSlaveClearWriteStatus();
- 179              		.loc 1 35 0
- 180 001a FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteBuf
- 181              	.LVL14:
-  36:.\i2c.c       ****     
- 182              		.loc 1 36 0
- 183 001e FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteStatus
- 184              	.LVL15:
-  38:.\i2c.c       ****     I2CS_SetSlaveInterruptMode(I2CS_INTR_SLAVE_I2C_WRITE_STOP);
- 185              		.loc 1 38 0
- 186 0022 0648     		ldr	r0, .L15+8
- 187 0024 FFF7FEFF 		bl	I2CS_SetCustomInterruptHandler
- 188              	.LVL16:
-  39:.\i2c.c       ****   
- 189              		.loc 1 39 0
- 190 0028 0822     		mov	r2, #8
- 191 002a 054B     		ldr	r3, .L15+12
- 192 002c 1A60     		str	r2, [r3]
-  41:.\i2c.c       **** }
- 193              		.loc 1 41 0
- 194 002e FFF7FEFF 		bl	I2CS_Start
- 195              	.LVL17:
-  42:.\i2c.c       **** 
- 196              		.loc 1 42 0
- 197              		@ sp needed
- 198 0032 08BD     		pop	{r3, pc}
- 199              	.L16:
- 200              		.align	2
- 201              	.L15:
- 202 0034 00000000 		.word	.LANCHOR0
- 203 0038 00000000 		.word	i2cRxBuffer
- 204 003c 00000000 		.word	isr_i2c_rx
- 205 0040 480F0640 		.word	1074138952
- 206              		.cfi_endproc
- 207              	.LFE34:
- 208              		.size	i2c_init, .-i2c_init
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 7
+ 159              	.L1:
+ 160              	.LBE2:
+  71:.\i2c.c       ****     }
+  72:.\i2c.c       **** }
+ 161              		.loc 1 72 0
+ 162 00b6 02B0     		add	sp, sp, #8
+ 163              		@ sp needed
+ 164 00b8 10BD     		pop	{r4, pc}
+ 165              	.L9:
+ 166 00ba C046     		.align	2
+ 167              	.L8:
+ 168 00bc 00000000 		.word	.LC0
+ 169 00c0 18000000 		.word	.LC2
+ 170 00c4 00000000 		.word	i2cRxBuffer
+ 171 00c8 2C000000 		.word	.LC5
+ 172 00cc 34000000 		.word	.LC7
+ 173 00d0 3C000000 		.word	.LC9
+ 174 00d4 44000000 		.word	.LC11
+ 175 00d8 00000000 		.word	dataXY
+ 176 00dc 54000000 		.word	.LC14
+ 177 00e0 64000000 		.word	.LC16
+ 178              		.cfi_endproc
+ 179              	.LFE34:
+ 180              		.size	I2CS_I2C_ISR_ExitCallback, .-I2CS_I2C_ISR_ExitCallback
+ 181              		.section	.text.i2c_init,"ax",%progbits
+ 182              		.align	2
+ 183              		.global	i2c_init
+ 184              		.code	16
+ 185              		.thumb_func
+ 186              		.type	i2c_init, %function
+ 187              	i2c_init:
+ 188              	.LFB35:
+  73:.\i2c.c       **** 
+  74:.\i2c.c       **** void i2c_init()
+  75:.\i2c.c       **** {    
+ 189              		.loc 1 75 0
+ 190              		.cfi_startproc
+ 191 0000 08B5     		push	{r3, lr}
+ 192              		.cfi_def_cfa_offset 8
+ 193              		.cfi_offset 3, -8
+ 194              		.cfi_offset 14, -4
+  76:.\i2c.c       ****     I2CS_I2CSlaveInitReadBuf(i2cTxBuffer, I2C_BUFFER_SIZE);
+ 195              		.loc 1 76 0
+ 196 0002 0948     		ldr	r0, .L11
+ 197 0004 0421     		mov	r1, #4
+ 198 0006 FFF7FEFF 		bl	I2CS_I2CSlaveInitReadBuf
+ 199              	.LVL25:
+  77:.\i2c.c       ****     I2CS_I2CSlaveClearReadBuf();
+ 200              		.loc 1 77 0
+ 201 000a FFF7FEFF 		bl	I2CS_I2CSlaveClearReadBuf
+ 202              	.LVL26:
+  78:.\i2c.c       ****     I2CS_I2CSlaveClearReadStatus();
+ 203              		.loc 1 78 0
+ 204 000e FFF7FEFF 		bl	I2CS_I2CSlaveClearReadStatus
+ 205              	.LVL27:
+  79:.\i2c.c       ****     
+  80:.\i2c.c       ****     I2CS_I2CSlaveInitWriteBuf(i2cRxBuffer, I2C_BUFFER_SIZE);
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 6
 
 
- 209              		.section	.text.i2c_rx,"ax",%progbits
- 210              		.align	2
- 211              		.global	i2c_rx
- 212              		.code	16
- 213              		.thumb_func
- 214              		.type	i2c_rx, %function
- 215              	i2c_rx:
- 216              	.LFB35:
-  45:.\i2c.c       ****   if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_WR_CMPLT))
- 217              		.loc 1 45 0
- 218              		.cfi_startproc
- 219 0000 00B5     		push	{lr}
- 220              		.cfi_def_cfa_offset 4
- 221              		.cfi_offset 14, -4
- 222 0002 83B0     		sub	sp, sp, #12
- 223              		.cfi_def_cfa_offset 16
-  46:.\i2c.c       ****   {
- 224              		.loc 1 46 0
- 225 0004 FFF7FEFF 		bl	I2CS_I2CSlaveStatus
- 226              	.LVL18:
- 227 0008 C306     		lsl	r3, r0, #27
- 228 000a 29D5     		bpl	.L17
-  48:.\i2c.c       ****     if(I2C_BUFFER_SIZE == I2CS_I2CSlaveGetWriteBufSize())
- 229              		.loc 1 48 0
- 230 000c 0020     		mov	r0, #0
- 231 000e 0021     		mov	r1, #0
- 232 0010 0122     		mov	r2, #1
- 233 0012 FFF7FEFF 		bl	setLed
- 234              	.LVL19:
-  49:.\i2c.c       ****     {
- 235              		.loc 1 49 0
- 236 0016 FFF7FEFF 		bl	I2CS_I2CSlaveGetWriteBufSize
- 237              	.LVL20:
- 238 001a 0428     		cmp	r0, #4
- 239 001c 17D1     		bne	.L19
-  51:.\i2c.c       ****       {
- 240              		.loc 1 51 0
- 241 001e 114B     		ldr	r3, .L21
- 242 0020 1B78     		ldrb	r3, [r3]
- 243 0022 BE2B     		cmp	r3, #190
- 244 0024 0ED1     		bne	.L20
-  51:.\i2c.c       ****       {
- 245              		.loc 1 51 0 is_stmt 0 discriminator 1
- 246 0026 0F4B     		ldr	r3, .L21
- 247 0028 DB78     		ldrb	r3, [r3, #3]
- 248 002a EF2B     		cmp	r3, #239
- 249 002c 0AD1     		bne	.L20
- 250              	.LBB3:
-  53:.\i2c.c       ****         struct Data action;
- 251              		.loc 1 53 0 is_stmt 1
- 252 002e 0020     		mov	r0, #0
- 253 0030 0121     		mov	r1, #1
- 254 0032 0022     		mov	r2, #0
- 255 0034 FFF7FEFF 		bl	setLed
- 256              	.LVL21:
-  56:.\i2c.c       ****         action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
- 257              		.loc 1 56 0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 8
+ 206              		.loc 1 80 0
+ 207 0012 0648     		ldr	r0, .L11+4
+ 208 0014 0421     		mov	r1, #4
+ 209 0016 FFF7FEFF 		bl	I2CS_I2CSlaveInitWriteBuf
+ 210              	.LVL28:
+  81:.\i2c.c       ****     I2CS_I2CSlaveClearWriteBuf();
+ 211              		.loc 1 81 0
+ 212 001a FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteBuf
+ 213              	.LVL29:
+  82:.\i2c.c       ****     I2CS_I2CSlaveClearWriteStatus();
+ 214              		.loc 1 82 0
+ 215 001e FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteStatus
+ 216              	.LVL30:
+  83:.\i2c.c       ****     
+  84:.\i2c.c       ****     I2CS_Start();
+ 217              		.loc 1 84 0
+ 218 0022 FFF7FEFF 		bl	I2CS_Start
+ 219              	.LVL31:
+  85:.\i2c.c       **** }
+ 220              		.loc 1 85 0
+ 221              		@ sp needed
+ 222 0026 08BD     		pop	{r3, pc}
+ 223              	.L12:
+ 224              		.align	2
+ 225              	.L11:
+ 226 0028 00000000 		.word	.LANCHOR0
+ 227 002c 00000000 		.word	i2cRxBuffer
+ 228              		.cfi_endproc
+ 229              	.LFE35:
+ 230              		.size	i2c_init, .-i2c_init
+ 231              		.section	.text.i2c_rx,"ax",%progbits
+ 232              		.align	2
+ 233              		.global	i2c_rx
+ 234              		.code	16
+ 235              		.thumb_func
+ 236              		.type	i2c_rx, %function
+ 237              	i2c_rx:
+ 238              	.LFB36:
+  86:.\i2c.c       **** 
+  87:.\i2c.c       **** void i2c_rx()
+  88:.\i2c.c       **** {
+ 239              		.loc 1 88 0
+ 240              		.cfi_startproc
+ 241 0000 00B5     		push	{lr}
+ 242              		.cfi_def_cfa_offset 4
+ 243              		.cfi_offset 14, -4
+ 244 0002 83B0     		sub	sp, sp, #12
+ 245              		.cfi_def_cfa_offset 16
+  89:.\i2c.c       ****   if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_WR_CMPLT))
+ 246              		.loc 1 89 0
+ 247 0004 FFF7FEFF 		bl	I2CS_I2CSlaveStatus
+ 248              	.LVL32:
+ 249 0008 C306     		lsl	r3, r0, #27
+ 250 000a 29D5     		bpl	.L13
+  90:.\i2c.c       ****   {
+  91:.\i2c.c       ****     setLed(0,0,1);
+ 251              		.loc 1 91 0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 7
 
 
- 258 0038 0A4B     		ldr	r3, .L21
- 259 003a 5878     		ldrb	r0, [r3, #1]
-  57:.\i2c.c       ****         
- 260              		.loc 1 57 0
- 261 003c 9978     		ldrb	r1, [r3, #2]
-  59:.\i2c.c       ****       }
- 262              		.loc 1 59 0
- 263 003e FFF7FEFF 		bl	pushQueue
- 264              	.LVL22:
- 265              	.LBE3:
-  52:.\i2c.c       ****         setLed(0,1,0);
- 266              		.loc 1 52 0
- 267 0042 04E0     		b	.L19
- 268              	.L20:
-  63:.\i2c.c       ****       }
- 269              		.loc 1 63 0
- 270 0044 0120     		mov	r0, #1
- 271 0046 0021     		mov	r1, #0
- 272 0048 0022     		mov	r2, #0
- 273 004a FFF7FEFF 		bl	setLed
- 274              	.LVL23:
- 275              	.L19:
-  66:.\i2c.c       ****     (void) I2CS_I2CSlaveClearWriteStatus();
- 276              		.loc 1 66 0
- 277 004e FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteBuf
- 278              	.LVL24:
-  67:.\i2c.c       ****     setLed(0,0,0);
- 279              		.loc 1 67 0
- 280 0052 FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteStatus
- 281              	.LVL25:
-  68:.\i2c.c       ****   }
- 282              		.loc 1 68 0
- 283 0056 0020     		mov	r0, #0
- 284 0058 0021     		mov	r1, #0
- 285 005a 0022     		mov	r2, #0
- 286 005c FFF7FEFF 		bl	setLed
- 287              	.LVL26:
- 288              	.L17:
-  70:.\i2c.c       **** 
- 289              		.loc 1 70 0
- 290 0060 03B0     		add	sp, sp, #12
- 291              		@ sp needed
- 292 0062 00BD     		pop	{pc}
- 293              	.L22:
- 294              		.align	2
- 295              	.L21:
- 296 0064 00000000 		.word	i2cRxBuffer
- 297              		.cfi_endproc
- 298              	.LFE35:
- 299              		.size	i2c_rx, .-i2c_rx
- 300              		.section	.text.i2c_tx,"ax",%progbits
- 301              		.align	2
- 302              		.global	i2c_tx
- 303              		.code	16
- 304              		.thumb_func
- 305              		.type	i2c_tx, %function
- 306              	i2c_tx:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 9
+ 252 000c 0020     		mov	r0, #0
+ 253 000e 0021     		mov	r1, #0
+ 254 0010 0122     		mov	r2, #1
+ 255 0012 FFF7FEFF 		bl	setLed
+ 256              	.LVL33:
+  92:.\i2c.c       ****     if(I2C_BUFFER_SIZE == I2CS_I2CSlaveGetWriteBufSize())
+ 257              		.loc 1 92 0
+ 258 0016 FFF7FEFF 		bl	I2CS_I2CSlaveGetWriteBufSize
+ 259              	.LVL34:
+ 260 001a 0428     		cmp	r0, #4
+ 261 001c 17D1     		bne	.L15
+  93:.\i2c.c       ****     {
+  94:.\i2c.c       ****       if((i2cRxBuffer[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxBuffer[I2C_PACKET_EOP_POS] ==
+ 262              		.loc 1 94 0
+ 263 001e 114B     		ldr	r3, .L17
+ 264 0020 1B78     		ldrb	r3, [r3]
+ 265 0022 BE2B     		cmp	r3, #190
+ 266 0024 0ED1     		bne	.L16
+ 267              		.loc 1 94 0 is_stmt 0 discriminator 1
+ 268 0026 0F4B     		ldr	r3, .L17
+ 269 0028 DB78     		ldrb	r3, [r3, #3]
+ 270 002a EF2B     		cmp	r3, #239
+ 271 002c 0AD1     		bne	.L16
+ 272              	.LBB3:
+  95:.\i2c.c       ****       {
+  96:.\i2c.c       ****         setLed(0,1,0);
+ 273              		.loc 1 96 0 is_stmt 1
+ 274 002e 0020     		mov	r0, #0
+ 275 0030 0121     		mov	r1, #1
+ 276 0032 0022     		mov	r2, #0
+ 277 0034 FFF7FEFF 		bl	setLed
+ 278              	.LVL35:
+  97:.\i2c.c       ****         struct Data action;
+  98:.\i2c.c       ****         
+  99:.\i2c.c       ****         action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
+ 279              		.loc 1 99 0
+ 280 0038 0A4B     		ldr	r3, .L17
+ 281 003a 5878     		ldrb	r0, [r3, #1]
+ 100:.\i2c.c       ****         action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
+ 282              		.loc 1 100 0
+ 283 003c 9978     		ldrb	r1, [r3, #2]
+ 101:.\i2c.c       ****         
+ 102:.\i2c.c       ****         pushQueue(action);
+ 284              		.loc 1 102 0
+ 285 003e FFF7FEFF 		bl	pushQueue
+ 286              	.LVL36:
+ 287              	.LBE3:
+  95:.\i2c.c       ****         setLed(0,1,0);
+ 288              		.loc 1 95 0
+ 289 0042 04E0     		b	.L15
+ 290              	.L16:
+ 103:.\i2c.c       ****       }
+ 104:.\i2c.c       ****       else
+ 105:.\i2c.c       ****       {
+ 106:.\i2c.c       ****         setLed(1,0,0);
+ 291              		.loc 1 106 0
+ 292 0044 0120     		mov	r0, #1
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 8
 
 
- 307              	.LFB36:
-  73:.\i2c.c       ****     if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_RD_CMPLT))
- 308              		.loc 1 73 0
- 309              		.cfi_startproc
- 310 0000 08B5     		push	{r3, lr}
- 311              		.cfi_def_cfa_offset 8
- 312              		.cfi_offset 3, -8
- 313              		.cfi_offset 14, -4
-  74:.\i2c.c       ****     {
- 314              		.loc 1 74 0
- 315 0002 FFF7FEFF 		bl	I2CS_I2CSlaveStatus
- 316              	.LVL27:
- 317 0006 C307     		lsl	r3, r0, #31
- 318 0008 03D5     		bpl	.L23
-  76:.\i2c.c       ****         (void) I2CS_I2CSlaveClearReadStatus();   
- 319              		.loc 1 76 0
- 320 000a FFF7FEFF 		bl	I2CS_I2CSlaveClearReadBuf
- 321              	.LVL28:
-  77:.\i2c.c       ****     }   
- 322              		.loc 1 77 0
- 323 000e FFF7FEFF 		bl	I2CS_I2CSlaveClearReadStatus
- 324              	.LVL29:
- 325              	.L23:
-  79:.\i2c.c       **** 
- 326              		.loc 1 79 0
- 327              		@ sp needed
- 328 0012 08BD     		pop	{r3, pc}
- 329              		.cfi_endproc
- 330              	.LFE36:
- 331              		.size	i2c_tx, .-i2c_tx
- 332              		.comm	dataXY,24,4
- 333              		.comm	i2cRxBuffer,4,4
- 334              		.global	i2cTxBuffer
- 335              		.data
- 336              		.align	2
- 337              		.set	.LANCHOR0,. + 0
- 338              		.type	i2cTxBuffer, %object
- 339              		.size	i2cTxBuffer, 4
- 340              	i2cTxBuffer:
- 341 0000 BE       		.byte	-66
- 342 0001 EE       		.byte	-18
- 343 0002 EE       		.byte	-18
- 344 0003 EF       		.byte	-17
- 345              		.text
- 346              	.Letext0:
- 347              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
- 348              		.file 3 ".\\data.h"
- 349              		.file 4 ".\\queue.h"
- 350              		.file 5 ".\\led.h"
- 351              		.file 6 "Generated_Source\\PSoC4/I2CS_I2C.h"
- 352              		.file 7 "Generated_Source\\PSoC4/I2CS.h"
- 353              		.section	.debug_info,"",%progbits
- 354              	.Ldebug_info0:
- 355 0000 DC040000 		.4byte	0x4dc
- 356 0004 0400     		.2byte	0x4
- 357 0006 00000000 		.4byte	.Ldebug_abbrev0
- 358 000a 04       		.byte	0x4
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 10
+ 293 0046 0021     		mov	r1, #0
+ 294 0048 0022     		mov	r2, #0
+ 295 004a FFF7FEFF 		bl	setLed
+ 296              	.LVL37:
+ 297              	.L15:
+ 107:.\i2c.c       ****       }
+ 108:.\i2c.c       ****     }
+ 109:.\i2c.c       ****     I2CS_I2CSlaveClearWriteBuf();
+ 298              		.loc 1 109 0
+ 299 004e FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteBuf
+ 300              	.LVL38:
+ 110:.\i2c.c       ****     (void) I2CS_I2CSlaveClearWriteStatus();
+ 301              		.loc 1 110 0
+ 302 0052 FFF7FEFF 		bl	I2CS_I2CSlaveClearWriteStatus
+ 303              	.LVL39:
+ 111:.\i2c.c       ****     setLed(0,0,0);
+ 304              		.loc 1 111 0
+ 305 0056 0020     		mov	r0, #0
+ 306 0058 0021     		mov	r1, #0
+ 307 005a 0022     		mov	r2, #0
+ 308 005c FFF7FEFF 		bl	setLed
+ 309              	.LVL40:
+ 310              	.L13:
+ 112:.\i2c.c       ****   }
+ 113:.\i2c.c       **** }
+ 311              		.loc 1 113 0
+ 312 0060 03B0     		add	sp, sp, #12
+ 313              		@ sp needed
+ 314 0062 00BD     		pop	{pc}
+ 315              	.L18:
+ 316              		.align	2
+ 317              	.L17:
+ 318 0064 00000000 		.word	i2cRxBuffer
+ 319              		.cfi_endproc
+ 320              	.LFE36:
+ 321              		.size	i2c_rx, .-i2c_rx
+ 322              		.section	.text.i2c_tx,"ax",%progbits
+ 323              		.align	2
+ 324              		.global	i2c_tx
+ 325              		.code	16
+ 326              		.thumb_func
+ 327              		.type	i2c_tx, %function
+ 328              	i2c_tx:
+ 329              	.LFB37:
+ 114:.\i2c.c       **** 
+ 115:.\i2c.c       **** void i2c_tx()
+ 116:.\i2c.c       **** {
+ 330              		.loc 1 116 0
+ 331              		.cfi_startproc
+ 332 0000 08B5     		push	{r3, lr}
+ 333              		.cfi_def_cfa_offset 8
+ 334              		.cfi_offset 3, -8
+ 335              		.cfi_offset 14, -4
+ 117:.\i2c.c       ****     if(0u != (I2CS_I2CSlaveStatus() & I2CS_I2C_SSTAT_RD_CMPLT))
+ 336              		.loc 1 117 0
+ 337 0002 FFF7FEFF 		bl	I2CS_I2CSlaveStatus
+ 338              	.LVL41:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 9
 
 
- 359 000b 01       		.uleb128 0x1
- 360 000c 38020000 		.4byte	.LASF52
- 361 0010 01       		.byte	0x1
- 362 0011 29030000 		.4byte	.LASF53
- 363 0015 23010000 		.4byte	.LASF54
- 364 0019 00000000 		.4byte	.Ldebug_ranges0+0
- 365 001d 00000000 		.4byte	0
- 366 0021 00000000 		.4byte	.Ldebug_line0
- 367 0025 02       		.uleb128 0x2
- 368 0026 01       		.byte	0x1
- 369 0027 06       		.byte	0x6
- 370 0028 14030000 		.4byte	.LASF0
- 371 002c 02       		.uleb128 0x2
- 372 002d 01       		.byte	0x1
- 373 002e 08       		.byte	0x8
- 374 002f 8E000000 		.4byte	.LASF1
- 375 0033 02       		.uleb128 0x2
- 376 0034 02       		.byte	0x2
- 377 0035 05       		.byte	0x5
- 378 0036 C6020000 		.4byte	.LASF2
- 379 003a 02       		.uleb128 0x2
- 380 003b 02       		.byte	0x2
- 381 003c 07       		.byte	0x7
- 382 003d 41000000 		.4byte	.LASF3
- 383 0041 02       		.uleb128 0x2
- 384 0042 04       		.byte	0x4
- 385 0043 05       		.byte	0x5
- 386 0044 FB020000 		.4byte	.LASF4
- 387 0048 02       		.uleb128 0x2
- 388 0049 04       		.byte	0x4
- 389 004a 07       		.byte	0x7
- 390 004b CD000000 		.4byte	.LASF5
- 391 004f 02       		.uleb128 0x2
- 392 0050 08       		.byte	0x8
- 393 0051 05       		.byte	0x5
- 394 0052 E9010000 		.4byte	.LASF6
- 395 0056 02       		.uleb128 0x2
- 396 0057 08       		.byte	0x8
- 397 0058 07       		.byte	0x7
- 398 0059 A5010000 		.4byte	.LASF7
- 399 005d 03       		.uleb128 0x3
- 400 005e 04       		.byte	0x4
- 401 005f 05       		.byte	0x5
- 402 0060 696E7400 		.ascii	"int\000"
- 403 0064 02       		.uleb128 0x2
- 404 0065 04       		.byte	0x4
- 405 0066 07       		.byte	0x7
- 406 0067 8C010000 		.4byte	.LASF8
- 407 006b 04       		.uleb128 0x4
- 408 006c DF000000 		.4byte	.LASF9
- 409 0070 02       		.byte	0x2
- 410 0071 3801     		.2byte	0x138
- 411 0073 2C000000 		.4byte	0x2c
- 412 0077 04       		.uleb128 0x4
- 413 0078 48010000 		.4byte	.LASF10
- 414 007c 02       		.byte	0x2
- 415 007d 3A01     		.2byte	0x13a
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 11
+ 339 0006 C307     		lsl	r3, r0, #31
+ 340 0008 03D5     		bpl	.L19
+ 118:.\i2c.c       ****     {
+ 119:.\i2c.c       ****         I2CS_I2CSlaveClearReadBuf();
+ 341              		.loc 1 119 0
+ 342 000a FFF7FEFF 		bl	I2CS_I2CSlaveClearReadBuf
+ 343              	.LVL42:
+ 120:.\i2c.c       ****         (void) I2CS_I2CSlaveClearReadStatus();   
+ 344              		.loc 1 120 0
+ 345 000e FFF7FEFF 		bl	I2CS_I2CSlaveClearReadStatus
+ 346              	.LVL43:
+ 347              	.L19:
+ 121:.\i2c.c       ****     }   
+ 122:.\i2c.c       **** }
+ 348              		.loc 1 122 0
+ 349              		@ sp needed
+ 350 0012 08BD     		pop	{r3, pc}
+ 351              		.cfi_endproc
+ 352              	.LFE37:
+ 353              		.size	i2c_tx, .-i2c_tx
+ 354              		.comm	dataXY,24,4
+ 355              		.comm	i2cRxBuffer,4,4
+ 356              		.global	i2cTxBuffer
+ 357              		.data
+ 358              		.align	2
+ 359              		.set	.LANCHOR0,. + 0
+ 360              		.type	i2cTxBuffer, %object
+ 361              		.size	i2cTxBuffer, 4
+ 362              	i2cTxBuffer:
+ 363 0000 BE       		.byte	-66
+ 364 0001 EE       		.byte	-18
+ 365 0002 EE       		.byte	-18
+ 366 0003 EF       		.byte	-17
+ 367              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 368              		.align	2
+ 369              	.LC0:
+ 370 0000 2A2A2069 		.ascii	"** isr exit callback **\000"
+ 370      73722065 
+ 370      78697420 
+ 370      63616C6C 
+ 370      6261636B 
+ 371              	.LC2:
+ 372 0018 493E2069 		.ascii	"I> i2cRxBuffer[0]: \000"
+ 372      32635278 
+ 372      42756666 
+ 372      65725B30 
+ 372      5D3A2000 
+ 373              	.LC5:
+ 374 002c 205B315D 		.ascii	" [1]: \000"
+ 374      3A2000
+ 375 0033 00       		.space	1
+ 376              	.LC7:
+ 377 0034 205B325D 		.ascii	" [2]: \000"
+ 377      3A2000
+ 378 003b 00       		.space	1
+ 379              	.LC9:
+ 380 003c 205B335D 		.ascii	" [3]: \000"
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 10
 
 
- 416 007f 48000000 		.4byte	0x48
- 417 0083 02       		.uleb128 0x2
- 418 0084 04       		.byte	0x4
- 419 0085 04       		.byte	0x4
- 420 0086 88000000 		.4byte	.LASF11
- 421 008a 02       		.uleb128 0x2
- 422 008b 08       		.byte	0x8
- 423 008c 04       		.byte	0x4
- 424 008d 07010000 		.4byte	.LASF12
- 425 0091 02       		.uleb128 0x2
- 426 0092 01       		.byte	0x1
- 427 0093 08       		.byte	0x8
- 428 0094 02010000 		.4byte	.LASF13
- 429 0098 04       		.uleb128 0x4
- 430 0099 0B000000 		.4byte	.LASF14
- 431 009d 02       		.byte	0x2
- 432 009e E401     		.2byte	0x1e4
- 433 00a0 A4000000 		.4byte	0xa4
- 434 00a4 05       		.uleb128 0x5
- 435 00a5 77000000 		.4byte	0x77
- 436 00a9 06       		.uleb128 0x6
- 437 00aa 04       		.byte	0x4
- 438 00ab AF000000 		.4byte	0xaf
- 439 00af 07       		.uleb128 0x7
- 440 00b0 02       		.uleb128 0x2
- 441 00b1 04       		.byte	0x4
- 442 00b2 07       		.byte	0x7
- 443 00b3 E0010000 		.4byte	.LASF15
- 444 00b7 08       		.uleb128 0x8
- 445 00b8 F2020000 		.4byte	.LASF28
- 446 00bc 18       		.byte	0x18
- 447 00bd 03       		.byte	0x3
- 448 00be 18       		.byte	0x18
- 449 00bf 54010000 		.4byte	0x154
- 450 00c3 09       		.uleb128 0x9
- 451 00c4 C8010000 		.4byte	.LASF16
- 452 00c8 03       		.byte	0x3
- 453 00c9 19       		.byte	0x19
- 454 00ca 6B000000 		.4byte	0x6b
- 455 00ce 00       		.byte	0
- 456 00cf 09       		.uleb128 0x9
- 457 00d0 D4010000 		.4byte	.LASF17
- 458 00d4 03       		.byte	0x3
- 459 00d5 1A       		.byte	0x1a
- 460 00d6 6B000000 		.4byte	0x6b
- 461 00da 01       		.byte	0x1
- 462 00db 09       		.uleb128 0x9
- 463 00dc 31030000 		.4byte	.LASF18
- 464 00e0 03       		.byte	0x3
- 465 00e1 1B       		.byte	0x1b
- 466 00e2 6B000000 		.4byte	0x6b
- 467 00e6 02       		.byte	0x2
- 468 00e7 09       		.uleb128 0x9
- 469 00e8 04030000 		.4byte	.LASF19
- 470 00ec 03       		.byte	0x3
- 471 00ed 1C       		.byte	0x1c
- 472 00ee 6B000000 		.4byte	0x6b
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 12
+ 380      3A2000
+ 381 0043 00       		.space	1
+ 382              	.LC11:
+ 383 0044 20627566 		.ascii	" buffer size: \000"
+ 383      66657220 
+ 383      73697A65 
+ 383      3A2000
+ 384 0053 00       		.space	1
+ 385              	.LC14:
+ 386 0054 29206973 		.ascii	") isrStopX = 1\000"
+ 386      7253746F 
+ 386      7058203D 
+ 386      203100
+ 387 0063 00       		.space	1
+ 388              	.LC16:
+ 389 0064 29206973 		.ascii	") isrStopY = 1\000"
+ 389      7253746F 
+ 389      7059203D 
+ 389      203100
+ 390 0073 00       		.text
+ 391              	.Letext0:
+ 392              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 393              		.file 3 ".\\data.h"
+ 394              		.file 4 ".\\queue.h"
+ 395              		.file 5 "Generated_Source\\PSoC4/DEBUG.h"
+ 396              		.file 6 "Generated_Source\\PSoC4/I2CS_I2C.h"
+ 397              		.file 7 "Generated_Source\\PSoC4/I2CS.h"
+ 398              		.file 8 ".\\led.h"
+ 399              		.section	.debug_info,"",%progbits
+ 400              	.Ldebug_info0:
+ 401 0000 83050000 		.4byte	0x583
+ 402 0004 0400     		.2byte	0x4
+ 403 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 404 000a 04       		.byte	0x4
+ 405 000b 01       		.uleb128 0x1
+ 406 000c 46020000 		.4byte	.LASF54
+ 407 0010 01       		.byte	0x1
+ 408 0011 48030000 		.4byte	.LASF55
+ 409 0015 22010000 		.4byte	.LASF56
+ 410 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 411 001d 00000000 		.4byte	0
+ 412 0021 00000000 		.4byte	.Ldebug_line0
+ 413 0025 02       		.uleb128 0x2
+ 414 0026 01       		.byte	0x1
+ 415 0027 06       		.byte	0x6
+ 416 0028 33030000 		.4byte	.LASF0
+ 417 002c 02       		.uleb128 0x2
+ 418 002d 01       		.byte	0x1
+ 419 002e 08       		.byte	0x8
+ 420 002f B1000000 		.4byte	.LASF1
+ 421 0033 02       		.uleb128 0x2
+ 422 0034 02       		.byte	0x2
+ 423 0035 05       		.byte	0x5
+ 424 0036 D4020000 		.4byte	.LASF2
+ 425 003a 02       		.uleb128 0x2
+ 426 003b 02       		.byte	0x2
+ 427 003c 07       		.byte	0x7
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 11
 
 
- 473 00f2 03       		.byte	0x3
- 474 00f3 09       		.uleb128 0x9
- 475 00f4 20030000 		.4byte	.LASF20
- 476 00f8 03       		.byte	0x3
- 477 00f9 1D       		.byte	0x1d
- 478 00fa 6B000000 		.4byte	0x6b
- 479 00fe 04       		.byte	0x4
- 480 00ff 09       		.uleb128 0x9
- 481 0100 0E010000 		.4byte	.LASF21
- 482 0104 03       		.byte	0x3
- 483 0105 1E       		.byte	0x1e
- 484 0106 6B000000 		.4byte	0x6b
- 485 010a 05       		.byte	0x5
- 486 010b 09       		.uleb128 0x9
- 487 010c 9C000000 		.4byte	.LASF22
- 488 0110 03       		.byte	0x3
- 489 0111 1F       		.byte	0x1f
- 490 0112 6B000000 		.4byte	0x6b
- 491 0116 06       		.byte	0x6
- 492 0117 09       		.uleb128 0x9
- 493 0118 86010000 		.4byte	.LASF23
- 494 011c 03       		.byte	0x3
- 495 011d 20       		.byte	0x20
- 496 011e 6B000000 		.4byte	0x6b
- 497 0122 07       		.byte	0x7
- 498 0123 09       		.uleb128 0x9
- 499 0124 BC010000 		.4byte	.LASF24
- 500 0128 03       		.byte	0x3
- 501 0129 21       		.byte	0x21
- 502 012a 77000000 		.4byte	0x77
- 503 012e 08       		.byte	0x8
- 504 012f 09       		.uleb128 0x9
- 505 0130 0F030000 		.4byte	.LASF25
- 506 0134 03       		.byte	0x3
- 507 0135 22       		.byte	0x22
- 508 0136 77000000 		.4byte	0x77
- 509 013a 0C       		.byte	0xc
- 510 013b 09       		.uleb128 0x9
- 511 013c A2000000 		.4byte	.LASF26
- 512 0140 03       		.byte	0x3
- 513 0141 23       		.byte	0x23
- 514 0142 77000000 		.4byte	0x77
- 515 0146 10       		.byte	0x10
- 516 0147 09       		.uleb128 0x9
- 517 0148 65000000 		.4byte	.LASF27
- 518 014c 03       		.byte	0x3
- 519 014d 24       		.byte	0x24
- 520 014e 77000000 		.4byte	0x77
- 521 0152 14       		.byte	0x14
- 522 0153 00       		.byte	0
- 523 0154 08       		.uleb128 0x8
- 524 0155 17010000 		.4byte	.LASF29
- 525 0159 08       		.byte	0x8
- 526 015a 04       		.byte	0x4
- 527 015b 18       		.byte	0x18
- 528 015c 79010000 		.4byte	0x179
- 529 0160 09       		.uleb128 0x9
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 13
+ 428 003d 4B000000 		.4byte	.LASF3
+ 429 0041 02       		.uleb128 0x2
+ 430 0042 04       		.byte	0x4
+ 431 0043 05       		.byte	0x5
+ 432 0044 1A030000 		.4byte	.LASF4
+ 433 0048 02       		.uleb128 0x2
+ 434 0049 04       		.byte	0x4
+ 435 004a 07       		.byte	0x7
+ 436 004b D1000000 		.4byte	.LASF5
+ 437 004f 02       		.uleb128 0x2
+ 438 0050 08       		.byte	0x8
+ 439 0051 05       		.byte	0x5
+ 440 0052 F7010000 		.4byte	.LASF6
+ 441 0056 02       		.uleb128 0x2
+ 442 0057 08       		.byte	0x8
+ 443 0058 07       		.byte	0x7
+ 444 0059 A4010000 		.4byte	.LASF7
+ 445 005d 03       		.uleb128 0x3
+ 446 005e 04       		.byte	0x4
+ 447 005f 05       		.byte	0x5
+ 448 0060 696E7400 		.ascii	"int\000"
+ 449 0064 02       		.uleb128 0x2
+ 450 0065 04       		.byte	0x4
+ 451 0066 07       		.byte	0x7
+ 452 0067 8B010000 		.4byte	.LASF8
+ 453 006b 04       		.uleb128 0x4
+ 454 006c E3000000 		.4byte	.LASF9
+ 455 0070 02       		.byte	0x2
+ 456 0071 3801     		.2byte	0x138
+ 457 0073 2C000000 		.4byte	0x2c
+ 458 0077 04       		.uleb128 0x4
+ 459 0078 47010000 		.4byte	.LASF10
+ 460 007c 02       		.byte	0x2
+ 461 007d 3A01     		.2byte	0x13a
+ 462 007f 48000000 		.4byte	0x48
+ 463 0083 02       		.uleb128 0x2
+ 464 0084 04       		.byte	0x4
+ 465 0085 04       		.byte	0x4
+ 466 0086 35000000 		.4byte	.LASF11
+ 467 008a 02       		.uleb128 0x2
+ 468 008b 08       		.byte	0x8
+ 469 008c 04       		.byte	0x4
+ 470 008d 06010000 		.4byte	.LASF12
+ 471 0091 04       		.uleb128 0x4
+ 472 0092 E8010000 		.4byte	.LASF13
+ 473 0096 02       		.byte	0x2
+ 474 0097 4901     		.2byte	0x149
+ 475 0099 9D000000 		.4byte	0x9d
+ 476 009d 02       		.uleb128 0x2
+ 477 009e 01       		.byte	0x1
+ 478 009f 08       		.byte	0x8
+ 479 00a0 0B000000 		.4byte	.LASF14
+ 480 00a4 02       		.uleb128 0x2
+ 481 00a5 04       		.byte	0x4
+ 482 00a6 07       		.byte	0x7
+ 483 00a7 EE010000 		.4byte	.LASF15
+ 484 00ab 05       		.uleb128 0x5
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 12
 
 
- 530 0161 33020000 		.4byte	.LASF30
- 531 0165 04       		.byte	0x4
- 532 0166 1A       		.byte	0x1a
- 533 0167 5D000000 		.4byte	0x5d
- 534 016b 00       		.byte	0
- 535 016c 09       		.uleb128 0x9
- 536 016d 14020000 		.4byte	.LASF31
- 537 0171 04       		.byte	0x4
- 538 0172 1B       		.byte	0x1b
- 539 0173 5D000000 		.4byte	0x5d
- 540 0177 04       		.byte	0x4
- 541 0178 00       		.byte	0
- 542 0179 0A       		.uleb128 0xa
- 543 017a 36000000 		.4byte	.LASF32
- 544 017e 01       		.byte	0x1
- 545 017f 51       		.byte	0x51
- 546 0180 00000000 		.4byte	.LFB37
- 547 0184 A8000000 		.4byte	.LFE37-.LFB37
- 548 0188 01       		.uleb128 0x1
- 549 0189 9C       		.byte	0x9c
- 550 018a 55020000 		.4byte	0x255
- 551 018e 0B       		.uleb128 0xb
- 552 018f 30000000 		.4byte	.LBB2
- 553 0193 34000000 		.4byte	.LBE2-.LBB2
- 554 0197 D0010000 		.4byte	0x1d0
- 555 019b 0C       		.uleb128 0xc
- 556 019c A7000000 		.4byte	.LASF35
- 557 01a0 01       		.byte	0x1
- 558 01a1 5C       		.byte	0x5c
- 559 01a2 54010000 		.4byte	0x154
- 560 01a6 02       		.uleb128 0x2
- 561 01a7 91       		.byte	0x91
- 562 01a8 70       		.sleb128 -16
- 563 01a9 0D       		.uleb128 0xd
- 564 01aa 3A000000 		.4byte	.LVL3
- 565 01ae 2A040000 		.4byte	0x42a
- 566 01b2 C6010000 		.4byte	0x1c6
- 567 01b6 0E       		.uleb128 0xe
- 568 01b7 01       		.uleb128 0x1
- 569 01b8 52       		.byte	0x52
- 570 01b9 01       		.uleb128 0x1
- 571 01ba 30       		.byte	0x30
- 572 01bb 0E       		.uleb128 0xe
- 573 01bc 01       		.uleb128 0x1
- 574 01bd 51       		.byte	0x51
- 575 01be 01       		.uleb128 0x1
- 576 01bf 31       		.byte	0x31
- 577 01c0 0E       		.uleb128 0xe
- 578 01c1 01       		.uleb128 0x1
- 579 01c2 50       		.byte	0x50
- 580 01c3 01       		.uleb128 0x1
- 581 01c4 30       		.byte	0x30
- 582 01c5 00       		.byte	0
- 583 01c6 0F       		.uleb128 0xf
- 584 01c7 64000000 		.4byte	.LVL4
- 585 01cb 45040000 		.4byte	0x445
- 586 01cf 00       		.byte	0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 14
+ 485 00ac C0010000 		.4byte	.LASF28
+ 486 00b0 18       		.byte	0x18
+ 487 00b1 03       		.byte	0x3
+ 488 00b2 18       		.byte	0x18
+ 489 00b3 48010000 		.4byte	0x148
+ 490 00b7 06       		.uleb128 0x6
+ 491 00b8 D0010000 		.4byte	.LASF16
+ 492 00bc 03       		.byte	0x3
+ 493 00bd 19       		.byte	0x19
+ 494 00be 6B000000 		.4byte	0x6b
+ 495 00c2 00       		.byte	0
+ 496 00c3 06       		.uleb128 0x6
+ 497 00c4 DC010000 		.4byte	.LASF17
+ 498 00c8 03       		.byte	0x3
+ 499 00c9 1A       		.byte	0x1a
+ 500 00ca 6B000000 		.4byte	0x6b
+ 501 00ce 01       		.byte	0x1
+ 502 00cf 06       		.uleb128 0x6
+ 503 00d0 50030000 		.4byte	.LASF18
+ 504 00d4 03       		.byte	0x3
+ 505 00d5 1B       		.byte	0x1b
+ 506 00d6 6B000000 		.4byte	0x6b
+ 507 00da 02       		.byte	0x2
+ 508 00db 06       		.uleb128 0x6
+ 509 00dc 23030000 		.4byte	.LASF19
+ 510 00e0 03       		.byte	0x3
+ 511 00e1 1C       		.byte	0x1c
+ 512 00e2 6B000000 		.4byte	0x6b
+ 513 00e6 03       		.byte	0x3
+ 514 00e7 06       		.uleb128 0x6
+ 515 00e8 3F030000 		.4byte	.LASF20
+ 516 00ec 03       		.byte	0x3
+ 517 00ed 1D       		.byte	0x1d
+ 518 00ee 6B000000 		.4byte	0x6b
+ 519 00f2 04       		.byte	0x4
+ 520 00f3 06       		.uleb128 0x6
+ 521 00f4 0D010000 		.4byte	.LASF21
+ 522 00f8 03       		.byte	0x3
+ 523 00f9 1E       		.byte	0x1e
+ 524 00fa 6B000000 		.4byte	0x6b
+ 525 00fe 05       		.byte	0x5
+ 526 00ff 06       		.uleb128 0x6
+ 527 0100 BF000000 		.4byte	.LASF22
+ 528 0104 03       		.byte	0x3
+ 529 0105 1F       		.byte	0x1f
+ 530 0106 6B000000 		.4byte	0x6b
+ 531 010a 06       		.byte	0x6
+ 532 010b 06       		.uleb128 0x6
+ 533 010c 85010000 		.4byte	.LASF23
+ 534 0110 03       		.byte	0x3
+ 535 0111 20       		.byte	0x20
+ 536 0112 6B000000 		.4byte	0x6b
+ 537 0116 07       		.byte	0x7
+ 538 0117 06       		.uleb128 0x6
+ 539 0118 BB010000 		.4byte	.LASF24
+ 540 011c 03       		.byte	0x3
+ 541 011d 21       		.byte	0x21
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 13
 
 
- 587 01d0 0F       		.uleb128 0xf
- 588 01d1 08000000 		.4byte	.LVL0
- 589 01d5 5B040000 		.4byte	0x45b
- 590 01d9 0D       		.uleb128 0xd
- 591 01da 18000000 		.4byte	.LVL1
- 592 01de 2A040000 		.4byte	0x42a
- 593 01e2 F6010000 		.4byte	0x1f6
- 594 01e6 0E       		.uleb128 0xe
- 595 01e7 01       		.uleb128 0x1
- 596 01e8 52       		.byte	0x52
- 597 01e9 01       		.uleb128 0x1
- 598 01ea 31       		.byte	0x31
- 599 01eb 0E       		.uleb128 0xe
- 600 01ec 01       		.uleb128 0x1
- 601 01ed 51       		.byte	0x51
- 602 01ee 01       		.uleb128 0x1
- 603 01ef 30       		.byte	0x30
- 604 01f0 0E       		.uleb128 0xe
- 605 01f1 01       		.uleb128 0x1
- 606 01f2 50       		.byte	0x50
- 607 01f3 01       		.uleb128 0x1
- 608 01f4 30       		.byte	0x30
- 609 01f5 00       		.byte	0
- 610 01f6 0F       		.uleb128 0xf
- 611 01f7 1C000000 		.4byte	.LVL2
- 612 01fb 66040000 		.4byte	0x466
- 613 01ff 0D       		.uleb128 0xd
- 614 0200 70000000 		.4byte	.LVL5
- 615 0204 2A040000 		.4byte	0x42a
- 616 0208 1C020000 		.4byte	0x21c
- 617 020c 0E       		.uleb128 0xe
- 618 020d 01       		.uleb128 0x1
- 619 020e 52       		.byte	0x52
- 620 020f 01       		.uleb128 0x1
- 621 0210 30       		.byte	0x30
- 622 0211 0E       		.uleb128 0xe
- 623 0212 01       		.uleb128 0x1
- 624 0213 51       		.byte	0x51
- 625 0214 01       		.uleb128 0x1
- 626 0215 30       		.byte	0x30
- 627 0216 0E       		.uleb128 0xe
- 628 0217 01       		.uleb128 0x1
- 629 0218 50       		.byte	0x50
- 630 0219 01       		.uleb128 0x1
- 631 021a 31       		.byte	0x31
- 632 021b 00       		.byte	0
- 633 021c 0D       		.uleb128 0xd
- 634 021d 7A000000 		.4byte	.LVL6
- 635 0221 2A040000 		.4byte	0x42a
- 636 0225 39020000 		.4byte	0x239
- 637 0229 0E       		.uleb128 0xe
- 638 022a 01       		.uleb128 0x1
- 639 022b 52       		.byte	0x52
- 640 022c 01       		.uleb128 0x1
- 641 022d 30       		.byte	0x30
- 642 022e 0E       		.uleb128 0xe
- 643 022f 01       		.uleb128 0x1
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 15
+ 542 011e 77000000 		.4byte	0x77
+ 543 0122 08       		.byte	0x8
+ 544 0123 06       		.uleb128 0x6
+ 545 0124 2E030000 		.4byte	.LASF25
+ 546 0128 03       		.byte	0x3
+ 547 0129 22       		.byte	0x22
+ 548 012a 77000000 		.4byte	0x77
+ 549 012e 0C       		.byte	0xc
+ 550 012f 06       		.uleb128 0x6
+ 551 0130 C5000000 		.4byte	.LASF26
+ 552 0134 03       		.byte	0x3
+ 553 0135 23       		.byte	0x23
+ 554 0136 77000000 		.4byte	0x77
+ 555 013a 10       		.byte	0x10
+ 556 013b 06       		.uleb128 0x6
+ 557 013c 6F000000 		.4byte	.LASF27
+ 558 0140 03       		.byte	0x3
+ 559 0141 24       		.byte	0x24
+ 560 0142 77000000 		.4byte	0x77
+ 561 0146 14       		.byte	0x14
+ 562 0147 00       		.byte	0
+ 563 0148 05       		.uleb128 0x5
+ 564 0149 16010000 		.4byte	.LASF29
+ 565 014d 08       		.byte	0x8
+ 566 014e 04       		.byte	0x4
+ 567 014f 18       		.byte	0x18
+ 568 0150 6D010000 		.4byte	0x16d
+ 569 0154 06       		.uleb128 0x6
+ 570 0155 41020000 		.4byte	.LASF30
+ 571 0159 04       		.byte	0x4
+ 572 015a 1A       		.byte	0x1a
+ 573 015b 5D000000 		.4byte	0x5d
+ 574 015f 00       		.byte	0
+ 575 0160 06       		.uleb128 0x6
+ 576 0161 22020000 		.4byte	.LASF31
+ 577 0165 04       		.byte	0x4
+ 578 0166 1B       		.byte	0x1b
+ 579 0167 5D000000 		.4byte	0x5d
+ 580 016b 04       		.byte	0x4
+ 581 016c 00       		.byte	0
+ 582 016d 07       		.uleb128 0x7
+ 583 016e 00030000 		.4byte	.LASF32
+ 584 0172 01       		.byte	0x1
+ 585 0173 1D       		.byte	0x1d
+ 586 0174 00000000 		.4byte	.LFB34
+ 587 0178 E4000000 		.4byte	.LFE34-.LFB34
+ 588 017c 01       		.uleb128 0x1
+ 589 017d 9C       		.byte	0x9c
+ 590 017e F0020000 		.4byte	0x2f0
+ 591 0182 08       		.uleb128 0x8
+ 592 0183 0C000000 		.4byte	.LBB2
+ 593 0187 AA000000 		.4byte	.LBE2-.LBB2
+ 594 018b E6020000 		.4byte	0x2e6
+ 595 018f 09       		.uleb128 0x9
+ 596 0190 CA000000 		.4byte	.LASF35
+ 597 0194 01       		.byte	0x1
+ 598 0195 30       		.byte	0x30
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 14
 
 
- 644 0230 51       		.byte	0x51
- 645 0231 01       		.uleb128 0x1
- 646 0232 30       		.byte	0x30
- 647 0233 0E       		.uleb128 0xe
- 648 0234 01       		.uleb128 0x1
- 649 0235 50       		.byte	0x50
- 650 0236 01       		.uleb128 0x1
- 651 0237 30       		.byte	0x30
- 652 0238 00       		.byte	0
- 653 0239 0F       		.uleb128 0xf
- 654 023a 7E000000 		.4byte	.LVL7
- 655 023e 66040000 		.4byte	0x466
- 656 0242 0F       		.uleb128 0xf
- 657 0243 86000000 		.4byte	.LVL8
- 658 0247 71040000 		.4byte	0x471
- 659 024b 0F       		.uleb128 0xf
- 660 024c 8A000000 		.4byte	.LVL9
- 661 0250 78040000 		.4byte	0x478
- 662 0254 00       		.byte	0
- 663 0255 0A       		.uleb128 0xa
- 664 0256 E5000000 		.4byte	.LASF33
- 665 025a 01       		.byte	0x1
- 666 025b 1C       		.byte	0x1c
- 667 025c 00000000 		.4byte	.LFB34
- 668 0260 44000000 		.4byte	.LFE34-.LFB34
- 669 0264 01       		.uleb128 0x1
- 670 0265 9C       		.byte	0x9c
- 671 0266 E7020000 		.4byte	0x2e7
- 672 026a 0D       		.uleb128 0xd
- 673 026b 0A000000 		.4byte	.LVL10
- 674 026f 83040000 		.4byte	0x483
- 675 0273 86020000 		.4byte	0x286
- 676 0277 0E       		.uleb128 0xe
- 677 0278 01       		.uleb128 0x1
- 678 0279 51       		.byte	0x51
- 679 027a 01       		.uleb128 0x1
- 680 027b 34       		.byte	0x34
- 681 027c 0E       		.uleb128 0xe
- 682 027d 01       		.uleb128 0x1
- 683 027e 50       		.byte	0x50
- 684 027f 05       		.uleb128 0x5
- 685 0280 03       		.byte	0x3
- 686 0281 00000000 		.4byte	.LANCHOR0
- 687 0285 00       		.byte	0
- 688 0286 0F       		.uleb128 0xf
- 689 0287 0E000000 		.4byte	.LVL11
- 690 028b 9F040000 		.4byte	0x49f
- 691 028f 0F       		.uleb128 0xf
- 692 0290 12000000 		.4byte	.LVL12
- 693 0294 A6040000 		.4byte	0x4a6
- 694 0298 0D       		.uleb128 0xd
- 695 0299 1A000000 		.4byte	.LVL13
- 696 029d B1040000 		.4byte	0x4b1
- 697 02a1 B4020000 		.4byte	0x2b4
- 698 02a5 0E       		.uleb128 0xe
- 699 02a6 01       		.uleb128 0x1
- 700 02a7 51       		.byte	0x51
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 16
+ 599 0196 48010000 		.4byte	0x148
+ 600 019a 02       		.uleb128 0x2
+ 601 019b 91       		.byte	0x91
+ 602 019c 70       		.sleb128 -16
+ 603 019d 0A       		.uleb128 0xa
+ 604 019e 10000000 		.4byte	.LVL1
+ 605 01a2 AE040000 		.4byte	0x4ae
+ 606 01a6 0B       		.uleb128 0xb
+ 607 01a7 16000000 		.4byte	.LVL2
+ 608 01ab B5040000 		.4byte	0x4b5
+ 609 01af BD010000 		.4byte	0x1bd
+ 610 01b3 0C       		.uleb128 0xc
+ 611 01b4 01       		.uleb128 0x1
+ 612 01b5 50       		.byte	0x50
+ 613 01b6 05       		.uleb128 0x5
+ 614 01b7 03       		.byte	0x3
+ 615 01b8 00000000 		.4byte	.LC0
+ 616 01bc 00       		.byte	0
+ 617 01bd 0A       		.uleb128 0xa
+ 618 01be 1A000000 		.4byte	.LVL3
+ 619 01c2 AE040000 		.4byte	0x4ae
+ 620 01c6 0B       		.uleb128 0xb
+ 621 01c7 20000000 		.4byte	.LVL4
+ 622 01cb B5040000 		.4byte	0x4b5
+ 623 01cf DD010000 		.4byte	0x1dd
+ 624 01d3 0C       		.uleb128 0xc
+ 625 01d4 01       		.uleb128 0x1
+ 626 01d5 50       		.byte	0x50
+ 627 01d6 05       		.uleb128 0x5
+ 628 01d7 03       		.byte	0x3
+ 629 01d8 18000000 		.4byte	.LC2
+ 630 01dc 00       		.byte	0
+ 631 01dd 0A       		.uleb128 0xa
+ 632 01de 28000000 		.4byte	.LVL5
+ 633 01e2 D1040000 		.4byte	0x4d1
+ 634 01e6 0B       		.uleb128 0xb
+ 635 01e7 2E000000 		.4byte	.LVL6
+ 636 01eb B5040000 		.4byte	0x4b5
+ 637 01ef FD010000 		.4byte	0x1fd
+ 638 01f3 0C       		.uleb128 0xc
+ 639 01f4 01       		.uleb128 0x1
+ 640 01f5 50       		.byte	0x50
+ 641 01f6 05       		.uleb128 0x5
+ 642 01f7 03       		.byte	0x3
+ 643 01f8 2C000000 		.4byte	.LC5
+ 644 01fc 00       		.byte	0
+ 645 01fd 0A       		.uleb128 0xa
+ 646 01fe 34000000 		.4byte	.LVL7
+ 647 0202 D1040000 		.4byte	0x4d1
+ 648 0206 0B       		.uleb128 0xb
+ 649 0207 3A000000 		.4byte	.LVL8
+ 650 020b B5040000 		.4byte	0x4b5
+ 651 020f 1D020000 		.4byte	0x21d
+ 652 0213 0C       		.uleb128 0xc
+ 653 0214 01       		.uleb128 0x1
+ 654 0215 50       		.byte	0x50
+ 655 0216 05       		.uleb128 0x5
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 15
 
 
- 701 02a8 01       		.uleb128 0x1
- 702 02a9 34       		.byte	0x34
- 703 02aa 0E       		.uleb128 0xe
- 704 02ab 01       		.uleb128 0x1
- 705 02ac 50       		.byte	0x50
- 706 02ad 05       		.uleb128 0x5
- 707 02ae 03       		.byte	0x3
- 708 02af 00000000 		.4byte	i2cRxBuffer
- 709 02b3 00       		.byte	0
- 710 02b4 0F       		.uleb128 0xf
- 711 02b5 1E000000 		.4byte	.LVL14
- 712 02b9 71040000 		.4byte	0x471
- 713 02bd 0F       		.uleb128 0xf
- 714 02be 22000000 		.4byte	.LVL15
- 715 02c2 78040000 		.4byte	0x478
- 716 02c6 0D       		.uleb128 0xd
- 717 02c7 28000000 		.4byte	.LVL16
- 718 02cb C7040000 		.4byte	0x4c7
- 719 02cf DD020000 		.4byte	0x2dd
- 720 02d3 0E       		.uleb128 0xe
- 721 02d4 01       		.uleb128 0x1
- 722 02d5 50       		.byte	0x50
- 723 02d6 05       		.uleb128 0x5
- 724 02d7 03       		.byte	0x3
- 725 02d8 00000000 		.4byte	isr_i2c_rx
- 726 02dc 00       		.byte	0
- 727 02dd 0F       		.uleb128 0xf
- 728 02de 32000000 		.4byte	.LVL17
- 729 02e2 D8040000 		.4byte	0x4d8
- 730 02e6 00       		.byte	0
- 731 02e7 0A       		.uleb128 0xa
- 732 02e8 1C010000 		.4byte	.LASF34
- 733 02ec 01       		.byte	0x1
- 734 02ed 2C       		.byte	0x2c
- 735 02ee 00000000 		.4byte	.LFB35
- 736 02f2 68000000 		.4byte	.LFE35-.LFB35
- 737 02f6 01       		.uleb128 0x1
- 738 02f7 9C       		.byte	0x9c
- 739 02f8 B6030000 		.4byte	0x3b6
- 740 02fc 0B       		.uleb128 0xb
- 741 02fd 2E000000 		.4byte	.LBB3
- 742 0301 14000000 		.4byte	.LBE3-.LBB3
- 743 0305 3E030000 		.4byte	0x33e
- 744 0309 0C       		.uleb128 0xc
- 745 030a A7000000 		.4byte	.LASF35
- 746 030e 01       		.byte	0x1
- 747 030f 36       		.byte	0x36
- 748 0310 54010000 		.4byte	0x154
- 749 0314 02       		.uleb128 0x2
- 750 0315 91       		.byte	0x91
- 751 0316 70       		.sleb128 -16
- 752 0317 0D       		.uleb128 0xd
- 753 0318 38000000 		.4byte	.LVL21
- 754 031c 2A040000 		.4byte	0x42a
- 755 0320 34030000 		.4byte	0x334
- 756 0324 0E       		.uleb128 0xe
- 757 0325 01       		.uleb128 0x1
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 17
+ 656 0217 03       		.byte	0x3
+ 657 0218 34000000 		.4byte	.LC7
+ 658 021c 00       		.byte	0
+ 659 021d 0A       		.uleb128 0xa
+ 660 021e 40000000 		.4byte	.LVL9
+ 661 0222 D1040000 		.4byte	0x4d1
+ 662 0226 0B       		.uleb128 0xb
+ 663 0227 46000000 		.4byte	.LVL10
+ 664 022b B5040000 		.4byte	0x4b5
+ 665 022f 3D020000 		.4byte	0x23d
+ 666 0233 0C       		.uleb128 0xc
+ 667 0234 01       		.uleb128 0x1
+ 668 0235 50       		.byte	0x50
+ 669 0236 05       		.uleb128 0x5
+ 670 0237 03       		.byte	0x3
+ 671 0238 3C000000 		.4byte	.LC9
+ 672 023c 00       		.byte	0
+ 673 023d 0A       		.uleb128 0xa
+ 674 023e 4C000000 		.4byte	.LVL11
+ 675 0242 D1040000 		.4byte	0x4d1
+ 676 0246 0B       		.uleb128 0xb
+ 677 0247 52000000 		.4byte	.LVL12
+ 678 024b B5040000 		.4byte	0x4b5
+ 679 024f 5D020000 		.4byte	0x25d
+ 680 0253 0C       		.uleb128 0xc
+ 681 0254 01       		.uleb128 0x1
+ 682 0255 50       		.byte	0x50
+ 683 0256 05       		.uleb128 0x5
+ 684 0257 03       		.byte	0x3
+ 685 0258 44000000 		.4byte	.LC11
+ 686 025c 00       		.byte	0
+ 687 025d 0A       		.uleb128 0xa
+ 688 025e 56000000 		.4byte	.LVL13
+ 689 0262 E2040000 		.4byte	0x4e2
+ 690 0266 0A       		.uleb128 0xa
+ 691 0267 5C000000 		.4byte	.LVL14
+ 692 026b D1040000 		.4byte	0x4d1
+ 693 026f 0A       		.uleb128 0xa
+ 694 0270 60000000 		.4byte	.LVL15
+ 695 0274 AE040000 		.4byte	0x4ae
+ 696 0278 0B       		.uleb128 0xb
+ 697 0279 7E000000 		.4byte	.LVL16
+ 698 027d B5040000 		.4byte	0x4b5
+ 699 0281 8F020000 		.4byte	0x28f
+ 700 0285 0C       		.uleb128 0xc
+ 701 0286 01       		.uleb128 0x1
+ 702 0287 50       		.byte	0x50
+ 703 0288 05       		.uleb128 0x5
+ 704 0289 03       		.byte	0x3
+ 705 028a 54000000 		.4byte	.LC14
+ 706 028e 00       		.byte	0
+ 707 028f 0A       		.uleb128 0xa
+ 708 0290 82000000 		.4byte	.LVL17
+ 709 0294 AE040000 		.4byte	0x4ae
+ 710 0298 0A       		.uleb128 0xa
+ 711 0299 8A000000 		.4byte	.LVL18
+ 712 029d ED040000 		.4byte	0x4ed
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 16
 
 
- 758 0326 52       		.byte	0x52
- 759 0327 01       		.uleb128 0x1
- 760 0328 30       		.byte	0x30
- 761 0329 0E       		.uleb128 0xe
- 762 032a 01       		.uleb128 0x1
- 763 032b 51       		.byte	0x51
- 764 032c 01       		.uleb128 0x1
- 765 032d 31       		.byte	0x31
- 766 032e 0E       		.uleb128 0xe
- 767 032f 01       		.uleb128 0x1
- 768 0330 50       		.byte	0x50
- 769 0331 01       		.uleb128 0x1
- 770 0332 30       		.byte	0x30
- 771 0333 00       		.byte	0
- 772 0334 0F       		.uleb128 0xf
- 773 0335 42000000 		.4byte	.LVL22
- 774 0339 45040000 		.4byte	0x445
- 775 033d 00       		.byte	0
- 776 033e 0F       		.uleb128 0xf
- 777 033f 08000000 		.4byte	.LVL18
- 778 0343 5B040000 		.4byte	0x45b
- 779 0347 0D       		.uleb128 0xd
- 780 0348 16000000 		.4byte	.LVL19
- 781 034c 2A040000 		.4byte	0x42a
- 782 0350 64030000 		.4byte	0x364
- 783 0354 0E       		.uleb128 0xe
- 784 0355 01       		.uleb128 0x1
- 785 0356 52       		.byte	0x52
- 786 0357 01       		.uleb128 0x1
- 787 0358 31       		.byte	0x31
- 788 0359 0E       		.uleb128 0xe
- 789 035a 01       		.uleb128 0x1
- 790 035b 51       		.byte	0x51
- 791 035c 01       		.uleb128 0x1
- 792 035d 30       		.byte	0x30
- 793 035e 0E       		.uleb128 0xe
- 794 035f 01       		.uleb128 0x1
- 795 0360 50       		.byte	0x50
- 796 0361 01       		.uleb128 0x1
- 797 0362 30       		.byte	0x30
- 798 0363 00       		.byte	0
- 799 0364 0F       		.uleb128 0xf
- 800 0365 1A000000 		.4byte	.LVL20
- 801 0369 66040000 		.4byte	0x466
- 802 036d 0D       		.uleb128 0xd
- 803 036e 4E000000 		.4byte	.LVL23
- 804 0372 2A040000 		.4byte	0x42a
- 805 0376 8A030000 		.4byte	0x38a
- 806 037a 0E       		.uleb128 0xe
- 807 037b 01       		.uleb128 0x1
- 808 037c 52       		.byte	0x52
- 809 037d 01       		.uleb128 0x1
- 810 037e 30       		.byte	0x30
- 811 037f 0E       		.uleb128 0xe
- 812 0380 01       		.uleb128 0x1
- 813 0381 51       		.byte	0x51
- 814 0382 01       		.uleb128 0x1
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 18
+ 713 02a1 0B       		.uleb128 0xb
+ 714 02a2 98000000 		.4byte	.LVL19
+ 715 02a6 B5040000 		.4byte	0x4b5
+ 716 02aa B8020000 		.4byte	0x2b8
+ 717 02ae 0C       		.uleb128 0xc
+ 718 02af 01       		.uleb128 0x1
+ 719 02b0 50       		.byte	0x50
+ 720 02b1 05       		.uleb128 0x5
+ 721 02b2 03       		.byte	0x3
+ 722 02b3 64000000 		.4byte	.LC16
+ 723 02b7 00       		.byte	0
+ 724 02b8 0A       		.uleb128 0xa
+ 725 02b9 9C000000 		.4byte	.LVL20
+ 726 02bd AE040000 		.4byte	0x4ae
+ 727 02c1 0A       		.uleb128 0xa
+ 728 02c2 A4000000 		.4byte	.LVL21
+ 729 02c6 ED040000 		.4byte	0x4ed
+ 730 02ca 0A       		.uleb128 0xa
+ 731 02cb AE000000 		.4byte	.LVL22
+ 732 02cf ED040000 		.4byte	0x4ed
+ 733 02d3 0A       		.uleb128 0xa
+ 734 02d4 B2000000 		.4byte	.LVL23
+ 735 02d8 03050000 		.4byte	0x503
+ 736 02dc 0A       		.uleb128 0xa
+ 737 02dd B6000000 		.4byte	.LVL24
+ 738 02e1 0A050000 		.4byte	0x50a
+ 739 02e5 00       		.byte	0
+ 740 02e6 0A       		.uleb128 0xa
+ 741 02e7 08000000 		.4byte	.LVL0
+ 742 02eb E2040000 		.4byte	0x4e2
+ 743 02ef 00       		.byte	0
+ 744 02f0 07       		.uleb128 0x7
+ 745 02f1 E9000000 		.4byte	.LASF33
+ 746 02f5 01       		.byte	0x1
+ 747 02f6 4A       		.byte	0x4a
+ 748 02f7 00000000 		.4byte	.LFB35
+ 749 02fb 30000000 		.4byte	.LFE35-.LFB35
+ 750 02ff 01       		.uleb128 0x1
+ 751 0300 9C       		.byte	0x9c
+ 752 0301 6B030000 		.4byte	0x36b
+ 753 0305 0B       		.uleb128 0xb
+ 754 0306 0A000000 		.4byte	.LVL25
+ 755 030a 15050000 		.4byte	0x515
+ 756 030e 21030000 		.4byte	0x321
+ 757 0312 0C       		.uleb128 0xc
+ 758 0313 01       		.uleb128 0x1
+ 759 0314 51       		.byte	0x51
+ 760 0315 01       		.uleb128 0x1
+ 761 0316 34       		.byte	0x34
+ 762 0317 0C       		.uleb128 0xc
+ 763 0318 01       		.uleb128 0x1
+ 764 0319 50       		.byte	0x50
+ 765 031a 05       		.uleb128 0x5
+ 766 031b 03       		.byte	0x3
+ 767 031c 00000000 		.4byte	.LANCHOR0
+ 768 0320 00       		.byte	0
+ 769 0321 0A       		.uleb128 0xa
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 17
 
 
- 815 0383 30       		.byte	0x30
- 816 0384 0E       		.uleb128 0xe
- 817 0385 01       		.uleb128 0x1
- 818 0386 50       		.byte	0x50
- 819 0387 01       		.uleb128 0x1
- 820 0388 31       		.byte	0x31
- 821 0389 00       		.byte	0
- 822 038a 0F       		.uleb128 0xf
- 823 038b 52000000 		.4byte	.LVL24
- 824 038f 71040000 		.4byte	0x471
- 825 0393 0F       		.uleb128 0xf
- 826 0394 56000000 		.4byte	.LVL25
- 827 0398 78040000 		.4byte	0x478
- 828 039c 10       		.uleb128 0x10
- 829 039d 60000000 		.4byte	.LVL26
- 830 03a1 2A040000 		.4byte	0x42a
- 831 03a5 0E       		.uleb128 0xe
- 832 03a6 01       		.uleb128 0x1
- 833 03a7 52       		.byte	0x52
- 834 03a8 01       		.uleb128 0x1
- 835 03a9 30       		.byte	0x30
- 836 03aa 0E       		.uleb128 0xe
- 837 03ab 01       		.uleb128 0x1
- 838 03ac 51       		.byte	0x51
- 839 03ad 01       		.uleb128 0x1
- 840 03ae 30       		.byte	0x30
- 841 03af 0E       		.uleb128 0xe
- 842 03b0 01       		.uleb128 0x1
- 843 03b1 50       		.byte	0x50
- 844 03b2 01       		.uleb128 0x1
- 845 03b3 30       		.byte	0x30
- 846 03b4 00       		.byte	0
- 847 03b5 00       		.byte	0
- 848 03b6 0A       		.uleb128 0xa
- 849 03b7 C1010000 		.4byte	.LASF36
- 850 03bb 01       		.byte	0x1
- 851 03bc 48       		.byte	0x48
- 852 03bd 00000000 		.4byte	.LFB36
- 853 03c1 14000000 		.4byte	.LFE36-.LFB36
- 854 03c5 01       		.uleb128 0x1
- 855 03c6 9C       		.byte	0x9c
- 856 03c7 E7030000 		.4byte	0x3e7
- 857 03cb 0F       		.uleb128 0xf
- 858 03cc 06000000 		.4byte	.LVL27
- 859 03d0 5B040000 		.4byte	0x45b
- 860 03d4 0F       		.uleb128 0xf
- 861 03d5 0E000000 		.4byte	.LVL28
- 862 03d9 9F040000 		.4byte	0x49f
- 863 03dd 0F       		.uleb128 0xf
- 864 03de 12000000 		.4byte	.LVL29
- 865 03e2 A6040000 		.4byte	0x4a6
- 866 03e6 00       		.byte	0
- 867 03e7 11       		.uleb128 0x11
- 868 03e8 6B000000 		.4byte	0x6b
- 869 03ec F7030000 		.4byte	0x3f7
- 870 03f0 12       		.uleb128 0x12
- 871 03f1 B0000000 		.4byte	0xb0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 19
+ 770 0322 0E000000 		.4byte	.LVL26
+ 771 0326 31050000 		.4byte	0x531
+ 772 032a 0A       		.uleb128 0xa
+ 773 032b 12000000 		.4byte	.LVL27
+ 774 032f 38050000 		.4byte	0x538
+ 775 0333 0B       		.uleb128 0xb
+ 776 0334 1A000000 		.4byte	.LVL28
+ 777 0338 43050000 		.4byte	0x543
+ 778 033c 4F030000 		.4byte	0x34f
+ 779 0340 0C       		.uleb128 0xc
+ 780 0341 01       		.uleb128 0x1
+ 781 0342 51       		.byte	0x51
+ 782 0343 01       		.uleb128 0x1
+ 783 0344 34       		.byte	0x34
+ 784 0345 0C       		.uleb128 0xc
+ 785 0346 01       		.uleb128 0x1
+ 786 0347 50       		.byte	0x50
+ 787 0348 05       		.uleb128 0x5
+ 788 0349 03       		.byte	0x3
+ 789 034a 00000000 		.4byte	i2cRxBuffer
+ 790 034e 00       		.byte	0
+ 791 034f 0A       		.uleb128 0xa
+ 792 0350 1E000000 		.4byte	.LVL29
+ 793 0354 03050000 		.4byte	0x503
+ 794 0358 0A       		.uleb128 0xa
+ 795 0359 22000000 		.4byte	.LVL30
+ 796 035d 0A050000 		.4byte	0x50a
+ 797 0361 0A       		.uleb128 0xa
+ 798 0362 26000000 		.4byte	.LVL31
+ 799 0366 59050000 		.4byte	0x559
+ 800 036a 00       		.byte	0
+ 801 036b 07       		.uleb128 0x7
+ 802 036c 1B010000 		.4byte	.LASF34
+ 803 0370 01       		.byte	0x1
+ 804 0371 57       		.byte	0x57
+ 805 0372 00000000 		.4byte	.LFB36
+ 806 0376 68000000 		.4byte	.LFE36-.LFB36
+ 807 037a 01       		.uleb128 0x1
+ 808 037b 9C       		.byte	0x9c
+ 809 037c 3A040000 		.4byte	0x43a
+ 810 0380 08       		.uleb128 0x8
+ 811 0381 2E000000 		.4byte	.LBB3
+ 812 0385 14000000 		.4byte	.LBE3-.LBB3
+ 813 0389 C2030000 		.4byte	0x3c2
+ 814 038d 09       		.uleb128 0x9
+ 815 038e CA000000 		.4byte	.LASF35
+ 816 0392 01       		.byte	0x1
+ 817 0393 61       		.byte	0x61
+ 818 0394 48010000 		.4byte	0x148
+ 819 0398 02       		.uleb128 0x2
+ 820 0399 91       		.byte	0x91
+ 821 039a 70       		.sleb128 -16
+ 822 039b 0B       		.uleb128 0xb
+ 823 039c 38000000 		.4byte	.LVL35
+ 824 03a0 60050000 		.4byte	0x560
+ 825 03a4 B8030000 		.4byte	0x3b8
+ 826 03a8 0C       		.uleb128 0xc
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 18
 
 
- 872 03f5 03       		.byte	0x3
- 873 03f6 00       		.byte	0
- 874 03f7 13       		.uleb128 0x13
- 875 03f8 99010000 		.4byte	.LASF37
- 876 03fc 01       		.byte	0x1
- 877 03fd 19       		.byte	0x19
- 878 03fe E7030000 		.4byte	0x3e7
- 879 0402 05       		.uleb128 0x5
- 880 0403 03       		.byte	0x3
- 881 0404 00000000 		.4byte	i2cTxBuffer
- 882 0408 13       		.uleb128 0x13
- 883 0409 2A000000 		.4byte	.LASF38
- 884 040d 01       		.byte	0x1
- 885 040e 1A       		.byte	0x1a
- 886 040f E7030000 		.4byte	0x3e7
- 887 0413 05       		.uleb128 0x5
- 888 0414 03       		.byte	0x3
- 889 0415 00000000 		.4byte	i2cRxBuffer
- 890 0419 13       		.uleb128 0x13
- 891 041a EB020000 		.4byte	.LASF39
- 892 041e 03       		.byte	0x3
- 893 041f 25       		.byte	0x25
- 894 0420 B7000000 		.4byte	0xb7
- 895 0424 05       		.uleb128 0x5
- 896 0425 03       		.byte	0x3
- 897 0426 00000000 		.4byte	dataXY
- 898 042a 14       		.uleb128 0x14
- 899 042b 54000000 		.4byte	.LASF40
- 900 042f 05       		.byte	0x5
- 901 0430 18       		.byte	0x18
- 902 0431 45040000 		.4byte	0x445
- 903 0435 15       		.uleb128 0x15
- 904 0436 6B000000 		.4byte	0x6b
- 905 043a 15       		.uleb128 0x15
- 906 043b 6B000000 		.4byte	0x6b
- 907 043f 15       		.uleb128 0x15
- 908 0440 6B000000 		.4byte	0x6b
- 909 0444 00       		.byte	0
- 910 0445 14       		.uleb128 0x14
- 911 0446 5B000000 		.4byte	.LASF41
- 912 044a 04       		.byte	0x4
- 913 044b 23       		.byte	0x23
- 914 044c 56040000 		.4byte	0x456
- 915 0450 15       		.uleb128 0x15
- 916 0451 56040000 		.4byte	0x456
- 917 0455 00       		.byte	0
- 918 0456 16       		.uleb128 0x16
- 919 0457 54010000 		.4byte	0x154
- 920 045b 17       		.uleb128 0x17
- 921 045c EE000000 		.4byte	.LASF42
- 922 0460 06       		.byte	0x6
- 923 0461 D6       		.byte	0xd6
- 924 0462 77000000 		.4byte	0x77
- 925 0466 17       		.uleb128 0x17
- 926 0467 4F010000 		.4byte	.LASF43
- 927 046b 06       		.byte	0x6
- 928 046c E2       		.byte	0xe2
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 20
+ 827 03a9 01       		.uleb128 0x1
+ 828 03aa 52       		.byte	0x52
+ 829 03ab 01       		.uleb128 0x1
+ 830 03ac 30       		.byte	0x30
+ 831 03ad 0C       		.uleb128 0xc
+ 832 03ae 01       		.uleb128 0x1
+ 833 03af 51       		.byte	0x51
+ 834 03b0 01       		.uleb128 0x1
+ 835 03b1 31       		.byte	0x31
+ 836 03b2 0C       		.uleb128 0xc
+ 837 03b3 01       		.uleb128 0x1
+ 838 03b4 50       		.byte	0x50
+ 839 03b5 01       		.uleb128 0x1
+ 840 03b6 30       		.byte	0x30
+ 841 03b7 00       		.byte	0
+ 842 03b8 0A       		.uleb128 0xa
+ 843 03b9 42000000 		.4byte	.LVL36
+ 844 03bd ED040000 		.4byte	0x4ed
+ 845 03c1 00       		.byte	0
+ 846 03c2 0A       		.uleb128 0xa
+ 847 03c3 08000000 		.4byte	.LVL32
+ 848 03c7 7B050000 		.4byte	0x57b
+ 849 03cb 0B       		.uleb128 0xb
+ 850 03cc 16000000 		.4byte	.LVL33
+ 851 03d0 60050000 		.4byte	0x560
+ 852 03d4 E8030000 		.4byte	0x3e8
+ 853 03d8 0C       		.uleb128 0xc
+ 854 03d9 01       		.uleb128 0x1
+ 855 03da 52       		.byte	0x52
+ 856 03db 01       		.uleb128 0x1
+ 857 03dc 31       		.byte	0x31
+ 858 03dd 0C       		.uleb128 0xc
+ 859 03de 01       		.uleb128 0x1
+ 860 03df 51       		.byte	0x51
+ 861 03e0 01       		.uleb128 0x1
+ 862 03e1 30       		.byte	0x30
+ 863 03e2 0C       		.uleb128 0xc
+ 864 03e3 01       		.uleb128 0x1
+ 865 03e4 50       		.byte	0x50
+ 866 03e5 01       		.uleb128 0x1
+ 867 03e6 30       		.byte	0x30
+ 868 03e7 00       		.byte	0
+ 869 03e8 0A       		.uleb128 0xa
+ 870 03e9 1A000000 		.4byte	.LVL34
+ 871 03ed E2040000 		.4byte	0x4e2
+ 872 03f1 0B       		.uleb128 0xb
+ 873 03f2 4E000000 		.4byte	.LVL37
+ 874 03f6 60050000 		.4byte	0x560
+ 875 03fa 0E040000 		.4byte	0x40e
+ 876 03fe 0C       		.uleb128 0xc
+ 877 03ff 01       		.uleb128 0x1
+ 878 0400 52       		.byte	0x52
+ 879 0401 01       		.uleb128 0x1
+ 880 0402 30       		.byte	0x30
+ 881 0403 0C       		.uleb128 0xc
+ 882 0404 01       		.uleb128 0x1
+ 883 0405 51       		.byte	0x51
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 19
 
 
- 929 046d 77000000 		.4byte	0x77
- 930 0471 18       		.uleb128 0x18
- 931 0472 D0020000 		.4byte	.LASF46
- 932 0476 06       		.byte	0x6
- 933 0477 E4       		.byte	0xe4
- 934 0478 17       		.uleb128 0x17
- 935 0479 6A000000 		.4byte	.LASF44
- 936 047d 06       		.byte	0x6
- 937 047e D8       		.byte	0xd8
- 938 047f 77000000 		.4byte	0x77
- 939 0483 14       		.uleb128 0x14
- 940 0484 11000000 		.4byte	.LASF45
- 941 0488 06       		.byte	0x6
- 942 0489 DF       		.byte	0xdf
- 943 048a 99040000 		.4byte	0x499
- 944 048e 15       		.uleb128 0x15
- 945 048f 99040000 		.4byte	0x499
- 946 0493 15       		.uleb128 0x15
- 947 0494 77000000 		.4byte	0x77
- 948 0498 00       		.byte	0
- 949 0499 06       		.uleb128 0x6
- 950 049a 04       		.byte	0x4
- 951 049b 6B000000 		.4byte	0x6b
- 952 049f 18       		.uleb128 0x18
- 953 04a0 19020000 		.4byte	.LASF47
- 954 04a4 06       		.byte	0x6
- 955 04a5 E3       		.byte	0xe3
- 956 04a6 17       		.uleb128 0x17
- 957 04a7 F7010000 		.4byte	.LASF48
- 958 04ab 06       		.byte	0x6
- 959 04ac D7       		.byte	0xd7
- 960 04ad 77000000 		.4byte	0x77
- 961 04b1 14       		.uleb128 0x14
- 962 04b2 6C010000 		.4byte	.LASF49
- 963 04b6 06       		.byte	0x6
- 964 04b7 E0       		.byte	0xe0
- 965 04b8 C7040000 		.4byte	0x4c7
- 966 04bc 15       		.uleb128 0x15
- 967 04bd 99040000 		.4byte	0x499
- 968 04c1 15       		.uleb128 0x15
- 969 04c2 77000000 		.4byte	0x77
- 970 04c6 00       		.byte	0
- 971 04c7 14       		.uleb128 0x14
- 972 04c8 AE000000 		.4byte	.LASF50
- 973 04cc 07       		.byte	0x7
- 974 04cd 71       		.byte	0x71
- 975 04ce D8040000 		.4byte	0x4d8
- 976 04d2 15       		.uleb128 0x15
- 977 04d3 A9000000 		.4byte	0xa9
- 978 04d7 00       		.byte	0
- 979 04d8 18       		.uleb128 0x18
- 980 04d9 00000000 		.4byte	.LASF51
- 981 04dd 07       		.byte	0x7
- 982 04de 68       		.byte	0x68
- 983 04df 00       		.byte	0
- 984              		.section	.debug_abbrev,"",%progbits
- 985              	.Ldebug_abbrev0:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 21
+ 884 0406 01       		.uleb128 0x1
+ 885 0407 30       		.byte	0x30
+ 886 0408 0C       		.uleb128 0xc
+ 887 0409 01       		.uleb128 0x1
+ 888 040a 50       		.byte	0x50
+ 889 040b 01       		.uleb128 0x1
+ 890 040c 31       		.byte	0x31
+ 891 040d 00       		.byte	0
+ 892 040e 0A       		.uleb128 0xa
+ 893 040f 52000000 		.4byte	.LVL38
+ 894 0413 03050000 		.4byte	0x503
+ 895 0417 0A       		.uleb128 0xa
+ 896 0418 56000000 		.4byte	.LVL39
+ 897 041c 0A050000 		.4byte	0x50a
+ 898 0420 0D       		.uleb128 0xd
+ 899 0421 60000000 		.4byte	.LVL40
+ 900 0425 60050000 		.4byte	0x560
+ 901 0429 0C       		.uleb128 0xc
+ 902 042a 01       		.uleb128 0x1
+ 903 042b 52       		.byte	0x52
+ 904 042c 01       		.uleb128 0x1
+ 905 042d 30       		.byte	0x30
+ 906 042e 0C       		.uleb128 0xc
+ 907 042f 01       		.uleb128 0x1
+ 908 0430 51       		.byte	0x51
+ 909 0431 01       		.uleb128 0x1
+ 910 0432 30       		.byte	0x30
+ 911 0433 0C       		.uleb128 0xc
+ 912 0434 01       		.uleb128 0x1
+ 913 0435 50       		.byte	0x50
+ 914 0436 01       		.uleb128 0x1
+ 915 0437 30       		.byte	0x30
+ 916 0438 00       		.byte	0
+ 917 0439 00       		.byte	0
+ 918 043a 07       		.uleb128 0x7
+ 919 043b C9010000 		.4byte	.LASF36
+ 920 043f 01       		.byte	0x1
+ 921 0440 73       		.byte	0x73
+ 922 0441 00000000 		.4byte	.LFB37
+ 923 0445 14000000 		.4byte	.LFE37-.LFB37
+ 924 0449 01       		.uleb128 0x1
+ 925 044a 9C       		.byte	0x9c
+ 926 044b 6B040000 		.4byte	0x46b
+ 927 044f 0A       		.uleb128 0xa
+ 928 0450 06000000 		.4byte	.LVL41
+ 929 0454 7B050000 		.4byte	0x57b
+ 930 0458 0A       		.uleb128 0xa
+ 931 0459 0E000000 		.4byte	.LVL42
+ 932 045d 31050000 		.4byte	0x531
+ 933 0461 0A       		.uleb128 0xa
+ 934 0462 12000000 		.4byte	.LVL43
+ 935 0466 38050000 		.4byte	0x538
+ 936 046a 00       		.byte	0
+ 937 046b 0E       		.uleb128 0xe
+ 938 046c 6B000000 		.4byte	0x6b
+ 939 0470 7B040000 		.4byte	0x47b
+ 940 0474 0F       		.uleb128 0xf
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 20
 
 
- 986 0000 01       		.uleb128 0x1
- 987 0001 11       		.uleb128 0x11
- 988 0002 01       		.byte	0x1
- 989 0003 25       		.uleb128 0x25
- 990 0004 0E       		.uleb128 0xe
- 991 0005 13       		.uleb128 0x13
- 992 0006 0B       		.uleb128 0xb
- 993 0007 03       		.uleb128 0x3
- 994 0008 0E       		.uleb128 0xe
- 995 0009 1B       		.uleb128 0x1b
- 996 000a 0E       		.uleb128 0xe
- 997 000b 55       		.uleb128 0x55
- 998 000c 17       		.uleb128 0x17
- 999 000d 11       		.uleb128 0x11
- 1000 000e 01       		.uleb128 0x1
- 1001 000f 10       		.uleb128 0x10
- 1002 0010 17       		.uleb128 0x17
- 1003 0011 00       		.byte	0
- 1004 0012 00       		.byte	0
- 1005 0013 02       		.uleb128 0x2
- 1006 0014 24       		.uleb128 0x24
- 1007 0015 00       		.byte	0
- 1008 0016 0B       		.uleb128 0xb
- 1009 0017 0B       		.uleb128 0xb
- 1010 0018 3E       		.uleb128 0x3e
- 1011 0019 0B       		.uleb128 0xb
- 1012 001a 03       		.uleb128 0x3
- 1013 001b 0E       		.uleb128 0xe
- 1014 001c 00       		.byte	0
- 1015 001d 00       		.byte	0
- 1016 001e 03       		.uleb128 0x3
- 1017 001f 24       		.uleb128 0x24
- 1018 0020 00       		.byte	0
- 1019 0021 0B       		.uleb128 0xb
- 1020 0022 0B       		.uleb128 0xb
- 1021 0023 3E       		.uleb128 0x3e
- 1022 0024 0B       		.uleb128 0xb
- 1023 0025 03       		.uleb128 0x3
- 1024 0026 08       		.uleb128 0x8
- 1025 0027 00       		.byte	0
- 1026 0028 00       		.byte	0
- 1027 0029 04       		.uleb128 0x4
- 1028 002a 16       		.uleb128 0x16
- 1029 002b 00       		.byte	0
- 1030 002c 03       		.uleb128 0x3
- 1031 002d 0E       		.uleb128 0xe
- 1032 002e 3A       		.uleb128 0x3a
- 1033 002f 0B       		.uleb128 0xb
- 1034 0030 3B       		.uleb128 0x3b
- 1035 0031 05       		.uleb128 0x5
- 1036 0032 49       		.uleb128 0x49
- 1037 0033 13       		.uleb128 0x13
- 1038 0034 00       		.byte	0
- 1039 0035 00       		.byte	0
- 1040 0036 05       		.uleb128 0x5
- 1041 0037 35       		.uleb128 0x35
- 1042 0038 00       		.byte	0
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 22
+ 941 0475 A4000000 		.4byte	0xa4
+ 942 0479 03       		.byte	0x3
+ 943 047a 00       		.byte	0
+ 944 047b 10       		.uleb128 0x10
+ 945 047c 98010000 		.4byte	.LASF37
+ 946 0480 01       		.byte	0x1
+ 947 0481 1A       		.byte	0x1a
+ 948 0482 6B040000 		.4byte	0x46b
+ 949 0486 05       		.uleb128 0x5
+ 950 0487 03       		.byte	0x3
+ 951 0488 00000000 		.4byte	i2cTxBuffer
+ 952 048c 10       		.uleb128 0x10
+ 953 048d 29000000 		.4byte	.LASF38
+ 954 0491 01       		.byte	0x1
+ 955 0492 1B       		.byte	0x1b
+ 956 0493 6B040000 		.4byte	0x46b
+ 957 0497 05       		.uleb128 0x5
+ 958 0498 03       		.byte	0x3
+ 959 0499 00000000 		.4byte	i2cRxBuffer
+ 960 049d 10       		.uleb128 0x10
+ 961 049e F9020000 		.4byte	.LASF39
+ 962 04a2 03       		.byte	0x3
+ 963 04a3 25       		.byte	0x25
+ 964 04a4 AB000000 		.4byte	0xab
+ 965 04a8 05       		.uleb128 0x5
+ 966 04a9 03       		.byte	0x3
+ 967 04aa 00000000 		.4byte	dataXY
+ 968 04ae 11       		.uleb128 0x11
+ 969 04af A3000000 		.4byte	.LASF43
+ 970 04b3 05       		.byte	0x5
+ 971 04b4 2A       		.byte	0x2a
+ 972 04b5 12       		.uleb128 0x12
+ 973 04b6 3B000000 		.4byte	.LASF40
+ 974 04ba 05       		.byte	0x5
+ 975 04bb 26       		.byte	0x26
+ 976 04bc C6040000 		.4byte	0x4c6
+ 977 04c0 13       		.uleb128 0x13
+ 978 04c1 C6040000 		.4byte	0x4c6
+ 979 04c5 00       		.byte	0
+ 980 04c6 14       		.uleb128 0x14
+ 981 04c7 04       		.byte	0x4
+ 982 04c8 CC040000 		.4byte	0x4cc
+ 983 04cc 15       		.uleb128 0x15
+ 984 04cd 91000000 		.4byte	0x91
+ 985 04d1 12       		.uleb128 0x12
+ 986 04d2 92000000 		.4byte	.LASF41
+ 987 04d6 05       		.byte	0x5
+ 988 04d7 28       		.byte	0x28
+ 989 04d8 E2040000 		.4byte	0x4e2
+ 990 04dc 13       		.uleb128 0x13
+ 991 04dd 6B000000 		.4byte	0x6b
+ 992 04e1 00       		.byte	0
+ 993 04e2 16       		.uleb128 0x16
+ 994 04e3 4E010000 		.4byte	.LASF45
+ 995 04e7 06       		.byte	0x6
+ 996 04e8 E2       		.byte	0xe2
+ 997 04e9 77000000 		.4byte	0x77
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 21
 
 
- 1043 0039 49       		.uleb128 0x49
- 1044 003a 13       		.uleb128 0x13
- 1045 003b 00       		.byte	0
- 1046 003c 00       		.byte	0
- 1047 003d 06       		.uleb128 0x6
- 1048 003e 0F       		.uleb128 0xf
- 1049 003f 00       		.byte	0
- 1050 0040 0B       		.uleb128 0xb
- 1051 0041 0B       		.uleb128 0xb
- 1052 0042 49       		.uleb128 0x49
- 1053 0043 13       		.uleb128 0x13
- 1054 0044 00       		.byte	0
- 1055 0045 00       		.byte	0
- 1056 0046 07       		.uleb128 0x7
- 1057 0047 15       		.uleb128 0x15
- 1058 0048 00       		.byte	0
- 1059 0049 27       		.uleb128 0x27
- 1060 004a 19       		.uleb128 0x19
- 1061 004b 00       		.byte	0
- 1062 004c 00       		.byte	0
- 1063 004d 08       		.uleb128 0x8
- 1064 004e 13       		.uleb128 0x13
- 1065 004f 01       		.byte	0x1
- 1066 0050 03       		.uleb128 0x3
- 1067 0051 0E       		.uleb128 0xe
- 1068 0052 0B       		.uleb128 0xb
- 1069 0053 0B       		.uleb128 0xb
- 1070 0054 3A       		.uleb128 0x3a
- 1071 0055 0B       		.uleb128 0xb
- 1072 0056 3B       		.uleb128 0x3b
- 1073 0057 0B       		.uleb128 0xb
- 1074 0058 01       		.uleb128 0x1
- 1075 0059 13       		.uleb128 0x13
- 1076 005a 00       		.byte	0
- 1077 005b 00       		.byte	0
- 1078 005c 09       		.uleb128 0x9
- 1079 005d 0D       		.uleb128 0xd
- 1080 005e 00       		.byte	0
- 1081 005f 03       		.uleb128 0x3
- 1082 0060 0E       		.uleb128 0xe
- 1083 0061 3A       		.uleb128 0x3a
- 1084 0062 0B       		.uleb128 0xb
- 1085 0063 3B       		.uleb128 0x3b
- 1086 0064 0B       		.uleb128 0xb
- 1087 0065 49       		.uleb128 0x49
- 1088 0066 13       		.uleb128 0x13
- 1089 0067 38       		.uleb128 0x38
- 1090 0068 0B       		.uleb128 0xb
- 1091 0069 00       		.byte	0
- 1092 006a 00       		.byte	0
- 1093 006b 0A       		.uleb128 0xa
- 1094 006c 2E       		.uleb128 0x2e
- 1095 006d 01       		.byte	0x1
- 1096 006e 3F       		.uleb128 0x3f
- 1097 006f 19       		.uleb128 0x19
- 1098 0070 03       		.uleb128 0x3
- 1099 0071 0E       		.uleb128 0xe
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 23
+ 998 04ed 12       		.uleb128 0x12
+ 999 04ee 65000000 		.4byte	.LASF42
+ 1000 04f2 04       		.byte	0x4
+ 1001 04f3 23       		.byte	0x23
+ 1002 04f4 FE040000 		.4byte	0x4fe
+ 1003 04f8 13       		.uleb128 0x13
+ 1004 04f9 FE040000 		.4byte	0x4fe
+ 1005 04fd 00       		.byte	0
+ 1006 04fe 15       		.uleb128 0x15
+ 1007 04ff 48010000 		.4byte	0x148
+ 1008 0503 11       		.uleb128 0x11
+ 1009 0504 DE020000 		.4byte	.LASF44
+ 1010 0508 06       		.byte	0x6
+ 1011 0509 E4       		.byte	0xe4
+ 1012 050a 16       		.uleb128 0x16
+ 1013 050b 74000000 		.4byte	.LASF46
+ 1014 050f 06       		.byte	0x6
+ 1015 0510 D8       		.byte	0xd8
+ 1016 0511 77000000 		.4byte	0x77
+ 1017 0515 12       		.uleb128 0x12
+ 1018 0516 10000000 		.4byte	.LASF47
+ 1019 051a 06       		.byte	0x6
+ 1020 051b DF       		.byte	0xdf
+ 1021 051c 2B050000 		.4byte	0x52b
+ 1022 0520 13       		.uleb128 0x13
+ 1023 0521 2B050000 		.4byte	0x52b
+ 1024 0525 13       		.uleb128 0x13
+ 1025 0526 77000000 		.4byte	0x77
+ 1026 052a 00       		.byte	0
+ 1027 052b 14       		.uleb128 0x14
+ 1028 052c 04       		.byte	0x4
+ 1029 052d 6B000000 		.4byte	0x6b
+ 1030 0531 11       		.uleb128 0x11
+ 1031 0532 27020000 		.4byte	.LASF48
+ 1032 0536 06       		.byte	0x6
+ 1033 0537 E3       		.byte	0xe3
+ 1034 0538 16       		.uleb128 0x16
+ 1035 0539 05020000 		.4byte	.LASF49
+ 1036 053d 06       		.byte	0x6
+ 1037 053e D7       		.byte	0xd7
+ 1038 053f 77000000 		.4byte	0x77
+ 1039 0543 12       		.uleb128 0x12
+ 1040 0544 6B010000 		.4byte	.LASF50
+ 1041 0548 06       		.byte	0x6
+ 1042 0549 E0       		.byte	0xe0
+ 1043 054a 59050000 		.4byte	0x559
+ 1044 054e 13       		.uleb128 0x13
+ 1045 054f 2B050000 		.4byte	0x52b
+ 1046 0553 13       		.uleb128 0x13
+ 1047 0554 77000000 		.4byte	0x77
+ 1048 0558 00       		.byte	0
+ 1049 0559 11       		.uleb128 0x11
+ 1050 055a 00000000 		.4byte	.LASF51
+ 1051 055e 07       		.byte	0x7
+ 1052 055f 68       		.byte	0x68
+ 1053 0560 12       		.uleb128 0x12
+ 1054 0561 5E000000 		.4byte	.LASF52
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 22
 
 
- 1100 0072 3A       		.uleb128 0x3a
- 1101 0073 0B       		.uleb128 0xb
- 1102 0074 3B       		.uleb128 0x3b
- 1103 0075 0B       		.uleb128 0xb
- 1104 0076 27       		.uleb128 0x27
- 1105 0077 19       		.uleb128 0x19
- 1106 0078 11       		.uleb128 0x11
- 1107 0079 01       		.uleb128 0x1
- 1108 007a 12       		.uleb128 0x12
- 1109 007b 06       		.uleb128 0x6
- 1110 007c 40       		.uleb128 0x40
- 1111 007d 18       		.uleb128 0x18
- 1112 007e 9742     		.uleb128 0x2117
- 1113 0080 19       		.uleb128 0x19
- 1114 0081 01       		.uleb128 0x1
- 1115 0082 13       		.uleb128 0x13
- 1116 0083 00       		.byte	0
- 1117 0084 00       		.byte	0
- 1118 0085 0B       		.uleb128 0xb
- 1119 0086 0B       		.uleb128 0xb
- 1120 0087 01       		.byte	0x1
- 1121 0088 11       		.uleb128 0x11
- 1122 0089 01       		.uleb128 0x1
- 1123 008a 12       		.uleb128 0x12
- 1124 008b 06       		.uleb128 0x6
- 1125 008c 01       		.uleb128 0x1
- 1126 008d 13       		.uleb128 0x13
- 1127 008e 00       		.byte	0
- 1128 008f 00       		.byte	0
- 1129 0090 0C       		.uleb128 0xc
- 1130 0091 34       		.uleb128 0x34
- 1131 0092 00       		.byte	0
- 1132 0093 03       		.uleb128 0x3
- 1133 0094 0E       		.uleb128 0xe
- 1134 0095 3A       		.uleb128 0x3a
- 1135 0096 0B       		.uleb128 0xb
- 1136 0097 3B       		.uleb128 0x3b
- 1137 0098 0B       		.uleb128 0xb
- 1138 0099 49       		.uleb128 0x49
- 1139 009a 13       		.uleb128 0x13
- 1140 009b 02       		.uleb128 0x2
- 1141 009c 18       		.uleb128 0x18
- 1142 009d 00       		.byte	0
- 1143 009e 00       		.byte	0
- 1144 009f 0D       		.uleb128 0xd
- 1145 00a0 898201   		.uleb128 0x4109
- 1146 00a3 01       		.byte	0x1
- 1147 00a4 11       		.uleb128 0x11
- 1148 00a5 01       		.uleb128 0x1
- 1149 00a6 31       		.uleb128 0x31
- 1150 00a7 13       		.uleb128 0x13
- 1151 00a8 01       		.uleb128 0x1
- 1152 00a9 13       		.uleb128 0x13
- 1153 00aa 00       		.byte	0
- 1154 00ab 00       		.byte	0
- 1155 00ac 0E       		.uleb128 0xe
- 1156 00ad 8A8201   		.uleb128 0x410a
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 24
+ 1055 0565 08       		.byte	0x8
+ 1056 0566 18       		.byte	0x18
+ 1057 0567 7B050000 		.4byte	0x57b
+ 1058 056b 13       		.uleb128 0x13
+ 1059 056c 6B000000 		.4byte	0x6b
+ 1060 0570 13       		.uleb128 0x13
+ 1061 0571 6B000000 		.4byte	0x6b
+ 1062 0575 13       		.uleb128 0x13
+ 1063 0576 6B000000 		.4byte	0x6b
+ 1064 057a 00       		.byte	0
+ 1065 057b 16       		.uleb128 0x16
+ 1066 057c F2000000 		.4byte	.LASF53
+ 1067 0580 06       		.byte	0x6
+ 1068 0581 D6       		.byte	0xd6
+ 1069 0582 77000000 		.4byte	0x77
+ 1070 0586 00       		.byte	0
+ 1071              		.section	.debug_abbrev,"",%progbits
+ 1072              	.Ldebug_abbrev0:
+ 1073 0000 01       		.uleb128 0x1
+ 1074 0001 11       		.uleb128 0x11
+ 1075 0002 01       		.byte	0x1
+ 1076 0003 25       		.uleb128 0x25
+ 1077 0004 0E       		.uleb128 0xe
+ 1078 0005 13       		.uleb128 0x13
+ 1079 0006 0B       		.uleb128 0xb
+ 1080 0007 03       		.uleb128 0x3
+ 1081 0008 0E       		.uleb128 0xe
+ 1082 0009 1B       		.uleb128 0x1b
+ 1083 000a 0E       		.uleb128 0xe
+ 1084 000b 55       		.uleb128 0x55
+ 1085 000c 17       		.uleb128 0x17
+ 1086 000d 11       		.uleb128 0x11
+ 1087 000e 01       		.uleb128 0x1
+ 1088 000f 10       		.uleb128 0x10
+ 1089 0010 17       		.uleb128 0x17
+ 1090 0011 00       		.byte	0
+ 1091 0012 00       		.byte	0
+ 1092 0013 02       		.uleb128 0x2
+ 1093 0014 24       		.uleb128 0x24
+ 1094 0015 00       		.byte	0
+ 1095 0016 0B       		.uleb128 0xb
+ 1096 0017 0B       		.uleb128 0xb
+ 1097 0018 3E       		.uleb128 0x3e
+ 1098 0019 0B       		.uleb128 0xb
+ 1099 001a 03       		.uleb128 0x3
+ 1100 001b 0E       		.uleb128 0xe
+ 1101 001c 00       		.byte	0
+ 1102 001d 00       		.byte	0
+ 1103 001e 03       		.uleb128 0x3
+ 1104 001f 24       		.uleb128 0x24
+ 1105 0020 00       		.byte	0
+ 1106 0021 0B       		.uleb128 0xb
+ 1107 0022 0B       		.uleb128 0xb
+ 1108 0023 3E       		.uleb128 0x3e
+ 1109 0024 0B       		.uleb128 0xb
+ 1110 0025 03       		.uleb128 0x3
+ 1111 0026 08       		.uleb128 0x8
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 23
 
 
- 1157 00b0 00       		.byte	0
- 1158 00b1 02       		.uleb128 0x2
- 1159 00b2 18       		.uleb128 0x18
- 1160 00b3 9142     		.uleb128 0x2111
- 1161 00b5 18       		.uleb128 0x18
- 1162 00b6 00       		.byte	0
- 1163 00b7 00       		.byte	0
- 1164 00b8 0F       		.uleb128 0xf
- 1165 00b9 898201   		.uleb128 0x4109
- 1166 00bc 00       		.byte	0
- 1167 00bd 11       		.uleb128 0x11
- 1168 00be 01       		.uleb128 0x1
- 1169 00bf 31       		.uleb128 0x31
- 1170 00c0 13       		.uleb128 0x13
- 1171 00c1 00       		.byte	0
- 1172 00c2 00       		.byte	0
- 1173 00c3 10       		.uleb128 0x10
- 1174 00c4 898201   		.uleb128 0x4109
- 1175 00c7 01       		.byte	0x1
- 1176 00c8 11       		.uleb128 0x11
- 1177 00c9 01       		.uleb128 0x1
- 1178 00ca 31       		.uleb128 0x31
- 1179 00cb 13       		.uleb128 0x13
- 1180 00cc 00       		.byte	0
- 1181 00cd 00       		.byte	0
- 1182 00ce 11       		.uleb128 0x11
- 1183 00cf 01       		.uleb128 0x1
- 1184 00d0 01       		.byte	0x1
- 1185 00d1 49       		.uleb128 0x49
- 1186 00d2 13       		.uleb128 0x13
- 1187 00d3 01       		.uleb128 0x1
- 1188 00d4 13       		.uleb128 0x13
- 1189 00d5 00       		.byte	0
- 1190 00d6 00       		.byte	0
- 1191 00d7 12       		.uleb128 0x12
- 1192 00d8 21       		.uleb128 0x21
- 1193 00d9 00       		.byte	0
- 1194 00da 49       		.uleb128 0x49
- 1195 00db 13       		.uleb128 0x13
- 1196 00dc 2F       		.uleb128 0x2f
- 1197 00dd 0B       		.uleb128 0xb
- 1198 00de 00       		.byte	0
- 1199 00df 00       		.byte	0
- 1200 00e0 13       		.uleb128 0x13
- 1201 00e1 34       		.uleb128 0x34
- 1202 00e2 00       		.byte	0
- 1203 00e3 03       		.uleb128 0x3
- 1204 00e4 0E       		.uleb128 0xe
- 1205 00e5 3A       		.uleb128 0x3a
- 1206 00e6 0B       		.uleb128 0xb
- 1207 00e7 3B       		.uleb128 0x3b
- 1208 00e8 0B       		.uleb128 0xb
- 1209 00e9 49       		.uleb128 0x49
- 1210 00ea 13       		.uleb128 0x13
- 1211 00eb 3F       		.uleb128 0x3f
- 1212 00ec 19       		.uleb128 0x19
- 1213 00ed 02       		.uleb128 0x2
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 25
+ 1112 0027 00       		.byte	0
+ 1113 0028 00       		.byte	0
+ 1114 0029 04       		.uleb128 0x4
+ 1115 002a 16       		.uleb128 0x16
+ 1116 002b 00       		.byte	0
+ 1117 002c 03       		.uleb128 0x3
+ 1118 002d 0E       		.uleb128 0xe
+ 1119 002e 3A       		.uleb128 0x3a
+ 1120 002f 0B       		.uleb128 0xb
+ 1121 0030 3B       		.uleb128 0x3b
+ 1122 0031 05       		.uleb128 0x5
+ 1123 0032 49       		.uleb128 0x49
+ 1124 0033 13       		.uleb128 0x13
+ 1125 0034 00       		.byte	0
+ 1126 0035 00       		.byte	0
+ 1127 0036 05       		.uleb128 0x5
+ 1128 0037 13       		.uleb128 0x13
+ 1129 0038 01       		.byte	0x1
+ 1130 0039 03       		.uleb128 0x3
+ 1131 003a 0E       		.uleb128 0xe
+ 1132 003b 0B       		.uleb128 0xb
+ 1133 003c 0B       		.uleb128 0xb
+ 1134 003d 3A       		.uleb128 0x3a
+ 1135 003e 0B       		.uleb128 0xb
+ 1136 003f 3B       		.uleb128 0x3b
+ 1137 0040 0B       		.uleb128 0xb
+ 1138 0041 01       		.uleb128 0x1
+ 1139 0042 13       		.uleb128 0x13
+ 1140 0043 00       		.byte	0
+ 1141 0044 00       		.byte	0
+ 1142 0045 06       		.uleb128 0x6
+ 1143 0046 0D       		.uleb128 0xd
+ 1144 0047 00       		.byte	0
+ 1145 0048 03       		.uleb128 0x3
+ 1146 0049 0E       		.uleb128 0xe
+ 1147 004a 3A       		.uleb128 0x3a
+ 1148 004b 0B       		.uleb128 0xb
+ 1149 004c 3B       		.uleb128 0x3b
+ 1150 004d 0B       		.uleb128 0xb
+ 1151 004e 49       		.uleb128 0x49
+ 1152 004f 13       		.uleb128 0x13
+ 1153 0050 38       		.uleb128 0x38
+ 1154 0051 0B       		.uleb128 0xb
+ 1155 0052 00       		.byte	0
+ 1156 0053 00       		.byte	0
+ 1157 0054 07       		.uleb128 0x7
+ 1158 0055 2E       		.uleb128 0x2e
+ 1159 0056 01       		.byte	0x1
+ 1160 0057 3F       		.uleb128 0x3f
+ 1161 0058 19       		.uleb128 0x19
+ 1162 0059 03       		.uleb128 0x3
+ 1163 005a 0E       		.uleb128 0xe
+ 1164 005b 3A       		.uleb128 0x3a
+ 1165 005c 0B       		.uleb128 0xb
+ 1166 005d 3B       		.uleb128 0x3b
+ 1167 005e 0B       		.uleb128 0xb
+ 1168 005f 27       		.uleb128 0x27
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 24
 
 
- 1214 00ee 18       		.uleb128 0x18
- 1215 00ef 00       		.byte	0
- 1216 00f0 00       		.byte	0
- 1217 00f1 14       		.uleb128 0x14
- 1218 00f2 2E       		.uleb128 0x2e
- 1219 00f3 01       		.byte	0x1
- 1220 00f4 3F       		.uleb128 0x3f
- 1221 00f5 19       		.uleb128 0x19
- 1222 00f6 03       		.uleb128 0x3
- 1223 00f7 0E       		.uleb128 0xe
- 1224 00f8 3A       		.uleb128 0x3a
- 1225 00f9 0B       		.uleb128 0xb
- 1226 00fa 3B       		.uleb128 0x3b
- 1227 00fb 0B       		.uleb128 0xb
- 1228 00fc 27       		.uleb128 0x27
- 1229 00fd 19       		.uleb128 0x19
- 1230 00fe 3C       		.uleb128 0x3c
- 1231 00ff 19       		.uleb128 0x19
- 1232 0100 01       		.uleb128 0x1
- 1233 0101 13       		.uleb128 0x13
- 1234 0102 00       		.byte	0
- 1235 0103 00       		.byte	0
- 1236 0104 15       		.uleb128 0x15
- 1237 0105 05       		.uleb128 0x5
- 1238 0106 00       		.byte	0
- 1239 0107 49       		.uleb128 0x49
- 1240 0108 13       		.uleb128 0x13
- 1241 0109 00       		.byte	0
- 1242 010a 00       		.byte	0
- 1243 010b 16       		.uleb128 0x16
- 1244 010c 26       		.uleb128 0x26
- 1245 010d 00       		.byte	0
- 1246 010e 49       		.uleb128 0x49
- 1247 010f 13       		.uleb128 0x13
- 1248 0110 00       		.byte	0
- 1249 0111 00       		.byte	0
- 1250 0112 17       		.uleb128 0x17
- 1251 0113 2E       		.uleb128 0x2e
- 1252 0114 00       		.byte	0
- 1253 0115 3F       		.uleb128 0x3f
- 1254 0116 19       		.uleb128 0x19
- 1255 0117 03       		.uleb128 0x3
- 1256 0118 0E       		.uleb128 0xe
- 1257 0119 3A       		.uleb128 0x3a
- 1258 011a 0B       		.uleb128 0xb
- 1259 011b 3B       		.uleb128 0x3b
- 1260 011c 0B       		.uleb128 0xb
- 1261 011d 27       		.uleb128 0x27
- 1262 011e 19       		.uleb128 0x19
- 1263 011f 49       		.uleb128 0x49
- 1264 0120 13       		.uleb128 0x13
- 1265 0121 3C       		.uleb128 0x3c
- 1266 0122 19       		.uleb128 0x19
- 1267 0123 00       		.byte	0
- 1268 0124 00       		.byte	0
- 1269 0125 18       		.uleb128 0x18
- 1270 0126 2E       		.uleb128 0x2e
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 26
+ 1169 0060 19       		.uleb128 0x19
+ 1170 0061 11       		.uleb128 0x11
+ 1171 0062 01       		.uleb128 0x1
+ 1172 0063 12       		.uleb128 0x12
+ 1173 0064 06       		.uleb128 0x6
+ 1174 0065 40       		.uleb128 0x40
+ 1175 0066 18       		.uleb128 0x18
+ 1176 0067 9742     		.uleb128 0x2117
+ 1177 0069 19       		.uleb128 0x19
+ 1178 006a 01       		.uleb128 0x1
+ 1179 006b 13       		.uleb128 0x13
+ 1180 006c 00       		.byte	0
+ 1181 006d 00       		.byte	0
+ 1182 006e 08       		.uleb128 0x8
+ 1183 006f 0B       		.uleb128 0xb
+ 1184 0070 01       		.byte	0x1
+ 1185 0071 11       		.uleb128 0x11
+ 1186 0072 01       		.uleb128 0x1
+ 1187 0073 12       		.uleb128 0x12
+ 1188 0074 06       		.uleb128 0x6
+ 1189 0075 01       		.uleb128 0x1
+ 1190 0076 13       		.uleb128 0x13
+ 1191 0077 00       		.byte	0
+ 1192 0078 00       		.byte	0
+ 1193 0079 09       		.uleb128 0x9
+ 1194 007a 34       		.uleb128 0x34
+ 1195 007b 00       		.byte	0
+ 1196 007c 03       		.uleb128 0x3
+ 1197 007d 0E       		.uleb128 0xe
+ 1198 007e 3A       		.uleb128 0x3a
+ 1199 007f 0B       		.uleb128 0xb
+ 1200 0080 3B       		.uleb128 0x3b
+ 1201 0081 0B       		.uleb128 0xb
+ 1202 0082 49       		.uleb128 0x49
+ 1203 0083 13       		.uleb128 0x13
+ 1204 0084 02       		.uleb128 0x2
+ 1205 0085 18       		.uleb128 0x18
+ 1206 0086 00       		.byte	0
+ 1207 0087 00       		.byte	0
+ 1208 0088 0A       		.uleb128 0xa
+ 1209 0089 898201   		.uleb128 0x4109
+ 1210 008c 00       		.byte	0
+ 1211 008d 11       		.uleb128 0x11
+ 1212 008e 01       		.uleb128 0x1
+ 1213 008f 31       		.uleb128 0x31
+ 1214 0090 13       		.uleb128 0x13
+ 1215 0091 00       		.byte	0
+ 1216 0092 00       		.byte	0
+ 1217 0093 0B       		.uleb128 0xb
+ 1218 0094 898201   		.uleb128 0x4109
+ 1219 0097 01       		.byte	0x1
+ 1220 0098 11       		.uleb128 0x11
+ 1221 0099 01       		.uleb128 0x1
+ 1222 009a 31       		.uleb128 0x31
+ 1223 009b 13       		.uleb128 0x13
+ 1224 009c 01       		.uleb128 0x1
+ 1225 009d 13       		.uleb128 0x13
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 25
 
 
- 1271 0127 00       		.byte	0
- 1272 0128 3F       		.uleb128 0x3f
- 1273 0129 19       		.uleb128 0x19
- 1274 012a 03       		.uleb128 0x3
- 1275 012b 0E       		.uleb128 0xe
- 1276 012c 3A       		.uleb128 0x3a
- 1277 012d 0B       		.uleb128 0xb
- 1278 012e 3B       		.uleb128 0x3b
- 1279 012f 0B       		.uleb128 0xb
- 1280 0130 27       		.uleb128 0x27
- 1281 0131 19       		.uleb128 0x19
- 1282 0132 3C       		.uleb128 0x3c
- 1283 0133 19       		.uleb128 0x19
- 1284 0134 00       		.byte	0
- 1285 0135 00       		.byte	0
- 1286 0136 00       		.byte	0
- 1287              		.section	.debug_aranges,"",%progbits
- 1288 0000 34000000 		.4byte	0x34
- 1289 0004 0200     		.2byte	0x2
- 1290 0006 00000000 		.4byte	.Ldebug_info0
- 1291 000a 04       		.byte	0x4
- 1292 000b 00       		.byte	0
- 1293 000c 0000     		.2byte	0
- 1294 000e 0000     		.2byte	0
- 1295 0010 00000000 		.4byte	.LFB37
- 1296 0014 A8000000 		.4byte	.LFE37-.LFB37
- 1297 0018 00000000 		.4byte	.LFB34
- 1298 001c 44000000 		.4byte	.LFE34-.LFB34
- 1299 0020 00000000 		.4byte	.LFB35
- 1300 0024 68000000 		.4byte	.LFE35-.LFB35
- 1301 0028 00000000 		.4byte	.LFB36
- 1302 002c 14000000 		.4byte	.LFE36-.LFB36
- 1303 0030 00000000 		.4byte	0
- 1304 0034 00000000 		.4byte	0
- 1305              		.section	.debug_ranges,"",%progbits
- 1306              	.Ldebug_ranges0:
- 1307 0000 00000000 		.4byte	.LFB37
- 1308 0004 A8000000 		.4byte	.LFE37
- 1309 0008 00000000 		.4byte	.LFB34
- 1310 000c 44000000 		.4byte	.LFE34
- 1311 0010 00000000 		.4byte	.LFB35
- 1312 0014 68000000 		.4byte	.LFE35
- 1313 0018 00000000 		.4byte	.LFB36
- 1314 001c 14000000 		.4byte	.LFE36
- 1315 0020 00000000 		.4byte	0
- 1316 0024 00000000 		.4byte	0
- 1317              		.section	.debug_line,"",%progbits
- 1318              	.Ldebug_line0:
- 1319 0000 0D010000 		.section	.debug_str,"MS",%progbits,1
- 1319      02007E00 
- 1319      00000201 
- 1319      FB0E0D00 
- 1319      01010101 
- 1320              	.LASF51:
- 1321 0000 49324353 		.ascii	"I2CS_Start\000"
- 1321      5F537461 
- 1321      727400
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 27
+ 1226 009e 00       		.byte	0
+ 1227 009f 00       		.byte	0
+ 1228 00a0 0C       		.uleb128 0xc
+ 1229 00a1 8A8201   		.uleb128 0x410a
+ 1230 00a4 00       		.byte	0
+ 1231 00a5 02       		.uleb128 0x2
+ 1232 00a6 18       		.uleb128 0x18
+ 1233 00a7 9142     		.uleb128 0x2111
+ 1234 00a9 18       		.uleb128 0x18
+ 1235 00aa 00       		.byte	0
+ 1236 00ab 00       		.byte	0
+ 1237 00ac 0D       		.uleb128 0xd
+ 1238 00ad 898201   		.uleb128 0x4109
+ 1239 00b0 01       		.byte	0x1
+ 1240 00b1 11       		.uleb128 0x11
+ 1241 00b2 01       		.uleb128 0x1
+ 1242 00b3 31       		.uleb128 0x31
+ 1243 00b4 13       		.uleb128 0x13
+ 1244 00b5 00       		.byte	0
+ 1245 00b6 00       		.byte	0
+ 1246 00b7 0E       		.uleb128 0xe
+ 1247 00b8 01       		.uleb128 0x1
+ 1248 00b9 01       		.byte	0x1
+ 1249 00ba 49       		.uleb128 0x49
+ 1250 00bb 13       		.uleb128 0x13
+ 1251 00bc 01       		.uleb128 0x1
+ 1252 00bd 13       		.uleb128 0x13
+ 1253 00be 00       		.byte	0
+ 1254 00bf 00       		.byte	0
+ 1255 00c0 0F       		.uleb128 0xf
+ 1256 00c1 21       		.uleb128 0x21
+ 1257 00c2 00       		.byte	0
+ 1258 00c3 49       		.uleb128 0x49
+ 1259 00c4 13       		.uleb128 0x13
+ 1260 00c5 2F       		.uleb128 0x2f
+ 1261 00c6 0B       		.uleb128 0xb
+ 1262 00c7 00       		.byte	0
+ 1263 00c8 00       		.byte	0
+ 1264 00c9 10       		.uleb128 0x10
+ 1265 00ca 34       		.uleb128 0x34
+ 1266 00cb 00       		.byte	0
+ 1267 00cc 03       		.uleb128 0x3
+ 1268 00cd 0E       		.uleb128 0xe
+ 1269 00ce 3A       		.uleb128 0x3a
+ 1270 00cf 0B       		.uleb128 0xb
+ 1271 00d0 3B       		.uleb128 0x3b
+ 1272 00d1 0B       		.uleb128 0xb
+ 1273 00d2 49       		.uleb128 0x49
+ 1274 00d3 13       		.uleb128 0x13
+ 1275 00d4 3F       		.uleb128 0x3f
+ 1276 00d5 19       		.uleb128 0x19
+ 1277 00d6 02       		.uleb128 0x2
+ 1278 00d7 18       		.uleb128 0x18
+ 1279 00d8 00       		.byte	0
+ 1280 00d9 00       		.byte	0
+ 1281 00da 11       		.uleb128 0x11
+ 1282 00db 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 26
 
 
- 1322              	.LASF14:
- 1323 000b 72656733 		.ascii	"reg32\000"
- 1323      3200
- 1324              	.LASF45:
- 1325 0011 49324353 		.ascii	"I2CS_I2CSlaveInitReadBuf\000"
- 1325      5F493243 
- 1325      536C6176 
- 1325      65496E69 
- 1325      74526561 
- 1326              	.LASF38:
- 1327 002a 69326352 		.ascii	"i2cRxBuffer\000"
- 1327      78427566 
- 1327      66657200 
- 1328              	.LASF32:
- 1329 0036 6973725F 		.ascii	"isr_i2c_rx\000"
- 1329      6932635F 
- 1329      727800
- 1330              	.LASF3:
- 1331 0041 73686F72 		.ascii	"short unsigned int\000"
- 1331      7420756E 
- 1331      7369676E 
- 1331      65642069 
- 1331      6E7400
- 1332              	.LASF40:
- 1333 0054 7365744C 		.ascii	"setLed\000"
- 1333      656400
- 1334              	.LASF41:
- 1335 005b 70757368 		.ascii	"pushQueue\000"
- 1335      51756575 
- 1335      6500
- 1336              	.LASF27:
- 1337 0065 79506F73 		.ascii	"yPos\000"
- 1337      00
- 1338              	.LASF44:
- 1339 006a 49324353 		.ascii	"I2CS_I2CSlaveClearWriteStatus\000"
- 1339      5F493243 
- 1339      536C6176 
- 1339      65436C65 
- 1339      61725772 
- 1340              	.LASF11:
- 1341 0088 666C6F61 		.ascii	"float\000"
- 1341      7400
- 1342              	.LASF1:
- 1343 008e 756E7369 		.ascii	"unsigned char\000"
- 1343      676E6564 
- 1343      20636861 
- 1343      7200
- 1344              	.LASF22:
- 1345 009c 78466C61 		.ascii	"xFlag\000"
- 1345      6700
- 1346              	.LASF26:
- 1347 00a2 794D6178 		.ascii	"yMax\000"
- 1347      00
- 1348              	.LASF35:
- 1349 00a7 61637469 		.ascii	"action\000"
- 1349      6F6E00
- 1350              	.LASF50:
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 28
+ 1283 00dc 00       		.byte	0
+ 1284 00dd 3F       		.uleb128 0x3f
+ 1285 00de 19       		.uleb128 0x19
+ 1286 00df 03       		.uleb128 0x3
+ 1287 00e0 0E       		.uleb128 0xe
+ 1288 00e1 3A       		.uleb128 0x3a
+ 1289 00e2 0B       		.uleb128 0xb
+ 1290 00e3 3B       		.uleb128 0x3b
+ 1291 00e4 0B       		.uleb128 0xb
+ 1292 00e5 27       		.uleb128 0x27
+ 1293 00e6 19       		.uleb128 0x19
+ 1294 00e7 3C       		.uleb128 0x3c
+ 1295 00e8 19       		.uleb128 0x19
+ 1296 00e9 00       		.byte	0
+ 1297 00ea 00       		.byte	0
+ 1298 00eb 12       		.uleb128 0x12
+ 1299 00ec 2E       		.uleb128 0x2e
+ 1300 00ed 01       		.byte	0x1
+ 1301 00ee 3F       		.uleb128 0x3f
+ 1302 00ef 19       		.uleb128 0x19
+ 1303 00f0 03       		.uleb128 0x3
+ 1304 00f1 0E       		.uleb128 0xe
+ 1305 00f2 3A       		.uleb128 0x3a
+ 1306 00f3 0B       		.uleb128 0xb
+ 1307 00f4 3B       		.uleb128 0x3b
+ 1308 00f5 0B       		.uleb128 0xb
+ 1309 00f6 27       		.uleb128 0x27
+ 1310 00f7 19       		.uleb128 0x19
+ 1311 00f8 3C       		.uleb128 0x3c
+ 1312 00f9 19       		.uleb128 0x19
+ 1313 00fa 01       		.uleb128 0x1
+ 1314 00fb 13       		.uleb128 0x13
+ 1315 00fc 00       		.byte	0
+ 1316 00fd 00       		.byte	0
+ 1317 00fe 13       		.uleb128 0x13
+ 1318 00ff 05       		.uleb128 0x5
+ 1319 0100 00       		.byte	0
+ 1320 0101 49       		.uleb128 0x49
+ 1321 0102 13       		.uleb128 0x13
+ 1322 0103 00       		.byte	0
+ 1323 0104 00       		.byte	0
+ 1324 0105 14       		.uleb128 0x14
+ 1325 0106 0F       		.uleb128 0xf
+ 1326 0107 00       		.byte	0
+ 1327 0108 0B       		.uleb128 0xb
+ 1328 0109 0B       		.uleb128 0xb
+ 1329 010a 49       		.uleb128 0x49
+ 1330 010b 13       		.uleb128 0x13
+ 1331 010c 00       		.byte	0
+ 1332 010d 00       		.byte	0
+ 1333 010e 15       		.uleb128 0x15
+ 1334 010f 26       		.uleb128 0x26
+ 1335 0110 00       		.byte	0
+ 1336 0111 49       		.uleb128 0x49
+ 1337 0112 13       		.uleb128 0x13
+ 1338 0113 00       		.byte	0
+ 1339 0114 00       		.byte	0
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 27
 
 
- 1351 00ae 49324353 		.ascii	"I2CS_SetCustomInterruptHandler\000"
- 1351      5F536574 
- 1351      43757374 
- 1351      6F6D496E 
- 1351      74657272 
- 1352              	.LASF5:
- 1353 00cd 6C6F6E67 		.ascii	"long unsigned int\000"
- 1353      20756E73 
- 1353      69676E65 
- 1353      6420696E 
- 1353      7400
- 1354              	.LASF9:
- 1355 00df 75696E74 		.ascii	"uint8\000"
- 1355      3800
- 1356              	.LASF33:
- 1357 00e5 6932635F 		.ascii	"i2c_init\000"
- 1357      696E6974 
- 1357      00
- 1358              	.LASF42:
- 1359 00ee 49324353 		.ascii	"I2CS_I2CSlaveStatus\000"
- 1359      5F493243 
- 1359      536C6176 
- 1359      65537461 
- 1359      74757300 
- 1360              	.LASF13:
- 1361 0102 63686172 		.ascii	"char\000"
- 1361      00
- 1362              	.LASF12:
- 1363 0107 646F7562 		.ascii	"double\000"
- 1363      6C6500
- 1364              	.LASF21:
- 1365 010e 69737253 		.ascii	"isrStopY\000"
- 1365      746F7059 
- 1365      00
- 1366              	.LASF29:
- 1367 0117 44617461 		.ascii	"Data\000"
- 1367      00
- 1368              	.LASF34:
- 1369 011c 6932635F 		.ascii	"i2c_rx\000"
- 1369      727800
- 1370              	.LASF54:
- 1371 0123 433A5C45 		.ascii	"C:\\E3PRJ3-Gruppe1\\PSoC\\PSoC4XY.cydsn\000"
- 1371      3350524A 
- 1371      332D4772 
- 1371      75707065 
- 1371      315C5053 
- 1372              	.LASF10:
- 1373 0148 75696E74 		.ascii	"uint32\000"
- 1373      333200
- 1374              	.LASF43:
- 1375 014f 49324353 		.ascii	"I2CS_I2CSlaveGetWriteBufSize\000"
- 1375      5F493243 
- 1375      536C6176 
- 1375      65476574 
- 1375      57726974 
- 1376              	.LASF49:
- 1377 016c 49324353 		.ascii	"I2CS_I2CSlaveInitWriteBuf\000"
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 29
+ 1340 0115 16       		.uleb128 0x16
+ 1341 0116 2E       		.uleb128 0x2e
+ 1342 0117 00       		.byte	0
+ 1343 0118 3F       		.uleb128 0x3f
+ 1344 0119 19       		.uleb128 0x19
+ 1345 011a 03       		.uleb128 0x3
+ 1346 011b 0E       		.uleb128 0xe
+ 1347 011c 3A       		.uleb128 0x3a
+ 1348 011d 0B       		.uleb128 0xb
+ 1349 011e 3B       		.uleb128 0x3b
+ 1350 011f 0B       		.uleb128 0xb
+ 1351 0120 27       		.uleb128 0x27
+ 1352 0121 19       		.uleb128 0x19
+ 1353 0122 49       		.uleb128 0x49
+ 1354 0123 13       		.uleb128 0x13
+ 1355 0124 3C       		.uleb128 0x3c
+ 1356 0125 19       		.uleb128 0x19
+ 1357 0126 00       		.byte	0
+ 1358 0127 00       		.byte	0
+ 1359 0128 00       		.byte	0
+ 1360              		.section	.debug_aranges,"",%progbits
+ 1361 0000 34000000 		.4byte	0x34
+ 1362 0004 0200     		.2byte	0x2
+ 1363 0006 00000000 		.4byte	.Ldebug_info0
+ 1364 000a 04       		.byte	0x4
+ 1365 000b 00       		.byte	0
+ 1366 000c 0000     		.2byte	0
+ 1367 000e 0000     		.2byte	0
+ 1368 0010 00000000 		.4byte	.LFB34
+ 1369 0014 E4000000 		.4byte	.LFE34-.LFB34
+ 1370 0018 00000000 		.4byte	.LFB35
+ 1371 001c 30000000 		.4byte	.LFE35-.LFB35
+ 1372 0020 00000000 		.4byte	.LFB36
+ 1373 0024 68000000 		.4byte	.LFE36-.LFB36
+ 1374 0028 00000000 		.4byte	.LFB37
+ 1375 002c 14000000 		.4byte	.LFE37-.LFB37
+ 1376 0030 00000000 		.4byte	0
+ 1377 0034 00000000 		.4byte	0
+ 1378              		.section	.debug_ranges,"",%progbits
+ 1379              	.Ldebug_ranges0:
+ 1380 0000 00000000 		.4byte	.LFB34
+ 1381 0004 E4000000 		.4byte	.LFE34
+ 1382 0008 00000000 		.4byte	.LFB35
+ 1383 000c 30000000 		.4byte	.LFE35
+ 1384 0010 00000000 		.4byte	.LFB36
+ 1385 0014 68000000 		.4byte	.LFE36
+ 1386 0018 00000000 		.4byte	.LFB37
+ 1387 001c 14000000 		.4byte	.LFE37
+ 1388 0020 00000000 		.4byte	0
+ 1389 0024 00000000 		.4byte	0
+ 1390              		.section	.debug_line,"",%progbits
+ 1391              	.Ldebug_line0:
+ 1392 0000 13010000 		.section	.debug_str,"MS",%progbits,1
+ 1392      02008900 
+ 1392      00000201 
+ 1392      FB0E0D00 
+ 1392      01010101 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 28
 
 
- 1377      5F493243 
- 1377      536C6176 
- 1377      65496E69 
- 1377      74577269 
- 1378              	.LASF23:
- 1379 0186 79466C61 		.ascii	"yFlag\000"
- 1379      6700
- 1380              	.LASF8:
- 1381 018c 756E7369 		.ascii	"unsigned int\000"
- 1381      676E6564 
- 1381      20696E74 
- 1381      00
- 1382              	.LASF37:
- 1383 0199 69326354 		.ascii	"i2cTxBuffer\000"
- 1383      78427566 
- 1383      66657200 
- 1384              	.LASF7:
- 1385 01a5 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1385      206C6F6E 
- 1385      6720756E 
- 1385      7369676E 
- 1385      65642069 
- 1386              	.LASF24:
- 1387 01bc 784D6178 		.ascii	"xMax\000"
- 1387      00
- 1388              	.LASF36:
- 1389 01c1 6932635F 		.ascii	"i2c_tx\000"
- 1389      747800
- 1390              	.LASF16:
- 1391 01c8 63616C69 		.ascii	"calibratedX\000"
- 1391      62726174 
- 1391      65645800 
- 1392              	.LASF17:
- 1393 01d4 63616C69 		.ascii	"calibratedY\000"
- 1393      62726174 
- 1393      65645900 
- 1394              	.LASF15:
- 1395 01e0 73697A65 		.ascii	"sizetype\000"
- 1395      74797065 
- 1395      00
- 1396              	.LASF6:
- 1397 01e9 6C6F6E67 		.ascii	"long long int\000"
- 1397      206C6F6E 
- 1397      6720696E 
- 1397      7400
- 1398              	.LASF48:
- 1399 01f7 49324353 		.ascii	"I2CS_I2CSlaveClearReadStatus\000"
- 1399      5F493243 
- 1399      536C6176 
- 1399      65436C65 
- 1399      61725265 
- 1400              	.LASF31:
- 1401 0214 76616C5F 		.ascii	"val_\000"
- 1401      00
- 1402              	.LASF47:
- 1403 0219 49324353 		.ascii	"I2CS_I2CSlaveClearReadBuf\000"
- 1403      5F493243 
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 30
+ 1393              	.LASF51:
+ 1394 0000 49324353 		.ascii	"I2CS_Start\000"
+ 1394      5F537461 
+ 1394      727400
+ 1395              	.LASF14:
+ 1396 000b 63686172 		.ascii	"char\000"
+ 1396      00
+ 1397              	.LASF47:
+ 1398 0010 49324353 		.ascii	"I2CS_I2CSlaveInitReadBuf\000"
+ 1398      5F493243 
+ 1398      536C6176 
+ 1398      65496E69 
+ 1398      74526561 
+ 1399              	.LASF38:
+ 1400 0029 69326352 		.ascii	"i2cRxBuffer\000"
+ 1400      78427566 
+ 1400      66657200 
+ 1401              	.LASF11:
+ 1402 0035 666C6F61 		.ascii	"float\000"
+ 1402      7400
+ 1403              	.LASF40:
+ 1404 003b 44454255 		.ascii	"DEBUG_PutString\000"
+ 1404      475F5075 
+ 1404      74537472 
+ 1404      696E6700 
+ 1405              	.LASF3:
+ 1406 004b 73686F72 		.ascii	"short unsigned int\000"
+ 1406      7420756E 
+ 1406      7369676E 
+ 1406      65642069 
+ 1406      6E7400
+ 1407              	.LASF52:
+ 1408 005e 7365744C 		.ascii	"setLed\000"
+ 1408      656400
+ 1409              	.LASF42:
+ 1410 0065 70757368 		.ascii	"pushQueue\000"
+ 1410      51756575 
+ 1410      6500
+ 1411              	.LASF27:
+ 1412 006f 79506F73 		.ascii	"yPos\000"
+ 1412      00
+ 1413              	.LASF46:
+ 1414 0074 49324353 		.ascii	"I2CS_I2CSlaveClearWriteStatus\000"
+ 1414      5F493243 
+ 1414      536C6176 
+ 1414      65436C65 
+ 1414      61725772 
+ 1415              	.LASF41:
+ 1416 0092 44454255 		.ascii	"DEBUG_PutHexByte\000"
+ 1416      475F5075 
+ 1416      74486578 
+ 1416      42797465 
+ 1416      00
+ 1417              	.LASF43:
+ 1418 00a3 44454255 		.ascii	"DEBUG_PutCRLF\000"
+ 1418      475F5075 
+ 1418      7443524C 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 29
 
 
- 1403      536C6176 
- 1403      65436C65 
- 1403      61725265 
- 1404              	.LASF30:
- 1405 0233 636D645F 		.ascii	"cmd_\000"
- 1405      00
- 1406              	.LASF52:
- 1407 0238 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
- 1407      4320342E 
- 1407      392E3320 
- 1407      32303135 
- 1407      30333033 
- 1408 026b 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
- 1408      20726576 
- 1408      6973696F 
- 1408      6E203232 
- 1408      31323230 
- 1409 029e 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
- 1409      66756E63 
- 1409      74696F6E 
- 1409      2D736563 
- 1409      74696F6E 
- 1410              	.LASF2:
- 1411 02c6 73686F72 		.ascii	"short int\000"
- 1411      7420696E 
- 1411      7400
- 1412              	.LASF46:
- 1413 02d0 49324353 		.ascii	"I2CS_I2CSlaveClearWriteBuf\000"
- 1413      5F493243 
- 1413      536C6176 
- 1413      65436C65 
- 1413      61725772 
- 1414              	.LASF39:
- 1415 02eb 64617461 		.ascii	"dataXY\000"
- 1415      585900
- 1416              	.LASF28:
- 1417 02f2 44617461 		.ascii	"DataXY_T\000"
- 1417      58595F54 
- 1417      00
- 1418              	.LASF4:
- 1419 02fb 6C6F6E67 		.ascii	"long int\000"
- 1419      20696E74 
- 1419      00
- 1420              	.LASF19:
- 1421 0304 696E7465 		.ascii	"interruptY\000"
- 1421      72727570 
- 1421      745900
- 1422              	.LASF25:
- 1423 030f 78506F73 		.ascii	"xPos\000"
- 1423      00
- 1424              	.LASF0:
- 1425 0314 7369676E 		.ascii	"signed char\000"
- 1425      65642063 
- 1425      68617200 
- 1426              	.LASF20:
- 1427 0320 69737253 		.ascii	"isrStopX\000"
- 1427      746F7058 
-ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccDLkHKc.s 			page 31
+ 1418      4600
+ 1419              	.LASF1:
+ 1420 00b1 756E7369 		.ascii	"unsigned char\000"
+ 1420      676E6564 
+ 1420      20636861 
+ 1420      7200
+ 1421              	.LASF22:
+ 1422 00bf 78466C61 		.ascii	"xFlag\000"
+ 1422      6700
+ 1423              	.LASF26:
+ 1424 00c5 794D6178 		.ascii	"yMax\000"
+ 1424      00
+ 1425              	.LASF35:
+ 1426 00ca 61637469 		.ascii	"action\000"
+ 1426      6F6E00
+ 1427              	.LASF5:
+ 1428 00d1 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1428      20756E73 
+ 1428      69676E65 
+ 1428      6420696E 
+ 1428      7400
+ 1429              	.LASF9:
+ 1430 00e3 75696E74 		.ascii	"uint8\000"
+ 1430      3800
+ 1431              	.LASF33:
+ 1432 00e9 6932635F 		.ascii	"i2c_init\000"
+ 1432      696E6974 
+ 1432      00
+ 1433              	.LASF53:
+ 1434 00f2 49324353 		.ascii	"I2CS_I2CSlaveStatus\000"
+ 1434      5F493243 
+ 1434      536C6176 
+ 1434      65537461 
+ 1434      74757300 
+ 1435              	.LASF12:
+ 1436 0106 646F7562 		.ascii	"double\000"
+ 1436      6C6500
+ 1437              	.LASF21:
+ 1438 010d 69737253 		.ascii	"isrStopY\000"
+ 1438      746F7059 
+ 1438      00
+ 1439              	.LASF29:
+ 1440 0116 44617461 		.ascii	"Data\000"
+ 1440      00
+ 1441              	.LASF34:
+ 1442 011b 6932635F 		.ascii	"i2c_rx\000"
+ 1442      727800
+ 1443              	.LASF56:
+ 1444 0122 433A5C45 		.ascii	"C:\\E3PRJ3-Gruppe1\\PSoC\\PSoC4XY.cydsn\000"
+ 1444      3350524A 
+ 1444      332D4772 
+ 1444      75707065 
+ 1444      315C5053 
+ 1445              	.LASF10:
+ 1446 0147 75696E74 		.ascii	"uint32\000"
+ 1446      333200
+ 1447              	.LASF45:
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 30
 
 
- 1427      00
- 1428              	.LASF53:
- 1429 0329 2E5C6932 		.ascii	".\\i2c.c\000"
- 1429      632E6300 
- 1430              	.LASF18:
- 1431 0331 696E7465 		.ascii	"interruptX\000"
- 1431      72727570 
- 1431      745800
- 1432              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br
+ 1448 014e 49324353 		.ascii	"I2CS_I2CSlaveGetWriteBufSize\000"
+ 1448      5F493243 
+ 1448      536C6176 
+ 1448      65476574 
+ 1448      57726974 
+ 1449              	.LASF50:
+ 1450 016b 49324353 		.ascii	"I2CS_I2CSlaveInitWriteBuf\000"
+ 1450      5F493243 
+ 1450      536C6176 
+ 1450      65496E69 
+ 1450      74577269 
+ 1451              	.LASF23:
+ 1452 0185 79466C61 		.ascii	"yFlag\000"
+ 1452      6700
+ 1453              	.LASF8:
+ 1454 018b 756E7369 		.ascii	"unsigned int\000"
+ 1454      676E6564 
+ 1454      20696E74 
+ 1454      00
+ 1455              	.LASF37:
+ 1456 0198 69326354 		.ascii	"i2cTxBuffer\000"
+ 1456      78427566 
+ 1456      66657200 
+ 1457              	.LASF7:
+ 1458 01a4 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1458      206C6F6E 
+ 1458      6720756E 
+ 1458      7369676E 
+ 1458      65642069 
+ 1459              	.LASF24:
+ 1460 01bb 784D6178 		.ascii	"xMax\000"
+ 1460      00
+ 1461              	.LASF28:
+ 1462 01c0 44617461 		.ascii	"DataXY_T\000"
+ 1462      58595F54 
+ 1462      00
+ 1463              	.LASF36:
+ 1464 01c9 6932635F 		.ascii	"i2c_tx\000"
+ 1464      747800
+ 1465              	.LASF16:
+ 1466 01d0 63616C69 		.ascii	"calibratedX\000"
+ 1466      62726174 
+ 1466      65645800 
+ 1467              	.LASF17:
+ 1468 01dc 63616C69 		.ascii	"calibratedY\000"
+ 1468      62726174 
+ 1468      65645900 
+ 1469              	.LASF13:
+ 1470 01e8 63686172 		.ascii	"char8\000"
+ 1470      3800
+ 1471              	.LASF15:
+ 1472 01ee 73697A65 		.ascii	"sizetype\000"
+ 1472      74797065 
+ 1472      00
+ 1473              	.LASF6:
+ 1474 01f7 6C6F6E67 		.ascii	"long long int\000"
+ 1474      206C6F6E 
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 31
+
+
+ 1474      6720696E 
+ 1474      7400
+ 1475              	.LASF49:
+ 1476 0205 49324353 		.ascii	"I2CS_I2CSlaveClearReadStatus\000"
+ 1476      5F493243 
+ 1476      536C6176 
+ 1476      65436C65 
+ 1476      61725265 
+ 1477              	.LASF31:
+ 1478 0222 76616C5F 		.ascii	"val_\000"
+ 1478      00
+ 1479              	.LASF48:
+ 1480 0227 49324353 		.ascii	"I2CS_I2CSlaveClearReadBuf\000"
+ 1480      5F493243 
+ 1480      536C6176 
+ 1480      65436C65 
+ 1480      61725265 
+ 1481              	.LASF30:
+ 1482 0241 636D645F 		.ascii	"cmd_\000"
+ 1482      00
+ 1483              	.LASF54:
+ 1484 0246 474E5520 		.ascii	"GNU C 4.9.3 20150303 (release) [ARM/embedded-4_9-br"
+ 1484      4320342E 
+ 1484      392E3320 
+ 1484      32303135 
+ 1484      30333033 
+ 1485 0279 616E6368 		.ascii	"anch revision 221220] -mcpu=cortex-m0 -mthumb -g -O"
+ 1485      20726576 
+ 1485      6973696F 
+ 1485      6E203232 
+ 1485      31323230 
+ 1486 02ac 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1486      66756E63 
+ 1486      74696F6E 
+ 1486      2D736563 
+ 1486      74696F6E 
+ 1487              	.LASF2:
+ 1488 02d4 73686F72 		.ascii	"short int\000"
+ 1488      7420696E 
+ 1488      7400
+ 1489              	.LASF44:
+ 1490 02de 49324353 		.ascii	"I2CS_I2CSlaveClearWriteBuf\000"
+ 1490      5F493243 
+ 1490      536C6176 
+ 1490      65436C65 
+ 1490      61725772 
+ 1491              	.LASF39:
+ 1492 02f9 64617461 		.ascii	"dataXY\000"
+ 1492      585900
+ 1493              	.LASF32:
+ 1494 0300 49324353 		.ascii	"I2CS_I2C_ISR_ExitCallback\000"
+ 1494      5F493243 
+ 1494      5F495352 
+ 1494      5F457869 
+ 1494      7443616C 
+ 1495              	.LASF4:
+ 1496 031a 6C6F6E67 		.ascii	"long int\000"
+ARM GAS  C:\Users\JEPPES~1\AppData\Local\Temp\ccFcUMOi.s 			page 32
+
+
+ 1496      20696E74 
+ 1496      00
+ 1497              	.LASF19:
+ 1498 0323 696E7465 		.ascii	"interruptY\000"
+ 1498      72727570 
+ 1498      745900
+ 1499              	.LASF25:
+ 1500 032e 78506F73 		.ascii	"xPos\000"
+ 1500      00
+ 1501              	.LASF0:
+ 1502 0333 7369676E 		.ascii	"signed char\000"
+ 1502      65642063 
+ 1502      68617200 
+ 1503              	.LASF20:
+ 1504 033f 69737253 		.ascii	"isrStopX\000"
+ 1504      746F7058 
+ 1504      00
+ 1505              	.LASF55:
+ 1506 0348 2E5C6932 		.ascii	".\\i2c.c\000"
+ 1506      632E6300 
+ 1507              	.LASF18:
+ 1508 0350 696E7465 		.ascii	"interruptX\000"
+ 1508      72727570 
+ 1508      745800
+ 1509              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.9.3 20150303 (release) [ARM/embedded-4_9-br

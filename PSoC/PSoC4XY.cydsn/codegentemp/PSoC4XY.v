@@ -1,6 +1,6 @@
 // ======================================================================
 // PSoC4XY.v generated from TopDesign.cysch
-// 05/23/2016 at 23:18
+// 05/24/2016 at 14:19
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
