@@ -2,7 +2,7 @@
  *  @file       i2c.c
  *  @brief      I2C modul
  *  @details    Håndter kommunikation via I2C-busset
- *  @ingroup    PSoC-XY
+ *  @ingroup    xy
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "i2c.h"
@@ -27,9 +27,9 @@ uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
 /*!
  *  @brief      Initialiser I2C modulet.
  *  @details    Initailiser I2C komponent på PSoC'en.
- *  @ingroup    PSoC-XY
+ *  @ingroup    xy
  *  @public
- *  @memberof   I2C
+ *  @memberof   I2CXY
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void i2c_init()

@@ -2,8 +2,8 @@
  *  @file       data.h
  *  @brief      Data modul
  *  @details    Indeholder data vedr. XY modulet.
- *  @ingroup    PSoC-XY
- *  @class      Data data.h
+ *  @ingroup    xy
+ *  @class      DataXY data.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef DATA_H

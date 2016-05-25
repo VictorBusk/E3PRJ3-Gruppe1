@@ -2,7 +2,7 @@
  *  @file       spi.c
  *  @brief      SPI modul
  *  @details    Håndter kommunikation via SPI-busset
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "data.h"
@@ -19,9 +19,9 @@
 /*!
  *  @brief      Initialiser SPI modulet.
  *  @details    Initailiser SPI komponent på PSoC'en og sætter "Custom Interrupt Handler".
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @public
- *  @memberof   SPI
+ *  @memberof   SPIMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void spi_init()
@@ -36,9 +36,9 @@ void spi_init()
 /*!
  *  @brief      Modtager kald fra SPI-busset
  *  @details    En "Interrupt Service Routine(ISR)" der aktiveres ved modtagelse af kald via SPI-busset, det modtaget data behandles og håndteres.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @public
- *  @memberof   SPI
+ *  @memberof   SPIMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 CY_ISR(isr_spi_rx)

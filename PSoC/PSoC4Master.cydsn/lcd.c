@@ -2,7 +2,7 @@
  *  @file       lcd.c
  *  @brief      LCD modul
  *  @details    Sender tekst til Nokia5110LCD skærmen via dens eksterne kode.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "data.h"
@@ -16,9 +16,9 @@
 /*!
  *  @brief      Char array der indholder tekst
  *  @details    Arrayet er et matrix array med 6 arryes med 12 pladser, det bruges til at indeholde de 6 linjer tekst der kan udskrives på Nokia 5110 LCD skærmen.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @private
- *  @memberof   LCD
+ *  @memberof   LCDMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 char lineStr[6][12];
@@ -31,9 +31,9 @@ char lineStr[6][12];
 /*!
  *  @brief      Udskriver tekst på Nokia 5110 LCD
  *  @details    Metoden bruges til at skrive en ny linje nederst på Nokia 5110 LCD skærmen, den husker på- og flytter de forhenværende linjer en linje op, når der indættes en ny.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @Public
- *  @memberof   LCD
+ *  @memberof   LCDMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void lcd_newline(char* characters)

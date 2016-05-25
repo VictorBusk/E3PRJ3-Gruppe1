@@ -2,7 +2,7 @@
  *  @file       handler.c
  *  @brief      Handler modul
  *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "handler.h"
@@ -20,9 +20,9 @@
  *  @details    Fortager en defineret handling ud fra den modtaget kommando med den tilhørende værdi.
  *  @param[in]  cmd Er den modtaget kommando.
  *  @param[in]  val Er den tilhørende værdi.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @public
- *  @memberof   Handler
+ *  @memberof   HandlerMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void handler(uint8 cmd, uint8 val)

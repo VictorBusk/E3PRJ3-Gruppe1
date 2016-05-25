@@ -2,8 +2,8 @@
  *  @file       spi.h
  *  @brief      SPI modul
  *  @details    Håndter kommunikation via SPI-busset
- *  @ingroup    PSoC-Master
- *  @class      SPI spi.h
+ *  @ingroup    master
+ *  @class      SPIMaster spi.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef SPI_H

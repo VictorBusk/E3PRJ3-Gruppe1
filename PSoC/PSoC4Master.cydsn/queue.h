@@ -2,8 +2,8 @@
  *  @file       queue.h
  *  @brief      Queue modul
  *  @details    En FIFO kø der er opbygget af en single linket liste.
- *  @ingroup    PSoC-Master
- *  @class      Queue queue.h
+ *  @ingroup    master
+ *  @class      QueueMaster queue.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef QUEUE_H
@@ -18,9 +18,9 @@
 /*!
  *  @brief      En struct til at lager data der skal indsættes i køen
  *  @details    Structen kan indeholde en kommando og tilhørende værdi, som kan indsættes i FIFO køen.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @public
- *  @memberof   Queue
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct Action

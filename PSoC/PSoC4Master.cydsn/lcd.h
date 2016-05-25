@@ -2,8 +2,8 @@
  *  @file       lcd.h
  *  @brief      LCD modul
  *  @details    Sender tekst til Nokia5110LCD skærmen via dens eksterne kode.
- *  @ingroup    PSoC-Master
- *  @class      LCD lcd.h
+ *  @ingroup    master
+ *  @class      LCDMaster lcd.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef LCD_H

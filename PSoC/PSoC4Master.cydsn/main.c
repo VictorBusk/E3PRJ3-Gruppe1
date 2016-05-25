@@ -2,7 +2,7 @@
  *  @file       main.c
  *  @brief      Hovedprogram
  *  @details    Intilizere modulerne og køre derefter i loop hvor der bliver kontrolieret om der er nogle actions i køen der skal håndteres af handleren.
- *  @defgroup   PSoC-Master
+ *  @defgroup   master PSoC-Master
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 

@@ -2,7 +2,7 @@
  *  @file       data.c
  *  @brief      Data modul
  *  @details    Indeholder data hentet fra PSoC-XY, -Z og -Sensor.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "data.h"
@@ -14,9 +14,9 @@
 /**
  *  @brief      Initialiser data modulet
  *  @details    Initialiser dataMaster structen med 0 værdier.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @public
- *  @memberof   Data
+ *  @memberof   DataMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void data_init()

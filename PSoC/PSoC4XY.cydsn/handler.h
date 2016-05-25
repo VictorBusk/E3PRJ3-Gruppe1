@@ -2,8 +2,8 @@
  *  @file       handler.h
  *  @brief      Handler modul
  *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
- *  @ingroup    PSoC-XY
- *  @class      Handler handler.h
+ *  @ingroup    xy
+ *  @class      HandlerXY handler.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef HANDLER_H

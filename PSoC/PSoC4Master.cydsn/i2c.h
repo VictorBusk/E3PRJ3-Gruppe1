@@ -2,8 +2,8 @@
  *  @file       i2c.h
  *  @brief      I2C modul
  *  @details    Håndter kommunikation via I2C-busset
- *  @ingroup    PSoC-Master
- *  @class      I2C i2c.h
+ *  @ingroup    master
+ *  @class      I2CMaster i2c.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef I2C_H

@@ -1,8 +1,8 @@
 /*!
  *  @file       led.c
- *  @brief      LCD modul
+ *  @brief      Led modul
  *  @details    Håndtere PSoC'ens røde, grønne og blå led.
- *  @ingroup    PSoC-Master
+ *  @ingroup    master
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "led.h"
@@ -18,8 +18,9 @@
  *  @param[in]  green   Tænder/slukker den grønne led.
  *  @param[in]  blue    Tænder/slukker den blå led.
  *  @param[in]  delay   Tid i microsekunder til delay.
+ *  @ingroup    master
  *  @public
- *  @memberof   LED
+ *  @memberof   LedMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void setLed(uint8 red, uint8 green, uint8 blue, uint8 delay)

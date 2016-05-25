@@ -2,7 +2,7 @@
  *  @file       data.c
  *  @brief      Data modul
  *  @details    Indeholder data vedr. XY modulet.
- *  @ingroup    PSoC-XY
+ *  @ingroup    xy
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "data.h"
@@ -14,9 +14,9 @@
 /**
  *  @brief      Initialiser data modulet
  *  @details    Initialiser dataXY structen med start værdier.
- *  @ingroup    PSoC-XY
+ *  @ingroup    xy
  *  @public
- *  @memberof   Data
+ *  @memberof   DataXY
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void data_init(void)
