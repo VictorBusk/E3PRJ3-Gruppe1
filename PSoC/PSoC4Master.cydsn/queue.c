@@ -76,9 +76,9 @@ static uint8 queueCount_;
  *       Private methods
  ***************************************/
 
-static void headInsert(struct Node** headPtr, const struct Data data);
+static void headInsert(struct Node** headPtr, const struct Action data);
 static void headRemove(struct Node** headPtr);
-static void backInsert(struct Node** backPtr, const struct Data data);
+static void backInsert(struct Node** backPtr, const struct Action data);
 
 
 /***************************************
@@ -174,7 +174,7 @@ void popQueue()
  *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-struct Data frontQueue()
+struct Action frontQueue()
 {
   DEBUG_PutString("Q=: count: ");
   DEBUG_PutHexByte(queueCount_);
@@ -252,7 +252,7 @@ void headRemove(struct Node** headPtr)
  *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-void backInsert(struct Node** backPtr, const struct Data data)
+void backInsert(struct Node** backPtr, const struct Action data)
 {
   if(*backPtr == NULL)
   {

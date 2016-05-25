@@ -37,7 +37,7 @@ struct Action
 extern void queue_init(uint8 queueMaxSize);
 extern void pushQueue(const struct Action data);
 extern void popQueue(void);
-extern struct Data frontQueue(void);
+extern struct Action frontQueue(void);
 extern uint8 isEmptyQueue(void);
 
 #endif  // ifndef QUEUE_H

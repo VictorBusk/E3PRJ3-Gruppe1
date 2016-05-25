@@ -27,10 +27,6 @@ void data_init()
   dataMaster.rVal = 0;
   dataMaster.gVal = 0;
   dataMaster.bVal = 0;
-  dataMaster.lumenVal = 0;
-  dataMaster.powerVal = 0;
-  dataMaster.distanceVal = 0;
-  dataMaster.movementVal = 0;
 }
 
 

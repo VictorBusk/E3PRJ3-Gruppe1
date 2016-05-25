@@ -43,7 +43,7 @@ int main()
     {
       struct Action action;
       action = frontQueue();
-      if(action.cmd_ != 0)
+      if(action.cmd != 0)
       {
         handler(action.cmd, action.val);
       }

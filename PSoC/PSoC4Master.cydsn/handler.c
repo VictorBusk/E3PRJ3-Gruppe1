@@ -45,12 +45,6 @@ void handler(uint8 cmd, uint8 val)
       i2c_getPacket(PSoC_Sensor, CMD_GET_BLUE_VAL, &dataMaster.gVal);
       i2c_getPacket(PSoC_Sensor, CMD_GET_GREEN_VAL, &dataMaster.bVal);
       break;
-    case 0x04 :
-      i2c_getPacket(PSoC_Sensor, CMD_GET_LUMEN_VAL, &dataMaster.lumenVal);
-      i2c_getPacket(PSoC_Sensor, CMD_GET_POWER_STS, &dataMaster.powerVal);
-      i2c_getPacket(PSoC_Sensor, CMD_SET_DISTANCE_STS, &dataMaster.distanceVal);
-      i2c_getPacket(PSoC_Sensor, CMD_GET_MOVEMENT_STS, &dataMaster.movementVal);
-      break;
     case CMD_SET_X_POS :
       i2c_setPacket(PSoC_XY, cmd, val);
       break;

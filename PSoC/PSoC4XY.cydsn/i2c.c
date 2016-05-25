@@ -67,9 +67,9 @@ void I2CS_I2C_ISR_ExitCallback()
     DEBUG_PutHexByte(I2CS_I2CSlaveGetWriteBufSize());
     DEBUG_PutCRLF();
     
-    struct Data action;
-    action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
-    action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
+    struct Action action;
+    action.cmd = i2cRxBuffer[I2C_PACKET_CMD_POS];
+    action.val = i2cRxBuffer[I2C_PACKET_VAL_POS];
     
     switch(i2cRxBuffer[I2C_PACKET_CMD_POS]) {
       case CMD_SET_X_POS :

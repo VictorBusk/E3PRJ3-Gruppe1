@@ -12,20 +12,6 @@
 #include <project.h>
 
 /***************************************
- *       Public attributes
- ***************************************/
-
-/*!
- * @todo  Dokumenter! i2cTxBuffer
- */
-extern uint8 i2cTxBuffer[I2C_BUFFER_SIZE];
-
-/*!
- * @todo  Dokumenter! i2cRxBuffer
- */
-extern uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
-
-/***************************************
  *       Public methods
  ***************************************/
 
@@ -54,6 +40,21 @@ extern void i2c_tx(void);
 /* Status */
 #define I2C_STS_CMD_DONE    (0xAAu)
 #define I2C_STS_CMD_FAIL    (0xEEu)
+
+
+/***************************************
+ *       Public attributes
+ ***************************************/
+
+/*!
+ * @todo  Dokumenter! i2cTxBuffer
+ */
+extern uint8 i2cTxBuffer[I2C_BUFFER_SIZE];
+
+/*!
+ * @todo  Dokumenter! i2cRxBuffer
+ */
+extern uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
 
 
 #endif  // ifndef I2C_H

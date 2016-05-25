@@ -62,7 +62,7 @@ CY_ISR(isr_X)
   
   if(dataXY.xFlag == 0)
   {
-    setLed(0,0,1);
+    setLed(0,0,1,0);
     for(i = 0; i < interruptSteps; i++)
     {
       stepXForwards();
@@ -71,14 +71,14 @@ CY_ISR(isr_X)
   }
   else if(dataXY.xFlag == 1)
   {
-    setLed(0,0,1);
+    setLed(0,0,1,0);
     for(i = 0; i < interruptSteps; i++)
     {
       stepXBackwards();
     }
     dataXY.xFlag = 0;
   }
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   interrupt_X_ClearPending();
   interrupt_X_Enable();
@@ -94,7 +94,7 @@ CY_ISR(isr_Y)
   
   if(dataXY.yFlag == 0)
   {
-    setLed(0,0,1);
+    setLed(0,0,1,0);
     for(i = 0; i < interruptSteps; i++)
     {
       stepYForwards();
@@ -103,14 +103,14 @@ CY_ISR(isr_Y)
   }
   else if(dataXY.yFlag == 1)
   {
-    setLed(0,0,1);
+    setLed(0,0,1,0);
     for(i = 0; i < interruptSteps; i++)
     {
       stepYBackwards();
     }
     dataXY.yFlag = 0;
   }
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   interrupt_Y_ClearPending();
   interrupt_Y_Enable();
@@ -130,7 +130,7 @@ void calibrateX()
   while(dataXY.interruptX == 0 && dataXY.xFlag == 1)
   {
     DEBUG_PutString(".");
-    setLed(1,0,0);
+    setLed(1,0,0,0);
     stepXForwards();
   }
   dataXY.interruptX = 0;
@@ -141,13 +141,13 @@ void calibrateX()
   while(dataXY.interruptX == 0 && dataXY.xFlag == 0)
   {
     DEBUG_PutString(".");
-    setLed(1,0,0);
+    setLed(1,0,0,0);
     stepXBackwards();
     dataXY.xMax++;
   }
   DEBUG_PutString("done");
   
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   dataXY.xPos = 0;
   dataXY.xMax = dataXY.xMax - interruptSteps;
@@ -177,7 +177,7 @@ void calibrateY()
   while(dataXY.interruptY == 0 && dataXY.yFlag == 1)
   {
     DEBUG_PutString(".");
-    setLed(1,0,0);
+    setLed(1,0,0,0);
     stepYForwards();
   }
   dataXY.interruptY = 0;
@@ -188,13 +188,13 @@ void calibrateY()
   while(dataXY.interruptY == 0 && dataXY.yFlag == 0)
   {
     DEBUG_PutString(".");
-    setLed(1,0,0);
+    setLed(1,0,0,0);
     stepYBackwards();
     dataXY.yMax++;
   }
   DEBUG_PutString("done");
   
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   dataXY.yPos = 0;
   dataXY.yMax = dataXY.yMax - interruptSteps;
@@ -231,7 +231,7 @@ void setXPos(uint8 xVal)
     
     if(xDes > dataXY.xPos)
     {
-      setLed(0,1,0);
+      setLed(0,1,0,0);
       dataXY.interruptX = 0;
       dataXY.xFlag = 1;
       xSteps = xDes - dataXY.xPos;
@@ -255,11 +255,11 @@ void setXPos(uint8 xVal)
       DEBUG_PutCRLF();
       DEBUG_PutCRLF();
       
-      setLed(0,0,0);
+      setLed(0,0,0,0);
     }
     else if(xDes < dataXY.xPos)
     {
-      setLed(0,1,0);
+      setLed(0,1,0,0);
       
       dataXY.interruptX = 0;
       dataXY.xFlag = 0;
@@ -283,7 +283,7 @@ void setXPos(uint8 xVal)
       DEBUG_PutCRLF();
       DEBUG_PutCRLF();
       
-      setLed(0,0,0);
+      setLed(0,0,0,0);
     }
   }
   else
@@ -315,7 +315,7 @@ void setYPos(uint8 yVal)
     
     if(yDes > dataXY.yPos)
     {
-      setLed(0,1,0);
+      setLed(0,1,0,0);
       
       dataXY.interruptY = 0;
       dataXY.yFlag = 1;
@@ -339,11 +339,11 @@ void setYPos(uint8 yVal)
       DEBUG_PutCRLF();
       DEBUG_PutCRLF();
       
-      setLed(0,0,0);
+      setLed(0,0,0,0);
     }
     else if(yDes < dataXY.yPos)
     {
-      setLed(0,1,0);
+      setLed(0,1,0,0);
       
       dataXY.interruptY = 0;
       dataXY.yFlag = 0;
@@ -367,7 +367,7 @@ void setYPos(uint8 yVal)
       DEBUG_PutCRLF();
       DEBUG_PutCRLF();
       
-      setLed(0,0,0);
+      setLed(0,0,0,0);
     }
   }
   else

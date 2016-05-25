@@ -66,17 +66,17 @@ CY_ISR(isr_spi_rx)
     }
     else
     {
-      sprintf(lcd, ">S %4x %2x", (int)spiRxAction.cmd_, (int)spiRxAction.val_);
+      sprintf(lcd, ">S %4x %2x", (int)spiRxAction.cmd, (int)spiRxAction.val);
       lcd_newline(lcd);
       
       DEBUG_PutString(">S: cmd: ");
-      DEBUG_PutHexByte(spiRxAction.cmd_);
+      DEBUG_PutHexByte(spiRxAction.cmd);
       DEBUG_PutString(" val: ");
-      DEBUG_PutHexByte(spiRxAction.val_);
+      DEBUG_PutHexByte(spiRxAction.val);
       DEBUG_PutCRLF();
       DEBUG_PutCRLF();
       
-      switch(spiRxAction.cmd_) {
+      switch(spiRxAction.cmd) {
         case CMD_GET_X_POS :
           SPIS_SpiUartClearTxBuffer();
           spiTxBuffer[SPI_PACKET_DATA_POS] = (uint16)dataMaster.xVal;

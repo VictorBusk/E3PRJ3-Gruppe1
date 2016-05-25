@@ -26,9 +26,9 @@ int main()
   DEBUG_PutString("===== Initializing PSoC XY =====");
   DEBUG_PutCRLF();
   
-  setLed(0,1,0);
+  setLed(0,1,0,0);
   CyDelay(100);
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   xy_start();
   
@@ -50,9 +50,9 @@ int main()
     
     while(isEmptyQueue() != 1)
     {
-      struct Data action;
+      struct Action action;
       action = frontQueue();
-      handler(action.cmd_, action.val_);
+      handler(action.cmd, action.val);
       popQueue();
     }
     i2c_tx();

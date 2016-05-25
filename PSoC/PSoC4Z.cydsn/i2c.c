@@ -44,9 +44,9 @@ void i2c_rx()
     {
       if((i2cRxBuffer[I2C_PACKET_SOP_POS] == I2C_PACKET_SOP) && (i2cRxBuffer[I2C_PACKET_EOP_POS] == I2C_PACKET_EOP))
       {
-        struct Data action;
-        action.cmd_ = i2cRxBuffer[I2C_PACKET_CMD_POS];
-        action.val_ = i2cRxBuffer[I2C_PACKET_VAL_POS];
+        struct Action action;
+        action.cmd = i2cRxBuffer[I2C_PACKET_CMD_POS];
+        action.val = i2cRxBuffer[I2C_PACKET_VAL_POS];
         
         pushQueue(action);
       }

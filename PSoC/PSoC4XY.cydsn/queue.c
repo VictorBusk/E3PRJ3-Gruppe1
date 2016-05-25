@@ -2,7 +2,7 @@
  *  @file       queue.c
  *  @brief      Queue modul
  *  @details    En FIFO kø der er opbygget af en single linket liste.
- *  @ingroup    xy
+ *  @ingroup    master
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "queue.h"
@@ -16,9 +16,9 @@
 /*!
  *  @brief      Element til køen
  *  @details    En struct til at oprette et element der kan indsættes i køen.
- *  @ingroup    xy
+ *  @ingroup    master
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct Node
@@ -35,9 +35,9 @@ struct Node
 /*!
  *  @brief      Pointer til foreste element i køen
  *  @details    En Node pointer der indeholder adressen på det foreste elementet i køen.
- *  @ingroup    xy
+ *  @ingroup    master
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 static struct Node* frontOfQueuePtr_;
@@ -45,9 +45,9 @@ static struct Node* frontOfQueuePtr_;
 /*!
  *  @brief      Pointer til bagerste element i køen
  *  @details    En Node pointer der indeholder adressen på det bagerste elementet i køen.
- *  @ingroup    xy
+ *  @ingroup    master
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 static struct Node* backOfQueuePtr_;
@@ -55,9 +55,9 @@ static struct Node* backOfQueuePtr_;
 /*!
  *  @brief      Køens max
  *  @details    Laver ved initialisering der ønsket antal for max elementer i køen
- *  @ingroup    xy
+ *  @ingroup    master
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 static uint8 queueMax_;
@@ -65,9 +65,9 @@ static uint8 queueMax_;
 /*!
  *  @brief      Kø element tæller
  *  @details    Bruges til at tælle hvor mange elementer der er i køen.
- *  @ingroup    xy
+ *  @ingroup    master
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 static uint8 queueCount_;
@@ -76,9 +76,9 @@ static uint8 queueCount_;
  *       Private methods
  ***************************************/
 
-static void headInsert(struct Node** headPtr, const struct Data data);
+static void headInsert(struct Node** headPtr, const struct Action data);
 static void headRemove(struct Node** headPtr);
-static void backInsert(struct Node** backPtr, const struct Data data);
+static void backInsert(struct Node** backPtr, const struct Action data);
 
 
 /***************************************
@@ -88,9 +88,9 @@ static void backInsert(struct Node** backPtr, const struct Data data);
 /*!
  *  @brief      Initialiser Queue modulet.
  *  @details    Initailiser køen med den ønsket max størelse.
- *  @ingroup    xy
+ *  @ingroup    master
  *  @public
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void queue_init(uint8 queueMaxSize)
@@ -108,7 +108,7 @@ void queue_init(uint8 queueMaxSize)
  *  @details    Indsætter det angivet element bagerst i FIFO køen.
  *  @param[in]  data    Data der skal indsættes i køen.
  *  @public
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void pushQueue(const struct Action data)
@@ -150,7 +150,7 @@ void pushQueue(const struct Action data)
  *  @brief      Fjerner et element i køen
  *  @details    Fjerner det foreste element i FIFO køen.
  *  @public
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void popQueue()
@@ -171,10 +171,10 @@ void popQueue()
  *  @brief      Viser et element fra køen
  *  @details    Viser det foreste element i FIFO køen.
  *  @public
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-struct Data frontQueue()
+struct Action frontQueue()
 {
   DEBUG_PutString("Q=: count: ");
   DEBUG_PutHexByte(queueCount_);
@@ -186,7 +186,7 @@ struct Data frontQueue()
  *  @brief      Retuner status af køen
  *  @details    Kontrollere om køen er tom.
  *  @public
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 uint8 isEmptyQueue()
@@ -207,7 +207,7 @@ uint8 isEmptyQueue()
  *  @param[in]  headPtr Pointer til det foreste element i listen.
  *  @param[in]  data    Data der skal indsættes i listen.
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void headInsert(struct Node** headPtr, const struct Action data)
@@ -229,7 +229,7 @@ void headInsert(struct Node** headPtr, const struct Action data)
  *  @details    Fjerner det forreste element i den underlæggende linked liste
  *  @param[in]  headPtr Pointer til det forreste element i listen.
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void headRemove(struct Node** headPtr)
@@ -249,10 +249,10 @@ void headRemove(struct Node** headPtr)
  *  @param[in]  backPtr Pointer til det bagerste element i listen.
  *  @param[in]  data    Data der skal indsættes i listen.
  *  @private
- *  @memberof   QueueXY
+ *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-void backInsert(struct Node** backPtr, const struct Data data)
+void backInsert(struct Node** backPtr, const struct Action data)
 {
   if(*backPtr == NULL)
   {

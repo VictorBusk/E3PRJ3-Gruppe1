@@ -56,9 +56,9 @@ int main()
     
     if(isEmptyQueue() != 1)
     {
-      struct Data action;
+      struct Action action;
       action = frontQueue();
-      handler(action.cmd_, action.val_);
+      handler(action.cmd, action.val);
       popQueue();
     }
     
