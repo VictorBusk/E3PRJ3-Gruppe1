@@ -23,7 +23,7 @@
  *  @memberof   Data
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-struct DataMaster_T
+struct DataMaster
 {
   uint8 xVal; /**< Værdi for sidst kendte X position */
   uint8 yVal; /**< Værdi for sidst kendte Y position */

@@ -1,26 +1,29 @@
-/* ========================================
- *
- * File: handler.c
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       handler.c
+ *  @brief      Handler modul
+ *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
+ *  @ingroup    PSoC-XY
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-
 #include "handler.h"
 #include "data.h"
 #include "i2c.h"
 #include "xy.h"
 
+/***************************************
+ *       Public methods
+ ***************************************/
+
+/**
+ *  @brief      Håndter kommando med tilhørende værdi
+ *  @details    Fortager en defineret handling ud fra den modtaget kommando med den tilhørende værdi.
+ *  @param[in]  cmd Er den modtaget kommando.
+ *  @param[in]  val Er den tilhørende værdi.
+ *  @ingroup    PSoC-XY
+ *  @public
+ *  @memberof   Handler
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
 void handler(uint8 cmd, uint8 val)
 {
   switch (cmd) {

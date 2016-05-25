@@ -1,5 +1,5 @@
 /*!
- *  @file       queue.h
+ *  @file       queue.c
  *  @brief      Queue modul
  *  @details    En FIFO kø der er opbygget af en single linket liste.
  *  @ingroup    PSoC-Master

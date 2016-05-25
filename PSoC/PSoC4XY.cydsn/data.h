@@ -1,27 +1,21 @@
-/* ========================================
- *
- * File: data.h
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       data.h
+ *  @brief      Data modul
+ *  @details    Indeholder data vedr. XY modulet.
+ *  @ingroup    PSoC-XY
+ *  @class      Data data.h
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-
 #ifndef DATA_H
 #define DATA_H
 
 #include <project.h>
 
-struct DataXY_T {
+/***************************************
+ *       Public data types
+ ***************************************/
+
+struct DataXY {
   uint8 calibratedX;
   uint8 calibratedY;
   uint8 interruptX;
@@ -36,8 +30,12 @@ struct DataXY_T {
   uint32 yPos;
 }dataXY;
 
-extern void data_init(void);
 
+/***************************************
+ *       Public methods
+ ***************************************/
+
+extern void data_init(void);
 
 
 #endif  // ifndef DATA_H

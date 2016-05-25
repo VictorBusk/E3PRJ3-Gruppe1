@@ -1,21 +1,10 @@
-/* ========================================
- *
- * File: main.c
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       main.c
+ *  @brief      Hovedprogram
+ *  @details    Intilizere modulerne og køre derefter i loop hvor der bliver kontrolieret om der er nogle actions i køen der skal håndteres af handleren.
+ *  @defgroup   PSoC-XY
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #include <project.h>
 #include "data.h"
 #include "handler.h"

@@ -1,7 +1,24 @@
-
-
+/*!
+ *  @file       data.c
+ *  @brief      Data modul
+ *  @details    Indeholder data vedr. XY modulet.
+ *  @ingroup    PSoC-XY
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
 #include "data.h"
 
+/***************************************
+ *       Public methods
+ ***************************************/
+
+/**
+ *  @brief      Initialiser data modulet
+ *  @details    Initialiser dataXY structen med start værdier.
+ *  @ingroup    PSoC-XY
+ *  @public
+ *  @memberof   Data
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
 void data_init(void)
 {
   dataXY.calibratedX = 1;

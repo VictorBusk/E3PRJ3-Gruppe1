@@ -1,24 +1,23 @@
-/* ========================================
- *
- * File: xy.c
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ * @todo  Dokumenter! xy.c
  */
-
 #include "xy.h"
 #include "data.h"
 #include "led.h"
+
+/***************************************
+ *       Private methods
+ ***************************************/
+
+static void stepXForwards(void);
+static void stepXBackwards(void);
+static void stepYForwards(void);
+static void stepYBackwards(void);
+
+
+/***************************************
+ *       Public methods
+ ***************************************/
 
 void xy_init()
 {
@@ -379,6 +378,11 @@ void setYPos(uint8 yVal)
   dataXY.interruptY = 0;
 }
 
+
+/***************************************
+ *       Private methods
+ ***************************************/
+
 void stepXForwards()
 {
   Pin_1a_X_Write(1);
@@ -433,14 +437,6 @@ void stepXBackwards()
   CyDelay(stepDelay);
 }
 
-void stopX()
-{
-  Pin_1a_X_Write(0);
-  Pin_2a_X_Write(0);
-  Pin_1b_X_Write(0);
-  Pin_2b_X_Write(0);
-}
-
 void stepYForwards()
 {
   Pin_1a_Y_Write(1);
@@ -493,14 +489,6 @@ void stepYBackwards()
   Pin_1b_Y_Write(0);
   Pin_2b_Y_Write(0);
   CyDelay(stepDelay);
-}
-
-void stopY()
-{
-  Pin_1a_Y_Write(0);
-  Pin_2a_Y_Write(0);
-  Pin_1b_Y_Write(0);
-  Pin_2b_Y_Write(0);
 }
 
 

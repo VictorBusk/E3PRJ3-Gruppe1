@@ -1,5 +1,5 @@
 /*!
- *  @file       led.h
+ *  @file       led.c
  *  @brief      LCD modul
  *  @details    Håndtere PSoC'ens røde, grønne og blå led.
  *  @ingroup    PSoC-Master
