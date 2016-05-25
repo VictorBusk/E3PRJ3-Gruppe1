@@ -1,20 +1,20 @@
 /* ========================================
  *
  * File: main.c
- * Description: 
+ * Description:
  *
  * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
  * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
  * Group: 1
- * 
- * Author: 
- * Matriculation number: 
+ *
+ * Author:
+ * Matriculation number:
  *
  * Version: 1.0
  * Date: 13-05-2016
  *
  * ========================================
-*/
+ */
 
 #include <project.h>
 #include "data.h"
@@ -26,48 +26,48 @@
 
 int main()
 {
-    CyGlobalIntEnable;
-
-    data_init();
-    queue_init(6u);
-    xy_init();
-    i2c_init();
-    
-    DEBUG_PutCRLF();
-    DEBUG_PutString("===== Initializing PSoC XY =====");
-    DEBUG_PutCRLF();
-    
-    setLed(0,1,0);
-    CyDelay(100);
-    setLed(0,0,0);
-    
-    xy_start();
-
-    for(;;)
+  CyGlobalIntEnable;
+  
+  data_init();
+  queue_init(6u);
+  xy_init();
+  i2c_init();
+  
+  DEBUG_PutCRLF();
+  DEBUG_PutString("===== Initializing PSoC XY =====");
+  DEBUG_PutCRLF();
+  
+  setLed(0,1,0);
+  CyDelay(100);
+  setLed(0,0,0);
+  
+  xy_start();
+  
+  for(;;)
+  {
+    if(SW2_Read() == 0u)
     {
-        if(SW2_Read() == 0u)
-        {
-            CyDelay(5u);
-            if(SW2_Read() == 0u)
-            {
-                calibrateX();
-                calibrateY();
-            }
-            while(SW2_Read() == 0u)
-            {
-                ; /* Wait till button released */
-            }
-        }
-        
-        while(isEmptyQueue() != 1)
-        {
-            struct Data action;
-            action = frontQueue();
-            handler(action.cmd_, action.val_);
-            popQueue();
-        }
-        i2c_tx();
+      CyDelay(5u);
+      if(SW2_Read() == 0u)
+      {
+        calibrateX();
+        calibrateY();
+      }
+      while(SW2_Read() == 0u)
+      {
+        ; /* Wait till button released */
+      }
     }
+    
+    while(isEmptyQueue() != 1)
+    {
+      struct Data action;
+      action = frontQueue();
+      handler(action.cmd_, action.val_);
+      popQueue();
+    }
+    i2c_tx();
+  }
 }
 
 /* [] END OF FILE */

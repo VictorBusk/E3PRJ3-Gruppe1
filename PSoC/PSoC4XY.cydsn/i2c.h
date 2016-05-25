@@ -1,24 +1,24 @@
 /* ========================================
  *
  * File: i2c.h
- * Description: 
+ * Description:
  *
  * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
  * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
  * Group: 1
- * 
+ *
  * Author: Jeppe Stærk
- * Matriculation number: 201271201 
+ * Matriculation number: 201271201
  *
  * Version: 1.0
  * Date: 13-05-2016
  *
  * ========================================
-*/
+ */
 
 #ifndef I2C_H
 #define I2C_H
-    
+
 #include <project.h>
 
 extern void i2c_init(void);
@@ -45,6 +45,6 @@ extern void i2c_tx(void);
 
 uint8 i2cTxBuffer[I2C_BUFFER_SIZE];
 uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
-    
+
 #endif  // ifndef I2C_H
 /* [] END OF FILE */

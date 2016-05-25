@@ -5,16 +5,16 @@
  */
 #ifndef QUEUE_H
 #define QUEUE_H
-    
+
 #include <project.h>
 
 /*!
  *  @class Queue
  */
-   
+
 /***************************************
-*       Public data types
-***************************************/
+ *       Public data types
+ ***************************************/
 
 /*!
  *  @brief      Struct to contain a command and value
@@ -28,8 +28,8 @@ struct Data
 };
 
 /***************************************
-*       Public methods            
-***************************************/
+ *       Public methods
+ ***************************************/
 
 extern void queue_init(uint8 queueSize);
 extern void pushQueue(const struct Data data);

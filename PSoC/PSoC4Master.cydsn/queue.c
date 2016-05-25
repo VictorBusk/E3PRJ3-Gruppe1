@@ -1,67 +1,80 @@
 /*!
- * @file        queue.c
- * @brief       A queue for incoming commands
- * @class       Queue
- * @author      Jeppe Stærk (201271201@uni.au.dk)
+ *  @file       queue.h
+ *  @brief      Queue modul
+ *  @details    En FIFO kø der er opbygget af en single linket liste.
+ *  @ingroup    PSoC-Master
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "queue.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 /***************************************
-*       Private data types
-***************************************/
+ *       Private data types
+ ***************************************/
 
 /*!
- *  @brief      Struct to contain a element in the queue
+ *  @brief      Element til køen
+ *  @details    En struct til at oprette et element der kan indsættes i køen.
+ *  @ingroup    PSoC-Master
  *  @private
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @memberof   Queue
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct Node
 {
-  struct Data data_;    /**< Data stored in queue */
-  struct Node* next_;   /**< Next node in queue */
+  struct Action data_;  /**< Data til køen */
+  struct Node* next_;   /**< Pointer til næste node i køen */
 };
 
+
 /***************************************
-*       Private attributes
-***************************************/
+ *       Private attributes
+ ***************************************/
 
 /*!
- *  @brief      Pointer to front element in queue
+ *  @brief      Pointer til foreste element i køen
+ *  @details    En Node pointer der indeholder adressen på det foreste elementet i køen.
+ *  @ingroup    PSoC-Master
  *  @private
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 static struct Node* frontOfQueuePtr_;
 
 /*!
- *  @brief      Pointer to back element in queue
+ *  @brief      Pointer til bagerste element i køen
+ *  @details    En Node pointer der indeholder adressen på det bagerste elementet i køen.
+ *  @ingroup    PSoC-Master
  *  @private
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 static struct Node* backOfQueuePtr_;
 
 /*!
- *  @brief      Conuter for elements in the queue
+ *  @brief      Køens max
+ *  @details    Laver ved initialisering der ønsket antal for max elementer i køen
+ *  @ingroup    PSoC-Master
  *  @private
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
- */
-uint8 queueCount_;
-
-/*!
- *  @brief      Maximum elements in queue
- *  @private
- *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 static uint8 queueMax_;
 
+/*!
+ *  @brief      Kø element tæller
+ *  @details    Bruges til at tælle hvor mange elementer der er i køen.
+ *  @ingroup    PSoC-Master
+ *  @private
+ *  @memberof   Queue
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+static uint8 queueCount_;
+
 /***************************************
-*       Private methods            
-***************************************/
+ *       Private methods
+ ***************************************/
 
 static void headInsert(struct Node** headPtr, const struct Data data);
 static void headRemove(struct Node** headPtr);
@@ -72,31 +85,33 @@ static void backInsert(struct Node** backPtr, const struct Data data);
  *       Public methods
  ***************************************/
 
-/**
- *  @brief      Initialize queue.
- *  @param[in]  queueSize   Size of queue.
+/*!
+ *  @brief      Initialiser Queue modulet.
+ *  @details    Initailiser køen med den ønsket max størelse.
+ *  @ingroup    PSoC-Master
  *  @public
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-void queue_init(uint8 queueSize)
+void queue_init(uint8 queueMaxSize)
 {
   frontOfQueuePtr_ = NULL;
   frontOfQueuePtr_->next_ = NULL;
   backOfQueuePtr_ = NULL;
   backOfQueuePtr_->next_ = NULL;
-  queueMax_ = queueSize;
+  queueMax_ = queueMaxSize;
   queueCount_ = 0;
 }
 
 /**
- *  @brief      Insert element in FIFO ordre in queue 
- *  @param[in]  data    Struct of data to be placed in the queue
+ *  @brief      Indsætter et element i køen
+ *  @details    Indsætter det angivet element bagerst i FIFO køen.
+ *  @param[in]  data    Data der skal indsættes i køen.
  *  @public
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-void pushQueue(const struct Data data)
+void pushQueue(const struct Action data)
 {
   if(queueCount_<queueMax_)
   {
@@ -115,9 +130,9 @@ void pushQueue(const struct Data data)
     DEBUG_PutString("Q+: count: ");
     DEBUG_PutHexByte(queueCount_);
     DEBUG_PutString(" cmd: ");
-    DEBUG_PutHexByte(data.cmd_);
+    DEBUG_PutHexByte(data.cmd);
     DEBUG_PutString(" val: ");
-    DEBUG_PutHexByte(data.val_);
+    DEBUG_PutHexByte(data.val);
     DEBUG_PutCRLF();
     DEBUG_PutCRLF();
   }
@@ -132,10 +147,11 @@ void pushQueue(const struct Data data)
 }
 
 /**
- *  @brief      Remove front element of the queue  
+ *  @brief      Fjerner et element i køen
+ *  @details    Fjerner det foreste element i FIFO køen.
  *  @public
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void popQueue()
 {
@@ -151,12 +167,12 @@ void popQueue()
   DEBUG_PutCRLF();
 }
 
-/*!
- *  @brief      Return data from the front element in the queue 
- *  @return     Data
+/**
+ *  @brief      Viser et element fra køen
+ *  @details    Viser det foreste element i FIFO køen.
  *  @public
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct Data frontQueue()
 {
@@ -166,14 +182,14 @@ struct Data frontQueue()
   return frontOfQueuePtr_->data_;
 }
 
-/*!
- *  @brief      Return 1 (true) if queue is empty or 0 (false) if not 
- *  @return     int
+/**
+ *  @brief      Retuner status af køen
+ *  @details    Kontrollere om køen er tom.
  *  @public
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-int isEmptyQueue()
+uint8 isEmptyQueue()
 {
   if(frontOfQueuePtr_ == NULL)
   {
@@ -185,53 +201,56 @@ int isEmptyQueue()
   }
 }
 
-/*!
- *  @brief      Insert element in the front of the queue
- *  @param[in]  headPtr     Pointer to front of queue
- *  @param[in]  data        Struct of data to be placed in the queue
+/**
+ *  @brief      Indsætter forreste i listen
+ *  @details    Indsætter det angivet element forreste i den underlægende linked liste.
+ *  @param[in]  headPtr Pointer til det foreste element i listen.
+ *  @param[in]  data    Data der skal indsættes i listen.
  *  @private
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-void headInsert(struct Node** headPtr, const struct Data data)
+void headInsert(struct Node** headPtr, const struct Action data)
 {
   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
   if(temp == NULL)
   {
     return;
   }
-
+  
   temp->data_ = data;
   temp->next_ = NULL;
-
+  
   *headPtr = temp;
 }
 
-/*!
- *  @brief      Remove element in front af queue
- *  @param[in]  headPtr     Pointer to front of queue
+/**
+ *  @brief      Fjerner fra listen
+ *  @details    Fjerner det forreste element i den underlæggende linked liste
+ *  @param[in]  headPtr Pointer til det forreste element i listen.
  *  @private
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void headRemove(struct Node** headPtr)
 {
   if(headPtr != NULL)
   {
-struct Node* condemned;
+    struct Node* condemned;
     condemned = *headPtr;
     *headPtr = (*headPtr)->next_;
     free(condemned);
   }
 }
 
-/*!
- *  @brief      Insert element in the back of the queue
- *  @param[in]  backPtr     Pointer to back of queue
- *  @param[in]  data        Struct of data to be placed in the queue
+/**
+ *  @brief      Indsætter bagerst i listen
+ *  @details    Indsætter det angivet element bagerst i den underlægende linked liste.
+ *  @param[in]  backPtr Pointer til det bagerste element i listen.
+ *  @param[in]  data    Data der skal indsættes i listen.
  *  @private
  *  @memberof   Queue
- *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void backInsert(struct Node** backPtr, const struct Data data)
 {
@@ -239,7 +258,7 @@ void backInsert(struct Node** backPtr, const struct Data data)
   {
     return;
   }
-
+  
   struct Node* next = (*backPtr)->next_;
   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
   temp->data_ = data;

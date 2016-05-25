@@ -9,8 +9,8 @@
 #include <stdlib.h>
 
 /***************************************
-*       Private data types
-***************************************/
+ *       Private data types
+ ***************************************/
 
 /*!
  *  @brief      Struct to contain a element in the queue
@@ -24,8 +24,8 @@ struct Node
 };
 
 /***************************************
-*       Private attributes
-***************************************/
+ *       Private attributes
+ ***************************************/
 
 /*!
  *  @brief      Pointer to front element in queue
@@ -60,8 +60,8 @@ static uint8 queueCount_;
 static uint8 queueMax_;
 
 /***************************************
-*       Private methods            
-***************************************/
+ *       Private methods
+ ***************************************/
 
 static void headInsert(struct Node** headPtr, const struct Data data);
 static void headRemove(struct Node** headPtr);
@@ -90,7 +90,7 @@ void queue_init(uint8 queueSize)
 }
 
 /**
- *  @brief      Insert element in FIFO ordre in queue 
+ *  @brief      Insert element in FIFO ordre in queue
  *  @param[in]  data    Struct of data to be placed in the queue
  *  @public
  *  @memberof   Queue
@@ -100,12 +100,12 @@ void pushQueue(const struct Data data)
 {
   if(queueCount_<queueMax_)
   {
-  if(isEmptyQueue() != 1)
-  {
-    backInsert(&backOfQueuePtr_, data);
-    backOfQueuePtr_ = backOfQueuePtr_->next_;
-    queueCount_++;
-  }
+    if(isEmptyQueue() != 1)
+    {
+      backInsert(&backOfQueuePtr_, data);
+      backOfQueuePtr_ = backOfQueuePtr_->next_;
+      queueCount_++;
+    }
     else
     {
       headInsert(&frontOfQueuePtr_, data);
@@ -116,7 +116,7 @@ void pushQueue(const struct Data data)
 }
 
 /**
- *  @brief      Remove front element of the queue  
+ *  @brief      Remove front element of the queue
  *  @public
  *  @memberof   Queue
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
@@ -132,7 +132,7 @@ void popQueue()
 }
 
 /*!
- *  @brief      Return data from the front element in the queue 
+ *  @brief      Return data from the front element in the queue
  *  @return     Data
  *  @public
  *  @memberof   Queue
@@ -144,7 +144,7 @@ struct Data frontQueue()
 }
 
 /*!
- *  @brief      Return 1 (true) if queue is empty or 0 (false) if not 
+ *  @brief      Return 1 (true) if queue is empty or 0 (false) if not
  *  @return     int
  *  @public
  *  @memberof   Queue
@@ -177,10 +177,10 @@ void headInsert(struct Node** headPtr, const struct Data data)
   {
     return;
   }
-
+  
   temp->data_ = data;
   temp->next_ = NULL;
-
+  
   *headPtr = temp;
 }
 
@@ -195,7 +195,7 @@ void headRemove(struct Node** headPtr)
 {
   if(headPtr != NULL)
   {
-struct Node* condemned;
+    struct Node* condemned;
     condemned = *headPtr;
     *headPtr = (*headPtr)->next_;
     free(condemned);
@@ -216,7 +216,7 @@ void backInsert(struct Node** backPtr, const struct Data data)
   {
     return;
   }
-
+  
   struct Node* next = (*backPtr)->next_;
   struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
   temp->data_ = data;
