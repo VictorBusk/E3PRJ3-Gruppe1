@@ -1,13 +1,29 @@
-#include "position.h"
+/*!
+ * @file        position.cpp
+ * @brief       Handles positioning
+ * @author      Victor Busk (201409557@post.au.dk)
+ */
+
+#include "maindisplay.h"
 #include "plannerdialog.h"
 #include "spiapi.h"
 #include "ui_display.h"
 #include <qdebug.h>
 #include <QWidget>
 
-unsigned char valX=0;
-unsigned char valY=0;
-unsigned char valZ=0;
+/***************************************
+ *       Public constants
+ ****************************************/
+
+const unsigned char cmdX = 0x10u;
+const unsigned char cmdY = 0x11u;
+const unsigned char cmdZ = 0x20u;
+
+/*!
+ *  @brief      Sets up display startup
+ *  @param[in]  parent   QWidget UI setup.
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 MainDisplay::MainDisplay(QWidget *parent) : QWidget(parent),
     ui(new Ui::MainDisplay)
@@ -21,9 +37,11 @@ MainDisplay::MainDisplay(QWidget *parent) : QWidget(parent),
     connect(ui->greenSlider, SIGNAL(valueChanged(int)), SLOT(on_ColorChanged()));
     connect(ui->blueSlider, SIGNAL(valueChanged(int)), SLOT(on_ColorChanged()));
 
-    ui->redLine->setReadOnly(true);
-    ui->greenLine->setReadOnly(true);
-    ui->blueLine->setReadOnly(true);
+    connect(ui->lumenSlider, SIGNAL(valueChanged(int)), SLOT(on_lumenChanged()));
+    connect(ui->distanceSpinBox, SIGNAL(valueChanged(int)), SLOT(on_distanceChanged()));
+    connect(ui->movementSlider, SIGNAL(valueChanged(int)), SLOT(on_movementChanged()));
+
+    ui->lumenSlider->setValue(0);
 
     ui->sliderButton->setVisible(false);
     ui->currentButton->setVisible(false);
@@ -33,50 +51,43 @@ MainDisplay::MainDisplay(QWidget *parent) : QWidget(parent),
 
 }
 
+/*!
+ *  @brief      Destroys maindisplay-UI when called
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
+
 MainDisplay::~MainDisplay()
 {
     delete ui;
 }
 
+/*!
+ *  @brief      Handles movement of position indicators
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 void MainDisplay::on_PosChanged()
 {
-    MainDisplay::setXYZ *setXYZPtr = new setXYZ((ui->xSlider->value()), (ui->ySlider->value()), (ui->zSlider->value()));
-
-    qDebug() << "Slider values: " << setXYZPtr->x << "," << setXYZPtr->y << "," << setXYZPtr->z;
 
     //Setting pushbutton position according to screen size. Y-axis is inverted.
     ui->sliderButton->move(((ui->xSlider->value())), (-(((ui->ySlider->value())*0.57)-145)));
     ui->sliderButton->setVisible(true);
 
+    qDebug() << "Slider values: " << ui->xSlider->value() << "," << ui->ySlider->value() << "," << ui->zSlider->value();
+
 }
 
-void MainDisplay::on_calButton_pressed()
-{
-
-    //Set x,y,z to the maximum value
-    quint8 xMax = 255;
-    quint8 yMax = 255;
-    quint8 zMax = 255;
-
-    setSendPos.setPacket(&cmdX, &xMax);
-    setSendPos.setPacket(&cmdY, &yMax);
-    setSendPos.setPacket(&cmdZ, &zMax);
-
-    //Return to original value
-    setSendPos.setPacket(&cmdX, &valX);
-    setSendPos.setPacket(&cmdY, &valY);
-    setSendPos.setPacket(&cmdZ, &valZ);
-
-    on_PosChanged();
-}
+/*!
+ *  @brief      Sends position XYZ from sliders on Go-Button-pressed event and updates green indicator
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 void MainDisplay::on_goPosButton_pressed()
 {
 
-    valX = ui->xSlider->value();
-    valY = ui->ySlider->value();
-    valZ = ui->zSlider->value();
+    unsigned char valX = ui->xSlider->value();
+    unsigned char valY = ui->ySlider->value();
+    unsigned char valZ = ui->zSlider->value();
 
     setSendPos.setPacket(&cmdX, &valX);
     setSendPos.setPacket(&cmdY, &valY);
@@ -87,31 +98,6 @@ void MainDisplay::on_goPosButton_pressed()
     qDebug() << "currentpos: " << valX << "," << valY << "," << valZ;
 
     ui->currentButton->setVisible(true);
-
-    on_PosChanged();
 }
 
-void MainDisplay::on_setTestButton_pressed()
-{
-    unsigned char val=0xaa;
-    unsigned char cmdSet=0x98;
-
-    SPIapi spi;
-
-    spi.setPacket(&cmdSet, &val);
-
-    qDebug() << "Sendt kommando: " << cmdSet << ", og val:" << val;
-}
-
-void MainDisplay::on_getTestButton_pressed()
-{
-    unsigned char cmdGet=0x99;
-    unsigned int returnVal;
-    SPIapi spi;
-
-    spi.getPacket(&cmdGet, &returnVal);
-
-    ui->getTestLine->setText(QString::number(returnVal));
-
-    qDebug() << "Modtaget kommando: " << cmdGet << ", og val:" << returnVal;
-}
+/* [] END OF FILE */

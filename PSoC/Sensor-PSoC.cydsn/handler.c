@@ -97,6 +97,9 @@ void handler(uint8 cmd, uint8 val)
                 RedPWM_Start();
                 GreenPWM_Start();
                 BluePWM_Start();
+                RedPWM_WriteCompare(sensorData.redPWMPct);
+                GreenPWM_WriteCompare(sensorData.greenPWMPct);
+                BluePWM_WriteCompare(sensorData.bluePWMPct);
             } else {
                 RedPWM_Stop();
                 GreenPWM_Stop();

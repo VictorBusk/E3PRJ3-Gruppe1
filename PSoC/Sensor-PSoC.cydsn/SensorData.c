@@ -17,23 +17,19 @@
 void initSensorData()
 {
     sensorData.desiredLux = 0;
-    sensorData.desiredTimeDistance = 0;
+    sensorData.desiredTimeDistance = 580;
 
     sensorData.movementAlertOn = 0;
     
     sensorData.ledPower = 0;
-    sensorData.redPWMPct = 0;
-    sensorData.greenPWMPct = 0;
-    sensorData.bluePWMPct = 0;
-
-#ifdef DEBUG_ON
-    sensorData.desiredTimeDistance = 580;
-    sensorData.desiredLux = 0;
-    sensorData.movementAlertOn = 1;
-    sensorData.ledPower = 1;
     sensorData.redPWMPct = 255;
     sensorData.greenPWMPct = 255;
     sensorData.bluePWMPct = 255;
+
+#ifdef DEBUG_ON
+    sensorData.desiredLux = 0;
+    sensorData.movementAlertOn = 1;
+    sensorData.ledPower = 1;
 #endif
     
     initCircularMean(&sensorData.LumenMean);

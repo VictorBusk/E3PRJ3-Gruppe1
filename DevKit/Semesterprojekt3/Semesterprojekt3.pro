@@ -18,17 +18,20 @@ SOURCES += main.cpp\
     plannerdialog.cpp \
     planner.cpp \
     spiapi.cpp \
-    QVirtualKeyboard.cpp
+    QVirtualKeyboard.cpp \
+    sensor.cpp
 
-HEADERS  += position.h \
-    light.h \
+HEADERS  += \
     plannerdialog.h \
-    planner.h \
     spiapi.h \
-    QVirtualKeyboard.h
+    QVirtualKeyboard.h \
+    maindisplay.h
 
 FORMS    += \
     plannerdialog.ui \
     display.ui
 
 DISTFILES +=
+
+RESOURCES += \
+    ressources.qrc

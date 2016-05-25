@@ -1,15 +1,33 @@
-#include "light.h"
-#include "position.h"
+/*!
+ * @file        light.cpp
+ * @brief       Handles light
+ * @author      Victor Busk (201409557@post.au.dk)
+ */
+
+#include "maindisplay.h"
 #include "spiapi.h"
 #include "ui_display.h"
 #include <qdebug.h>
 
+/***************************************
+ *       Public constants
+ ****************************************/
+
+const unsigned char cmdR = 0x30u;
+const unsigned char cmdG = 0x31u;
+const unsigned char cmdB = 0x32u;
+
+const unsigned char cmdPower = 0x34u;
+
+
+/*!
+ *  @brief      Sets up colorpalette to color preview
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
+
 void MainDisplay::on_ColorChanged()
 {
     //Opdaterer farvepalette
-    MainDisplay::setSliders *setSlidersPtr = new setSliders((ui->redSlider->value()), (ui->greenSlider->value()), (ui->blueSlider->value()));
-
-    qDebug() << "Color values: " << setSlidersPtr->red << "," << setSlidersPtr->green << "," << setSlidersPtr->blue;
 
     rgbColor.setRgb(((ui->redSlider->value())), ((ui->greenSlider->value())), ((ui->blueSlider->value())));
     QPalette pal = ui->colorPalette->palette();
@@ -26,33 +44,42 @@ void MainDisplay::on_ColorChanged()
     //Send values
 }
 
+/*!
+ *  @brief      Increments red-, green- and blue-slider by 5 on Up-Button-pressed event
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
+
 void MainDisplay::on_upButton_pressed()
 {
     // disables moving all sliders up when one reaches maximum
     // checks if individual sliders have reached maximum
 
-    ui->redSlider->setSliderPosition(ui->redSlider->value() == 255 ? ui->redSlider->value() : ui->redSlider->value() + 1);
-    ui->greenSlider->setSliderPosition(ui->greenSlider->value() == 255 ? ui->greenSlider->value() : ui->greenSlider->value() + 1);
-    ui->blueSlider->setSliderPosition(ui->blueSlider->value() == 255 ? ui->blueSlider->value() : ui->blueSlider->value() + 1);
-
-    on_ColorChanged();
+    ui->redSlider->setSliderPosition(ui->redSlider->value() == 255 ? ui->redSlider->value() : ui->redSlider->value() + 5);
+    ui->greenSlider->setSliderPosition(ui->greenSlider->value() == 255 ? ui->greenSlider->value() : ui->greenSlider->value() + 5);
+    ui->blueSlider->setSliderPosition(ui->blueSlider->value() == 255 ? ui->blueSlider->value() : ui->blueSlider->value() + 5);
 }
+
+/*!
+ *  @brief      Decrements red-, green- and blue-slider by 5 on Up-Button-pressed event
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 void MainDisplay::on_downButton_pressed()
 {
     // disables moving all sliders down when one reaches minimum
     // checks if individual sliders have reached minimum
-    ui->redSlider->setSliderPosition(ui->redSlider->value() == 0 ? ui->redSlider->value() : ui->redSlider->value() - 1);
-    ui->greenSlider->setSliderPosition(ui->greenSlider->value() == 0 ? ui->greenSlider->value() : ui->greenSlider->value() - 1);
-    ui->blueSlider->setSliderPosition(ui->blueSlider->value() == 0 ? ui->blueSlider->value() : ui->blueSlider->value() - 1);
-
-    on_ColorChanged();
+    ui->redSlider->setSliderPosition(ui->redSlider->value() == 0 ? ui->redSlider->value() : ui->redSlider->value() - 5);
+    ui->greenSlider->setSliderPosition(ui->greenSlider->value() == 0 ? ui->greenSlider->value() : ui->greenSlider->value() - 5);
+    ui->blueSlider->setSliderPosition(ui->blueSlider->value() == 0 ? ui->blueSlider->value() : ui->blueSlider->value() - 5);
 }
+
+/*!
+ *  @brief      Sends light RGB on Go-Button-pressed event
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 void MainDisplay::on_goLightButton_pressed()
 {
-    SPIapi setLight;
-
     unsigned char valR = ui->redSlider->value();
     unsigned char valG = ui->greenSlider->value();
     unsigned char valB = ui->blueSlider->value();
@@ -60,40 +87,36 @@ void MainDisplay::on_goLightButton_pressed()
     setLight.setPacket(&cmdR, &valR);
     setLight.setPacket(&cmdG, &valG);
     setLight.setPacket(&cmdB, &valB);
-
-    on_ColorChanged();
 }
 
+/*!
+ *  @brief      Turns on light on white light (RGB = 255)
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 void MainDisplay::on_onButton_pressed()
 {
-    SPIapi redOn;
-    SPIapi greenOn;
-    SPIapi blueOn;
+    unsigned char valOn = 1;
 
-    unsigned char On = 0xff;
+    setSensor.setPacket(&cmdPower, &valOn);
 
-    redOn.setPacket(&cmdR, &On);
-    greenOn.setPacket(&cmdG, &On);
-    blueOn.setPacket(&cmdB, &On);
+    qDebug() << "Power is on (0=Off & 1=On): " << valOn;
 
-    qDebug() << "On button pressed: ";
-
-    on_ColorChanged();
 }
+
+/*!
+ *  @brief      Turns off light (RGB = 0)
+ *  @author     Victor Busk (201409557@post.au.dk)
+ */
 
 void MainDisplay::on_offButton_pressed()
 {
-    SPIapi redOff;
-    SPIapi greenOff;
-    SPIapi blueOff;
+    unsigned char valOff = 0;
 
+    setSensor.setPacket(&cmdPower, &valOff);
 
-    unsigned char Off = 0x00;
-
-    redOff.setPacket(&cmdR, &Off);
-    greenOff.setPacket(&cmdG, &Off);
-    blueOff.setPacket(&cmdB, &Off);
+    qDebug() << "Power is off (0=Off & 1=On): " << valOff;
 }
+/* [] END OF FILE */
 
 

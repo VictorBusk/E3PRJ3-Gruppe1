@@ -169,12 +169,23 @@ int main()
                 // Read the PIR sensor output
                 int tmp = PIR_Trig_Read();
                 // If there is movement now but not before
-                if (tmp && (tmp != sensorData.movement)) {
-                    handler(cmdMovementAlert, 0xff);
+                if (tmp) {
+                    // Movement detected - set movement high
+                    sensorData.movement = 10;
+
+                    if (!sensorData.movement) {
+                        // Did it just happen?
+                        handler(cmdMovementAlert, 0xff);
+                    }
+                } else {
+                    // No movement
+                    if (sensorData.movement) {
+                        // But there were movement before - so slowly decay the indicator
+                        --(sensorData.movement);
+                    }
                 }
-                // Store new value
-                sensorData.movement = tmp;
             } else {
+                // Movement alert is off
                 sensorData.movement = 0;
             }
         }

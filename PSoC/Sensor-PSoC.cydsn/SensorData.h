@@ -21,8 +21,8 @@ struct sensorDataT {
 
     // PIR sensor
     uint8 movement;   /*!< The latest reading from the PIR movement sensor */
-    uint8 movementAlertOn;   /*!< Should the system react to movement or ignore it */
-    
+    uint8 movementAlertOn;  /*!< Should the system react to movement or ignore it */
+
     // Distance sensor
     int distance;   /*!< The latest reading from the ultrasonic distance sensor */
     int desiredTimeDistance;   /*!< The distance the lamp should not be lowered below. Stored in micro-seconds for greater resolution */
