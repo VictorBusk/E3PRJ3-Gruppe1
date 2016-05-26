@@ -24,6 +24,13 @@ int main()
   i2c_init();
   LCD_Init();
   DEBUG_Start();
+
+  lcd_newline("------------");
+  lcd_newline("<          >");
+  lcd_newline("< L.A.M.P! >");
+  lcd_newline("< Prj3Gpr1 >");
+  lcd_newline("<          >");
+  lcd_newline("------------");
   
   setLed(1,0,0,150);
   setLed(0,1,0,150);

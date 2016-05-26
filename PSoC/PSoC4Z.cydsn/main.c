@@ -38,8 +38,7 @@ int main()
       CyDelay(5u);
       if(SW2_Read() == 0u)
       {
-        calibrateX();
-        calibrateY();
+        calibrateZ();
       }
       while(SW2_Read() == 0u)
       {

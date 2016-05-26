@@ -15,8 +15,8 @@
  *       Private methods
  ***************************************/
 
-static void stepZForwards();
-static void stepZBackwards():
+static void stepZForwards(void);
+static void stepZBackwards(void);
 
 
 /***************************************
@@ -47,8 +47,9 @@ void z_init()
  *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-void Z_start()
+void z_start()
 {
+  dataZ.interruptZ = 0;
   DEBUG_PutString("Z initializing going to zero");
   
   while(dataZ.interruptZ == 0 && dataZ.zFlag == 0)
@@ -73,19 +74,21 @@ void Z_start()
  */
 CY_ISR(isr_Z)
 {
+  DEBUG_PutString("Interrupt Z");
+  DEBUG_PutCRLF();
   interrupt_Z_Disable();
   
   uint32 i;
   
   dataZ.interruptZ = 1;
 
-  setLed(0,0,1);
+  setLed(0,0,1,0);
   for(i = 0; i < interruptSteps; i++)
   {
     stepZForwards();
   }
   dataZ.zFlag = 1;
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   interrupt_Z_ClearPending();
   interrupt_Z_Enable();
@@ -102,19 +105,21 @@ CY_ISR(isr_Z)
  */
 CY_ISR(isr_S)
 {
+  DEBUG_PutString("Interrupt S");
+  DEBUG_PutCRLF();
   interrupt_S_Disable();
   
   uint32 i;
   
   dataZ.interruptZ = 1;
   
-  setLed(0,0,1);
+  setLed(0,0,1,0);
   for(i = 0; i < interruptSteps; i++)
   {
     stepZBackwards();
   }
   dataZ.zFlag = 0;
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   interrupt_S_ClearPending();
   interrupt_S_Enable();
@@ -143,7 +148,7 @@ void calibrateZ()
   while(dataZ.interruptZ == 0 && dataZ.zFlag == 1)
   {
     DEBUG_PutString(".");
-    setLed(1,0,0);
+    setLed(1,0,0,0);
     stepZForwards();
   }
   dataZ.interruptZ = 0;
@@ -155,13 +160,13 @@ void calibrateZ()
   while(dataZ.interruptZ == 0 && dataZ.zFlag == 0)
   {
     DEBUG_PutString(".");
-    setLed(1,0,0);
+    setLed(1,0,0,0);
     stepZBackwards();
     dataZ.zMax++;
   }
   DEBUG_PutString("done");
 
-  setLed(0,0,0);
+  setLed(0,0,0,0);
   
   dataZ.zPos = 0;
   dataZ.zMax = dataZ.zMax - interruptSteps;
@@ -208,13 +213,13 @@ void setZPos(uint8 zVal)
     
     if(zDes > dataZ.zPos)
     {
-      setLed(0,1,0);
+      setLed(0,1,0,0);
       dataZ.interruptZ = 0;
       dataZ.zFlag = 1;
       zSteps = zDes - dataZ.zPos;
       
       DEBUG_PutString(" going forwards steps: ");
-      DEBUG_PutHexInt(xSteps);
+      DEBUG_PutHexInt(zSteps);
       for(i = 0; i < zSteps  && dataZ.isrStopZ == 0 && dataZ.interruptZ == 0 && dataZ.zFlag == 1; i++)
       {
         DEBUG_PutString(".");
@@ -236,7 +241,7 @@ void setZPos(uint8 zVal)
     }
     else if(zDes < dataZ.zPos)
     {
-      setLed(0,1,0);
+      setLed(0,1,0,0);
       
       dataZ.interruptZ = 0;
       dataZ.zFlag = 0;

@@ -9,7 +9,7 @@
 
 
 /***************************************
- *       Public methods
+ *       Private attributes
  ***************************************/
 
 /*!
@@ -51,5 +51,6 @@ void lcd_newline(char* characters)
     LCD_String(lineStr[i]);
   }
 }
+
 
 /* [] END OF FILE */

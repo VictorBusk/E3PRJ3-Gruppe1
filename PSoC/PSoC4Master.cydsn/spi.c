@@ -45,7 +45,9 @@ CY_ISR(isr_spi_rx)
   uint16 spiRxBuffer[SPI_PACKET_SIZE];
   uint16 spiTxBuffer[SPI_PACKET_SIZE];
   struct Action spiRxAction;
-  
+  DEBUG_PutString("SPI!");
+  DEBUG_PutCRLF();
+
   while(SPIS_SpiUartGetRxBufferSize() > 0)
   {
     spiRxBuffer[SPI_PACKET_DATA_POS] = SPIS_SpiUartReadRxData();
@@ -111,7 +113,6 @@ CY_ISR(isr_spi_rx)
     }
   }
   
-  SPIS_SpiUartClearRxBuffer();
   SPIS_ClearRxInterruptSource(SPIS_GetRxInterruptSource());
   SPIS_EnableInt();
 }

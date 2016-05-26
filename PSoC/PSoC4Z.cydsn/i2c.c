@@ -90,15 +90,9 @@ void I2CS_I2C_ISR_ExitCallback()
     action.val = i2cRxBuffer[I2C_PACKET_VAL_POS];
     
     switch(i2cRxBuffer[I2C_PACKET_CMD_POS]) {
-      case CMD_SET_X_POS :
-        dataXY.isrStopX = 1;
-        DEBUG_PutString(") isrStopX = 1");
-        DEBUG_PutCRLF();
-        pushQueue(action);
-        break;
-      case CMD_SET_Y_POS :
-        dataXY.isrStopY = 1;
-        DEBUG_PutString(") isrStopY = 1");
+      case CMD_SET_Z_POS :
+        dataZ.isrStopZ = 1;
+        DEBUG_PutString(") isrStopZ = 1");
         DEBUG_PutCRLF();
         pushQueue(action);
         break;
