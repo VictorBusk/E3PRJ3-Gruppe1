@@ -1,5 +1,5 @@
 /*!
- *  @file        Handler.c
+ *  @file        main.c
  *  @brief       Main file for Sensor-PSoC
  *
  *  Contains the main loop and control structure for the Sensor-PSoC.
