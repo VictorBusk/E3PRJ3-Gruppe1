@@ -2,14 +2,27 @@
  *  @file       handler.h
  *  @brief      Handler modul
  *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
- *  @ingroup    xy
- *  @class      HandlerXY handler.h
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef HANDLER_H
 #define HANDLER_H
 
 #include <project.h>
+
+/***************************************
+ *       Class
+ ***************************************/
+
+/*!
+ *  @class      Handler handler.h
+ *  @brief      Handler class
+ *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
 
 /***************************************
  *       Public methods

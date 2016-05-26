@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['frontofqueueptr_5f',['frontOfQueuePtr_',['../class_queue.html#aa48f05218d0a78402821c8aa9bdad06a',1,'Queue']]],
-  ['frontqueue',['frontQueue',['../class_queue.html#a49c50ba30a42033068d8d8e6a23c6ca1',1,'Queue::frontQueue()'],['../queue_8h.html#a5b7c475046e2cba50c67a3f3995d1fe1',1,'frontQueue():&#160;queue.h']]]
+  ['empty_5fcolumn_5fdata',['EMPTY_COLUMN_DATA',['../dc/d08/_nokia5110_l_c_d_8h.html#aaafc5650777bddfbeabede2599523c79',1,'Nokia5110LCD.h']]]
 ];

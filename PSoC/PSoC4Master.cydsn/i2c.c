@@ -13,7 +13,22 @@
  *       Private methods
  ***************************************/
 
+/*!
+ *  @brief      Buffer til afsendelse af data.
+ *  @details    En buffer der indeholder de data pakker der skal sende over I2C-busset.
+ *  @private
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 static uint8 i2c_tx(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal);
+
+/*!
+ *  @brief      Buffer til modtagelse af data.
+ *  @details    En buffer der indeholder de data pakker der skal modtagelse over I2C-busset.
+ *  @private
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 static uint8 i2c_rx(uint8 i2cRxAddr, uint8* i2cRxCmd, uint8* i2cRxVal);
 
 

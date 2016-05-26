@@ -2,7 +2,8 @@
  *  @file       handler.c
  *  @brief      Handler modul
  *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
- *  @ingroup    xy
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "handler.h"
@@ -19,9 +20,10 @@
  *  @details    Fortager en defineret handling ud fra den modtaget kommando med den tilhørende værdi.
  *  @param[in]  cmd Er den modtaget kommando.
  *  @param[in]  val Er den tilhørende værdi.
- *  @ingroup    xy
  *  @public
- *  @memberof   HandlerXY
+ *  @memberof   Handler
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void handler(uint8 cmd, uint8 val)

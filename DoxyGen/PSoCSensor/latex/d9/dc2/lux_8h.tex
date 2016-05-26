@@ -1,0 +1,172 @@
+\hypertarget{lux_8h}{}\subsection{lux.\+h filreference}
+\label{lux_8h}\index{lux.\+h@{lux.\+h}}
+
+
+Code copied from the \char`\"{}\+T\+S\+L2561 Light-\/to-\/digital converter\char`\"{} datasheet.  
+
+
+Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=165pt]{df/d85/lux_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+unsigned int \hyperlink{lux_8h_a3db2aa0d603f0627be256dc108d3d763}{Calculate\+Lux} (unsigned int i\+Gain, unsigned int t\+Int, unsigned int ch0, unsigned int ch1, int i\+Type)
+\begin{DoxyCompactList}\small\item\em Calculate perceived lux from sensor values The sensor has two detectors, one that detects visible and infrared light while the second only detects infrared light. The amount of visible light is then calculated by substracting a scaling fraction of the second detector value from a scaling fraction of the first. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+Code copied from the \char`\"{}\+T\+S\+L2561 Light-\/to-\/digital converter\char`\"{} datasheet. 
+
+\begin{DoxyAuthor}{Forfatter}
+T\+A\+OS, Inc. 
+\end{DoxyAuthor}
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{lux.\+h@{lux.\+h}!Calculate\+Lux@{Calculate\+Lux}}
+\index{Calculate\+Lux@{Calculate\+Lux}!lux.\+h@{lux.\+h}}
+\paragraph[{\texorpdfstring{Calculate\+Lux(unsigned int i\+Gain, unsigned int t\+Int, unsigned int ch0, unsigned int ch1, int i\+Type)}{CalculateLux(unsigned int iGain, unsigned int tInt, unsigned int ch0, unsigned int ch1, int iType)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int Calculate\+Lux (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{i\+Gain, }
+\item[{unsigned int}]{t\+Int, }
+\item[{unsigned int}]{ch0, }
+\item[{unsigned int}]{ch1, }
+\item[{int}]{i\+Type}
+\end{DoxyParamCaption}
+)}\hypertarget{lux_8h_a3db2aa0d603f0627be256dc108d3d763}{}\label{lux_8h_a3db2aa0d603f0627be256dc108d3d763}
+
+
+Calculate perceived lux from sensor values The sensor has two detectors, one that detects visible and infrared light while the second only detects infrared light. The amount of visible light is then calculated by substracting a scaling fraction of the second detector value from a scaling fraction of the first. 
+
+\begin{DoxyReturn}{Returnerer}
+The calculated lux value 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em i\+Gain} & Is internal scaling enabled in the sensor (0 = x1, 1 = x16) \\
+\hline
+\mbox{\tt in}  & {\em t\+Int} & Integration time set in the sensor (0 = 13.\+7ms, 1 = 101ms, 2 = 402ms) \\
+\hline
+\mbox{\tt in}  & {\em ch0} & Value read from detector 0 \\
+\hline
+\mbox{\tt in}  & {\em ch1} & Value read from detector 1 \\
+\hline
+\mbox{\tt in}  & {\em i\+Type} & Physical sensor package (0 = T, FN or CL, 1 = CS)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+T\+A\+OS, Inc. 
+\end{DoxyAuthor}
+
+
+Defineret på linje 147 i filen lux.\+c.
+
+
+
+Indeholder referencer til B1C, B1T, B2C, B2T, B3C, B3T, B4C, B4T, B5C, B5T, B6C, B6T, B7C, B7T, B8C, B8T, C\+H\+\_\+\+S\+C\+A\+LE, C\+H\+S\+C\+A\+L\+E\+\_\+\+T\+I\+N\+T0, C\+H\+S\+C\+A\+L\+E\+\_\+\+T\+I\+N\+T1, K1C, K1T, K2C, K2T, K3C, K3T, K4C, K4T, K5C, K5T, K6C, K6T, K7C, K7T, K8C, K8T, L\+U\+X\+\_\+\+S\+C\+A\+LE, M1C, M1T, M2C, M2T, M3C, M3T, M4C, M4T, M5C, M5T, M6C, M6T, M7C, M7T, M8C, M8T og R\+A\+T\+I\+O\+\_\+\+S\+C\+A\+LE.
+
+
+
+Refereret til af read\+Lumen\+Sensor().
+
+
+\begin{DoxyCode}
+149 \{
+151   \textcolor{comment}{// first, scale the channel values depending on the gain and integration time}
+152   \textcolor{comment}{// 16X, 402mS is nominal.}
+153   \textcolor{comment}{// scale if integration time is NOT 402 msec}
+154   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} chScale;
+155   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} channel1;
+156   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} channel0;
+157   \textcolor{keywordflow}{switch} (tInt)
+158   \{
+159     \textcolor{keywordflow}{case} 0: \textcolor{comment}{// 13.7 msec}
+160       chScale = \hyperlink{lux_8c_af740a064eaa0da3339e7eba683a671ed}{CHSCALE\_TINT0};
+161       \textcolor{keywordflow}{break};
+162     \textcolor{keywordflow}{case} 1: \textcolor{comment}{// 101 msec}
+163       chScale = \hyperlink{lux_8c_a1f741d16494e81486136c73489097cdd}{CHSCALE\_TINT1};
+164       \textcolor{keywordflow}{break};
+165     \textcolor{keywordflow}{default}: \textcolor{comment}{// assume no scaling}
+166       chScale = (1 << \hyperlink{lux_8c_ae77b11d54490369c690da18aef1e76e5}{CH\_SCALE});
+167       \textcolor{keywordflow}{break};
+168   \}
+169   \textcolor{comment}{// scale if gain is NOT 16X}
+170   \textcolor{keywordflow}{if} (!iGain) chScale = chScale << 4; \textcolor{comment}{// scale 1X to 16X}
+171   \textcolor{comment}{// scale the channel values}
+172   channel0 = (ch0 * chScale) >> \hyperlink{lux_8c_ae77b11d54490369c690da18aef1e76e5}{CH\_SCALE};
+173   channel1 = (ch1 * chScale) >> \hyperlink{lux_8c_ae77b11d54490369c690da18aef1e76e5}{CH\_SCALE};
+175   \textcolor{comment}{// find the ratio of the channel values (Channel1/Channel0)}
+176   \textcolor{comment}{// protect against divide by zero}
+177   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} ratio1 = 0;
+178   \textcolor{keywordflow}{if} (channel0 != 0) ratio1 = (channel1 << (\hyperlink{lux_8c_a2d36ccf8157f890c015eddd64276d77c}{RATIO\_SCALE}+1)) / channel0;
+179   \textcolor{comment}{// round the ratio value}
+180   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} ratio = (ratio1 + 1) >> 1;
+181   \textcolor{comment}{// is ratio <= eachBreak ?}
+182   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} b = 0, m = 0;
+183   \textcolor{keywordflow}{switch} (iType)
+184   \{
+185     \textcolor{keywordflow}{case} 0: \textcolor{comment}{// T, FN and CL package}
+186       \textcolor{keywordflow}{if} ((ratio >= 0) && (ratio <= \hyperlink{lux_8c_a8d1758888413b06317d05260d023c6f1}{K1T}))
+187       \{b=\hyperlink{lux_8c_a77a115660299dfe589547bd1c9313e18}{B1T}; m=\hyperlink{lux_8c_a9cee464de95fd9f1cc41e4737cdfcf56}{M1T};\}
+188       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_af3f76dac869af6d4fb8834ba8e5baa72}{K2T})
+189       \{b=\hyperlink{lux_8c_a0a24c8d38c744a6706fbef06cc0d045e}{B2T}; m=\hyperlink{lux_8c_af13d82736a980dd7f78a0c8633c656c0}{M2T};\}
+190       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_a96898795c866703216e3035ecc1c29aa}{K3T})
+191       \{b=\hyperlink{lux_8c_aa58a8a3b4010f1d8ab947e2351b6cf1d}{B3T}; m=\hyperlink{lux_8c_a6d02cd58020bf44d98927446668a2f7b}{M3T};\}
+192       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_aa3489bee2d8a1e25002669517f4b6f7d}{K4T})
+193       \{b=\hyperlink{lux_8c_a836fd96912939cd386f83e20ed1061ee}{B4T}; m=\hyperlink{lux_8c_ac5983b281c3a2f1d4ea1f87236cfcb44}{M4T};\}
+194       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_a7df915d6ba425afa9a463f249168d6bd}{K5T})
+195       \{b=\hyperlink{lux_8c_a8a3732432706e9a5a5ae3d3485d47043}{B5T}; m=\hyperlink{lux_8c_a2d9fce4a16f258b5ab02b09a954648f6}{M5T};\}
+196       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_a677e2edf3cf15bef63405c35a7be1310}{K6T})
+197       \{b=\hyperlink{lux_8c_ab01465ad82a39e8d02c2dd79279bfe38}{B6T}; m=\hyperlink{lux_8c_a48074a633649636c0748b851a23776df}{M6T};\}
+198       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_a7e788fd48d058b89ffcc0438bc3d558e}{K7T})
+199       \{b=\hyperlink{lux_8c_ad61180572632999584ac8b582a00e2c8}{B7T}; m=\hyperlink{lux_8c_aa3094566ff7a1a2bcd210e256c7b50cc}{M7T};\}
+200       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio > \hyperlink{lux_8c_aa0dc3961e2039ad7d91faf6829ec1404}{K8T})
+201       \{b=\hyperlink{lux_8c_ab5d069e613c69aaf71ea97b129cc5ec1}{B8T}; m=\hyperlink{lux_8c_acb54eadab753bfe327548d7216edd9a2}{M8T};\}
+202       \textcolor{keywordflow}{break};
+203     \textcolor{keywordflow}{case} 1:\textcolor{comment}{// CS package}
+204       \textcolor{keywordflow}{if} ((ratio >= 0) && (ratio <= \hyperlink{lux_8c_a5d91e3222633d82540d7ce0e8d2e1bb2}{K1C}))
+205       \{b=\hyperlink{lux_8c_a93aa8f0bb51f43d51e78656a352c6d16}{B1C}; m=\hyperlink{lux_8c_a4ec6175326ca3eb8b731a162b6fcd866}{M1C};\}
+206       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_ac91e954471045fdbd9b3d01933373c1e}{K2C})
+207       \{b=\hyperlink{lux_8c_a95f02da704fdc6c1cabd0c29713cee66}{B2C}; m=\hyperlink{lux_8c_ab70590fa6ebed50a3ab8ff17c22b55b2}{M2C};\}
+208       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_acbc83f137380f27faf46af997f35f882}{K3C})
+209       \{b=\hyperlink{lux_8c_ac03c4526fc8c17d71c8ee2171537facd}{B3C}; m=\hyperlink{lux_8c_a172d826f878378caa7889305ad29011f}{M3C};\}
+210       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_a2fccbc87358653185282ba16b03a64ee}{K4C})
+211       \{b=\hyperlink{lux_8c_a6bd8165e32f19978994245c552b8ee2d}{B4C}; m=\hyperlink{lux_8c_abca79308fb0392b1f8c9d5cfeb5310a0}{M4C};\}
+212       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_aa39a8eec5ffe9f84c4ac098724c70c91}{K5C})
+213       \{b=\hyperlink{lux_8c_af4a1b651ec51bb418ce1bffb87fa79e4}{B5C}; m=\hyperlink{lux_8c_a7c5adce134d8d2be44024c075f55c5c1}{M5C};\}
+214       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_a9dccc63bcf43c1b4714e913053a906c1}{K6C})
+215       \{b=\hyperlink{lux_8c_abe71d8a87f6d974ee3d26693d1a2ea51}{B6C}; m=\hyperlink{lux_8c_a2140b89133d826e76d2a717a3d863551}{M6C};\}
+216       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio <= \hyperlink{lux_8c_ac104bf3b33df4e42b14dc31078283565}{K7C})
+217       \{b=\hyperlink{lux_8c_a5750be8469107d68ea4bdd4e4947316b}{B7C}; m=\hyperlink{lux_8c_acc5b1974656133787900e9bd5219c5ce}{M7C};\}
+218       \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (ratio > \hyperlink{lux_8c_ac47a903b8bc65dc56915024f00201213}{K8C})
+219       \{b=\hyperlink{lux_8c_a6d9dfce0cef08b9ef488e582ac4f92e9}{B8C}; m=\hyperlink{lux_8c_ac15c8f99823ed2ff447fb568ce4d3957}{M8C};\}
+220       \textcolor{keywordflow}{break};
+221   \}
+222   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} temp;
+223   temp = ((channel0 * b) - (channel1 * m));
+224   \textcolor{comment}{// do not allow negative lux value}
+225   \textcolor{keywordflow}{if} (temp < 0) temp = 0;
+227   temp += (1 << (\hyperlink{lux_8c_abe3540b1f05e5974dfa40491719b322a}{LUX\_SCALE}-1));
+228   \textcolor{comment}{// strip off fractional portion}
+229   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} lux = temp >> \hyperlink{lux_8c_abe3540b1f05e5974dfa40491719b322a}{LUX\_SCALE};
+230   \textcolor{keywordflow}{return}(lux);
+231 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d9/dc2/lux_8h_a3db2aa0d603f0627be256dc108d3d763_icgraph}
+\end{center}
+\end{figure}
+
+

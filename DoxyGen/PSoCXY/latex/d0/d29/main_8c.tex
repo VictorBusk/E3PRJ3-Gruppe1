@@ -1,0 +1,116 @@
+\hypertarget{main_8c}{}\subsection{main.\+c filreference}
+\label{main_8c}\index{main.\+c@{main.\+c}}
+
+
+Hovedprogram.  
+
+
+{\ttfamily \#include $<$project.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}data.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}handler.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}i2c.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}led.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}queue.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}xy.\+h\char`\"{}}\\*
+Inklusions-\/afhængighedsgraf for main.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d4/d10/main_8c__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+Hovedprogram. 
+
+Intilizere modulerne og køre derefter i loop hvor der bliver kontrolieret om der er nogle actions i køen der skal håndteres af handleren. \begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{main.\+c@{main.\+c}!main@{main}}
+\index{main@{main}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{main()}{main()}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+
+
+Defineret på linje 17 i filen main.\+c.
+
+
+
+Indeholder referencer til X\+Y\+::calibrate\+X(), X\+Y\+::calibrate\+Y(), Data\+::data\+\_\+init(), Queue\+::front\+Queue(), Handler\+::handler(), I2\+C\+::i2c\+\_\+init(), I2\+C\+::i2c\+\_\+tx(), Queue\+::is\+Empty\+Queue(), Queue\+::pop\+Queue(), Queue\+::queue\+\_\+init(), L\+E\+D\+::set\+Led(), X\+Y\+::xy\+\_\+init() og X\+Y\+::xy\+\_\+start().
+
+
+\begin{DoxyCode}
+18 \{
+19   CyGlobalIntEnable;
+20   
+21   \hyperlink{class_data_adf37c815716edf228a3cbb4564290275}{data\_init}();
+22   \hyperlink{class_queue_a4e0a3758d721506e7729f4d074a280ff}{queue\_init}(6u);
+23   \hyperlink{class_x_y_aaf6d50e1866014a76b1b15325d2dba4b}{xy\_init}();
+24   \hyperlink{class_i2_c_a64303230bf4843297e7ac37ac236ca04}{i2c\_init}();
+25   
+26   DEBUG\_PutCRLF();
+27   DEBUG\_PutString(\textcolor{stringliteral}{"===== Initializing PSoC XY ====="});
+28   DEBUG\_PutCRLF();
+29   
+30   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,1,0,0);
+31   CyDelay(100);
+32   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
+33   
+34   \hyperlink{class_x_y_a47c6cc7fae92395e4d1231428c7070d4}{xy\_start}();
+35   
+36   \textcolor{keywordflow}{for}(;;)
+37   \{
+38     \textcolor{keywordflow}{if}(SW2\_Read() == 0u)
+39     \{
+40       CyDelay(5u);
+41       \textcolor{keywordflow}{if}(SW2\_Read() == 0u)
+42       \{
+43         \hyperlink{class_x_y_a852d7d757cec8e85e0b436969d0ce237}{calibrateX}();
+44         \hyperlink{class_x_y_a86751f168bdc352fa109644298829609}{calibrateY}();
+45       \}
+46       \textcolor{keywordflow}{while}(SW2\_Read() == 0u)
+47       \{
+48         ; \textcolor{comment}{/* Wait till button released */}
+49       \}
+50     \}
+51     
+52     \textcolor{keywordflow}{while}(\hyperlink{class_queue_aafb324c79731abdc228dbf94d86722a3}{isEmptyQueue}() != 1)
+53     \{
+54       \textcolor{keyword}{struct }\hyperlink{queue_8h_df/d8c/struct_action}{Action} action;
+55       action = \hyperlink{class_queue_a49c50ba30a42033068d8d8e6a23c6ca1}{frontQueue}();
+56       \hyperlink{class_handler_af5be5b016b862943cd22504490acc8f4}{handler}(action.cmd, action.val);
+57       \hyperlink{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b}{popQueue}();
+58     \}
+59     \hyperlink{class_i2_c_a3d3187ad377a6ca29b3fac5c809b6012}{i2c\_tx}();
+60   \}
+61 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d29/main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph}
+\end{center}
+\end{figure}
+
+

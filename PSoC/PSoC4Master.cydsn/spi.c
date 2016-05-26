@@ -18,7 +18,6 @@
 /*!
  *  @brief      Initialiser SPI modulet.
  *  @details    Initailiser SPI komponent på PSoC'en og sætter "Custom Interrupt Handler".
- *
  *  @public
  *  @memberof   SPI
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
@@ -35,7 +34,6 @@ void spi_init()
 /*!
  *  @brief      Modtager kald fra SPI-busset
  *  @details    En "Interrupt Service Routine(ISR)" der aktiveres ved modtagelse af kald via SPI-busset, det modtaget data behandles og håndteres.
- *
  *  @public
  *  @memberof   SPI
  *  @author     Jeppe Stærk (201271201@uni.au.dk)

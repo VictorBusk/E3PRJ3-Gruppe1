@@ -1,0 +1,128 @@
+\hypertarget{_sensor_data_8h}{}\subsection{Sensor\+Data.\+h filreference}
+\label{_sensor_data_8h}\index{Sensor\+Data.\+h@{Sensor\+Data.\+h}}
+{\ttfamily \#include $<$project.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Circular\+Mean.\+h\char`\"{}}\\*
+Inklusions-\/afhængighedsgraf for Sensor\+Data.\+h\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=236pt]{da/daa/_sensor_data_8h__incl}
+\end{center}
+\end{figure}
+Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/d8f/_sensor_data_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Datastrukturer}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{_sensor_data_8h_d4/d49/structsensor_data_t}{sensor\+DataT}
+\begin{DoxyCompactList}\small\item\em Container for sensor data.  \hyperlink{_sensor_data_8h_d4/d49/structsensor_data_t}{Mere...}\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variable}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{_sensor_data_8h_d4/d49/structsensor_data_t}{sensor\+DataT} \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensor\+Data}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Datastruktur-\/documentation}
+\index{sensor\+DataT@{sensor\+DataT}}\label{structsensor_data_t}
+\hypertarget{_sensor_data_8h_structsensor_data_t}{}
+\paragraph{struct sensor\+DataT}
+Container for sensor data. 
+
+Defineret på linje 16 i filen Sensor\+Data.\+h.
+
+
+
+Samarbejdsdiagram for sensor\+DataT\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dc/d44/structsensor_data_t__coll__graph}
+\end{center}
+\end{figure}
+\begin{DoxyFields}{Data-\/felter}
+uint8\hypertarget{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{}\label{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}
+&
+blue\+P\+W\+M\+Pct&
+Power level of the blue L\+ED\+: Scale 0-\/255. \\
+\hline
+
+unsigned int\hypertarget{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}{}\label{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}
+&
+desired\+Lux&
+The lux value the system should try to maintain \\
+\hline
+
+int\hypertarget{_sensor_data_8h_a477d7465dc8c397bdb795593df890d8b}{}\label{_sensor_data_8h_a477d7465dc8c397bdb795593df890d8b}
+&
+desired\+Time\+Distance&
+The distance the lamp should not be lowered below. Stored in micro-\/seconds for greater resolution \\
+\hline
+
+int\hypertarget{_sensor_data_8h_afb9412686cd344ad61757c1c19ba8a87}{}\label{_sensor_data_8h_afb9412686cd344ad61757c1c19ba8a87}
+&
+distance&
+The latest reading from the ultrasonic distance sensor \\
+\hline
+
+uint8\hypertarget{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{}\label{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}
+&
+green\+P\+W\+M\+Pct&
+Power level of the green L\+ED\+: Scale 0-\/255. \\
+\hline
+
+uint8\hypertarget{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{}\label{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}
+&
+led\+Power&
+Are the L\+E\+Ds currently on or off \\
+\hline
+
+struct \hyperlink{_circular_mean_8h_d2/ddd/struct_circular_mean}{Circular\+Mean}\hypertarget{_sensor_data_8h_a2ff5a38714ef318f86285c7d8fe4c8ea}{}\label{_sensor_data_8h_a2ff5a38714ef318f86285c7d8fe4c8ea}
+&
+Lumen\+Mean&
+Circular structure. Can add values and get their average. Used for lux measurements \\
+\hline
+
+unsigned int\hypertarget{_sensor_data_8h_aeb23f0cb9c43c48bf83c1d75a5c179a4}{}\label{_sensor_data_8h_aeb23f0cb9c43c48bf83c1d75a5c179a4}
+&
+lux&
+The average value of lux measured \\
+\hline
+
+uint8\hypertarget{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{}\label{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}
+&
+movement&
+The latest reading from the P\+IR movement sensor \\
+\hline
+
+uint8\hypertarget{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}{}\label{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}
+&
+movement\+Alert\+On&
+Should the system react to movement or ignore it \\
+\hline
+
+uint8\hypertarget{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{}\label{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}
+&
+red\+P\+W\+M\+Pct&
+Power level of the red L\+ED\+: Scale 0-\/255. \\
+\hline
+
+\end{DoxyFields}
+
+
+\subsubsection{Variabel-\/dokumentation}
+\index{Sensor\+Data.\+h@{Sensor\+Data.\+h}!sensor\+Data@{sensor\+Data}}
+\index{sensor\+Data@{sensor\+Data}!Sensor\+Data.\+h@{Sensor\+Data.\+h}}
+\paragraph[{\texorpdfstring{sensor\+Data}{sensorData}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf sensor\+DataT}  sensor\+Data}\hypertarget{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{}\label{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}
+
+
+Refereret til af C\+Y\+\_\+\+I\+S\+R(), handler(), Sensor\+Data\+::init\+Sensor\+Data(), main() og scale\+Led\+P\+W\+M().
+

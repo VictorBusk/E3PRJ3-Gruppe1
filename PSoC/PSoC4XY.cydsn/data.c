@@ -2,7 +2,8 @@
  *  @file       data.c
  *  @brief      Data modul
  *  @details    Indeholder data vedr. XY modulet.
- *  @ingroup    xy
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "data.h"
@@ -14,9 +15,10 @@
 /**
  *  @brief      Initialiser data modulet
  *  @details    Initialiser dataXY structen med start værdier.
- *  @ingroup    xy
  *  @public
- *  @memberof   DataXY
+ *  @memberof   Data
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 void data_init(void)

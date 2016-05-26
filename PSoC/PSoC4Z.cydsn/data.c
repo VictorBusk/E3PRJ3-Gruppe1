@@ -1,23 +1,23 @@
-/* ========================================
- *
- * File: data.c
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       data.c
+ *  @brief      Data modul
+ *  @details    Indeholder data vedr. Z modulet.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-
 #include "data.h"
 
+
+/***************************************
+ *       Public methods
+ ***************************************/
+
+/**
+ *  @brief      Initialiser data modulet
+ *  @details    Initialiser dataZ structen med start værdier.
+ *  @public
+ *  @memberof   Data
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
 void data_init(void)
 {
   dataZ.calibratedZ = 1;

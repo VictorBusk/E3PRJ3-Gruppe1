@@ -2,14 +2,28 @@
  *  @file       data.h
  *  @brief      Data modul
  *  @details    Indeholder data vedr. XY modulet.
- *  @ingroup    xy
- *  @class      DataXY data.h
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef DATA_H
 #define DATA_H
 
 #include <project.h>
+
+/***************************************
+ *       Class
+ ***************************************/
+
+/*!
+ *  @class      Data data.h
+ *  @brief      Data class
+ *  @details    Indeholder data vedr. XY modulet.
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+
 
 /***************************************
  *       Public data types

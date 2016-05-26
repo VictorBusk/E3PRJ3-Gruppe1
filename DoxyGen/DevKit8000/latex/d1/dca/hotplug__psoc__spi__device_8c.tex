@@ -1,0 +1,255 @@
+\hypertarget{hotplug__psoc__spi__device_8c}{}\subsection{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c filreference}
+\label{hotplug__psoc__spi__device_8c}\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+{\ttfamily \#include $<$linux/init.\+h$>$}\\*
+{\ttfamily \#include $<$linux/module.\+h$>$}\\*
+{\ttfamily \#include $<$linux/spi/spi.\+h$>$}\\*
+{\ttfamily \#include $<$asm/uaccess.\+h$>$}\\*
+{\ttfamily \#include $<$linux/platform\+\_\+data/spi-\/omap2-\/mcspi.\+h$>$}\\*
+Inklusions-\/afhængighedsgraf for hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d3/dd2/hotplug__psoc__spi__device_8c__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{hotplug__psoc__spi__device_8c_a76205f40e50e793bad85477c56a1fcb5}{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR} (\char`\"{}Jeppe Stærk\char`\"{})
+\item 
+\hyperlink{hotplug__psoc__spi__device_8c_a5c95e2cd11cba226f5f3513060a8928e}{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE} (\char`\"{}Dual B\+SD/G\+PL\char`\"{})
+\item 
+static int \hyperlink{hotplug__psoc__spi__device_8c_ad22e734f3f2605901ebaeecc84688362}{hotplug\+\_\+spi\+\_\+init} (void)
+\item 
+static void \hyperlink{hotplug__psoc__spi__device_8c_aeb21f0923200cce2c073558c826a6257}{hotplug\+\_\+spi\+\_\+exit} (void)
+\item 
+\hyperlink{hotplug__psoc__spi__device_8c_aa5bc2e887faa7c9d28e378e434228edb}{module\+\_\+init} (\hyperlink{hotplug__psoc__spi__device_8c_ad22e734f3f2605901ebaeecc84688362}{hotplug\+\_\+spi\+\_\+init})
+\item 
+\hyperlink{hotplug__psoc__spi__device_8c_a9598455ed5fae1360ad263793d9d2357}{module\+\_\+exit} (\hyperlink{hotplug__psoc__spi__device_8c_aeb21f0923200cce2c073558c826a6257}{hotplug\+\_\+spi\+\_\+exit})
+\end{DoxyCompactItemize}
+\subsubsection*{Variable}
+\begin{DoxyCompactItemize}
+\item 
+static struct spi\+\_\+device $\ast$ \hyperlink{hotplug__psoc__spi__device_8c_a4c80f5a180249a93e8946022ede52199}{slave\+\_\+spi\+\_\+device}
+\item 
+static struct omap2\+\_\+mcspi\+\_\+device\+\_\+config \hyperlink{hotplug__psoc__spi__device_8c_a52cfe025127b44fa0e131f99a4acfab4}{mcspi\+\_\+config}
+\item 
+static struct spi\+\_\+board\+\_\+info \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\+\_\+spi\+\_\+board\+\_\+info}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!hotplug\+\_\+spi\+\_\+exit@{hotplug\+\_\+spi\+\_\+exit}}
+\index{hotplug\+\_\+spi\+\_\+exit@{hotplug\+\_\+spi\+\_\+exit}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{hotplug\+\_\+spi\+\_\+exit(void)}{hotplug_spi_exit(void)}}]{\setlength{\rightskip}{0pt plus 5cm}static void hotplug\+\_\+spi\+\_\+exit (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{hotplug__psoc__spi__device_8c_aeb21f0923200cce2c073558c826a6257}{}\label{hotplug__psoc__spi__device_8c_aeb21f0923200cce2c073558c826a6257}
+
+
+Defineret på linje 67 i filen hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c.
+
+
+
+Indeholder referencer til hotplug\+\_\+spi\+\_\+init(), module\+\_\+exit(), module\+\_\+init(), slave\+\_\+spi\+\_\+board\+\_\+info og slave\+\_\+spi\+\_\+device.
+
+
+\begin{DoxyCode}
+68 \{
+69   printk(KERN\_ALERT \textcolor{stringliteral}{"Removing SPI Device: %s, bus: %i, chip-sel: %i\(\backslash\)n"}, 
+70      \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info}.modalias, \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info}.bus\_num, 
+      \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info}.chip\_select);
+71   spi\_unregister\_device(\hyperlink{hotplug__psoc__spi__device_8c_a4c80f5a180249a93e8946022ede52199}{slave\_spi\_device});
+72 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{d1/dca/hotplug__psoc__spi__device_8c_aeb21f0923200cce2c073558c826a6257_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!hotplug\+\_\+spi\+\_\+init@{hotplug\+\_\+spi\+\_\+init}}
+\index{hotplug\+\_\+spi\+\_\+init@{hotplug\+\_\+spi\+\_\+init}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{hotplug\+\_\+spi\+\_\+init(void)}{hotplug_spi_init(void)}}]{\setlength{\rightskip}{0pt plus 5cm}static int hotplug\+\_\+spi\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{hotplug__psoc__spi__device_8c_ad22e734f3f2605901ebaeecc84688362}{}\label{hotplug__psoc__spi__device_8c_ad22e734f3f2605901ebaeecc84688362}
+
+
+Defineret på linje 32 i filen hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c.
+
+
+
+Indeholder referencer til slave\+\_\+spi\+\_\+board\+\_\+info og slave\+\_\+spi\+\_\+device.
+
+
+
+Refereret til af hotplug\+\_\+spi\+\_\+exit().
+
+
+\begin{DoxyCode}
+33 \{
+34   \textcolor{keywordtype}{int} bus\_num;
+35   \textcolor{keyword}{struct }spi\_master *slaves\_spi\_master;
+36 
+37   printk(KERN\_ALERT \textcolor{stringliteral}{"Adding SPI Device: %s, bus: %i, chip-sel: %i\(\backslash\)n"}, 
+38      \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info}.modalias, \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info}.bus\_num, 
+      \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info}.chip\_select);
+39   
+40   \textcolor{comment}{/* Add the slave SPI device to the SPI bus}
+41 \textcolor{comment}{   *}
+42 \textcolor{comment}{   * These methods are used to hot-plug spi devices.}
+43 \textcolor{comment}{   * SPI devices are by nature NOT hot-pluggable, as}
+44 \textcolor{comment}{   * they cannot be probed for functionality etc. SPI}
+45 \textcolor{comment}{   * devices are normally cold-plugged during boot, that}
+46 \textcolor{comment}{   * is, they are added in the board description file:}
+47 \textcolor{comment}{   * /arch/arm/mach-omap2/board-devkit8000.c}
+48 \textcolor{comment}{   * Using this method we actually doing "hot" cold-plugging}
+49 \textcolor{comment}{   * adding devices using a kernel module.}
+50 \textcolor{comment}{   * Note that it is crusial that driver and device uses}
+51 \textcolor{comment}{   * the same name alias. If not, the device and driver}
+52 \textcolor{comment}{   * will not be paired and the probe method in the driver}
+53 \textcolor{comment}{   * not be called.}
+54 \textcolor{comment}{   */} 
+55   bus\_num = \hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info}.bus\_num;
+56   slaves\_spi\_master = spi\_busnum\_to\_master(bus\_num);
+57   \hyperlink{hotplug__psoc__spi__device_8c_a4c80f5a180249a93e8946022ede52199}{slave\_spi\_device} = spi\_new\_device(slaves\_spi\_master,
+58                     &\hyperlink{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{slave\_spi\_board\_info});
+59   \textcolor{keywordflow}{if}(\hyperlink{hotplug__psoc__spi__device_8c_a4c80f5a180249a93e8946022ede52199}{slave\_spi\_device} < 0) \{
+60     printk(KERN\_ALERT \textcolor{stringliteral}{"Unsuccesful creating a new device\(\backslash\)n"});
+61     \textcolor{keywordflow}{return} -1;
+62   \}
+63     
+64   \textcolor{keywordflow}{return} 0;
+65 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{d1/dca/hotplug__psoc__spi__device_8c_ad22e734f3f2605901ebaeecc84688362_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR@{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR}}
+\index{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR@{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+O\+R(""Jeppe Stærk"")}{MODULE_AUTHOR("Jeppe Stærk")}}]{\setlength{\rightskip}{0pt plus 5cm}M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR (
+\begin{DoxyParamCaption}
+\item[{\char`\"{}Jeppe Stærk\char`\"{}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{hotplug__psoc__spi__device_8c_a76205f40e50e793bad85477c56a1fcb5}{}\label{hotplug__psoc__spi__device_8c_a76205f40e50e793bad85477c56a1fcb5}
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!module\+\_\+exit@{module\+\_\+exit}}
+\index{module\+\_\+exit@{module\+\_\+exit}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{module\+\_\+exit(hotplug\+\_\+spi\+\_\+exit)}{module_exit(hotplug_spi_exit)}}]{\setlength{\rightskip}{0pt plus 5cm}module\+\_\+exit (
+\begin{DoxyParamCaption}
+\item[{{\bf hotplug\+\_\+spi\+\_\+exit}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{hotplug__psoc__spi__device_8c_a9598455ed5fae1360ad263793d9d2357}{}\label{hotplug__psoc__spi__device_8c_a9598455ed5fae1360ad263793d9d2357}
+
+
+Refereret til af hotplug\+\_\+spi\+\_\+exit().
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{d1/dca/hotplug__psoc__spi__device_8c_a9598455ed5fae1360ad263793d9d2357_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!module\+\_\+init@{module\+\_\+init}}
+\index{module\+\_\+init@{module\+\_\+init}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{module\+\_\+init(hotplug\+\_\+spi\+\_\+init)}{module_init(hotplug_spi_init)}}]{\setlength{\rightskip}{0pt plus 5cm}module\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf hotplug\+\_\+spi\+\_\+init}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{hotplug__psoc__spi__device_8c_aa5bc2e887faa7c9d28e378e434228edb}{}\label{hotplug__psoc__spi__device_8c_aa5bc2e887faa7c9d28e378e434228edb}
+
+
+Refereret til af hotplug\+\_\+spi\+\_\+exit().
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{d1/dca/hotplug__psoc__spi__device_8c_aa5bc2e887faa7c9d28e378e434228edb_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE@{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE}}
+\index{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE@{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+S\+E(""Dual B\+S\+D/\+G\+PL"")}{MODULE_LICENSE("Dual BSD/GPL")}}]{\setlength{\rightskip}{0pt plus 5cm}M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE (
+\begin{DoxyParamCaption}
+\item[{\char`\"{}Dual B\+SD/G\+PL\char`\"{}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{hotplug__psoc__spi__device_8c_a5c95e2cd11cba226f5f3513060a8928e}{}\label{hotplug__psoc__spi__device_8c_a5c95e2cd11cba226f5f3513060a8928e}
+
+
+\subsubsection{Variabel-\/dokumentation}
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!mcspi\+\_\+config@{mcspi\+\_\+config}}
+\index{mcspi\+\_\+config@{mcspi\+\_\+config}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{mcspi\+\_\+config}{mcspi_config}}]{\setlength{\rightskip}{0pt plus 5cm}struct omap2\+\_\+mcspi\+\_\+device\+\_\+config mcspi\+\_\+config\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{hotplug__psoc__spi__device_8c_a52cfe025127b44fa0e131f99a4acfab4}{}\label{hotplug__psoc__spi__device_8c_a52cfe025127b44fa0e131f99a4acfab4}
+{\bfseries Startværdi\+:}
+\begin{DoxyCode}
+= \{
+  .turbo\_mode       = 1,
+\}
+\end{DoxyCode}
+
+
+Defineret på linje 16 i filen hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c.
+
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!slave\+\_\+spi\+\_\+board\+\_\+info@{slave\+\_\+spi\+\_\+board\+\_\+info}}
+\index{slave\+\_\+spi\+\_\+board\+\_\+info@{slave\+\_\+spi\+\_\+board\+\_\+info}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{slave\+\_\+spi\+\_\+board\+\_\+info}{slave_spi_board_info}}]{\setlength{\rightskip}{0pt plus 5cm}struct spi\+\_\+board\+\_\+info slave\+\_\+spi\+\_\+board\+\_\+info\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}{}\label{hotplug__psoc__spi__device_8c_ae5d3eeebde04f85290320b9f6310b8be}
+{\bfseries Startværdi\+:}
+\begin{DoxyCode}
+= \{
+  .modalias     = \textcolor{stringliteral}{"psoc4"},
+  .bus\_num      = 1,
+  .chip\_select      = 0,
+  .max\_speed\_hz     = 100000,
+  .controller\_data  = &\hyperlink{hotplug__psoc__spi__device_8c_a52cfe025127b44fa0e131f99a4acfab4}{mcspi\_config},
+  .mode             = SPI\_MODE\_3, 
+\}
+\end{DoxyCode}
+
+
+Defineret på linje 23 i filen hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c.
+
+
+
+Refereret til af hotplug\+\_\+spi\+\_\+exit() og hotplug\+\_\+spi\+\_\+init().
+
+\index{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}!slave\+\_\+spi\+\_\+device@{slave\+\_\+spi\+\_\+device}}
+\index{slave\+\_\+spi\+\_\+device@{slave\+\_\+spi\+\_\+device}!hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c@{hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c}}
+\paragraph[{\texorpdfstring{slave\+\_\+spi\+\_\+device}{slave_spi_device}}]{\setlength{\rightskip}{0pt plus 5cm}struct spi\+\_\+device$\ast$ slave\+\_\+spi\+\_\+device\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{hotplug__psoc__spi__device_8c_a4c80f5a180249a93e8946022ede52199}{}\label{hotplug__psoc__spi__device_8c_a4c80f5a180249a93e8946022ede52199}
+
+
+Defineret på linje 11 i filen hotplug\+\_\+psoc\+\_\+spi\+\_\+device.\+c.
+
+
+
+Refereret til af hotplug\+\_\+spi\+\_\+exit() og hotplug\+\_\+spi\+\_\+init().
+

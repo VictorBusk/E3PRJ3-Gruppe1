@@ -1,0 +1,148 @@
+\hypertarget{class_handler}{}\subsection{Handler Klasse-\/reference}
+\label{class_handler}\index{Handler@{Handler}}
+
+
+\hyperlink{class_handler}{Handler} class.  
+
+
+
+
+{\ttfamily \#include $<$handler.\+h$>$}
+
+
+
+Samarbejdsdiagram for Handler\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=145pt]{d9/de1/class_handler__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Offentlige metoder}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_handler_af5be5b016b862943cd22504490acc8f4}{handler} (uint8 cmd, uint8 val)
+\begin{DoxyCompactList}\small\item\em Håndter kommando med tilhørende værdi. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+\hyperlink{class_handler}{Handler} class. 
+
+Håndtere indkommende kommandoer med tilhørende værdier. \begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{Dokumentation af medlemsfunktioner}
+\index{Handler@{Handler}!handler@{handler}}
+\index{handler@{handler}!Handler@{Handler}}
+\paragraph[{\texorpdfstring{handler(uint8 cmd, uint8 val)}{handler(uint8 cmd, uint8 val)}}]{\setlength{\rightskip}{0pt plus 5cm}void handler (
+\begin{DoxyParamCaption}
+\item[{uint8}]{cmd, }
+\item[{uint8}]{val}
+\end{DoxyParamCaption}
+)}\hypertarget{class_handler_af5be5b016b862943cd22504490acc8f4}{}\label{class_handler_af5be5b016b862943cd22504490acc8f4}
+
+
+Håndter kommando med tilhørende værdi. 
+
+Fortager en defineret handling ud fra den modtaget kommando med den tilhørende værdi. 
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em cmd} & Er den modtaget kommando. \\
+\hline
+\mbox{\tt in}  & {\em val} & Er den tilhørende værdi.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 29 i filen handler.\+c.
+
+
+
+Indeholder referencer til X\+Y\+::calibrate\+X(), X\+Y\+::calibrate\+Y(), C\+M\+D\+\_\+\+G\+E\+T\+\_\+\+X\+\_\+\+P\+OS, C\+M\+D\+\_\+\+G\+E\+T\+\_\+\+Y\+\_\+\+P\+OS, C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+X\+\_\+\+P\+OS, C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+Y\+\_\+\+P\+OS, C\+M\+D\+\_\+\+X\+\_\+\+C\+AL, C\+M\+D\+\_\+\+X\+\_\+\+S\+TP, C\+M\+D\+\_\+\+Y\+\_\+\+C\+AL, C\+M\+D\+\_\+\+Y\+\_\+\+S\+TP, data\+XY, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+C\+M\+D\+\_\+\+P\+OS, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+V\+A\+L\+\_\+\+P\+OS, I2\+C\+::i2c\+\_\+tx(), I2\+C\+::i2c\+Tx\+Buffer(), Data\+X\+Y\+::isr\+StopX, Data\+X\+Y\+::isr\+StopY, resolution, X\+Y\+::set\+X\+Pos(), X\+Y\+::set\+Y\+Pos(), Data\+X\+Y\+::x\+Max, Data\+X\+Y\+::x\+Pos, Data\+X\+Y\+::y\+Max og Data\+X\+Y\+::y\+Pos.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+30 \{
+31   \textcolor{keywordflow}{switch} (\hyperlink{queue_8h_a85092d82ab6ea85dad51ba78cbda36a0}{cmd}) \{
+32     \textcolor{keywordflow}{case} \hyperlink{handler_8h_af70b73890a98cfe329a916df037f46a4}{CMD\_SET\_X\_POS} :
+33       \hyperlink{xy_8h_ac4bc2d178bbf432fc918391abd379af6}{setXPos}(\hyperlink{queue_8h_aa0ccb5ee6d882ee3605ff47745c6467b}{val});
+34       \textcolor{keywordflow}{break};
+35     \textcolor{keywordflow}{case} \hyperlink{handler_8h_a82640a671f668fb40ff4851901d5a151}{CMD\_SET\_Y\_POS}:
+36       \hyperlink{xy_8h_adbc3a49d939491e88137a7677ad889f3}{setYPos}(\hyperlink{queue_8h_aa0ccb5ee6d882ee3605ff47745c6467b}{val});
+37       \textcolor{keywordflow}{break};
+38     \textcolor{keywordflow}{case} \hyperlink{handler_8h_aa50e083669624eeaef782ebc867008f9}{CMD\_GET\_X\_POS} :
+39       i2cTxBuffer[\hyperlink{i2c_8h_ac13fcfeded7dc2d82fa4734456f3761f}{I2C\_PACKET\_CMD\_POS}] = \hyperlink{queue_8h_a85092d82ab6ea85dad51ba78cbda36a0}{cmd};
+40       i2cTxBuffer[\hyperlink{i2c_8h_a68506c3651f015716bb2c135e8e7b972}{I2C\_PACKET\_VAL\_POS}] = (uint8)((\hyperlink{xy_8h_a518902ce4d6b0c41b04e9fcd3c648916}{resolution} * 
+      \hyperlink{data_8h_a89d7998a721b3f36f9f4131e7a5e42d2}{dataXY}.\hyperlink{data_8h_a5262e09f478a571552e65be75c506bdb}{xPos}) / \hyperlink{data_8h_a89d7998a721b3f36f9f4131e7a5e42d2}{dataXY}.\hyperlink{data_8h_a5b6ae90a32a5f290afcc50656befceca}{xMax} + 1);
+41       \hyperlink{i2c_8h_a8c32e47b48dcd3f24f6e03716312b9a9}{i2c\_tx}();
+42       \textcolor{keywordflow}{break};
+43     \textcolor{keywordflow}{case} \hyperlink{handler_8h_a51053e5251048d6ebbf4d2e23de40761}{CMD\_GET\_Y\_POS} :
+44       i2cTxBuffer[\hyperlink{i2c_8h_ac13fcfeded7dc2d82fa4734456f3761f}{I2C\_PACKET\_CMD\_POS}] = \hyperlink{queue_8h_a85092d82ab6ea85dad51ba78cbda36a0}{cmd};
+45       i2cTxBuffer[\hyperlink{i2c_8h_a68506c3651f015716bb2c135e8e7b972}{I2C\_PACKET\_VAL\_POS}] = (uint8)((\hyperlink{xy_8h_a518902ce4d6b0c41b04e9fcd3c648916}{resolution} * 
+      \hyperlink{data_8h_a89d7998a721b3f36f9f4131e7a5e42d2}{dataXY}.\hyperlink{data_8h_a4c7347df04ab0f3d860046571be08af4}{yPos}) / \hyperlink{data_8h_a89d7998a721b3f36f9f4131e7a5e42d2}{dataXY}.\hyperlink{data_8h_ab979b62fb4882313ad47718325e34879}{yMax} + 1);
+46       \hyperlink{i2c_8h_a8c32e47b48dcd3f24f6e03716312b9a9}{i2c\_tx}();
+47       \textcolor{keywordflow}{break};
+48     \textcolor{keywordflow}{case} \hyperlink{handler_8h_af7c8f19d1c1b9e2240251d42109c5cfd}{CMD\_X\_STP}:
+49       \hyperlink{data_8h_a89d7998a721b3f36f9f4131e7a5e42d2}{dataXY}.\hyperlink{data_8h_ab8211b7be27d53644048a83fccb95d70}{isrStopX} = 1;
+50       \textcolor{keywordflow}{break};
+51     \textcolor{keywordflow}{case} \hyperlink{handler_8h_a83ab3037b2c91ea010b2d8c47acd5434}{CMD\_Y\_STP}:
+52       \hyperlink{data_8h_a89d7998a721b3f36f9f4131e7a5e42d2}{dataXY}.\hyperlink{data_8h_a92ec85e6a09f5dc7ed83640f1810c4bb}{isrStopY} = 1;
+53       \textcolor{keywordflow}{break};
+54     \textcolor{keywordflow}{case} \hyperlink{handler_8h_a5edf35288955238e1090f2367f96e828}{CMD\_X\_CAL}:
+55       \hyperlink{xy_8h_a7930e37ef31e3575388f1bce7870872c}{calibrateX}();
+56       \textcolor{keywordflow}{break};
+57     \textcolor{keywordflow}{case} \hyperlink{handler_8h_a2b2db51eef91dc2aa5586d0817838ef2}{CMD\_Y\_CAL}:
+58       \hyperlink{xy_8h_ab52d33c452fb38ec0fb6c9ad77031ccd}{calibrateY}();
+59       \textcolor{keywordflow}{break};
+60     \textcolor{keywordflow}{default} :
+61       \textcolor{keywordflow}{break};
+62   \}
+63 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d01/class_handler_af5be5b016b862943cd22504490acc8f4_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{d2/d01/class_handler_af5be5b016b862943cd22504490acc8f4_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Dokumentationen for denne klasse blev genereret ud fra filerne\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{handler_8h}{handler.\+h}\item 
+\hyperlink{handler_8c}{handler.\+c}\end{DoxyCompactItemize}

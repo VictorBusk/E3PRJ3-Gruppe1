@@ -2,7 +2,6 @@
  *  @file       i2c.c
  *  @brief      I2C modul
  *  @details    Håndter kommunikation via I2C-busset
- *  @ingroup    xy
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "i2c.h"
@@ -16,7 +15,22 @@
  *       Public attributes
  ***************************************/
 
+/*!
+ *  @brief      Buffer til afsendelse af data.
+ *  @details    En buffer der indeholder de data pakker der skal sende over I2C-busset.
+ *  @private
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 uint8 i2cTxBuffer[I2C_BUFFER_SIZE] = {I2C_PACKET_SOP, I2C_STS_CMD_FAIL, I2C_STS_CMD_FAIL, I2C_PACKET_EOP};
+
+/*!
+ *  @brief      Buffer til modtagelse af data.
+ *  @details    En buffer der indeholder de data pakker der skal modtagelse over I2C-busset.
+ *  @private
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
 uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
 
 
@@ -27,9 +41,8 @@ uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
 /*!
  *  @brief      Initialiser I2C modulet.
  *  @details    Initailiser I2C komponent på PSoC'en.
- *  @ingroup    xy
  *  @public
- *  @memberof   I2CXY
+ *  @memberof   I2C
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void i2c_init()
@@ -46,7 +59,11 @@ void i2c_init()
 }
 
 /*!
- * @todo  Dokumenter! I2CS_I2C_ISR_ExitCallback
+ *  @brief      Motager "Exit Callback" fra I2C
+ *  @details    En "Interrupt Service Routine(ISR)" der aktiveres ved færdig modtagelse af kald via I2C-busset, det modtaget data behandles og håndteres.
+ *  @public
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void I2CS_I2C_ISR_ExitCallback()
 {
@@ -94,7 +111,11 @@ void I2CS_I2C_ISR_ExitCallback()
 }
 
 /*!
- * @todo  Dokumenter! i2c_tx
+ *  @brief      Ryder om efter I2C
+ *  @details    Efter fuldført afsendelse af pakke til I2C-master, bliver status nulstillet.
+ *  @public
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void i2c_tx()
 {

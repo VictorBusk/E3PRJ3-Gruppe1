@@ -1,21 +1,9 @@
-/* ========================================
- *
- * File: main.c
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       main.c
+ *  @brief      Hovedprogram
+ *  @details    Intilizere modulerne og køre derefter i loop hvor der bliver kontrolieret om der er nogle actions i køen der skal håndteres af handleren.
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
-
 #include <project.h>
 #include "data.h"
 #include "handler.h"
@@ -33,9 +21,15 @@ int main()
   z_init();
   i2c_init();
   
-  setLed(0,1,0);
+  DEBUG_PutCRLF();
+  DEBUG_PutString("===== Initializing PSoC Z =====");
+  DEBUG_PutCRLF();
+  
+  setLed(0,1,0,0);
   CyDelay(100);
-  setLed(0,0,0);
+  setLed(0,0,0,0);
+  
+  z_start();
   
   for(;;)
   {
@@ -44,7 +38,8 @@ int main()
       CyDelay(5u);
       if(SW2_Read() == 0u)
       {
-        calibrateZ();
+        calibrateX();
+        calibrateY();
       }
       while(SW2_Read() == 0u)
       {
@@ -52,18 +47,16 @@ int main()
       }
     }
     
-    i2c_rx();
-    
-    if(isEmptyQueue() != 1)
+    while(isEmptyQueue() != 1)
     {
       struct Action action;
       action = frontQueue();
       handler(action.cmd, action.val);
       popQueue();
     }
-    
     i2c_tx();
   }
 }
+
 
 /* [] END OF FILE */

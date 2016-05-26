@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lumensensor',['LumenSensor',['../namespace_3global_scope_4.html#class_lumen_sensor',1,'']]]
+  ['lumensensor',['LumenSensor',['../d0/deb/namespace_3global_scope_4.html#d0/df9/class_lumen_sensor',1,'']]]
 ];

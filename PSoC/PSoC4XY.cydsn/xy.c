@@ -1,9 +1,14 @@
 /*!
- * @todo  Dokumenter! xy.c
+ *  @file       xy.c
+ *  @brief      XY modul
+ *  @details    Styre XY modulets funktioner.
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  */
 #include "xy.h"
 #include "data.h"
 #include "led.h"
+
 
 /***************************************
  *       Private methods
@@ -19,12 +24,28 @@ static void stepYBackwards(void);
  *       Public methods
  ***************************************/
 
+/**
+ *  @brief      Initialiser XY modulet
+ *  @details    Initialiser XY modulets interrupt.
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void xy_init()
 {
   interrupt_X_StartEx(isr_X);
   interrupt_Y_StartEx(isr_Y);
 }
 
+/**
+ *  @brief      Starter XY modulet
+ *  @details    Starter XY modulet, og køre til position 0,0
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void xy_start()
 {
   DEBUG_PutString("X initializing going to zero");
@@ -52,6 +73,14 @@ void xy_start()
   dataXY.interruptY = 0;
 }
 
+/*!
+ *  @brief      Afvikler "Interrupt" fra X
+ *  @details    En "Interrupt Service Routine(ISR)" for X der aktiveres ved interrupt fra X modulet.
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 CY_ISR(isr_X)
 {
   interrupt_X_Disable();
@@ -84,6 +113,14 @@ CY_ISR(isr_X)
   interrupt_X_Enable();
 }
 
+/*!
+ *  @brief      Afvikler "Interrupt" fra Y
+ *  @details    En "Interrupt Service Routine(ISR)" for Y der aktiveres ved interrupt fra Y modulet.
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 CY_ISR(isr_Y)
 {
   interrupt_Y_Disable();
@@ -116,6 +153,14 @@ CY_ISR(isr_Y)
   interrupt_Y_Enable();
 }
 
+/*!
+ *  @brief      Kalibrere X
+ *  @details    Metoden kalibrerer X og sætter en ny max værdi for X.
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void calibrateX()
 {
   DEBUG_PutString("X calibrate pre-xMax: ");
@@ -137,6 +182,7 @@ void calibrateX()
   
   DEBUG_PutString("done");
   DEBUG_PutCRLF();
+  
   DEBUG_PutString("Going backwards to zero");
   while(dataXY.interruptX == 0 && dataXY.xFlag == 0)
   {
@@ -163,6 +209,14 @@ void calibrateX()
   dataXY.interruptX = 0;
 }
 
+/*!
+ *  @brief      Kalibrere Y
+ *  @details    Metoden kalibrerer Y og sætter en ny max værdi for Y.
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void calibrateY()
 {
   DEBUG_PutString("Y calibrate pre yMax: ");
@@ -184,6 +238,7 @@ void calibrateY()
   
   DEBUG_PutString("done");
   DEBUG_PutCRLF();
+  
   DEBUG_PutString("Going backwards to zero");
   while(dataXY.interruptY == 0 && dataXY.yFlag == 0)
   {
@@ -210,6 +265,15 @@ void calibrateY()
   dataXY.interruptY = 0;
 }
 
+/*!
+ *  @brief      Sætter ny X position
+ *  @details    Ud fra den modtaget værdi udregnes antal step og vej til den ønsket destination.
+ *  @param[in]  xVal  Værdi for position.
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void setXPos(uint8 xVal)
 {
   uint32 i;
@@ -246,7 +310,7 @@ void setXPos(uint8 xVal)
       }
       DEBUG_PutString("done");
       
-      if(dataXY.interruptX == 1u)
+      if(dataXY.interruptX == 1)
       {
         dataXY.xPos = dataXY.xMax;
       }
@@ -274,7 +338,7 @@ void setXPos(uint8 xVal)
         dataXY.xPos--;
       }
       DEBUG_PutString("done");
-      if(dataXY.interruptX == 1u)
+      if(dataXY.interruptX == 1)
       {
         dataXY.xPos = 0;
       }
@@ -294,6 +358,15 @@ void setXPos(uint8 xVal)
   dataXY.interruptX = 0;
 }
 
+/*!
+ *  @brief      Sætter ny Y position
+ *  @details    Ud fra den modtaget værdi udregnes antal step og vej til den ønsket destination.
+ *  @param[in]  yVal  Værdi for position.
+ *  @public
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void setYPos(uint8 yVal)
 {
   uint32 i;
@@ -330,7 +403,7 @@ void setYPos(uint8 yVal)
         dataXY.yPos++;
       }
       DEBUG_PutString("done");
-      if(dataXY.interruptY == 1u)
+      if(dataXY.interruptY == 1)
       {
         dataXY.yPos = dataXY.yMax;
       }
@@ -358,7 +431,7 @@ void setYPos(uint8 yVal)
         dataXY.yPos--;
       }
       DEBUG_PutString("done");
-      if(dataXY.interruptY == 1u)
+      if(dataXY.interruptY == 1)
       {
         dataXY.yPos = 0;
       }
@@ -383,6 +456,14 @@ void setYPos(uint8 yVal)
  *       Private methods
  ***************************************/
 
+/*!
+ *  @brief      Køre X motor et step frem
+ *  @details    Køre X motoren et step fremad.
+ *  @private
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void stepXForwards()
 {
   Pin_1a_X_Write(1);
@@ -410,6 +491,14 @@ void stepXForwards()
   CyDelay(stepDelay);
 }
 
+/*!
+ *  @brief      Køre X motor et step tilbage
+ *  @details    Køre X motoren et step tilbage.
+ *  @private
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void stepXBackwards()
 {
   Pin_1a_X_Write(0);
@@ -437,6 +526,14 @@ void stepXBackwards()
   CyDelay(stepDelay);
 }
 
+/*!
+ *  @brief      Køre Y motor et step frem
+ *  @details    Køre Y motoren et step fremad.
+ *  @private
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void stepYForwards()
 {
   Pin_1a_Y_Write(1);
@@ -464,6 +561,14 @@ void stepYForwards()
   CyDelay(stepDelay);
 }
 
+/*!
+ *  @brief      Køre Y motor et step tilbage
+ *  @details    Køre Y motoren et step tilbage.
+ *  @private
+ *  @memberof   XY
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ */
 void stepYBackwards()
 {
   Pin_1a_Y_Write(0);

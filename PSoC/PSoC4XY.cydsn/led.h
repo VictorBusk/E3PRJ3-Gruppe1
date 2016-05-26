@@ -1,15 +1,29 @@
 /*!
  *  @file       led.h
- *  @brief      Led modul
+ *  @brief      LED modul
  *  @details    Håndtere PSoC'ens røde, grønne og blå led.
- *  @ingroup    xy
- *  @class      LedXY led.h
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef LED_H
 #define LED_H
 
 #include <project.h>
+
+/***************************************
+ *       Class
+ ***************************************/
+
+/*!
+ *  @class      LED led.h
+ *  @brief      LED class
+ *  @details    Håndtere PSoC'ens røde, grønne og blå led
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+
 
 /***************************************
  *       Public methods

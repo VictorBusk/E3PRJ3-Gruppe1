@@ -1,15 +1,24 @@
 /*!
  *  @file       i2c.h
  *  @brief      I2C modul
- *  @details    Håndter kommunikation via I2C-busset
- *  @ingroup    xy
- *  @class      I2CXY i2c.h
+ *  @details    Håndter kommunikation via I2C-busset.
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef I2C_H
 #define I2C_H
 
 #include <project.h>
+
+/***************************************
+ *       Class
+ ***************************************/
+
+/*!
+ *  @class      I2C i2c.h
+ *  @brief      I2C class
+ *  @details    Håndter kommunikation via I2C-busset.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
 
 /***************************************
  *       Public methods
@@ -47,12 +56,20 @@ extern void i2c_tx(void);
  ***************************************/
 
 /*!
- * @todo  Dokumenter! i2cTxBuffer
+ *  @brief      Buffer til afsendelse af data.
+ *  @details    En buffer der indeholder de data pakker der skal sende over I2C-busset.
+ *  @public
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 extern uint8 i2cTxBuffer[I2C_BUFFER_SIZE];
 
 /*!
- * @todo  Dokumenter! i2cRxBuffer
+ *  @brief      Buffer til modtagelse af data.
+ *  @details    En buffer der indeholder de data pakker der skal modtagelse over I2C-busset.
+ *  @public
+ *  @memberof   I2C
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 extern uint8 i2cRxBuffer[I2C_BUFFER_SIZE];
 

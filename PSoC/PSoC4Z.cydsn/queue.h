@@ -2,8 +2,6 @@
  *  @file       queue.h
  *  @brief      Queue modul
  *  @details    En FIFO kø der er opbygget af en single linket liste.
- *  @ingroup    master
- *  @class      QueueMaster queue.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef QUEUE_H
@@ -11,16 +9,26 @@
 
 #include <project.h>
 
+
+/***************************************
+ *       Class
+ ***************************************/
+
+/*!
+ *  @class      Queue queue.h
+ *  @brief      Queue class
+ *  @details    En FIFO kø der er opbygget af en single linket liste.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+
+
 /***************************************
  *       Public data types
  ***************************************/
 
 /*!
- *  @brief      En struct til at lager data der skal indsættes i køen
+ *  @brief      Action struct
  *  @details    Structen kan indeholde en kommando og tilhørende værdi, som kan indsættes i FIFO køen.
- *  @ingroup    master
- *  @public
- *  @memberof   QueueMaster
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct Action
@@ -39,6 +47,7 @@ extern void pushQueue(const struct Action data);
 extern void popQueue(void);
 extern struct Action frontQueue(void);
 extern uint8 isEmptyQueue(void);
+
 
 #endif  // ifndef QUEUE_H
 /* [] END OF FILE */

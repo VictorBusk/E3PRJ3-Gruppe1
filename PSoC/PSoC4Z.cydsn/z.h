@@ -1,38 +1,52 @@
-/* ========================================
- *
- * File: z.h
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       z.h
+ *  @brief      Z modul
+ *  @details    Styre Z modulets funktioner.
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-
 #ifndef Z_H
 #define Z_H
 
 #include <project.h>
 
+
+/***************************************
+ *       Class
+ ***************************************/
+
+/*!
+ *  @class      Z z.h
+ *  @brief      Z class
+ *  @details    Styre Z modulets funktioner.
+ *  @author     Casper Dieu Le (201370338@uni.au.dk)
+ *  @author     Kasper Hinkler Uldbjerg (201370281@uni.au.dk)
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+
+
+/***************************************
+ *       Public methods
+ ***************************************/
+
+extern void z_init(void);
+extern void z_start(void);
+CY_ISR_PROTO(isr_Z);
+CY_ISR_PROTO(isr_S);
+extern void calibrateZ(void);
+extern void setZPos(uint8 zVal);
+
+
+/***************************************
+ *       Public constants
+ ***************************************/
+
+/* Konstanter til styring af Z modul */
 #define stepDelay (3u)
 #define interruptSteps (50u)
 #define resolution (255u)
 
-void z_init(void);
-CY_ISR_PROTO(isr_Z);
-CY_ISR_PROTO(isr_S);
-void calibrateZ(void);
-void setZPos(uint8 zVal);
-void stepZForwards(void);
-void stepZBackwards(void);
-void stopZ(void);
 
 #endif  // ifndef Z_H
 /* [] END OF FILE */

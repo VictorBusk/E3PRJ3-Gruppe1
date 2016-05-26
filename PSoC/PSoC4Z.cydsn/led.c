@@ -1,28 +1,35 @@
-/* ========================================
- *
- * File: handler.c
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       led.c
+ *  @brief      LED modul
+ *  @details    Håndtere PSoC'ens røde, grønne og blå led.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-
 #include "led.h"
 
-void setLed(uint8 red, uint8 green, uint8 blue)
+
+/***************************************
+ *       Public methods
+ ***************************************/
+
+/**
+ *  @brief      Sætter den defineret farve og angivet delay.
+ *  @details    Metoden sætter den/de valgte farver og venter i det angivet delay.
+ *  @param[in]  red     Tænder/slukker den røde led.
+ *  @param[in]  green   Tænder/slukker den grønne led.
+ *  @param[in]  blue    Tænder/slukker den blå led.
+ *  @param[in]  delay   Tid i microsekunder til delay.
+ *  @public
+ *  @memberof   LED
+ *  @author     Jeppe Stærk (201271201@uni.au.dk)
+ */
+void setLed(uint8 red, uint8 green, uint8 blue, uint8 delay)
 {
-  red ? LED_Red_Write(0u) : LED_Red_Write(1u);
-  green ? LED_Green_Write(0u) : LED_Green_Write(1u);
-  blue ? LED_Blue_Write(0u) : LED_Blue_Write(1u);
+  red ? LED_RED_Write(LED_ON) : LED_RED_Write(LED_OFF);
+  green ? LED_GREEN_Write(LED_ON) : LED_GREEN_Write(LED_OFF);
+  blue ? LED_BLUE_Write(LED_ON) : LED_BLUE_Write(LED_OFF);
+  
+  CyDelay(delay);
 }
+
 
 /* [] END OF FILE */

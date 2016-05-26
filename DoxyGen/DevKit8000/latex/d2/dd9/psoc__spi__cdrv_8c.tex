@@ -1,0 +1,681 @@
+\hypertarget{psoc__spi__cdrv_8c}{}\subsection{psoc\+\_\+spi\+\_\+cdrv.\+c filreference}
+\label{psoc__spi__cdrv_8c}\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+{\ttfamily \#include $<$linux/err.\+h$>$}\\*
+{\ttfamily \#include $<$linux/ctype.\+h$>$}\\*
+{\ttfamily \#include $<$linux/cdev.\+h$>$}\\*
+{\ttfamily \#include $<$asm/uaccess.\+h$>$}\\*
+{\ttfamily \#include $<$linux/input.\+h$>$}\\*
+{\ttfamily \#include $<$linux/module.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}psoc\+\_\+spi\+\_\+dev.\+h\char`\"{}}\\*
+Inklusions-\/afhængighedsgraf for psoc\+\_\+spi\+\_\+cdrv.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{da/d23/psoc__spi__cdrv_8c__incl}
+\end{center}
+\end{figure}
+\subsubsection*{\#Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{psoc__spi__cdrv_8c_a124f980cd43bd8fc55e93146e383dfa1}{psoc4\+\_\+\+M\+A\+J\+OR}~64
+\item 
+\#define \hyperlink{psoc__spi__cdrv_8c_ad31e561878608dc6a09701bbc47fd6da}{psoc4\+\_\+\+M\+I\+N\+OR}~0
+\item 
+\#define \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\+\_\+\+D\+E\+V\+I\+CE}~1
+\item 
+\#define \hyperlink{psoc__spi__cdrv_8c_ae6648cd71a8bd49d58ae8ed33ba910d1}{M\+A\+X\+L\+EN}~16
+\item 
+\#define \hyperlink{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}{M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG}~1
+\item 
+\#define \hyperlink{psoc__spi__cdrv_8c_aec31c17a958eb660efb41c39552beaff}{E\+R\+R\+G\+O\+TO}(label, ...)                                  
+\end{DoxyCompactItemize}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{psoc__spi__cdrv_8c_a76205f40e50e793bad85477c56a1fcb5}{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR} (\char`\"{}Jeppe Stærk\char`\"{})
+\item 
+\hyperlink{psoc__spi__cdrv_8c_a5c95e2cd11cba226f5f3513060a8928e}{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE} (\char`\"{}Dual B\+SD/G\+PL\char`\"{})
+\item 
+static int \+\_\+\+\_\+init \hyperlink{psoc__spi__cdrv_8c_aab06beebbb38dd06b8e09548670afb21}{psoc4\+\_\+cdrv\+\_\+init} (void)
+\item 
+static void \+\_\+\+\_\+exit \hyperlink{psoc__spi__cdrv_8c_a016013e009a7cf15be35db2e3ec5d1f5}{psoc4\+\_\+cdrv\+\_\+exit} (void)
+\item 
+int \hyperlink{psoc__spi__cdrv_8c_a07168c0964966774fe208a05d9434cb1}{psoc4\+\_\+cdrv\+\_\+open} (struct inode $\ast$inode, struct file $\ast$filep)
+\item 
+int \hyperlink{psoc__spi__cdrv_8c_aa5f178db147ff43e6606e84bee03dc4e}{psoc4\+\_\+cdrv\+\_\+release} (struct inode $\ast$inode, struct file $\ast$filep)
+\item 
+ssize\+\_\+t \hyperlink{psoc__spi__cdrv_8c_a466ecffe904674771c9cff7f85590714}{psoc4\+\_\+cdrv\+\_\+write} (struct file $\ast$filep, const char \+\_\+\+\_\+user $\ast$ubuf, size\+\_\+t count, loff\+\_\+t $\ast$f\+\_\+pos)
+\item 
+ssize\+\_\+t \hyperlink{psoc__spi__cdrv_8c_a07b1fa48cf0fce6dafea41605b75d06c}{psoc4\+\_\+cdrv\+\_\+read} (struct file $\ast$filep, char \+\_\+\+\_\+user $\ast$ubuf, size\+\_\+t count, loff\+\_\+t $\ast$f\+\_\+pos)
+\item 
+\hyperlink{psoc__spi__cdrv_8c_a29681621922a8dc64ff84e750913f81a}{module\+\_\+init} (\hyperlink{psoc__spi__cdrv_8c_aab06beebbb38dd06b8e09548670afb21}{psoc4\+\_\+cdrv\+\_\+init})
+\item 
+\hyperlink{psoc__spi__cdrv_8c_a31b4f4d359c645ad1bb69792eff1f94b}{module\+\_\+exit} (\hyperlink{psoc__spi__cdrv_8c_a016013e009a7cf15be35db2e3ec5d1f5}{psoc4\+\_\+cdrv\+\_\+exit})
+\end{DoxyCompactItemize}
+\subsubsection*{Variable}
+\begin{DoxyCompactItemize}
+\item 
+static struct cdev \hyperlink{psoc__spi__cdrv_8c_a333f62d9a833315715c266689805cf1a}{psoc4\+Dev}
+\item 
+struct file\+\_\+operations \hyperlink{psoc__spi__cdrv_8c_a867a6cfbce3482b70eb142dd2067774f}{psoc4\+\_\+\+Fops}
+\item 
+static int \hyperlink{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}{devno}
+\item 
+static struct spi\+\_\+device $\ast$ \hyperlink{psoc__spi__cdrv_8c_a777bc87492fc7e5d359aa1f0450fc370}{psoc4\+\_\+spi\+\_\+device} = N\+U\+LL
+\end{DoxyCompactItemize}
+
+
+\subsubsection{\#Define-\/dokumentation}
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!E\+R\+R\+G\+O\+TO@{E\+R\+R\+G\+O\+TO}}
+\index{E\+R\+R\+G\+O\+TO@{E\+R\+R\+G\+O\+TO}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{E\+R\+R\+G\+O\+TO}{ERRGOTO}}]{\setlength{\rightskip}{0pt plus 5cm}\#define E\+R\+R\+G\+O\+TO(
+\begin{DoxyParamCaption}
+\item[{}]{label, }
+\item[{}]{...}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_aec31c17a958eb660efb41c39552beaff}{}\label{psoc__spi__cdrv_8c_aec31c17a958eb660efb41c39552beaff}
+{\bfseries Værdi\+:}
+\begin{DoxyCode}
+\{                                             \(\backslash\)
+    printk (\_\_VA\_ARGS\_\_);                     \(\backslash\)
+    goto label;                               \(\backslash\)
+\} \textcolor{keywordflow}{while}(0)
+\end{DoxyCode}
+
+
+Defineret på linje 28 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+init().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!M\+A\+X\+L\+EN@{M\+A\+X\+L\+EN}}
+\index{M\+A\+X\+L\+EN@{M\+A\+X\+L\+EN}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{M\+A\+X\+L\+EN}{MAXLEN}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+A\+X\+L\+EN~16}\hypertarget{psoc__spi__cdrv_8c_ae6648cd71a8bd49d58ae8ed33ba910d1}{}\label{psoc__spi__cdrv_8c_ae6648cd71a8bd49d58ae8ed33ba910d1}
+
+
+Defineret på linje 15 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+write().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG@{M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG}}
+\index{M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG@{M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG}{MODULE_DEBUG}}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG~1}\hypertarget{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}{}\label{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}
+
+
+Defineret på linje 17 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read() og psoc4\+\_\+cdrv\+\_\+write().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+\+D\+E\+V\+I\+CE@{psoc4\+\_\+\+D\+E\+V\+I\+CE}}
+\index{psoc4\+\_\+\+D\+E\+V\+I\+CE@{psoc4\+\_\+\+D\+E\+V\+I\+CE}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+\+D\+E\+V\+I\+CE}{psoc4_DEVICE}}]{\setlength{\rightskip}{0pt plus 5cm}\#define psoc4\+\_\+\+D\+E\+V\+I\+CE~1}\hypertarget{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{}\label{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}
+
+
+Defineret på linje 14 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+exit(), psoc4\+\_\+cdrv\+\_\+init(), psoc4\+\_\+cdrv\+\_\+open() og psoc4\+\_\+cdrv\+\_\+release().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+\+M\+A\+J\+OR@{psoc4\+\_\+\+M\+A\+J\+OR}}
+\index{psoc4\+\_\+\+M\+A\+J\+OR@{psoc4\+\_\+\+M\+A\+J\+OR}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+\+M\+A\+J\+OR}{psoc4_MAJOR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define psoc4\+\_\+\+M\+A\+J\+OR~64}\hypertarget{psoc__spi__cdrv_8c_a124f980cd43bd8fc55e93146e383dfa1}{}\label{psoc__spi__cdrv_8c_a124f980cd43bd8fc55e93146e383dfa1}
+
+
+Defineret på linje 12 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+init().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+\+M\+I\+N\+OR@{psoc4\+\_\+\+M\+I\+N\+OR}}
+\index{psoc4\+\_\+\+M\+I\+N\+OR@{psoc4\+\_\+\+M\+I\+N\+OR}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+\+M\+I\+N\+OR}{psoc4_MINOR}}]{\setlength{\rightskip}{0pt plus 5cm}\#define psoc4\+\_\+\+M\+I\+N\+OR~0}\hypertarget{psoc__spi__cdrv_8c_ad31e561878608dc6a09701bbc47fd6da}{}\label{psoc__spi__cdrv_8c_ad31e561878608dc6a09701bbc47fd6da}
+
+
+Defineret på linje 13 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+init().
+
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR@{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR}}
+\index{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR@{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+O\+R(""Jeppe Stærk"")}{MODULE_AUTHOR("Jeppe Stærk")}}]{\setlength{\rightskip}{0pt plus 5cm}M\+O\+D\+U\+L\+E\+\_\+\+A\+U\+T\+H\+OR (
+\begin{DoxyParamCaption}
+\item[{\char`\"{}Jeppe Stærk\char`\"{}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_a76205f40e50e793bad85477c56a1fcb5}{}\label{psoc__spi__cdrv_8c_a76205f40e50e793bad85477c56a1fcb5}
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!module\+\_\+exit@{module\+\_\+exit}}
+\index{module\+\_\+exit@{module\+\_\+exit}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{module\+\_\+exit(psoc4\+\_\+cdrv\+\_\+exit)}{module_exit(psoc4_cdrv_exit)}}]{\setlength{\rightskip}{0pt plus 5cm}module\+\_\+exit (
+\begin{DoxyParamCaption}
+\item[{{\bf psoc4\+\_\+cdrv\+\_\+exit}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_a31b4f4d359c645ad1bb69792eff1f94b}{}\label{psoc__spi__cdrv_8c_a31b4f4d359c645ad1bb69792eff1f94b}
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read().
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=279pt]{d2/dd9/psoc__spi__cdrv_8c_a31b4f4d359c645ad1bb69792eff1f94b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!module\+\_\+init@{module\+\_\+init}}
+\index{module\+\_\+init@{module\+\_\+init}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{module\+\_\+init(psoc4\+\_\+cdrv\+\_\+init)}{module_init(psoc4_cdrv_init)}}]{\setlength{\rightskip}{0pt plus 5cm}module\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{{\bf psoc4\+\_\+cdrv\+\_\+init}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_a29681621922a8dc64ff84e750913f81a}{}\label{psoc__spi__cdrv_8c_a29681621922a8dc64ff84e750913f81a}
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read().
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{d2/dd9/psoc__spi__cdrv_8c_a29681621922a8dc64ff84e750913f81a_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE@{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE}}
+\index{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE@{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+S\+E(""Dual B\+S\+D/\+G\+PL"")}{MODULE_LICENSE("Dual BSD/GPL")}}]{\setlength{\rightskip}{0pt plus 5cm}M\+O\+D\+U\+L\+E\+\_\+\+L\+I\+C\+E\+N\+SE (
+\begin{DoxyParamCaption}
+\item[{\char`\"{}Dual B\+SD/G\+PL\char`\"{}}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_a5c95e2cd11cba226f5f3513060a8928e}{}\label{psoc__spi__cdrv_8c_a5c95e2cd11cba226f5f3513060a8928e}
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+cdrv\+\_\+exit@{psoc4\+\_\+cdrv\+\_\+exit}}
+\index{psoc4\+\_\+cdrv\+\_\+exit@{psoc4\+\_\+cdrv\+\_\+exit}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+cdrv\+\_\+exit(void)}{psoc4_cdrv_exit(void)}}]{\setlength{\rightskip}{0pt plus 5cm}static void \+\_\+\+\_\+exit psoc4\+\_\+cdrv\+\_\+exit (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{psoc__spi__cdrv_8c_a016013e009a7cf15be35db2e3ec5d1f5}{}\label{psoc__spi__cdrv_8c_a016013e009a7cf15be35db2e3ec5d1f5}
+
+
+Defineret på linje 74 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Indeholder referencer til devno, psoc4\+\_\+\+D\+E\+V\+I\+CE, psoc4\+\_\+spi\+\_\+exit() og psoc4\+Dev.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read().
+
+
+\begin{DoxyCode}
+75 \{
+76     printk(\textcolor{stringliteral}{"psoc4 driver Exit\(\backslash\)n"});
+77     cdev\_del(&\hyperlink{psoc__spi__cdrv_8c_a333f62d9a833315715c266689805cf1a}{psoc4Dev});
+78     
+79     unregister\_chrdev\_region(\hyperlink{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}{devno}, \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE});
+80     
+81     \hyperlink{psoc__spi__dev_8c_a9d271797d6983fd0f289b7f6b266d0be}{psoc4\_spi\_exit}();
+82 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=286pt]{d2/dd9/psoc__spi__cdrv_8c_a016013e009a7cf15be35db2e3ec5d1f5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=297pt]{d2/dd9/psoc__spi__cdrv_8c_a016013e009a7cf15be35db2e3ec5d1f5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+cdrv\+\_\+init@{psoc4\+\_\+cdrv\+\_\+init}}
+\index{psoc4\+\_\+cdrv\+\_\+init@{psoc4\+\_\+cdrv\+\_\+init}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+cdrv\+\_\+init(void)}{psoc4_cdrv_init(void)}}]{\setlength{\rightskip}{0pt plus 5cm}static int \+\_\+\+\_\+init psoc4\+\_\+cdrv\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{psoc__spi__cdrv_8c_aab06beebbb38dd06b8e09548670afb21}{}\label{psoc__spi__cdrv_8c_aab06beebbb38dd06b8e09548670afb21}
+
+
+Defineret på linje 38 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Indeholder referencer til devno, E\+R\+R\+G\+O\+TO, psoc4\+\_\+\+D\+E\+V\+I\+CE, psoc4\+\_\+\+Fops, psoc4\+\_\+\+M\+A\+J\+OR, psoc4\+\_\+\+M\+I\+N\+OR, psoc4\+\_\+spi\+\_\+exit(), psoc4\+\_\+spi\+\_\+init() og psoc4\+Dev.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read().
+
+
+\begin{DoxyCode}
+39 \{
+40     \textcolor{keywordtype}{int} err;
+41     
+42     printk(\textcolor{stringliteral}{"psoc4 driver initializing\(\backslash\)n"});
+43     
+44     \textcolor{comment}{/* Register SPI Driver */}
+45     err=\hyperlink{psoc__spi__dev_8c_a8d33dfea48e2a1e88f7758492ede12cf}{psoc4\_spi\_init}();
+46     \textcolor{keywordflow}{if}(err)
+47         \hyperlink{psoc__spi__cdrv_8c_aec31c17a958eb660efb41c39552beaff}{ERRGOTO}(error, \textcolor{stringliteral}{"Failed SPI Initialization\(\backslash\)n"});
+48     
+49     \textcolor{comment}{/* Allocate chrdev region */}
+50     \hyperlink{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}{devno} = MKDEV(\hyperlink{psoc__spi__cdrv_8c_a124f980cd43bd8fc55e93146e383dfa1}{psoc4\_MAJOR}, \hyperlink{psoc__spi__cdrv_8c_ad31e561878608dc6a09701bbc47fd6da}{psoc4\_MINOR});
+51     err = register\_chrdev\_region(\hyperlink{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}{devno}, \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE}, \textcolor{stringliteral}{"psoc4"});
+52     \textcolor{keywordflow}{if}(err)
+53         \hyperlink{psoc__spi__cdrv_8c_aec31c17a958eb660efb41c39552beaff}{ERRGOTO}(err\_spi\_init, \textcolor{stringliteral}{"Failed registering char region (%d,%d) +%d, error %d\(\backslash\)n"},
+54                 \hyperlink{psoc__spi__cdrv_8c_a124f980cd43bd8fc55e93146e383dfa1}{psoc4\_MAJOR}, \hyperlink{psoc__spi__cdrv_8c_ad31e561878608dc6a09701bbc47fd6da}{psoc4\_MINOR}, \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE}, err);
+55     
+56     \textcolor{comment}{/* Register Char Device */}
+57     cdev\_init(&\hyperlink{psoc__spi__cdrv_8c_a333f62d9a833315715c266689805cf1a}{psoc4Dev}, &\hyperlink{psoc__spi__cdrv_8c_a867a6cfbce3482b70eb142dd2067774f}{psoc4\_Fops});
+58     err = cdev\_add(&\hyperlink{psoc__spi__cdrv_8c_a333f62d9a833315715c266689805cf1a}{psoc4Dev}, \hyperlink{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}{devno}, \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE});
+59     \textcolor{keywordflow}{if} (err)
+60         \hyperlink{psoc__spi__cdrv_8c_aec31c17a958eb660efb41c39552beaff}{ERRGOTO}(err\_register, \textcolor{stringliteral}{"Error %d adding psoc4 device\(\backslash\)n"}, err);
+61     
+62     \textcolor{keywordflow}{return} 0;
+63     
+64 err\_register:
+65     unregister\_chrdev\_region(\hyperlink{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}{devno}, \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE});
+66     
+67 err\_spi\_init:
+68     \hyperlink{psoc__spi__dev_8c_a9d271797d6983fd0f289b7f6b266d0be}{psoc4\_spi\_exit}();
+69     
+70 error:
+71     \textcolor{keywordflow}{return} err;
+72 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{d2/dd9/psoc__spi__cdrv_8c_aab06beebbb38dd06b8e09548670afb21_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{d2/dd9/psoc__spi__cdrv_8c_aab06beebbb38dd06b8e09548670afb21_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+cdrv\+\_\+open@{psoc4\+\_\+cdrv\+\_\+open}}
+\index{psoc4\+\_\+cdrv\+\_\+open@{psoc4\+\_\+cdrv\+\_\+open}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+cdrv\+\_\+open(struct inode $\ast$inode, struct file $\ast$filep)}{psoc4_cdrv_open(struct inode *inode, struct file *filep)}}]{\setlength{\rightskip}{0pt plus 5cm}int psoc4\+\_\+cdrv\+\_\+open (
+\begin{DoxyParamCaption}
+\item[{struct inode $\ast$}]{inode, }
+\item[{struct file $\ast$}]{filep}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_a07168c0964966774fe208a05d9434cb1}{}\label{psoc__spi__cdrv_8c_a07168c0964966774fe208a05d9434cb1}
+
+
+Defineret på linje 84 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Indeholder referencer til psoc4\+\_\+\+D\+E\+V\+I\+CE, psoc4\+\_\+get\+\_\+device() og psoc4\+\_\+spi\+\_\+device.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read().
+
+
+\begin{DoxyCode}
+85 \{
+86     \textcolor{keywordtype}{int} major = imajor(inode);
+87     \textcolor{keywordtype}{int} minor = iminor(inode);
+88     
+89     printk(\textcolor{stringliteral}{"cdrv\_open: Opening psoc4 Device [major], [minor]: %i, %i\(\backslash\)n"}, major, minor);
+90     
+91     \textcolor{comment}{/* Check if minor number is within range */}
+92     \textcolor{keywordflow}{if} (minor > \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE}-1)
+93     \{
+94         printk(\textcolor{stringliteral}{"Minor no out of range (0-%i): %i\(\backslash\)n"}, \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE}, minor);
+95         \textcolor{keywordflow}{return} -ENODEV;
+96     \}
+97     
+98     \textcolor{comment}{/* Check if a psoc4 device is registered */}
+99     \textcolor{keywordflow}{if}(!(\hyperlink{psoc__spi__cdrv_8c_a777bc87492fc7e5d359aa1f0450fc370}{psoc4\_spi\_device}=\hyperlink{psoc__spi__dev_8c_a2870b5e4e3611c8ba3baf9592c4d8be1}{psoc4\_get\_device}()))
+100         \textcolor{keywordflow}{return} -ENODEV;
+101     
+102     \textcolor{keywordflow}{return} 0;
+103 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=308pt]{d2/dd9/psoc__spi__cdrv_8c_a07168c0964966774fe208a05d9434cb1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{d2/dd9/psoc__spi__cdrv_8c_a07168c0964966774fe208a05d9434cb1_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+cdrv\+\_\+read@{psoc4\+\_\+cdrv\+\_\+read}}
+\index{psoc4\+\_\+cdrv\+\_\+read@{psoc4\+\_\+cdrv\+\_\+read}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+cdrv\+\_\+read(struct file $\ast$filep, char \+\_\+\+\_\+user $\ast$ubuf, size\+\_\+t count, loff\+\_\+t $\ast$f\+\_\+pos)}{psoc4_cdrv_read(struct file *filep, char __user *ubuf, size_t count, loff_t *f_pos)}}]{\setlength{\rightskip}{0pt plus 5cm}ssize\+\_\+t psoc4\+\_\+cdrv\+\_\+read (
+\begin{DoxyParamCaption}
+\item[{struct file $\ast$}]{filep, }
+\item[{char \+\_\+\+\_\+user $\ast$}]{ubuf, }
+\item[{size\+\_\+t}]{count, }
+\item[{loff\+\_\+t $\ast$}]{f\+\_\+pos}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_a07b1fa48cf0fce6dafea41605b75d06c}{}\label{psoc__spi__cdrv_8c_a07b1fa48cf0fce6dafea41605b75d06c}
+
+
+Defineret på linje 158 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Indeholder referencer til M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG, module\+\_\+exit(), module\+\_\+init(), psoc4\+\_\+cdrv\+\_\+exit(), psoc4\+\_\+cdrv\+\_\+init(), psoc4\+\_\+cdrv\+\_\+open(), psoc4\+\_\+cdrv\+\_\+release(), psoc4\+\_\+cdrv\+\_\+write(), psoc4\+\_\+\+Fops, psoc4\+\_\+spi\+\_\+device og psoc4\+\_\+spi\+\_\+read().
+
+
+\begin{DoxyCode}
+159 \{
+160     \textcolor{keywordtype}{int} minor, rxLen;
+161     u16 rxData;
+162     \textcolor{keywordtype}{char} rxBuffer[5];
+163     
+164     minor = iminor(filep->f\_inode);
+165     
+166     \textcolor{keywordflow}{if}(\hyperlink{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}{MODULE\_DEBUG})
+167         printk(KERN\_ALERT \textcolor{stringliteral}{"cdrv\_read: Reading from psoc4 [Minor] %i \(\backslash\)n"}, minor);
+168     
+169     \hyperlink{psoc__spi__dev_8c_aafd69a02e9977933fb6789e99d296bee}{psoc4\_spi\_read}(\hyperlink{psoc__spi__cdrv_8c_a777bc87492fc7e5d359aa1f0450fc370}{psoc4\_spi\_device}, &rxData);
+170     
+171     \textcolor{keywordflow}{if}(\hyperlink{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}{MODULE\_DEBUG})
+172         printk(KERN\_DEBUG \textcolor{stringliteral}{"cdrv\_read: Reading from psoc4 result: 0x%02x\(\backslash\)n"}, rxData);
+173         
+174     \textcolor{comment}{// Laver en int om til en string}
+175     \textcolor{comment}{/* Convert to string and copy to user space */}
+176     \textcolor{comment}{//  len = snprintf(resultBuf, sizeof resultBuf, "%d\(\backslash\)n", result);}
+177     \textcolor{comment}{/* Convert integer to string limited to "count" size. Returns}
+178 \textcolor{comment}{    * length excluding NULL termination */}
+179     rxLen = sprintf(rxBuffer, \textcolor{stringliteral}{"%hu"}, rxData);
+180     rxLen++;
+181 
+182     \textcolor{keywordflow}{if}(\hyperlink{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}{MODULE\_DEBUG})
+183         printk(KERN\_DEBUG \textcolor{stringliteral}{"cdrv\_read: Convert from psoc4 result: %s \(\backslash\)n"}, rxBuffer);
+184 
+185     \textcolor{comment}{/* Copy data to user space */}
+186     \textcolor{keywordflow}{if}(copy\_to\_user(ubuf, rxBuffer, rxLen))
+187         \textcolor{keywordflow}{return} -EFAULT;
+188 
+189     \textcolor{comment}{/* Move fileptr */}
+190     *f\_pos += rxLen;
+191     
+192     \textcolor{keywordflow}{return} rxLen;
+193 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/dd9/psoc__spi__cdrv_8c_a07b1fa48cf0fce6dafea41605b75d06c_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+cdrv\+\_\+release@{psoc4\+\_\+cdrv\+\_\+release}}
+\index{psoc4\+\_\+cdrv\+\_\+release@{psoc4\+\_\+cdrv\+\_\+release}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+cdrv\+\_\+release(struct inode $\ast$inode, struct file $\ast$filep)}{psoc4_cdrv_release(struct inode *inode, struct file *filep)}}]{\setlength{\rightskip}{0pt plus 5cm}int psoc4\+\_\+cdrv\+\_\+release (
+\begin{DoxyParamCaption}
+\item[{struct inode $\ast$}]{inode, }
+\item[{struct file $\ast$}]{filep}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_aa5f178db147ff43e6606e84bee03dc4e}{}\label{psoc__spi__cdrv_8c_aa5f178db147ff43e6606e84bee03dc4e}
+
+
+Defineret på linje 105 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Indeholder referencer til psoc4\+\_\+\+D\+E\+V\+I\+CE, psoc4\+\_\+get\+\_\+device() og psoc4\+\_\+spi\+\_\+device.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read().
+
+
+\begin{DoxyCode}
+106 \{
+107     \textcolor{keywordtype}{int} major = imajor(inode);
+108     \textcolor{keywordtype}{int} minor = iminor(inode);
+109     
+110     printk(\textcolor{stringliteral}{"cdrv\_release: Closing psoc4 Device [major], [minor]: %i, %i\(\backslash\)n"}, major, minor);
+111     
+112     \textcolor{keywordflow}{if} ((minor > \hyperlink{psoc__spi__cdrv_8c_a7a5b3d2485bcd2ccbb86c7e7cebe14e6}{psoc4\_DEVICE}-1) || !(\hyperlink{psoc__spi__cdrv_8c_a777bc87492fc7e5d359aa1f0450fc370}{psoc4\_spi\_device}=
+      \hyperlink{psoc__spi__dev_8c_a2870b5e4e3611c8ba3baf9592c4d8be1}{psoc4\_get\_device}()))
+113         \textcolor{keywordflow}{return} -ENODEV;
+114     
+115     \textcolor{keywordflow}{return} 0;
+116 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=318pt]{d2/dd9/psoc__spi__cdrv_8c_aa5f178db147ff43e6606e84bee03dc4e_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=314pt]{d2/dd9/psoc__spi__cdrv_8c_aa5f178db147ff43e6606e84bee03dc4e_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+cdrv\+\_\+write@{psoc4\+\_\+cdrv\+\_\+write}}
+\index{psoc4\+\_\+cdrv\+\_\+write@{psoc4\+\_\+cdrv\+\_\+write}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+cdrv\+\_\+write(struct file $\ast$filep, const char \+\_\+\+\_\+user $\ast$ubuf, size\+\_\+t count, loff\+\_\+t $\ast$f\+\_\+pos)}{psoc4_cdrv_write(struct file *filep, const char __user *ubuf, size_t count, loff_t *f_pos)}}]{\setlength{\rightskip}{0pt plus 5cm}ssize\+\_\+t psoc4\+\_\+cdrv\+\_\+write (
+\begin{DoxyParamCaption}
+\item[{struct file $\ast$}]{filep, }
+\item[{const char \+\_\+\+\_\+user $\ast$}]{ubuf, }
+\item[{size\+\_\+t}]{count, }
+\item[{loff\+\_\+t $\ast$}]{f\+\_\+pos}
+\end{DoxyParamCaption}
+)}\hypertarget{psoc__spi__cdrv_8c_a466ecffe904674771c9cff7f85590714}{}\label{psoc__spi__cdrv_8c_a466ecffe904674771c9cff7f85590714}
+
+
+Defineret på linje 119 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Indeholder referencer til M\+A\+X\+L\+EN, M\+O\+D\+U\+L\+E\+\_\+\+D\+E\+B\+UG, psoc4\+\_\+spi\+\_\+device og psoc4\+\_\+spi\+\_\+write().
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+read().
+
+
+\begin{DoxyCode}
+120 \{
+121     \textcolor{keywordtype}{int} err, minor, txLen;
+122     \textcolor{keywordtype}{char} txBuffer[\hyperlink{psoc__spi__cdrv_8c_ae6648cd71a8bd49d58ae8ed33ba910d1}{MAXLEN}];
+123     u16 txData;
+124     
+125     minor = iminor(filep->f\_inode);
+126     
+127     printk(KERN\_ALERT \textcolor{stringliteral}{"cdrv\_write: Writing to psoc4 [Minor] %i \(\backslash\)n"}, minor);
+128     
+129     \textcolor{comment}{/* Limit copy length to MAXLEN allocated andCopy from user */}
+130     txLen = count < \hyperlink{psoc__spi__cdrv_8c_ae6648cd71a8bd49d58ae8ed33ba910d1}{MAXLEN} ? count : \hyperlink{psoc__spi__cdrv_8c_ae6648cd71a8bd49d58ae8ed33ba910d1}{MAXLEN};
+131     err = copy\_from\_user(txBuffer, ubuf, txLen);
+132     \textcolor{keywordflow}{if}(err) \{\textcolor{keywordflow}{return} -err;\}
+133     
+134     \textcolor{comment}{/* Pad null termination to string */}
+135     txBuffer[txLen] = \textcolor{charliteral}{'\(\backslash\)0'};
+136     
+137     \textcolor{keywordflow}{if}(\hyperlink{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}{MODULE\_DEBUG})
+138         printk(\textcolor{stringliteral}{"cdrv\_write: string from user: %s lenth: %i\(\backslash\)n"}, txBuffer, txLen);
+139     
+140     \textcolor{comment}{/* Convert sting to int */}
+141     sscanf(txBuffer, \textcolor{stringliteral}{"%hu"}, &txData);
+142     
+143     \textcolor{keywordflow}{if}(\hyperlink{psoc__spi__cdrv_8c_ae5874b45ddf4a96602ab046bb2bca80a}{MODULE\_DEBUG})
+144         printk(\textcolor{stringliteral}{"cdrv\_write: data from user: 0x%x\(\backslash\)n"}, txData);
+145     
+146     \hyperlink{psoc__spi__dev_8c_a53b6a4eaa64bcfe04302321ffb085b82}{psoc4\_spi\_write}(\hyperlink{psoc__spi__cdrv_8c_a777bc87492fc7e5d359aa1f0450fc370}{psoc4\_spi\_device}, txData);
+147     
+148     \textcolor{comment}{/* Legacy file ptr f\_pos. Used to support}
+149 \textcolor{comment}{     * random access but in char drv we dont!}
+150 \textcolor{comment}{     * Move it the length actually  written}
+151 \textcolor{comment}{     * for compability */}
+152     *f\_pos += txLen;
+153     
+154     \textcolor{comment}{/* return length actually written */}
+155     \textcolor{keywordflow}{return} txLen;
+156 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{d2/dd9/psoc__spi__cdrv_8c_a466ecffe904674771c9cff7f85590714_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=303pt]{d2/dd9/psoc__spi__cdrv_8c_a466ecffe904674771c9cff7f85590714_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Variabel-\/dokumentation}
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!devno@{devno}}
+\index{devno@{devno}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{devno}{devno}}]{\setlength{\rightskip}{0pt plus 5cm}int devno\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}{}\label{psoc__spi__cdrv_8c_a68915ca671494de990d424ea3a02d7e9}
+
+
+Defineret på linje 22 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+exit() og psoc4\+\_\+cdrv\+\_\+init().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+\+Fops@{psoc4\+\_\+\+Fops}}
+\index{psoc4\+\_\+\+Fops@{psoc4\+\_\+\+Fops}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+\+Fops}{psoc4_Fops}}]{\setlength{\rightskip}{0pt plus 5cm}struct file\+\_\+operations psoc4\+\_\+\+Fops}\hypertarget{psoc__spi__cdrv_8c_a867a6cfbce3482b70eb142dd2067774f}{}\label{psoc__spi__cdrv_8c_a867a6cfbce3482b70eb142dd2067774f}
+{\bfseries Startværdi\+:}
+\begin{DoxyCode}
+=
+\{
+    .owner   = THIS\_MODULE,
+    .open    = \hyperlink{psoc__spi__cdrv_8c_a07168c0964966774fe208a05d9434cb1}{psoc4\_cdrv\_open},
+    .release = \hyperlink{psoc__spi__cdrv_8c_aa5f178db147ff43e6606e84bee03dc4e}{psoc4\_cdrv\_release},
+    .write   = \hyperlink{psoc__spi__cdrv_8c_a466ecffe904674771c9cff7f85590714}{psoc4\_cdrv\_write},
+    .read    = \hyperlink{psoc__spi__cdrv_8c_a07b1fa48cf0fce6dafea41605b75d06c}{psoc4\_cdrv\_read},
+\}
+\end{DoxyCode}
+
+
+Defineret på linje 21 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+init() og psoc4\+\_\+cdrv\+\_\+read().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+\_\+spi\+\_\+device@{psoc4\+\_\+spi\+\_\+device}}
+\index{psoc4\+\_\+spi\+\_\+device@{psoc4\+\_\+spi\+\_\+device}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+\_\+spi\+\_\+device}{psoc4_spi_device}}]{\setlength{\rightskip}{0pt plus 5cm}struct spi\+\_\+device$\ast$ psoc4\+\_\+spi\+\_\+device = N\+U\+LL\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{psoc__spi__cdrv_8c_a777bc87492fc7e5d359aa1f0450fc370}{}\label{psoc__spi__cdrv_8c_a777bc87492fc7e5d359aa1f0450fc370}
+
+
+Defineret på linje 25 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+open(), psoc4\+\_\+cdrv\+\_\+read(), psoc4\+\_\+cdrv\+\_\+release() og psoc4\+\_\+cdrv\+\_\+write().
+
+\index{psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}!psoc4\+Dev@{psoc4\+Dev}}
+\index{psoc4\+Dev@{psoc4\+Dev}!psoc\+\_\+spi\+\_\+cdrv.\+c@{psoc\+\_\+spi\+\_\+cdrv.\+c}}
+\paragraph[{\texorpdfstring{psoc4\+Dev}{psoc4Dev}}]{\setlength{\rightskip}{0pt plus 5cm}struct cdev psoc4\+Dev\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{psoc__spi__cdrv_8c_a333f62d9a833315715c266689805cf1a}{}\label{psoc__spi__cdrv_8c_a333f62d9a833315715c266689805cf1a}
+
+
+Defineret på linje 20 i filen psoc\+\_\+spi\+\_\+cdrv.\+c.
+
+
+
+Refereret til af psoc4\+\_\+cdrv\+\_\+exit() og psoc4\+\_\+cdrv\+\_\+init().
+

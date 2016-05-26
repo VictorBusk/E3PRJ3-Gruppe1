@@ -1,0 +1,282 @@
+\hypertarget{handler_8c}{}\subsection{handler.\+c filreference}
+\label{handler_8c}\index{handler.\+c@{handler.\+c}}
+
+
+Communication handler for the Sensor-\/\+P\+SoC (to P\+So\+C4\+Master)  
+
+
+{\ttfamily \#include \char`\"{}handler.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Sensor\+Data.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Lumen\+Sensor.\+h\char`\"{}}\\*
+Inklusions-\/afhængighedsgraf for handler.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d2/d83/handler_8c__incl}
+\end{center}
+\end{figure}
+\subsubsection*{\#Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{handler_8c_a911d91f7898a9a0c4e35bb71e01d39a0}{D\+E\+B\+U\+G\+\_\+\+ON}
+\end{DoxyCompactItemize}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{handler_8c_af5be5b016b862943cd22504490acc8f4}{handler} (uint8 cmd, uint8 val)
+\begin{DoxyCompactList}\small\item\em Communication handler for the Sensor-\/\+P\+SoC. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+Communication handler for the Sensor-\/\+P\+SoC (to P\+So\+C4\+Master) 
+
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{\#Define-\/dokumentation}
+\index{handler.\+c@{handler.\+c}!D\+E\+B\+U\+G\+\_\+\+ON@{D\+E\+B\+U\+G\+\_\+\+ON}}
+\index{D\+E\+B\+U\+G\+\_\+\+ON@{D\+E\+B\+U\+G\+\_\+\+ON}!handler.\+c@{handler.\+c}}
+\paragraph[{\texorpdfstring{D\+E\+B\+U\+G\+\_\+\+ON}{DEBUG_ON}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+B\+U\+G\+\_\+\+ON}\hypertarget{handler_8c_a911d91f7898a9a0c4e35bb71e01d39a0}{}\label{handler_8c_a911d91f7898a9a0c4e35bb71e01d39a0}
+Debug define. Comment out to suppress debug prints 
+
+Defineret på linje 12 i filen handler.\+c.
+
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{handler.\+c@{handler.\+c}!handler@{handler}}
+\index{handler@{handler}!handler.\+c@{handler.\+c}}
+\paragraph[{\texorpdfstring{handler(uint8 cmd, uint8 val)}{handler(uint8 cmd, uint8 val)}}]{\setlength{\rightskip}{0pt plus 5cm}void handler (
+\begin{DoxyParamCaption}
+\item[{uint8}]{cmd, }
+\item[{uint8}]{val}
+\end{DoxyParamCaption}
+)}\hypertarget{handler_8c_af5be5b016b862943cd22504490acc8f4}{}\label{handler_8c_af5be5b016b862943cd22504490acc8f4}
+
+
+Communication handler for the Sensor-\/\+P\+SoC. 
+
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em cmd} & The command to be executed \\
+\hline
+\mbox{\tt in}  & {\em val} & Optional command argument\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 21 i filen handler.\+c.
+
+
+
+Indeholder referencer til sensor\+Data\+T\+::blue\+P\+W\+M\+Pct, cmd\+Distance\+Alert, cmd\+Get\+Blue, cmd\+Get\+Distance, cmd\+Get\+Green, cmd\+Get\+Lumen, cmd\+Get\+Movement, cmd\+Get\+Power, cmd\+Get\+Red, cmd\+Movement\+Alert, cmd\+Set\+Blue, cmd\+Set\+Distance, cmd\+Set\+Green, cmd\+Set\+Lumen, cmd\+Set\+Movement, cmd\+Set\+Power, cmd\+Set\+Red, sensor\+Data\+T\+::desired\+Lux, sensor\+Data\+T\+::desired\+Time\+Distance, sensor\+Data\+T\+::distance, sensor\+Data\+T\+::green\+P\+W\+M\+Pct, i2c\+Tx\+Buffer, sensor\+Data\+T\+::led\+Power, sensor\+Data\+T\+::lux, sensor\+Data\+T\+::movement, sensor\+Data\+T\+::movement\+Alert\+On, sensor\+Data\+T\+::red\+P\+W\+M\+Pct, scale\+F\+Fto\+Lux(), scale\+Lux\+To\+F\+F() og sensor\+Data.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+22 \{
+23     \textcolor{keywordflow}{switch} (cmd) \{
+24         \textcolor{keywordflow}{case} \hyperlink{handler_8h_aa39caa89b6fa6b35214c8901c6e4b8c0}{cmdGetRed} : 
+25             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+26             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct};
+27 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+28     DEBUG\_PutString(\textcolor{stringliteral}{"cmdGetRed "});
+29     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct});
+30     DEBUG\_PutCRLF();
+31 \textcolor{preprocessor}{#endif}
+32             \textcolor{keywordflow}{break};
+33         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a72a39c238400d347470027bdafb79dca}{cmdSetRed} : 
+34             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct} = val;
+35             RedPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct});
+36             RedPWM\_Start();
+37             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = 1;
+38 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+39     DEBUG\_PutString(\textcolor{stringliteral}{"cmdSetRed "});
+40     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct});
+41     DEBUG\_PutCRLF();
+42 \textcolor{preprocessor}{#endif}
+43             \textcolor{keywordflow}{break};
+44         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a56422ce1e0b7ab010f1e8b8aa0611807}{cmdGetGreen} : 
+45             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+46             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct};
+47 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+48     DEBUG\_PutString(\textcolor{stringliteral}{"cmdGetGreen "});
+49     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct});
+50     DEBUG\_PutCRLF();
+51 \textcolor{preprocessor}{#endif}
+52             \textcolor{keywordflow}{break};
+53         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a7bca2a01611d738bc36b1aeeacdb3026}{cmdSetGreen} : 
+54             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct} = val;
+55             GreenPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct});
+56             GreenPWM\_Start();
+57             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = 1;
+58 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+59     DEBUG\_PutString(\textcolor{stringliteral}{"cmdSetGreen "});
+60     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct});
+61     DEBUG\_PutCRLF();
+62 \textcolor{preprocessor}{#endif}
+63             \textcolor{keywordflow}{break};
+64         \textcolor{keywordflow}{case} \hyperlink{handler_8h_ad8c31184815a1468c80d66cd35f4fc47}{cmdGetBlue} : 
+65             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+66             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct};
+67 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+68     DEBUG\_PutString(\textcolor{stringliteral}{"cmdGetBlue "});
+69     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct});
+70     DEBUG\_PutCRLF();
+71 \textcolor{preprocessor}{#endif}
+72             \textcolor{keywordflow}{break};
+73         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a7f396b95169a91881b4ce8562c400896}{cmdSetBlue} : 
+74             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct} = val;
+75             BluePWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct});
+76             BluePWM\_Start();
+77             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = 1;
+78 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+79     DEBUG\_PutString(\textcolor{stringliteral}{"cmdSetBlue "});
+80     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct});
+81     DEBUG\_PutCRLF();
+82 \textcolor{preprocessor}{#endif}
+83             \textcolor{keywordflow}{break};
+84 
+85         \textcolor{keywordflow}{case} \hyperlink{handler_8h_ae4561d0f2c4ec97c5d0bbb4be62b29bd}{cmdGetPower} : 
+86             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+87             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower};
+88 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+89     DEBUG\_PutString(\textcolor{stringliteral}{"cmdGetPower "});
+90     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower});
+91     DEBUG\_PutCRLF();
+92 \textcolor{preprocessor}{#endif}
+93             \textcolor{keywordflow}{break};
+94         \textcolor{keywordflow}{case} \hyperlink{handler_8h_ac837efe61096c1997f1c1e1d71984273}{cmdSetPower} : 
+95             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = val;
+96             \textcolor{keywordflow}{if} (val) \{
+97                 RedPWM\_Start();
+98                 GreenPWM\_Start();
+99                 BluePWM\_Start();
+100                 RedPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct});
+101                 GreenPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct});
+102                 BluePWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct});
+103             \} \textcolor{keywordflow}{else} \{
+104                 RedPWM\_Stop();
+105                 GreenPWM\_Stop();
+106                 BluePWM\_Stop();
+107             \}
+108 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+109     DEBUG\_PutString(\textcolor{stringliteral}{"cmdSetPower "});
+110     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower});
+111     DEBUG\_PutCRLF();
+112 \textcolor{preprocessor}{#endif}
+113             \textcolor{keywordflow}{break};
+114 
+115         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a655dc05fa7975f8fb8f5f17a4b407d54}{cmdGetLumen} : 
+116             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+117             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = \hyperlink{_lumen_sensor_8c_a1337221b40e407eeb46861aef99c6b83}{scaleLuxToFF}(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.
+      \hyperlink{_sensor_data_8h_aeb23f0cb9c43c48bf83c1d75a5c179a4}{lux});
+118 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+119     DEBUG\_PutString(\textcolor{stringliteral}{"cmdGetLumen "});
+120     DEBUG\_PutHexByte(\hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2]);
+121     DEBUG\_PutCRLF();
+122 \textcolor{preprocessor}{#endif}
+123             \textcolor{keywordflow}{break};
+124         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a51b92906c8317bc56e16f4d2033b6a89}{cmdSetLumen} : 
+125             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}{desiredLux} = \hyperlink{_lumen_sensor_8c_a4e19311d2241c61d7b3a7ca9cd5fb765}{scaleFFtoLux}(val);
+126 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+127     DEBUG\_PutString(\textcolor{stringliteral}{"cmdSetLumen "});
+128     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}{desiredLux});
+129     DEBUG\_PutCRLF();
+130 \textcolor{preprocessor}{#endif}
+131             \textcolor{keywordflow}{break};
+132 
+133         \textcolor{keywordflow}{case} \hyperlink{handler_8h_ad88c0cb2da0a29858e6c78a2a17a1f28}{cmdGetDistance} : 
+134             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+135             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = (uint8)((\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_afb9412686cd344ad61757c1c19ba8a87}{distance} < 255) ? 
+      \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_afb9412686cd344ad61757c1c19ba8a87}{distance} : 255);
+136 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+137     DEBUG\_PutString(\textcolor{stringliteral}{"cmdGetDistance "});
+138     DEBUG\_PutHexByte(\hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2]);
+139     DEBUG\_PutCRLF();
+140 \textcolor{preprocessor}{#endif}
+141             \textcolor{keywordflow}{break};
+142         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a4be23ec767771ecfe8b5b38a54747707}{cmdSetDistance} : 
+143             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a477d7465dc8c397bdb795593df890d8b}{desiredTimeDistance} = val * 58;
+144 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+145     DEBUG\_PutString(\textcolor{stringliteral}{"cmdSetDistance "});
+146     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a477d7465dc8c397bdb795593df890d8b}{desiredTimeDistance});
+147     DEBUG\_PutCRLF();
+148 \textcolor{preprocessor}{#endif}
+149             \textcolor{keywordflow}{break};
+150         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a7ff1eee538e52b66fc7bbfb56e239509}{cmdDistanceAlert} : 
+151             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+152             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = val;
+153 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+154     DEBUG\_PutString(\textcolor{stringliteral}{"cmdDistanceAlert "});
+155     DEBUG\_PutHexByte(val);
+156     DEBUG\_PutCRLF();
+157 \textcolor{preprocessor}{#endif}
+158             \textcolor{keywordflow}{break};
+159 
+160         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a8fcd15bda1dd568571708dabad31c941}{cmdGetMovement} : 
+161             \textcolor{comment}{// Return 0xff if there is movement, 0x00 if there is not}
+162             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+163             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = (\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement}) ? 0xff : 0x00;
+164 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+165     DEBUG\_PutString(\textcolor{stringliteral}{"cmdGetMovement "});
+166     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement});
+167     DEBUG\_PutCRLF();
+168 \textcolor{preprocessor}{#endif}
+169             \textcolor{keywordflow}{break};
+170         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a1a4e40c0d1dab39bdcd739cd09638d45}{cmdSetMovement} : 
+171             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}{movementAlertOn} = val;
+172 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+173     DEBUG\_PutString(\textcolor{stringliteral}{"cmdSetMovement "});
+174     DEBUG\_PutHexByte(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}{movementAlertOn});
+175     DEBUG\_PutCRLF();
+176 \textcolor{preprocessor}{#endif}
+177             \textcolor{keywordflow}{break};
+178         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a7f220e109d88ae4a5a48cb33de8afb21}{cmdMovementAlert} : 
+179             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[1] = cmd;
+180             \hyperlink{i2c_8c_af66ed5dc7817e74d7da731c994721217}{i2cTxBuffer}[2] = val;
+181 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+182     DEBUG\_PutString(\textcolor{stringliteral}{"cmdMovementAlert "});
+183     DEBUG\_PutHexByte(val);
+184     DEBUG\_PutCRLF();
+185 \textcolor{preprocessor}{#endif}
+186             \textcolor{keywordflow}{break};
+187 
+188         \textcolor{keywordflow}{default} :
+189             \textcolor{keywordflow}{break};
+190     \}
+191 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=244pt]{db/dd1/handler_8c_af5be5b016b862943cd22504490acc8f4_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{db/dd1/handler_8c_af5be5b016b862943cd22504490acc8f4_icgraph}
+\end{center}
+\end{figure}
+
+

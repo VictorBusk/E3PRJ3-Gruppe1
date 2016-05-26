@@ -1,27 +1,32 @@
-/* ========================================
- *
- * File: data.h
- * Description:
- *
- * University: AARHUS UNIVERSITY SCHOOL OF ENGINEERING
- * Project: F16 - E3PRJ3-02 Semesterprojekt 3 [240501U178]
- * Group: 1
- *
- * Author:
- * Matriculation number:
- *
- * Version: 1.0
- * Date: 13-05-2016
- *
- * ========================================
+/*!
+ *  @file       data.h
+ *  @brief      Data modul
+ *  @details    Indeholder data vedr. Z modulet.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
-
 #ifndef DATA_H
 #define DATA_H
 
 #include <project.h>
 
-struct DataZ_T {
+
+/***************************************
+ *       Class
+ ***************************************/
+
+/*!
+ *  @class      Data data.h
+ *  @brief      Data class
+ *  @details    Indeholder data vedr. XY modulet.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+
+
+/***************************************
+ *       Public data types
+ ***************************************/
+
+struct DataZ {
   uint8 calibratedZ;
   uint8 interruptZ;
   uint8 isrStopZ;
@@ -30,8 +35,12 @@ struct DataZ_T {
   uint32 zPos;
 }dataZ;
 
-extern void data_init(void);
 
+/***************************************
+ *       Public methods
+ ***************************************/
+
+extern void data_init(void);
 
 
 #endif  // ifndef DATA_H

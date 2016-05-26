@@ -1,0 +1,119 @@
+\hypertarget{class_sensor_data}{}\subsection{Sensor\+Data Klasse-\/reference}
+\label{class_sensor_data}\index{Sensor\+Data@{Sensor\+Data}}
+
+
+Container for sensor data.  
+
+
+
+
+{\ttfamily \#include $<$Sensor\+Data.\+h$>$}
+
+
+
+Samarbejdsdiagram for Sensor\+Data\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=177pt]{dc/d1d/class_sensor_data__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Offentlige metoder}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_sensor_data_ad900f3738890946c3d0516ddd9105474}{init\+Sensor\+Data} ()
+\begin{DoxyCompactList}\small\item\em Initializes the \hyperlink{class_sensor_data}{Sensor\+Data} struct parts that need initial values. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+Container for sensor data. 
+
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{Dokumentation af medlemsfunktioner}
+\index{Sensor\+Data@{Sensor\+Data}!init\+Sensor\+Data@{init\+Sensor\+Data}}
+\index{init\+Sensor\+Data@{init\+Sensor\+Data}!Sensor\+Data@{Sensor\+Data}}
+\paragraph[{\texorpdfstring{init\+Sensor\+Data()}{initSensorData()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+Sensor\+Data (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_sensor_data_ad900f3738890946c3d0516ddd9105474}{}\label{class_sensor_data_ad900f3738890946c3d0516ddd9105474}
+
+
+Initializes the \hyperlink{class_sensor_data}{Sensor\+Data} struct parts that need initial values. 
+
+Debug define. Comment out to suppress debug prints
+
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk})
+
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 17 i filen Sensor\+Data.\+c.
+
+
+
+Indeholder referencer til sensor\+Data\+T\+::blue\+P\+W\+M\+Pct, sensor\+Data\+T\+::desired\+Lux, sensor\+Data\+T\+::desired\+Time\+Distance, sensor\+Data\+T\+::green\+P\+W\+M\+Pct, init\+Circular\+Mean(), sensor\+Data\+T\+::led\+Power, sensor\+Data\+T\+::\+Lumen\+Mean, sensor\+Data\+T\+::movement\+Alert\+On, sensor\+Data\+T\+::red\+P\+W\+M\+Pct og sensor\+Data.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+18 \{
+19     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}{desiredLux} = 0;
+20     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a477d7465dc8c397bdb795593df890d8b}{desiredTimeDistance} = 580;
+21 
+22     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}{movementAlertOn} = 0;
+23     
+24     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = 0;
+25     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct} = 255;
+26     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct} = 255;
+27     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct} = 255;
+28 
+29 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+30     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}{desiredLux} = 0;
+31     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}{movementAlertOn} = 1;
+32     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = 1;
+33 \textcolor{preprocessor}{#endif}
+34     
+35     \hyperlink{_circular_mean_8c_a5118b6b2a8751d4400b4ea2a0a15329a}{initCircularMean}(&\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a2ff5a38714ef318f86285c7d8fe4c8ea}{LumenMean});
+36 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=286pt]{d2/d7e/class_sensor_data_ad900f3738890946c3d0516ddd9105474_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{d2/d7e/class_sensor_data_ad900f3738890946c3d0516ddd9105474_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Dokumentationen for denne klasse blev genereret ud fra filerne\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_sensor_data_8h}{Sensor\+Data.\+h}\item 
+\hyperlink{_sensor_data_8c}{Sensor\+Data.\+c}\end{DoxyCompactItemize}
