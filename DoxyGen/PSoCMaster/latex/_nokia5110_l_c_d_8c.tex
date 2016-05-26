@@ -1,0 +1,530 @@
+\hypertarget{_nokia5110_l_c_d_8c}{}\subsection{Nokia5110\+L\+C\+D.\+c filreference}
+\label{_nokia5110_l_c_d_8c}\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+
+
+Nokia5110\+L\+CD Modul (Impoteret)  
+
+
+{\ttfamily \#include \char`\"{}Nokia5110\+L\+C\+D.\+h\char`\"{}}\\*
+Inklusions-\/afhængighedsgraf for Nokia5110\+L\+C\+D.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=282pt]{_nokia5110_l_c_d_8c__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_ae37cf16cd7f3298d819aede8023da757}{L\+C\+D\+\_\+\+Character} (uint8 character)
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_ae60d0b62d7eb3fa31266c095d7b3c245}{L\+C\+D\+\_\+\+Clear} (void)
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_aa53c9d40f3aa552a9974cd55ac510cb3}{L\+C\+D\+\_\+\+Init} (void)
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_a4c2c90307f23817e8445be5c6ca537c5}{L\+C\+D\+\_\+\+String} (char $\ast$characters)
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{L\+C\+D\+\_\+\+Write} (uint8 data\+\_\+or\+\_\+command, uint8 data\+\_\+value)
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_ae1c81f642c55e721681c1049afc22e21}{Send\+\_\+\+Data} (int8 value)
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_adde1a4c2e7bd6bc1bbeb7694db45925b}{L\+C\+D\+\_\+goto\+XY} (uint8 x, uint8 y)
+\item 
+void \hyperlink{_nokia5110_l_c_d_8c_abcb278ab41675fe7ad44ff783e1d10ec}{L\+C\+D\+\_\+\+Bitmap} (char $\ast$my\+\_\+array)
+\end{DoxyCompactItemize}
+\subsubsection*{Variable}
+\begin{DoxyCompactItemize}
+\item 
+static const uint8 \hyperlink{_nokia5110_l_c_d_8c_a15f4ad21eef7bd4012d7223cec9ec0dc}{Fonts} \mbox{[}$\,$\mbox{]}\mbox{[}\hyperlink{_nokia5110_l_c_d_8h_a7b2e9cc063e140c50b67a4f224988a45}{F\+O\+N\+T\+\_\+\+W\+I\+D\+TH}\mbox{]}
+\item 
+static const char \hyperlink{_nokia5110_l_c_d_8c_abd16123c1907b95492929b4e045c5bed}{Cypress\+Logo} \mbox{[}$\,$\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+Nokia5110\+L\+CD Modul (Impoteret) 
+
+Impoteret kildekode til Nokia 5110 L\+SD \begin{DoxyAuthor}{Forfatter}
+Matt (cy.\+wbz) 
+\end{DoxyAuthor}
+\begin{DoxyRemark}{Bemærkninger}
+\href{https://www.element14.com/community/thread/26122/l/psoc-4-pioneer-kit-community-project061-nokia-5110-lcd-interface?displayFullThread=true}{\tt https\+://www.\+element14.\+com/community/thread/26122/l/psoc-\/4-\/pioneer-\/kit-\/community-\/project061-\/nokia-\/5110-\/lcd-\/interface?display\+Full\+Thread=true} 
+\end{DoxyRemark}
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!L\+C\+D\+\_\+\+Bitmap@{L\+C\+D\+\_\+\+Bitmap}}
+\index{L\+C\+D\+\_\+\+Bitmap@{L\+C\+D\+\_\+\+Bitmap}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{L\+C\+D\+\_\+\+Bitmap(char $\ast$my\+\_\+array)}{LCD_Bitmap(char *my_array)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+\+Bitmap (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{my\+\_\+array}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_abcb278ab41675fe7ad44ff783e1d10ec}{}\label{_nokia5110_l_c_d_8c_abcb278ab41675fe7ad44ff783e1d10ec}
+
+
+Defineret på linje 396 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til F\+O\+N\+T\+\_\+\+H\+E\+I\+G\+HT, L\+C\+D\+\_\+\+D\+A\+TA, L\+C\+D\+\_\+\+Write(), L\+C\+D\+\_\+X og L\+C\+D\+\_\+Y.
+
+
+\begin{DoxyCode}
+397 \{
+398     uint16 index4;
+399     \textcolor{keywordflow}{for} (index4 = 0 ; index4 < (\hyperlink{_nokia5110_l_c_d_8h_a808ffb5b80958b23f08910c0f38c53d3}{LCD\_X} * \hyperlink{_nokia5110_l_c_d_8h_ae5070c3ce78b96d41f8e166abff903ed}{LCD\_Y}/\hyperlink{_nokia5110_l_c_d_8h_a33f4fac49f2a5e27e2857eb27f054510}{FONT\_HEIGHT}) ; index4++)
+400         
+401         \textcolor{comment}{/* Take one byte at a time and send it to LCD as DATA */}
+402         \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a25e9d818788f36ed74d7c4579f87f2a6}{LCD\_DATA}, my\_array[index4]);
+403 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_abcb278ab41675fe7ad44ff783e1d10ec_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!L\+C\+D\+\_\+\+Character@{L\+C\+D\+\_\+\+Character}}
+\index{L\+C\+D\+\_\+\+Character@{L\+C\+D\+\_\+\+Character}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{L\+C\+D\+\_\+\+Character(uint8 character)}{LCD_Character(uint8 character)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+\+Character (
+\begin{DoxyParamCaption}
+\item[{uint8}]{character}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_ae37cf16cd7f3298d819aede8023da757}{}\label{_nokia5110_l_c_d_8c_ae37cf16cd7f3298d819aede8023da757}
+
+
+Defineret på linje 167 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til E\+M\+P\+T\+Y\+\_\+\+C\+O\+L\+U\+M\+N\+\_\+\+D\+A\+TA, F\+O\+N\+T\+\_\+\+W\+I\+D\+TH, Fonts, L\+C\+D\+\_\+\+D\+A\+TA, L\+C\+D\+\_\+\+Write() og O\+F\+F\+S\+E\+T\+\_\+\+F\+O\+R\+\_\+\+A\+S\+C\+II.
+
+
+
+Refereret til af L\+C\+D\+\_\+\+String().
+
+
+\begin{DoxyCode}
+168 \{
+169     uint16 index1;
+170     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a25e9d818788f36ed74d7c4579f87f2a6}{LCD\_DATA}, \hyperlink{_nokia5110_l_c_d_8h_aaafc5650777bddfbeabede2599523c79}{EMPTY\_COLUMN\_DATA});
+171 
+172     \textcolor{keywordflow}{for} (index1 = 0 ; index1 < \hyperlink{_nokia5110_l_c_d_8h_a7b2e9cc063e140c50b67a4f224988a45}{FONT\_WIDTH} ; index1++)
+173         \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a25e9d818788f36ed74d7c4579f87f2a6}{LCD\_DATA}, \hyperlink{_nokia5110_l_c_d_8c_a15f4ad21eef7bd4012d7223cec9ec0dc}{Fonts}[character - 
+      \hyperlink{_nokia5110_l_c_d_8h_a6252ed1db694fee526e93a1059e682d3}{OFFSET\_FOR\_ASCII}][index1]);
+174 
+175     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a25e9d818788f36ed74d7c4579f87f2a6}{LCD\_DATA}, \hyperlink{_nokia5110_l_c_d_8h_aaafc5650777bddfbeabede2599523c79}{EMPTY\_COLUMN\_DATA});
+176 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_ae37cf16cd7f3298d819aede8023da757_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_ae37cf16cd7f3298d819aede8023da757_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!L\+C\+D\+\_\+\+Clear@{L\+C\+D\+\_\+\+Clear}}
+\index{L\+C\+D\+\_\+\+Clear@{L\+C\+D\+\_\+\+Clear}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{L\+C\+D\+\_\+\+Clear(void)}{LCD_Clear(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+\+Clear (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_ae60d0b62d7eb3fa31266c095d7b3c245}{}\label{_nokia5110_l_c_d_8c_ae60d0b62d7eb3fa31266c095d7b3c245}
+
+
+Defineret på linje 193 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til C\+O\+L\+U\+M\+N\+\_\+\+B\+E\+G\+I\+N\+N\+I\+NG, E\+M\+P\+T\+Y\+\_\+\+C\+O\+L\+U\+M\+N\+\_\+\+D\+A\+TA, F\+O\+N\+T\+\_\+\+H\+E\+I\+G\+HT, L\+C\+D\+\_\+\+D\+A\+TA, L\+C\+D\+\_\+goto\+X\+Y(), L\+C\+D\+\_\+\+Write(), L\+C\+D\+\_\+X, L\+C\+D\+\_\+Y og R\+O\+W\+\_\+\+B\+E\+G\+I\+N\+N\+I\+NG.
+
+
+
+Refereret til af L\+C\+D\+\_\+\+Init() og L\+C\+D\+::lcd\+\_\+newline().
+
+
+\begin{DoxyCode}
+194 \{
+195     uint16 index2;
+196     \hyperlink{_nokia5110_l_c_d_8c_adde1a4c2e7bd6bc1bbeb7694db45925b}{LCD\_gotoXY}(\hyperlink{_nokia5110_l_c_d_8h_a36f758274dfeeb23c2494cd346144744}{COLUMN\_BEGINNING}, \hyperlink{_nokia5110_l_c_d_8h_a8b5d221d1489e603dd73680aad4bcdf8}{ROW\_BEGINNING});
+197     
+198     \textcolor{keywordflow}{for} (index2 = 0 ; index2 < (\hyperlink{_nokia5110_l_c_d_8h_a808ffb5b80958b23f08910c0f38c53d3}{LCD\_X} * \hyperlink{_nokia5110_l_c_d_8h_ae5070c3ce78b96d41f8e166abff903ed}{LCD\_Y}/\hyperlink{_nokia5110_l_c_d_8h_a33f4fac49f2a5e27e2857eb27f054510}{FONT\_HEIGHT}) ; index2++)
+199         \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a25e9d818788f36ed74d7c4579f87f2a6}{LCD\_DATA}, \hyperlink{_nokia5110_l_c_d_8h_aaafc5650777bddfbeabede2599523c79}{EMPTY\_COLUMN\_DATA});
+200         
+201     \hyperlink{_nokia5110_l_c_d_8c_adde1a4c2e7bd6bc1bbeb7694db45925b}{LCD\_gotoXY}(\hyperlink{_nokia5110_l_c_d_8h_a36f758274dfeeb23c2494cd346144744}{COLUMN\_BEGINNING}, \hyperlink{_nokia5110_l_c_d_8h_a8b5d221d1489e603dd73680aad4bcdf8}{ROW\_BEGINNING});
+202 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_ae60d0b62d7eb3fa31266c095d7b3c245_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_ae60d0b62d7eb3fa31266c095d7b3c245_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!L\+C\+D\+\_\+goto\+XY@{L\+C\+D\+\_\+goto\+XY}}
+\index{L\+C\+D\+\_\+goto\+XY@{L\+C\+D\+\_\+goto\+XY}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{L\+C\+D\+\_\+goto\+X\+Y(uint8 x, uint8 y)}{LCD_gotoXY(uint8 x, uint8 y)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+goto\+XY (
+\begin{DoxyParamCaption}
+\item[{uint8}]{x, }
+\item[{uint8}]{y}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_adde1a4c2e7bd6bc1bbeb7694db45925b}{}\label{_nokia5110_l_c_d_8c_adde1a4c2e7bd6bc1bbeb7694db45925b}
+
+
+Defineret på linje 375 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til C\+M\+D\+\_\+\+C\+O\+L\+U\+M\+N\+\_\+\+D\+A\+TA, C\+M\+D\+\_\+\+R\+O\+W\+\_\+\+D\+A\+TA, C\+O\+L\+U\+M\+N\+\_\+\+D\+A\+T\+A\+\_\+\+M\+A\+SK, L\+C\+D\+\_\+\+C\+O\+M\+M\+A\+ND, L\+C\+D\+\_\+\+Write() og R\+O\+W\+\_\+\+D\+A\+T\+A\+\_\+\+M\+A\+SK.
+
+
+
+Refereret til af L\+C\+D\+\_\+\+Clear() og L\+C\+D\+::lcd\+\_\+newline().
+
+
+\begin{DoxyCode}
+376 \{
+377     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_a159a84674b38b66c1ea021331bdb757e}{CMD\_COLUMN\_DATA}  | (x & 
+      \hyperlink{_nokia5110_l_c_d_8h_aba07c0bc26f47395b9daba931a5122e2}{COLUMN\_DATA\_MASK}));                       \textcolor{comment}{// Column}
+378     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_a9e25c527b4dd02cd409641483e2c9eb8}{CMD\_ROW\_DATA}     | (y & 
+      \hyperlink{_nokia5110_l_c_d_8h_ab3d905cbccea22b6651d12b44d662e07}{ROW\_DATA\_MASK}));     \textcolor{comment}{// Row : Last 3 bits are valid}
+379 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_adde1a4c2e7bd6bc1bbeb7694db45925b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_adde1a4c2e7bd6bc1bbeb7694db45925b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!L\+C\+D\+\_\+\+Init@{L\+C\+D\+\_\+\+Init}}
+\index{L\+C\+D\+\_\+\+Init@{L\+C\+D\+\_\+\+Init}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{L\+C\+D\+\_\+\+Init(void)}{LCD_Init(void)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+\+Init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_aa53c9d40f3aa552a9974cd55ac510cb3}{}\label{_nokia5110_l_c_d_8c_aa53c9d40f3aa552a9974cd55ac510cb3}
+
+
+Defineret på linje 220 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til B\+I\+A\+S\+\_\+1\+\_\+\+B\+Y\+\_\+8, B\+I\+A\+S\+\_\+\+S\+Y\+S\+T\+E\+M\+\_\+\+M\+A\+SK, C\+M\+D\+\_\+\+B\+I\+A\+S\+\_\+\+S\+Y\+S\+T\+EM, C\+M\+D\+\_\+\+D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+O\+N\+T\+R\+OL, C\+M\+D\+\_\+\+F\+U\+N\+C\+T\+I\+O\+N\+\_\+\+S\+ET, C\+M\+D\+\_\+\+S\+E\+T\+\_\+\+V\+OP, C\+M\+D\+\_\+\+T\+E\+M\+P\+\_\+\+C\+O\+N\+T\+R\+OL, D\+E\+L\+A\+Y\+\_\+1\+\_\+\+MS, D\+I\+S\+P\+L\+A\+Y\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+M\+A\+SK, D\+I\+S\+P\+L\+A\+Y\+\_\+\+N\+O\+R\+M\+AL, F\+U\+N\+C\+T\+I\+O\+N\+\_\+\+S\+E\+T\+\_\+\+M\+A\+SK, H\+\_\+\+E\+X\+T\+E\+N\+D\+E\+D\+\_\+\+I\+N\+ST, H\+\_\+\+M\+A\+SK, H\+\_\+\+S\+H\+I\+FT, H\+I\+GH, L\+C\+D\+\_\+\+Clear(), L\+C\+D\+\_\+\+C\+O\+M\+M\+A\+ND, L\+C\+D\+\_\+\+Write(), L\+OW, P\+D\+\_\+\+C\+H\+I\+P\+\_\+\+A\+C\+T\+I\+VE, P\+D\+\_\+\+M\+A\+SK, P\+D\+\_\+\+S\+H\+I\+FT, S\+E\+T\+\_\+\+V\+O\+P\+\_\+5V, S\+E\+T\+\_\+\+V\+O\+P\+\_\+\+M\+A\+SK, T\+E\+M\+P\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+C\+O\+E\+F\+F0, T\+E\+M\+P\+\_\+\+C\+O\+N\+T\+R\+O\+L\+\_\+\+M\+A\+SK, V\+\_\+\+H\+O\+R\+I\+Z\+O\+N\+T\+A\+L\+\_\+\+A\+DD, V\+\_\+\+M\+A\+SK og V\+\_\+\+S\+H\+I\+FT.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+221 \{
+222     \textcolor{comment}{/* Enable Gnd, Vcc & Backlight pins */}
+223     Gnd\_Write(\hyperlink{_nokia5110_l_c_d_8h_ab811d8c6ff3a505312d3276590444289}{LOW});
+224     Vcc\_Write(\hyperlink{_nokia5110_l_c_d_8h_a5bb885982ff66a2e0a0a45a8ee9c35e2}{HIGH});
+225     BL\_Write(\hyperlink{_nokia5110_l_c_d_8h_a5bb885982ff66a2e0a0a45a8ee9c35e2}{HIGH});
+226     
+227     \textcolor{comment}{/* Reset the LCD - Active Low (1 -> 0 -> 1) */}
+228     RST\_Write(\hyperlink{_nokia5110_l_c_d_8h_a5bb885982ff66a2e0a0a45a8ee9c35e2}{HIGH});
+229     CyDelay(\hyperlink{_nokia5110_l_c_d_8h_a52bfdbdb0f66648736304dbed85b1eee}{DELAY\_1\_MS});
+230     RST\_Write(\hyperlink{_nokia5110_l_c_d_8h_ab811d8c6ff3a505312d3276590444289}{LOW});
+231     CyDelay(\hyperlink{_nokia5110_l_c_d_8h_a52bfdbdb0f66648736304dbed85b1eee}{DELAY\_1\_MS});
+232     RST\_Write(\hyperlink{_nokia5110_l_c_d_8h_a5bb885982ff66a2e0a0a45a8ee9c35e2}{HIGH});
+233     CyDelay(\hyperlink{_nokia5110_l_c_d_8h_a52bfdbdb0f66648736304dbed85b1eee}{DELAY\_1\_MS});
+234     
+235     \textcolor{comment}{/* No Power Down, Horizontal Addressing Mode, Extended Instruction set */}
+236     \textcolor{comment}{/* 0x21 = 0010 0001    Instruction : Function Set (H=1)*/}
+237     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_a6e8374040226d7ea27d2783cae94f6ec}{CMD\_FUNCTION\_SET} | ((((
+      \hyperlink{_nokia5110_l_c_d_8h_a8f280391129058891d6dafd25e9f5ebe}{PD\_CHIP\_ACTIVE} << \hyperlink{_nokia5110_l_c_d_8h_ab9126a4380117dcb422f1b2025a78cd1}{PD\_SHIFT}) & \hyperlink{_nokia5110_l_c_d_8h_ab44bdd714f3dcacacd2c8deca2f22568}{PD\_MASK}) \(\backslash\)
+238     | ((\hyperlink{_nokia5110_l_c_d_8h_a28d9b8ca20803b32bfffb256a281404c}{V\_HORIZONTAL\_ADD} << \hyperlink{_nokia5110_l_c_d_8h_a634a68d0765064dec3171194ecb541b2}{V\_SHIFT}) & \hyperlink{_nokia5110_l_c_d_8h_a3964a8e86997d1704108bb308e5a644f}{V\_MASK}) | ((
+      \hyperlink{_nokia5110_l_c_d_8h_aa22de21587e50b229df0eeb1fd90929c}{H\_EXTENDED\_INST} << \hyperlink{_nokia5110_l_c_d_8h_a2b197a68538e31c816ea8b8fa08b6d12}{H\_SHIFT}) & \hyperlink{_nokia5110_l_c_d_8h_a2c22a8118660a79c51b36ddf8f770f3b}{H\_MASK})) \(\backslash\)
+239     & \hyperlink{_nokia5110_l_c_d_8h_a0203e2bfec43dd360d79d820f7e0da44}{FUNCTION\_SET\_MASK}));
+240         
+241     \textcolor{comment}{/* Set LCD Vop (Contrast): Try 0xB1(good @ 3.3V) or 0xBF if your display is too dark */}
+242     \textcolor{comment}{/* 0xB1 = 1100 0000    Instruction : Set Vop */}
+243     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_a79bc3509563e0bac6c86290d41dcbdd8}{CMD\_SET\_VOP} | (
+      \hyperlink{_nokia5110_l_c_d_8h_a0002e11f2ba33712a484e581f1991511}{SET\_VOP\_5V} & \hyperlink{_nokia5110_l_c_d_8h_aee5a1e57ccae6fbc08870442d754c787}{SET\_VOP\_MASK}));
+244     
+245     \textcolor{comment}{/* Set Temp coefficent */}
+246     \textcolor{comment}{/* 0x04 = 0000 0100    Instruction : Temperature Control */}
+247     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_af5ea7845ce181a7511cace6bb548544a}{CMD\_TEMP\_CONTROL} | (
+      \hyperlink{_nokia5110_l_c_d_8h_af9cffbe3b644b95e62af117cbe659acd}{TEMP\_CONTROL\_COEFF0} & \hyperlink{_nokia5110_l_c_d_8h_ad8dcbbb711cf2f05a28c0e702187ce35}{TEMP\_CONTROL\_MASK}));
+248     
+249     \textcolor{comment}{/* LCD bias mode 1:48: Try 0x13 or 0x14 */}
+250     \textcolor{comment}{/* 0x13 = 0001 0100    Instruction : Bias System */}
+251     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_aa3b814f6b1578a9dbdeed06563f016b1}{CMD\_BIAS\_SYSTEM} | (
+      \hyperlink{_nokia5110_l_c_d_8h_a5d9aa7fb016dea7e05a1de117ad0e4f5}{BIAS\_1\_BY\_8} & \hyperlink{_nokia5110_l_c_d_8h_a858abd2af474906b45154a5cc33add80}{BIAS\_SYSTEM\_MASK}));
+252     
+253     \textcolor{comment}{/* We must send 0x20 before modifying the display control mode */}
+254     \textcolor{comment}{/* 0x20 = 0010 0000    Instruction : Function set (H=0)*/}
+255     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_a6e8374040226d7ea27d2783cae94f6ec}{CMD\_FUNCTION\_SET} | ((
+      \hyperlink{_nokia5110_l_c_d_8h_a8f280391129058891d6dafd25e9f5ebe}{PD\_CHIP\_ACTIVE} << (\hyperlink{_nokia5110_l_c_d_8h_ab9126a4380117dcb422f1b2025a78cd1}{PD\_SHIFT} - 1)) & \hyperlink{_nokia5110_l_c_d_8h_a0203e2bfec43dd360d79d820f7e0da44}{FUNCTION\_SET\_MASK}));
+256     
+257     \textcolor{comment}{/* Set display control, normal mode. 0x0D for inverse */}
+258     \textcolor{comment}{/* 0x0C = 0000 1101    Instruction : Display control */}
+259     \hyperlink{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{LCD\_Write}(\hyperlink{_nokia5110_l_c_d_8h_a11051095b0ca9f734b9e33117dac5ce8}{LCD\_COMMAND}, \hyperlink{_nokia5110_l_c_d_8h_a7cff120ed9b0fef8ea6e3c829155a6b7}{CMD\_DISPLAY\_CONTROL} | (
+      \hyperlink{_nokia5110_l_c_d_8h_a28931614d96c39b23745dcf8e55001d7}{DISPLAY\_NORMAL} & \hyperlink{_nokia5110_l_c_d_8h_a2c15976b130befe754209d0379151982}{DISPLAY\_CONTROL\_MASK}));
+260     
+261     \textcolor{comment}{/* Clear the LCD screen */}
+262     \hyperlink{_nokia5110_l_c_d_8c_ae60d0b62d7eb3fa31266c095d7b3c245}{LCD\_Clear}();
+263     
+264     \textcolor{comment}{/* Display bitmap image of Cypress Logo on the LCD */}
+265 \textcolor{comment}{//    LCD\_Bitmap(CypressLogo);}
+266     
+267     \textcolor{comment}{/* Wait for 1 second before clearing the display */}
+268 \textcolor{comment}{//    CyDelay(1000);}
+269     
+270     \hyperlink{_nokia5110_l_c_d_8c_ae60d0b62d7eb3fa31266c095d7b3c245}{LCD\_Clear}();
+271 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_aa53c9d40f3aa552a9974cd55ac510cb3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=209pt]{_nokia5110_l_c_d_8c_aa53c9d40f3aa552a9974cd55ac510cb3_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!L\+C\+D\+\_\+\+String@{L\+C\+D\+\_\+\+String}}
+\index{L\+C\+D\+\_\+\+String@{L\+C\+D\+\_\+\+String}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{L\+C\+D\+\_\+\+String(char $\ast$characters)}{LCD_String(char *characters)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+\+String (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{characters}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_a4c2c90307f23817e8445be5c6ca537c5}{}\label{_nokia5110_l_c_d_8c_a4c2c90307f23817e8445be5c6ca537c5}
+
+
+Defineret på linje 288 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til L\+C\+D\+\_\+\+Character().
+
+
+
+Refereret til af L\+C\+D\+::lcd\+\_\+newline().
+
+
+\begin{DoxyCode}
+289 \{
+290     \textcolor{keywordflow}{while} (*characters)
+291         \hyperlink{_nokia5110_l_c_d_8c_ae37cf16cd7f3298d819aede8023da757}{LCD\_Character}(*characters++);
+292 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_a4c2c90307f23817e8445be5c6ca537c5_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_a4c2c90307f23817e8445be5c6ca537c5_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!L\+C\+D\+\_\+\+Write@{L\+C\+D\+\_\+\+Write}}
+\index{L\+C\+D\+\_\+\+Write@{L\+C\+D\+\_\+\+Write}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{L\+C\+D\+\_\+\+Write(uint8 data\+\_\+or\+\_\+command, uint8 data\+\_\+value)}{LCD_Write(uint8 data_or_command, uint8 data_value)}}]{\setlength{\rightskip}{0pt plus 5cm}void L\+C\+D\+\_\+\+Write (
+\begin{DoxyParamCaption}
+\item[{uint8}]{data\+\_\+or\+\_\+command, }
+\item[{uint8}]{data\+\_\+value}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}{}\label{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1}
+
+
+Defineret på linje 311 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til D\+E\+L\+A\+Y\+\_\+1\+\_\+\+US, H\+I\+GH, L\+OW og Send\+\_\+\+Data().
+
+
+
+Refereret til af L\+C\+D\+\_\+\+Bitmap(), L\+C\+D\+\_\+\+Character(), L\+C\+D\+\_\+\+Clear(), L\+C\+D\+\_\+goto\+X\+Y() og L\+C\+D\+\_\+\+Init().
+
+
+\begin{DoxyCode}
+312 \{
+313     CE\_Write(\hyperlink{_nokia5110_l_c_d_8h_ab811d8c6ff3a505312d3276590444289}{LOW});
+314     CyDelayUs(\hyperlink{_nokia5110_l_c_d_8h_ae3d7631de8f8bc443cfb910d8d7495ec}{DELAY\_1\_US});
+315     DC\_Write(data\_or\_command);
+316     \hyperlink{_nokia5110_l_c_d_8c_ae1c81f642c55e721681c1049afc22e21}{Send\_Data}(data\_value);
+317     CE\_Write(\hyperlink{_nokia5110_l_c_d_8h_a5bb885982ff66a2e0a0a45a8ee9c35e2}{HIGH});
+318     CyDelayUs(\hyperlink{_nokia5110_l_c_d_8h_ae3d7631de8f8bc443cfb910d8d7495ec}{DELAY\_1\_US});
+319 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=247pt]{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_aabeaad8714f6c1379e1d613e049554d1_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!Send\+\_\+\+Data@{Send\+\_\+\+Data}}
+\index{Send\+\_\+\+Data@{Send\+\_\+\+Data}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{Send\+\_\+\+Data(int8 value)}{Send_Data(int8 value)}}]{\setlength{\rightskip}{0pt plus 5cm}void Send\+\_\+\+Data (
+\begin{DoxyParamCaption}
+\item[{int8}]{value}
+\end{DoxyParamCaption}
+)}\hypertarget{_nokia5110_l_c_d_8c_ae1c81f642c55e721681c1049afc22e21}{}\label{_nokia5110_l_c_d_8c_ae1c81f642c55e721681c1049afc22e21}
+
+
+Defineret på linje 336 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Indeholder referencer til D\+E\+L\+A\+Y\+\_\+1\+\_\+\+US, F\+O\+N\+T\+\_\+\+H\+E\+I\+G\+HT, H\+I\+GH, L\+OW, M\+Sb\+\_\+\+P\+O\+S\+I\+T\+I\+ON og S\+H\+I\+F\+T\+\_\+\+L\+E\+F\+T\+\_\+\+B\+Y\+\_\+1.
+
+
+
+Refereret til af L\+C\+D\+\_\+\+Write().
+
+
+\begin{DoxyCode}
+337 \{
+338     uint8 index3;
+339     \textcolor{keywordflow}{for} (index3 = 0; index3 < \hyperlink{_nokia5110_l_c_d_8h_a33f4fac49f2a5e27e2857eb27f054510}{FONT\_HEIGHT}; index3++)
+340     \{
+341         \textcolor{comment}{/* Take one bit (MSb) at a time and send it to Data Input pin of LCD */}
+342         \textcolor{keywordflow}{if}(\hyperlink{_nokia5110_l_c_d_8h_aef4c84e9494a5cb4f36b8f12b66d6dbd}{MSb\_POSITION} == (value & \hyperlink{_nokia5110_l_c_d_8h_aef4c84e9494a5cb4f36b8f12b66d6dbd}{MSb\_POSITION}))
+343             Din\_Write(\hyperlink{_nokia5110_l_c_d_8h_a5bb885982ff66a2e0a0a45a8ee9c35e2}{HIGH});
+344         \textcolor{keywordflow}{else}
+345             Din\_Write(\hyperlink{_nokia5110_l_c_d_8h_ab811d8c6ff3a505312d3276590444289}{LOW});
+346         
+347         \textcolor{comment}{/* After setting the Data value on Din pin, toggle the Clock so that LCD can read Din */}
+348         Clk\_Write(\hyperlink{_nokia5110_l_c_d_8h_a5bb885982ff66a2e0a0a45a8ee9c35e2}{HIGH});
+349         CyDelayUs(\hyperlink{_nokia5110_l_c_d_8h_ae3d7631de8f8bc443cfb910d8d7495ec}{DELAY\_1\_US});
+350         Clk\_Write(\hyperlink{_nokia5110_l_c_d_8h_ab811d8c6ff3a505312d3276590444289}{LOW});
+351         CyDelayUs(\hyperlink{_nokia5110_l_c_d_8h_ae3d7631de8f8bc443cfb910d8d7495ec}{DELAY\_1\_US});
+352         
+353         \textcolor{comment}{/* Left shift the value before processing next bit */}
+354         value <<= \hyperlink{_nokia5110_l_c_d_8h_af460569931827945c54504c0532bd91c}{SHIFT\_LEFT\_BY\_1};
+355     \}
+356 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{_nokia5110_l_c_d_8c_ae1c81f642c55e721681c1049afc22e21_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Variabel-\/dokumentation}
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!Cypress\+Logo@{Cypress\+Logo}}
+\index{Cypress\+Logo@{Cypress\+Logo}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{Cypress\+Logo}{CypressLogo}}]{\setlength{\rightskip}{0pt plus 5cm}const char Cypress\+Logo\mbox{[}$\,$\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{_nokia5110_l_c_d_8c_abd16123c1907b95492929b4e045c5bed}{}\label{_nokia5110_l_c_d_8c_abd16123c1907b95492929b4e045c5bed}
+
+
+Defineret på linje 115 i filen Nokia5110\+L\+C\+D.\+c.
+
+\index{Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}!Fonts@{Fonts}}
+\index{Fonts@{Fonts}!Nokia5110\+L\+C\+D.\+c@{Nokia5110\+L\+C\+D.\+c}}
+\paragraph[{\texorpdfstring{Fonts}{Fonts}}]{\setlength{\rightskip}{0pt plus 5cm}const uint8 Fonts\mbox{[}$\,$\mbox{]}\mbox{[}{\bf F\+O\+N\+T\+\_\+\+W\+I\+D\+TH}\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{_nokia5110_l_c_d_8c_a15f4ad21eef7bd4012d7223cec9ec0dc}{}\label{_nokia5110_l_c_d_8c_a15f4ad21eef7bd4012d7223cec9ec0dc}
+
+
+Defineret på linje 14 i filen Nokia5110\+L\+C\+D.\+c.
+
+
+
+Refereret til af L\+C\+D\+\_\+\+Character().
+

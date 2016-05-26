@@ -1,0 +1,277 @@
+\hypertarget{_lumen_sensor_8h}{}\subsection{Lumen\+Sensor.\+h filreference}
+\label{_lumen_sensor_8h}\index{Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}}
+{\ttfamily \#include $<$project.\+h$>$}\\*
+Inklusions-\/afhængighedsgraf for Lumen\+Sensor.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=166pt]{_lumen_sensor_8h__incl}
+\end{center}
+\end{figure}
+Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=303pt]{_lumen_sensor_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{_lumen_sensor_8h_a89993394d4ef10fb5362c18ab189ad31}{init\+Lumen\+Sensor} ()
+\begin{DoxyCompactList}\small\item\em Initialize the light sensor. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_lumen_sensor_8h_acbfb15efe3f5e10e4de610ba5e3ef9e7}{read\+Lumen\+Sensor} ()
+\begin{DoxyCompactList}\small\item\em Read sensor data from the light sensor. \end{DoxyCompactList}\item 
+uint8 \hyperlink{_lumen_sensor_8h_a1337221b40e407eeb46861aef99c6b83}{scale\+Lux\+To\+FF} (unsigned int val)
+\begin{DoxyCompactList}\small\item\em Scale a lux value into a 0-\/255 range value Due to the limited range to scale into, lux over 1530 is scaled to 255. The top 1530 vas chosen because 1530/255 = 6. \end{DoxyCompactList}\item 
+unsigned int \hyperlink{_lumen_sensor_8h_a4e19311d2241c61d7b3a7ca9cd5fb765}{scale\+F\+Fto\+Lux} (uint8 val)
+\begin{DoxyCompactList}\small\item\em Scale a 0-\/255 range value into lux Due to the limited input range 1530 has been chosen as max value for lux. The top 1530 vas chosen because 1530/255 = 6. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}!init\+Lumen\+Sensor@{init\+Lumen\+Sensor}}
+\index{init\+Lumen\+Sensor@{init\+Lumen\+Sensor}!Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}}
+\paragraph[{\texorpdfstring{init\+Lumen\+Sensor()}{initLumenSensor()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+Lumen\+Sensor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_lumen_sensor_8h_a89993394d4ef10fb5362c18ab189ad31}{}\label{_lumen_sensor_8h_a89993394d4ef10fb5362c18ab189ad31}
+
+
+Initialize the light sensor. 
+
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 18 i filen Lumen\+Sensor.\+c.
+
+
+
+Indeholder referencer til L\+U\+M\+E\+N\+\_\+\+A\+D\+DR.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+19 \{
+20     uint8 writeBuf[2];
+21     uint32 err;
+22     
+23     \textcolor{comment}{// Add internal pull-up resistors on the SCL and SDA lines}
+24     LumenCom\_scl\_SetDriveMode(LumenCom\_scl\_DM\_RES\_UP);
+25     LumenCom\_sda\_SetDriveMode(LumenCom\_sda\_DM\_RES\_UP);
+26 
+27     LumenCom\_Start();
+28     \textcolor{comment}{// Send command to sensor:}
+29     writeBuf[0] = 0x80; \textcolor{comment}{// Highest bit set = command, low bits 0000 = control register}
+30     writeBuf[1] = 0x03; \textcolor{comment}{// Power up sensor}
+31     err = LumenCom\_I2CMasterWriteBuf(\hyperlink{_lumen_sensor_8c_aee9d6665305479ca38bc745e6f09a336}{LUMEN\_ADDR}, writeBuf, 2, LumenCom\_I2C\_MODE\_COMPLETE\_XFER);
+32     \textcolor{comment}{// Wait for the I2C command to finish transferring:}
+33     \textcolor{keywordflow}{while}(LumenCom\_I2CMasterStatus() & LumenCom\_I2C\_MSTAT\_XFER\_INP) \{\}
+34 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=245pt]{_lumen_sensor_8h_a89993394d4ef10fb5362c18ab189ad31_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}!read\+Lumen\+Sensor@{read\+Lumen\+Sensor}}
+\index{read\+Lumen\+Sensor@{read\+Lumen\+Sensor}!Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}}
+\paragraph[{\texorpdfstring{read\+Lumen\+Sensor()}{readLumenSensor()}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int read\+Lumen\+Sensor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{_lumen_sensor_8h_acbfb15efe3f5e10e4de610ba5e3ef9e7}{}\label{_lumen_sensor_8h_acbfb15efe3f5e10e4de610ba5e3ef9e7}
+
+
+Read sensor data from the light sensor. 
+
+\begin{DoxyReturn}{Returnerer}
+The lux value of the perceived light
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 42 i filen Lumen\+Sensor.\+c.
+
+
+
+Indeholder referencer til Calculate\+Lux() og L\+U\+M\+E\+N\+\_\+\+A\+D\+DR.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+43 \{
+44     uint8 readBuf[2];
+45     uint8 writeBuf[1];
+46     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} channel0 = 0;
+47     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} channel1 = 0;
+48 
+49     \textcolor{comment}{// Send "read channel 0" command}
+50     writeBuf[0] = 0xAC;
+51     LumenCom\_I2CMasterWriteBuf(\hyperlink{_lumen_sensor_8c_aee9d6665305479ca38bc745e6f09a336}{LUMEN\_ADDR}, writeBuf, 1, LumenCom\_I2C\_MODE\_NO\_STOP);
+52 
+53     \textcolor{comment}{// Wait for the I2C command to finish transferring}
+54     \textcolor{keywordflow}{while}(!(LumenCom\_I2CMasterStatus() & LumenCom\_I2C\_MSTAT\_XFER\_HALT)) \{\}
+55     \textcolor{comment}{// Read two bytes of data}
+56     LumenCom\_I2CMasterReadBuf(\hyperlink{_lumen_sensor_8c_aee9d6665305479ca38bc745e6f09a336}{LUMEN\_ADDR}, readBuf, 2,
+57         LumenCom\_I2C\_MODE\_REPEAT\_START | LumenCom\_I2C\_MODE\_NO\_STOP);
+58 
+59     \textcolor{comment}{// Wait for the I2C command to finish transferring}
+60     \textcolor{keywordflow}{while}(!(LumenCom\_I2CMasterStatus() & LumenCom\_I2C\_MSTAT\_XFER\_HALT)) \{\}
+61 
+62     channel0 = readBuf[0] + readBuf[1] * 256;
+63 
+64     \textcolor{comment}{// Send "read channel 1" command}
+65     writeBuf[0] = 0xAE;
+66     LumenCom\_I2CMasterWriteBuf(\hyperlink{_lumen_sensor_8c_aee9d6665305479ca38bc745e6f09a336}{LUMEN\_ADDR}, writeBuf, 1,
+67         LumenCom\_I2C\_MODE\_REPEAT\_START | LumenCom\_I2C\_MODE\_NO\_STOP);
+68 
+69     \textcolor{comment}{// Wait for the I2C command to finish transferring}
+70     \textcolor{keywordflow}{while}(!(LumenCom\_I2CMasterStatus() & LumenCom\_I2C\_MSTAT\_XFER\_HALT)) \{\}
+71     \textcolor{comment}{// Read two bytes of data}
+72     LumenCom\_I2CMasterReadBuf(\hyperlink{_lumen_sensor_8c_aee9d6665305479ca38bc745e6f09a336}{LUMEN\_ADDR}, readBuf, 2, LumenCom\_I2C\_MODE\_REPEAT\_START);
+73 
+74     \textcolor{comment}{// Wait for the I2C command to finish transferring}
+75     \textcolor{keywordflow}{while}(LumenCom\_I2CMasterStatus() & LumenCom\_I2C\_MSTAT\_XFER\_INP) \{\}
+76 
+77     channel1 = readBuf[0] + readBuf[1] * 256;
+78 
+79     \textcolor{comment}{// Use Datasheet function to calculate lux value from read values}
+80     \textcolor{keywordflow}{return} \hyperlink{lux_8c_a3db2aa0d603f0627be256dc108d3d763}{CalculateLux}(0, 2, channel0, channel1, 0);
+81 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{_lumen_sensor_8h_acbfb15efe3f5e10e4de610ba5e3ef9e7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{_lumen_sensor_8h_acbfb15efe3f5e10e4de610ba5e3ef9e7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}!scale\+F\+Fto\+Lux@{scale\+F\+Fto\+Lux}}
+\index{scale\+F\+Fto\+Lux@{scale\+F\+Fto\+Lux}!Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}}
+\paragraph[{\texorpdfstring{scale\+F\+Fto\+Lux(uint8 val)}{scaleFFtoLux(uint8 val)}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int scale\+F\+Fto\+Lux (
+\begin{DoxyParamCaption}
+\item[{uint8}]{val}
+\end{DoxyParamCaption}
+)}\hypertarget{_lumen_sensor_8h_a4e19311d2241c61d7b3a7ca9cd5fb765}{}\label{_lumen_sensor_8h_a4e19311d2241c61d7b3a7ca9cd5fb765}
+
+
+Scale a 0-\/255 range value into lux Due to the limited input range 1530 has been chosen as max value for lux. The top 1530 vas chosen because 1530/255 = 6. 
+
+\begin{DoxyReturn}{Returnerer}
+The an upscaled lux value 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em val} & uint8 containing a value to scale up\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 110 i filen Lumen\+Sensor.\+c.
+
+
+
+Refereret til af handler().
+
+
+\begin{DoxyCode}
+111 \{
+112 \textcolor{comment}{//    return  (val * 1530) / 255;}
+113     \textcolor{keywordflow}{return}  val * 6;
+114 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=315pt]{_lumen_sensor_8h_a4e19311d2241c61d7b3a7ca9cd5fb765_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}!scale\+Lux\+To\+FF@{scale\+Lux\+To\+FF}}
+\index{scale\+Lux\+To\+FF@{scale\+Lux\+To\+FF}!Lumen\+Sensor.\+h@{Lumen\+Sensor.\+h}}
+\paragraph[{\texorpdfstring{scale\+Lux\+To\+F\+F(unsigned int val)}{scaleLuxToFF(unsigned int val)}}]{\setlength{\rightskip}{0pt plus 5cm}uint8 scale\+Lux\+To\+FF (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{val}
+\end{DoxyParamCaption}
+)}\hypertarget{_lumen_sensor_8h_a1337221b40e407eeb46861aef99c6b83}{}\label{_lumen_sensor_8h_a1337221b40e407eeb46861aef99c6b83}
+
+
+Scale a lux value into a 0-\/255 range value Due to the limited range to scale into, lux over 1530 is scaled to 255. The top 1530 vas chosen because 1530/255 = 6. 
+
+\begin{DoxyReturn}{Returnerer}
+The lux value scaled down into a single uint8 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em val} & The lux value to scale down\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 93 i filen Lumen\+Sensor.\+c.
+
+
+
+Refereret til af handler() og scale\+Led\+P\+W\+M().
+
+
+\begin{DoxyCode}
+94 \{
+95 \textcolor{comment}{//    int tmp = (val * 255) / 1530;}
+96     \textcolor{keywordtype}{int} tmp = val / 6;
+97     \textcolor{keywordflow}{return} (uint8)((tmp < 255) ? tmp : 255);
+98 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{_lumen_sensor_8h_a1337221b40e407eeb46861aef99c6b83_icgraph}
+\end{center}
+\end{figure}
+
+

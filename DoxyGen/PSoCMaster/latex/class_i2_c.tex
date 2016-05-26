@@ -1,0 +1,458 @@
+\hypertarget{class_i2_c}{}\subsection{I2C Klasse-\/reference}
+\label{class_i2_c}\index{I2C@{I2C}}
+
+
+\hyperlink{class_i2_c}{I2C} class.  
+
+
+
+
+{\ttfamily \#include $<$i2c.\+h$>$}
+
+
+
+Samarbejdsdiagram for I2C\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{class_i2_c__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Offentlige metoder}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_i2_c_a64303230bf4843297e7ac37ac236ca04}{i2c\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialiser \hyperlink{class_i2_c}{I2C} modulet. \end{DoxyCompactList}\item 
+void \hyperlink{class_i2_c_a0e13c9c7d87ebdb3680495a787f68d29}{i2c\+\_\+set\+Packet} (uint8 i2c\+Addr, uint8 i2c\+Cmd, uint8 i2c\+Val)
+\begin{DoxyCompactList}\small\item\em Sender en \hyperlink{class_i2_c}{I2C} pakke. \end{DoxyCompactList}\item 
+void \hyperlink{class_i2_c_afd44ef28b428b7ec2cffb38c97340251}{i2c\+\_\+get\+Packet} (uint8 i2c\+Addr, uint8 i2c\+Cmd, uint8 $\ast$i2c\+Val)
+\begin{DoxyCompactList}\small\item\em Henter en \hyperlink{class_i2_c}{I2C} pakke. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Private metoder}
+\begin{DoxyCompactItemize}
+\item 
+uint8 \hyperlink{class_i2_c_a6e8687e512564fb2b0201d5fdbecba65}{i2c\+\_\+tx} (uint8 i2c\+Addr, uint8 i2c\+Cmd, uint8 i2c\+Val)
+\begin{DoxyCompactList}\small\item\em Sender en \hyperlink{class_i2_c}{I2C} pakke. \end{DoxyCompactList}\item 
+uint8 \hyperlink{class_i2_c_a802cdc1702988bf2e8efaba23eb0ce1b}{i2c\+\_\+rx} (uint8 i2c\+Rx\+Addr, uint8 $\ast$i2c\+Rx\+Cmd, uint8 $\ast$i2c\+Rx\+Val)
+\begin{DoxyCompactList}\small\item\em Henter en \hyperlink{class_i2_c}{I2C} pakke. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+\hyperlink{class_i2_c}{I2C} class. 
+
+Håndter kommunikation via I2\+C-\/busset. \begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{Dokumentation af medlemsfunktioner}
+\index{I2C@{I2C}!i2c\+\_\+get\+Packet@{i2c\+\_\+get\+Packet}}
+\index{i2c\+\_\+get\+Packet@{i2c\+\_\+get\+Packet}!I2C@{I2C}}
+\paragraph[{\texorpdfstring{i2c\+\_\+get\+Packet(uint8 i2c\+Addr, uint8 i2c\+Cmd, uint8 $\ast$i2c\+Val)}{i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 *i2cVal)}}]{\setlength{\rightskip}{0pt plus 5cm}void i2c\+\_\+get\+Packet (
+\begin{DoxyParamCaption}
+\item[{uint8}]{i2c\+Addr, }
+\item[{uint8}]{i2c\+Cmd, }
+\item[{uint8 $\ast$}]{i2c\+Val}
+\end{DoxyParamCaption}
+)}\hypertarget{class_i2_c_afd44ef28b428b7ec2cffb38c97340251}{}\label{class_i2_c_afd44ef28b428b7ec2cffb38c97340251}
+
+
+Henter en \hyperlink{class_i2_c}{I2C} pakke. 
+
+Metoden henter en \hyperlink{class_i2_c}{I2C} data pakke via I2\+C-\/busset fra den defineret adresse med den modtaget kommande og lager den på den modtaget værdi pointer. 
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em i2c\+Addr} & \hyperlink{class_i2_c}{I2C} adresse på modtager. \\
+\hline
+\mbox{\tt in}  & {\em i2c\+Cmd} & Kommando til modtager. \\
+\hline
+\mbox{\tt out}  & {\em i2c\+Val} & Pointer til variabel hvor den hentet værdi skal lagers. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returnerer}
+Status på kommunikation.
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 84 i filen i2c.\+c.
+
+
+
+Indeholder referencer til i2c\+\_\+rx(), I2\+C\+\_\+\+S\+T\+S\+\_\+\+C\+M\+D\+\_\+\+D\+O\+NE, i2c\+\_\+tx(), L\+C\+D\+::lcd\+\_\+newline() og L\+E\+D\+::set\+Led().
+
+
+
+Refereret til af Handler\+::handler().
+
+
+\begin{DoxyCode}
+85 \{
+86   uint8 status;
+87   uint8 i2cTxSTS;
+88   uint8 i2cRxCmd;
+89   \textcolor{keywordtype}{char} lcd[12];
+90   
+91   i2cTxSTS = \hyperlink{class_i2_c_a6e8687e512564fb2b0201d5fdbecba65}{i2c\_tx}(i2cAddr, i2cCmd, *i2cVal);
+92   \textcolor{keywordflow}{if}(i2cTxSTS == \hyperlink{i2c_8h_a7f8f53679384fa228bf06779cc168cfd}{I2C\_STS\_CMD\_DONE})
+93   \{
+94     status = 1;
+95     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,1,50);
+96   \}
+97   \textcolor{keywordflow}{else}
+98   \{
+99     status = 0;
+100     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(1,0,0,50);
+101   \}
+102   sprintf(lcd, \textcolor{stringliteral}{"I> %1.1x %2.2x %2.2x %1.1d"}, (\textcolor{keywordtype}{int})i2cAddr, (\textcolor{keywordtype}{int})i2cCmd, (\textcolor{keywordtype}{int})*i2cVal, status);
+103   \hyperlink{lcd_8h_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(lcd);
+104   
+105   DEBUG\_PutString(\textcolor{stringliteral}{"I>: addr: "});
+106   DEBUG\_PutHexByte(i2cAddr);
+107   DEBUG\_PutString(\textcolor{stringliteral}{" cmd: "});
+108   DEBUG\_PutHexByte(i2cCmd);
+109   DEBUG\_PutString(\textcolor{stringliteral}{" val: "});
+110   DEBUG\_PutHexByte(*i2cVal);
+111   DEBUG\_PutCRLF();
+112   
+113   \hyperlink{class_i2_c_a802cdc1702988bf2e8efaba23eb0ce1b}{i2c\_rx}(i2cAddr, &i2cRxCmd, i2cVal);
+114   \textcolor{keywordflow}{if}(i2cRxCmd == i2cCmd)
+115   \{
+116     status = 1;
+117     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,1,0,50);
+118   \}
+119   \textcolor{keywordflow}{else}
+120   \{
+121     status = 0;
+122     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(1,0,0,50);
+123   \}
+124   \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,50);
+125   
+126   sprintf(lcd, \textcolor{stringliteral}{">I %1.1x %2.2x %2.2x %1.1d"}, (\textcolor{keywordtype}{int})i2cAddr, (\textcolor{keywordtype}{int})i2cCmd, (\textcolor{keywordtype}{int})i2cVal, status);
+127   \hyperlink{lcd_8h_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(lcd);
+128   DEBUG\_PutString(\textcolor{stringliteral}{">I: addr: "});
+129   DEBUG\_PutHexByte(i2cAddr);
+130   DEBUG\_PutString(\textcolor{stringliteral}{" cmd: "});
+131   DEBUG\_PutHexByte(i2cCmd);
+132   DEBUG\_PutString(\textcolor{stringliteral}{" val: "});
+133   DEBUG\_PutHexByte(*i2cVal);
+134   DEBUG\_PutCRLF();
+135 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=289pt]{class_i2_c_afd44ef28b428b7ec2cffb38c97340251_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i2_c_afd44ef28b428b7ec2cffb38c97340251_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{I2C@{I2C}!i2c\+\_\+init@{i2c\+\_\+init}}
+\index{i2c\+\_\+init@{i2c\+\_\+init}!I2C@{I2C}}
+\paragraph[{\texorpdfstring{i2c\+\_\+init()}{i2c_init()}}]{\setlength{\rightskip}{0pt plus 5cm}void i2c\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_i2_c_a64303230bf4843297e7ac37ac236ca04}{}\label{class_i2_c_a64303230bf4843297e7ac37ac236ca04}
+
+
+Initialiser \hyperlink{class_i2_c}{I2C} modulet. 
+
+Initailiser \hyperlink{class_i2_c}{I2C} komponent på P\+SoC\textquotesingle{}en.
+
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 31 i filen i2c.\+c.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+32 \{
+33   I2CM\_Start();
+34 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=201pt]{class_i2_c_a64303230bf4843297e7ac37ac236ca04_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{I2C@{I2C}!i2c\+\_\+rx@{i2c\+\_\+rx}}
+\index{i2c\+\_\+rx@{i2c\+\_\+rx}!I2C@{I2C}}
+\paragraph[{\texorpdfstring{i2c\+\_\+rx(uint8 i2c\+Rx\+Addr, uint8 $\ast$i2c\+Rx\+Cmd, uint8 $\ast$i2c\+Rx\+Val)}{i2c_rx(uint8 i2cRxAddr, uint8 *i2cRxCmd, uint8 *i2cRxVal)}}]{\setlength{\rightskip}{0pt plus 5cm}uint8 i2c\+\_\+rx (
+\begin{DoxyParamCaption}
+\item[{uint8}]{i2c\+Rx\+Addr, }
+\item[{uint8 $\ast$}]{i2c\+Rx\+Cmd, }
+\item[{uint8 $\ast$}]{i2c\+Rx\+Val}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_i2_c_a802cdc1702988bf2e8efaba23eb0ce1b}{}\label{class_i2_c_a802cdc1702988bf2e8efaba23eb0ce1b}
+
+
+Henter en \hyperlink{class_i2_c}{I2C} pakke. 
+
+Metoden henter en \hyperlink{class_i2_c}{I2C} data pakke via I2\+C-\/busset fra den defineret adresse med den modtaget kommande og lager den på den modtaget værdi pointer. 
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em i2c\+Rx\+Addr} & \hyperlink{class_i2_c}{I2C} adresse på modtager. \\
+\hline
+\mbox{\tt in}  & {\em i2c\+Rx\+Cmd} & Kommando til modtager. \\
+\hline
+\mbox{\tt out}  & {\em i2c\+Rx\+Val} & Pointer til variabel hvor den hentet værdi skal lagers. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returnerer}
+Status på kommunikation.
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 190 i filen i2c.\+c.
+
+
+
+Indeholder referencer til I2\+C\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+ZE, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+C\+M\+D\+\_\+\+P\+OS, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+E\+OP, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+E\+O\+P\+\_\+\+P\+OS, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+S\+I\+ZE, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+S\+OP, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+S\+O\+P\+\_\+\+P\+OS, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+V\+A\+L\+\_\+\+P\+OS og I2\+C\+\_\+\+S\+T\+S\+\_\+\+C\+M\+D\+\_\+\+F\+A\+IL.
+
+
+
+Refereret til af i2c\+\_\+get\+Packet().
+
+
+\begin{DoxyCode}
+191 \{
+192   uint8 i2cRxStatus = \hyperlink{i2c_8h_aee0adbd7dcb13e95337369b7342a27e3}{I2C\_STS\_CMD\_FAIL};
+193   uint8 i2cRxData[\hyperlink{i2c_8h_a8c24abf58121f3c16b5f687cc2946cd1}{I2C\_PACKET\_SIZE}];
+194   
+195   (void) I2CM\_I2CMasterReadBuf(i2cRxAddr, i2cRxData, \hyperlink{i2c_8h_a8c24abf58121f3c16b5f687cc2946cd1}{I2C\_PACKET\_SIZE}, 
+      I2CM\_I2C\_MODE\_COMPLETE\_XFER);
+196   \textcolor{keywordflow}{while} (0u == (I2CM\_I2CMasterStatus() & I2CM\_I2C\_MSTAT\_RD\_CMPLT))
+197   \{
+198   \}
+199   \textcolor{keywordflow}{if} (0u == (I2CM\_I2C\_MSTAT\_ERR\_XFER & I2CM\_I2CMasterStatus()))
+200   \{
+201     \textcolor{keywordflow}{if} ((I2CM\_I2CMasterGetReadBufSize() == \hyperlink{i2c_8h_a6458dbf193a0eef0470fc1b08400bfcd}{I2C\_BUFFER\_SIZE}))
+202     \{
+203       \textcolor{keywordflow}{if}((i2cRxData[\hyperlink{i2c_8h_a1207f4b2c3692b1a344f0013da629310}{I2C\_PACKET\_SOP\_POS}] == \hyperlink{i2c_8h_a52bb5b964361ed2f1b18df32c5b8f2c5}{I2C\_PACKET\_SOP}) && (i2cRxData[
+      \hyperlink{i2c_8h_a940f0ea8103872c7ba81b9dc0f121feb}{I2C\_PACKET\_EOP\_POS}] == \hyperlink{i2c_8h_a62b4ae6e51a3d0da47f5165165cdbc0a}{I2C\_PACKET\_EOP}))
+204       \{
+205         *i2cRxCmd = i2cRxData[\hyperlink{i2c_8h_ac13fcfeded7dc2d82fa4734456f3761f}{I2C\_PACKET\_CMD\_POS}];
+206         *i2cRxVal = i2cRxData[\hyperlink{i2c_8h_a68506c3651f015716bb2c135e8e7b972}{I2C\_PACKET\_VAL\_POS}];
+207         i2cRxStatus = i2cRxData[\hyperlink{i2c_8h_ac13fcfeded7dc2d82fa4734456f3761f}{I2C\_PACKET\_CMD\_POS}];
+208       \}
+209     \}
+210   \}
+211   (void) I2CM\_I2CMasterClearStatus();
+212   
+213   \textcolor{keywordflow}{return} i2cRxStatus;
+214 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i2_c_a802cdc1702988bf2e8efaba23eb0ce1b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{I2C@{I2C}!i2c\+\_\+set\+Packet@{i2c\+\_\+set\+Packet}}
+\index{i2c\+\_\+set\+Packet@{i2c\+\_\+set\+Packet}!I2C@{I2C}}
+\paragraph[{\texorpdfstring{i2c\+\_\+set\+Packet(uint8 i2c\+Addr, uint8 i2c\+Cmd, uint8 i2c\+Val)}{i2c_setPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)}}]{\setlength{\rightskip}{0pt plus 5cm}void i2c\+\_\+set\+Packet (
+\begin{DoxyParamCaption}
+\item[{uint8}]{i2c\+Addr, }
+\item[{uint8}]{i2c\+Cmd, }
+\item[{uint8}]{i2c\+Val}
+\end{DoxyParamCaption}
+)}\hypertarget{class_i2_c_a0e13c9c7d87ebdb3680495a787f68d29}{}\label{class_i2_c_a0e13c9c7d87ebdb3680495a787f68d29}
+
+
+Sender en \hyperlink{class_i2_c}{I2C} pakke. 
+
+Metoden sender en \hyperlink{class_i2_c}{I2C} data pakke via I2\+C-\/busset til den defineret adresse med den modtaget kommande og tilhørende værdi. 
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em i2c\+Addr} & \hyperlink{class_i2_c}{I2C} adresse på modtager. \\
+\hline
+\mbox{\tt in}  & {\em i2c\+Cmd} & Kommando til modtager. \\
+\hline
+\mbox{\tt in}  & {\em i2c\+Val} & Værdi til modtager.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 46 i filen i2c.\+c.
+
+
+
+Indeholder referencer til I2\+C\+\_\+\+S\+T\+S\+\_\+\+C\+M\+D\+\_\+\+D\+O\+NE, i2c\+\_\+tx(), L\+C\+D\+::lcd\+\_\+newline() og L\+E\+D\+::set\+Led().
+
+
+
+Refereret til af Handler\+::handler().
+
+
+\begin{DoxyCode}
+47 \{
+48   uint8 status;
+49   \textcolor{keywordtype}{char} lcd[12];
+50   \textcolor{keywordflow}{if}(\hyperlink{class_i2_c_a6e8687e512564fb2b0201d5fdbecba65}{i2c\_tx}(i2cAddr, i2cCmd, i2cVal) == \hyperlink{i2c_8h_a7f8f53679384fa228bf06779cc168cfd}{I2C\_STS\_CMD\_DONE})
+51   \{
+52     status = 1;
+53     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,1,50);
+54   \}
+55   \textcolor{keywordflow}{else}
+56   \{
+57     status = 0;
+58     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(1,0,0,50);
+59   \}
+60   sprintf(lcd, \textcolor{stringliteral}{"I>%2.1x %2.2x %2.2x %1.1d"}, (\textcolor{keywordtype}{int})i2cAddr, (\textcolor{keywordtype}{int})i2cCmd, (\textcolor{keywordtype}{int})i2cVal, status);
+61   \hyperlink{lcd_8h_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(lcd);
+62   
+63   DEBUG\_PutString(\textcolor{stringliteral}{"I>: addr: "});
+64   DEBUG\_PutHexByte(i2cAddr);
+65   DEBUG\_PutString(\textcolor{stringliteral}{" cmd: "});
+66   DEBUG\_PutHexByte(i2cCmd);
+67   DEBUG\_PutString(\textcolor{stringliteral}{" val: "});
+68   DEBUG\_PutHexByte(i2cVal);
+69   DEBUG\_PutCRLF();
+70   \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,50);
+71 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{class_i2_c_a0e13c9c7d87ebdb3680495a787f68d29_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i2_c_a0e13c9c7d87ebdb3680495a787f68d29_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{I2C@{I2C}!i2c\+\_\+tx@{i2c\+\_\+tx}}
+\index{i2c\+\_\+tx@{i2c\+\_\+tx}!I2C@{I2C}}
+\paragraph[{\texorpdfstring{i2c\+\_\+tx(uint8 i2c\+Addr, uint8 i2c\+Cmd, uint8 i2c\+Val)}{i2c_tx(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)}}]{\setlength{\rightskip}{0pt plus 5cm}uint8 i2c\+\_\+tx (
+\begin{DoxyParamCaption}
+\item[{uint8}]{i2c\+Addr, }
+\item[{uint8}]{i2c\+Cmd, }
+\item[{uint8}]{i2c\+Val}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_i2_c_a6e8687e512564fb2b0201d5fdbecba65}{}\label{class_i2_c_a6e8687e512564fb2b0201d5fdbecba65}
+
+
+Sender en \hyperlink{class_i2_c}{I2C} pakke. 
+
+Metoden sender en \hyperlink{class_i2_c}{I2C} data pakke via I2\+C-\/busset til den defineret adresse med den modtaget kommande og tilhørende værdi. 
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em i2c\+Addr} & \hyperlink{class_i2_c}{I2C} adresse på modtager. \\
+\hline
+\mbox{\tt in}  & {\em i2c\+Cmd} & Kommando til modtager. \\
+\hline
+\mbox{\tt in}  & {\em i2c\+Val} & Værdi til modtager. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returnerer}
+Status på kommunikation.
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 153 i filen i2c.\+c.
+
+
+
+Indeholder referencer til I2\+C\+\_\+\+B\+U\+F\+F\+E\+R\+\_\+\+S\+I\+ZE, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+C\+M\+D\+\_\+\+P\+OS, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+E\+OP, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+E\+O\+P\+\_\+\+P\+OS, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+S\+I\+ZE, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+S\+OP, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+S\+O\+P\+\_\+\+P\+OS, I2\+C\+\_\+\+P\+A\+C\+K\+E\+T\+\_\+\+V\+A\+L\+\_\+\+P\+OS, I2\+C\+\_\+\+S\+T\+S\+\_\+\+C\+M\+D\+\_\+\+D\+O\+NE og I2\+C\+\_\+\+S\+T\+S\+\_\+\+C\+M\+D\+\_\+\+F\+A\+IL.
+
+
+
+Refereret til af i2c\+\_\+get\+Packet() og i2c\+\_\+set\+Packet().
+
+
+\begin{DoxyCode}
+154 \{
+155   uint8 i2cTxStatus = \hyperlink{i2c_8h_aee0adbd7dcb13e95337369b7342a27e3}{I2C\_STS\_CMD\_FAIL};
+156   uint8 i2cTxData[\hyperlink{i2c_8h_a8c24abf58121f3c16b5f687cc2946cd1}{I2C\_PACKET\_SIZE}];
+157   
+158   i2cTxData[\hyperlink{i2c_8h_a1207f4b2c3692b1a344f0013da629310}{I2C\_PACKET\_SOP\_POS}] = \hyperlink{i2c_8h_a52bb5b964361ed2f1b18df32c5b8f2c5}{I2C\_PACKET\_SOP};
+159   i2cTxData[\hyperlink{i2c_8h_ac13fcfeded7dc2d82fa4734456f3761f}{I2C\_PACKET\_CMD\_POS}] = i2cCmd;
+160   i2cTxData[\hyperlink{i2c_8h_a68506c3651f015716bb2c135e8e7b972}{I2C\_PACKET\_VAL\_POS}] = i2cVal;
+161   i2cTxData[\hyperlink{i2c_8h_a940f0ea8103872c7ba81b9dc0f121feb}{I2C\_PACKET\_EOP\_POS}] = \hyperlink{i2c_8h_a62b4ae6e51a3d0da47f5165165cdbc0a}{I2C\_PACKET\_EOP};
+162   
+163   (void) I2CM\_I2CMasterWriteBuf(i2cAddr, i2cTxData, \hyperlink{i2c_8h_a8c24abf58121f3c16b5f687cc2946cd1}{I2C\_PACKET\_SIZE}, 
+      I2CM\_I2C\_MODE\_COMPLETE\_XFER);
+164   \textcolor{keywordflow}{while} (0u == (I2CM\_I2CMasterStatus() & I2CM\_I2C\_MSTAT\_WR\_CMPLT))
+165   \{
+166   \}
+167   \textcolor{keywordflow}{if} (0u == (I2CM\_I2C\_MSTAT\_ERR\_XFER & I2CM\_I2CMasterStatus()))
+168   \{
+169     \textcolor{keywordflow}{if} (I2CM\_I2CMasterGetWriteBufSize() == \hyperlink{i2c_8h_a6458dbf193a0eef0470fc1b08400bfcd}{I2C\_BUFFER\_SIZE})
+170     \{
+171       i2cTxStatus = \hyperlink{i2c_8h_a7f8f53679384fa228bf06779cc168cfd}{I2C\_STS\_CMD\_DONE};
+172     \}
+173   \}
+174   (void) I2CM\_I2CMasterClearStatus();
+175   
+176   \textcolor{keywordflow}{return} i2cTxStatus;
+177 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_i2_c_a6e8687e512564fb2b0201d5fdbecba65_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Dokumentationen for denne klasse blev genereret ud fra filerne\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{i2c_8h}{i2c.\+h}\item 
+\hyperlink{i2c_8c}{i2c.\+c}\end{DoxyCompactItemize}

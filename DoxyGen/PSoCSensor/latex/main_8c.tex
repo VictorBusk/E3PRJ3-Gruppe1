@@ -1,0 +1,606 @@
+\hypertarget{main_8c}{}\subsection{main.\+c filreference}
+\label{main_8c}\index{main.\+c@{main.\+c}}
+
+
+Main file for Sensor-\/\+P\+SoC.  
+
+
+{\ttfamily \#include $<$project.\+h$>$}\\*
+{\ttfamily \#include $<$stdio.\+h$>$}\\*
+{\ttfamily \#include \char`\"{}Sensor\+Data.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}Lumen\+Sensor.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}handler.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}i2c.\+h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}queue.\+h\char`\"{}}\\*
+Inklusions-\/afhængighedsgraf for main.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c__incl}
+\end{center}
+\end{figure}
+\subsubsection*{\#Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{main_8c_a911d91f7898a9a0c4e35bb71e01d39a0}{D\+E\+B\+U\+G\+\_\+\+ON}
+\end{DoxyCompactItemize}
+\subsubsection*{Enumerationer}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0}{sensor} \{ \\*
+\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}{D\+I\+ST}, 
+\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}{L\+U\+M\+EN}, 
+\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}{P\+IR}, 
+\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{D\+I\+S\+T\+\_\+\+A\+L\+E\+RT}, 
+\\*
+\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}{M\+O\+V\+E\+\_\+\+A\+L\+E\+RT}
+ \}
+\item 
+enum \hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231}{ctrl} \{ \hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{C\+O\+U\+NT}, 
+\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{R\+A\+TE}, 
+\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{F\+L\+AG}
+ \}
+\end{DoxyCompactItemize}
+\subsubsection*{Funktioner}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{main_8c_a0fd1541e8b5dd4632bcd172e587867e7}{scale\+Led\+P\+WM} ()
+\begin{DoxyCompactList}\small\item\em Should control L\+ED output according to measured and desired lux Does not currently work\+: L\+E\+Ds cannot produce enough light to affect the measured lux in a meaningful way. Should have implemented a primitive P\+ID controller (so far only P-\/part has been attempted implemented). \end{DoxyCompactList}\item 
+void \hyperlink{main_8c_ab71b7288d2eed8977e50757ebc2676f7}{init\+Ctrl\+Flags} ()
+\item 
+void \hyperlink{main_8c_a8f8722a3186c0854e4c79a42d505919e}{incr\+Ctrl\+Flag} (enum \hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0}{sensor} se)
+\item 
+\hyperlink{main_8c_a3b57b6f2f7b51ae3f0d451bf4eacb583}{C\+Y\+\_\+\+I\+SR} (Metronome\+\_\+\+Interrupt)
+\item 
+\hyperlink{main_8c_ad3bf9e5c182ff36df81d72095be2f4cd}{C\+Y\+\_\+\+I\+SR} (Dist\+Timer\+\_\+\+Interrupt)
+\item 
+int \hyperlink{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\begin{DoxyCompactList}\small\item\em Main function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Variable}
+\begin{DoxyCompactItemize}
+\item 
+char \hyperlink{main_8c_a5f5aa467e9be80dc4d6ec9632e2bbb21}{bla} \mbox{[}150\mbox{]}
+\item 
+char \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{control\+Flags} \mbox{[}5\mbox{]}\mbox{[}3\mbox{]}
+\item 
+uint8 \hyperlink{main_8c_a207aeefbb3ad600c6c96cc609f5c72e1}{dist\+Alert\+Triggered} = 0
+\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+Main file for Sensor-\/\+P\+SoC. 
+
+Contains the main loop and control structure for the Sensor-\/\+P\+SoC. The main control is the Metronome timer which generates an interrupt every half second. This interrupt then increases a set of counters which, in turn, set flags when the counters overflow. This allows us to define periodic events that trigger on integer multiple of half seconds.
+
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{\#Define-\/dokumentation}
+\index{main.\+c@{main.\+c}!D\+E\+B\+U\+G\+\_\+\+ON@{D\+E\+B\+U\+G\+\_\+\+ON}}
+\index{D\+E\+B\+U\+G\+\_\+\+ON@{D\+E\+B\+U\+G\+\_\+\+ON}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{D\+E\+B\+U\+G\+\_\+\+ON}{DEBUG_ON}}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\+E\+B\+U\+G\+\_\+\+ON}\hypertarget{main_8c_a911d91f7898a9a0c4e35bb71e01d39a0}{}\label{main_8c_a911d91f7898a9a0c4e35bb71e01d39a0}
+Debug define. Comment out to suppress debug prints 
+
+Defineret på linje 22 i filen main.\+c.
+
+
+
+\subsubsection{Dokumentation af enumerations-\/typer}
+\index{main.\+c@{main.\+c}!ctrl@{ctrl}}
+\index{ctrl@{ctrl}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{ctrl}{ctrl}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf ctrl}}\hypertarget{main_8c_a2ccd086d97741fd5669700e420bed231}{}\label{main_8c_a2ccd086d97741fd5669700e420bed231}
+Flag names \begin{Desc}
+\item[Enumerationsværdier]\par
+\begin{description}
+\index{C\+O\+U\+NT@{C\+O\+U\+NT}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!C\+O\+U\+NT@{C\+O\+U\+NT}}\item[{\em 
+C\+O\+U\+NT\hypertarget{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{}\label{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}
+}]\index{R\+A\+TE@{R\+A\+TE}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!R\+A\+TE@{R\+A\+TE}}\item[{\em 
+R\+A\+TE\hypertarget{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{}\label{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}
+}]\index{F\+L\+AG@{F\+L\+AG}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!F\+L\+AG@{F\+L\+AG}}\item[{\em 
+F\+L\+AG\hypertarget{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{}\label{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}
+}]\end{description}
+\end{Desc}
+
+
+Defineret på linje 31 i filen main.\+c.
+
+
+\begin{DoxyCode}
+31 \{\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}, \hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{RATE}, \hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}\};
+\end{DoxyCode}
+\index{main.\+c@{main.\+c}!sensor@{sensor}}
+\index{sensor@{sensor}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{sensor}{sensor}}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf sensor}}\hypertarget{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0}{}\label{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0}
+List of event names \begin{Desc}
+\item[Enumerationsværdier]\par
+\begin{description}
+\index{D\+I\+ST@{D\+I\+ST}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!D\+I\+ST@{D\+I\+ST}}\item[{\em 
+D\+I\+ST\hypertarget{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}{}\label{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}
+}]\index{L\+U\+M\+EN@{L\+U\+M\+EN}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!L\+U\+M\+EN@{L\+U\+M\+EN}}\item[{\em 
+L\+U\+M\+EN\hypertarget{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}{}\label{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}
+}]\index{P\+IR@{P\+IR}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!P\+IR@{P\+IR}}\item[{\em 
+P\+IR\hypertarget{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}{}\label{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}
+}]\index{D\+I\+S\+T\+\_\+\+A\+L\+E\+RT@{D\+I\+S\+T\+\_\+\+A\+L\+E\+RT}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!D\+I\+S\+T\+\_\+\+A\+L\+E\+RT@{D\+I\+S\+T\+\_\+\+A\+L\+E\+RT}}\item[{\em 
+D\+I\+S\+T\+\_\+\+A\+L\+E\+RT\hypertarget{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{}\label{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}
+}]\index{M\+O\+V\+E\+\_\+\+A\+L\+E\+RT@{M\+O\+V\+E\+\_\+\+A\+L\+E\+RT}!main.\+c@{main.\+c}}\index{main.\+c@{main.\+c}!M\+O\+V\+E\+\_\+\+A\+L\+E\+RT@{M\+O\+V\+E\+\_\+\+A\+L\+E\+RT}}\item[{\em 
+M\+O\+V\+E\+\_\+\+A\+L\+E\+RT\hypertarget{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}{}\label{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}
+}]\end{description}
+\end{Desc}
+
+
+Defineret på linje 29 i filen main.\+c.
+
+
+\begin{DoxyCode}
+29 \{\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}{DIST}, \hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}{LUMEN}, \hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}{PIR}, \hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}, \hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}{MOVE\_ALERT}\};
+\end{DoxyCode}
+
+
+\subsubsection{Funktions-\/dokumentation}
+\index{main.\+c@{main.\+c}!C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}}
+\index{C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{C\+Y\+\_\+\+I\+S\+R(\+Metronome\+\_\+\+Interrupt)}{CY_ISR(Metronome_Interrupt)}}]{\setlength{\rightskip}{0pt plus 5cm}C\+Y\+\_\+\+I\+SR (
+\begin{DoxyParamCaption}
+\item[{Metronome\+\_\+\+Interrupt}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_a3b57b6f2f7b51ae3f0d451bf4eacb583}{}\label{main_8c_a3b57b6f2f7b51ae3f0d451bf4eacb583}
+Metronome timer interrupt handler 
+
+Defineret på linje 58 i filen main.\+c.
+
+
+
+Indeholder referencer til D\+I\+ST, incr\+Ctrl\+Flag(), L\+U\+M\+EN, M\+O\+V\+E\+\_\+\+A\+L\+E\+RT og P\+IR.
+
+
+\begin{DoxyCode}
+59 \{
+60     \textcolor{comment}{// Clear interrupt}
+61     MetronomeTimer\_ReadStatusRegister();
+62 
+63     \hyperlink{main_8c_a8f8722a3186c0854e4c79a42d505919e}{incrCtrlFlag}(\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}{DIST});
+64     \hyperlink{main_8c_a8f8722a3186c0854e4c79a42d505919e}{incrCtrlFlag}(\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}{LUMEN});
+65     \hyperlink{main_8c_a8f8722a3186c0854e4c79a42d505919e}{incrCtrlFlag}(\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}{PIR});
+66     \textcolor{comment}{// Not DIST\_ALERT}
+67     \hyperlink{main_8c_a8f8722a3186c0854e4c79a42d505919e}{incrCtrlFlag}(\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}{MOVE\_ALERT});
+68 
+69 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+70 \textcolor{comment}{//    DEBUG\_PutString("Beat\(\backslash\)r\(\backslash\)n");}
+71 \textcolor{preprocessor}{#endif}
+72 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{main_8c_a3b57b6f2f7b51ae3f0d451bf4eacb583_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{main.\+c@{main.\+c}!C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}}
+\index{C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{C\+Y\+\_\+\+I\+S\+R(\+Dist\+Timer\+\_\+\+Interrupt)}{CY_ISR(DistTimer_Interrupt)}}]{\setlength{\rightskip}{0pt plus 5cm}C\+Y\+\_\+\+I\+SR (
+\begin{DoxyParamCaption}
+\item[{Dist\+Timer\+\_\+\+Interrupt}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_ad3bf9e5c182ff36df81d72095be2f4cd}{}\label{main_8c_ad3bf9e5c182ff36df81d72095be2f4cd}
+Timer interrupt for ultrasonic distance sensor 
+
+Defineret på linje 78 i filen main.\+c.
+
+
+
+Indeholder referencer til control\+Flags, C\+O\+U\+NT, sensor\+Data\+T\+::desired\+Time\+Distance, D\+I\+S\+T\+\_\+\+A\+L\+E\+RT, dist\+Alert\+Triggered, sensor\+Data\+T\+::distance, F\+L\+AG og sensor\+Data.
+
+
+\begin{DoxyCode}
+79 \{
+80     \textcolor{comment}{//  Calculate distance from delay. Basic formula: cm = micro-seconds / 58}
+81     \textcolor{comment}{//      Timer counts down from 2^16, so start at 2^16 and subtract timer.}
+82     \textcolor{keywordtype}{int} echoDelay = (1<<16) - DistTimer\_ReadCapture();
+83 
+84     \textcolor{comment}{//  Integer calculations means everything gets rounded down, so add}
+85     \textcolor{comment}{//      half a cm (58/2) to make 3.5 round up instead.}
+86     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_afb9412686cd344ad61757c1c19ba8a87}{distance} = (echoDelay + 58/2) / 58;
+87 
+88     \textcolor{comment}{// Check if we are too close - check done in time domain due to greater resolution}
+89     \textcolor{keywordflow}{if} (echoDelay < \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a477d7465dc8c397bdb795593df890d8b}{desiredTimeDistance}) \{
+90         \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}] = 1;
+91     \} \textcolor{keywordflow}{else} \{
+92         \hyperlink{main_8c_a207aeefbb3ad600c6c96cc609f5c72e1}{distAlertTriggered} = 0;
+93         DistInterruptPin\_Write(0);
+94         \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}] = 0;
+95     \}
+96 
+97     \textcolor{comment}{// Reset the timer}
+98     DistReset\_Write(1);
+99 
+100 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+101 \textcolor{comment}{//    sprintf(bla, "Dist: %i\(\backslash\)n\(\backslash\)r", sensorData.distance);}
+102 \textcolor{comment}{//    DEBUG\_PutString(bla);}
+103 \textcolor{preprocessor}{#endif}
+104 \}
+\end{DoxyCode}
+\index{main.\+c@{main.\+c}!incr\+Ctrl\+Flag@{incr\+Ctrl\+Flag}}
+\index{incr\+Ctrl\+Flag@{incr\+Ctrl\+Flag}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{incr\+Ctrl\+Flag(enum sensor se)}{incrCtrlFlag(enum sensor se)}}]{\setlength{\rightskip}{0pt plus 5cm}void incr\+Ctrl\+Flag (
+\begin{DoxyParamCaption}
+\item[{enum {\bf sensor}}]{se}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_a8f8722a3186c0854e4c79a42d505919e}{}\label{main_8c_a8f8722a3186c0854e4c79a42d505919e}
+Helper function\+: Increase count, check for overflow, and raise flag if needed 
+
+Defineret på linje 50 i filen main.\+c.
+
+
+
+Indeholder referencer til control\+Flags, C\+O\+U\+NT, F\+L\+AG og R\+A\+TE.
+
+
+
+Refereret til af C\+Y\+\_\+\+I\+S\+R().
+
+
+\begin{DoxyCode}
+51 \{
+52     \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[se][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}] = (\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[se][
+      \hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}] + 1) % \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[se][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{RATE}];
+53     \textcolor{keywordflow}{if} (\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[se][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}] == 0) \{
+54         \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[se][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}] = 1;
+55     \}
+56 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{main_8c_a8f8722a3186c0854e4c79a42d505919e_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{main.\+c@{main.\+c}!init\+Ctrl\+Flags@{init\+Ctrl\+Flags}}
+\index{init\+Ctrl\+Flags@{init\+Ctrl\+Flags}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{init\+Ctrl\+Flags()}{initCtrlFlags()}}]{\setlength{\rightskip}{0pt plus 5cm}void init\+Ctrl\+Flags (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_ab71b7288d2eed8977e50757ebc2676f7}{}\label{main_8c_ab71b7288d2eed8977e50757ebc2676f7}
+Initializer for control structure 
+
+Defineret på linje 41 i filen main.\+c.
+
+
+
+Indeholder referencer til control\+Flags, D\+I\+ST, L\+U\+M\+EN, M\+O\+V\+E\+\_\+\+A\+L\+E\+RT, P\+IR og R\+A\+TE.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+42 \{
+43     \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}{DIST}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{RATE}] = 3;
+44     \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}{LUMEN}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{RATE}] = 2;
+45     \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}{PIR}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{RATE}] = 1;
+46 
+47     \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}{MOVE\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231ad686160b5c55c6a61d43aa09ded647ef}{RATE}] = 1;
+48 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=222pt]{main_8c_ab71b7288d2eed8977e50757ebc2676f7_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{main.\+c@{main.\+c}!main@{main}}
+\index{main@{main}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{main()}{main()}}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{}\label{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}
+
+
+Main function. 
+
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 111 i filen main.\+c.
+
+
+
+Indeholder referencer til bla, sensor\+Data\+T\+::blue\+P\+W\+M\+Pct, cmd\+Distance\+Alert, cmd\+Movement\+Alert, control\+Flags, C\+O\+U\+NT, sensor\+Data\+T\+::desired\+Lux, D\+I\+ST, D\+I\+S\+T\+\_\+\+A\+L\+E\+RT, dist\+Alert\+Triggered, F\+L\+AG, Queue\+::front\+Queue(), get\+Mean\+Value(), sensor\+Data\+T\+::green\+P\+W\+M\+Pct, handler(), i2c\+\_\+init(), i2c\+\_\+rx(), i2c\+\_\+tx(), init\+Ctrl\+Flags(), init\+Lumen\+Sensor(), Sensor\+Data\+::init\+Sensor\+Data(), insert\+Value(), Queue\+::is\+Empty\+Queue(), sensor\+Data\+T\+::led\+Power, L\+U\+M\+EN, sensor\+Data\+T\+::\+Lumen\+Mean, sensor\+Data\+T\+::lux, M\+O\+V\+E\+\_\+\+A\+L\+E\+RT, sensor\+Data\+T\+::movement, sensor\+Data\+T\+::movement\+Alert\+On, P\+IR, Queue\+::pop\+Queue(), Queue\+::queue\+\_\+init(), Queue\+::queue\+Count\+\_\+, read\+Lumen\+Sensor(), sensor\+Data\+T\+::red\+P\+W\+M\+Pct, scale\+Led\+P\+W\+M() og sensor\+Data.
+
+
+\begin{DoxyCode}
+112 \{
+113     CyGlobalIntEnable; \textcolor{comment}{/* Enable global interrupts. */}
+114 
+115     \textcolor{comment}{// Data collection}
+116     \hyperlink{class_sensor_data_ad900f3738890946c3d0516ddd9105474}{initSensorData}();
+117     
+118     \textcolor{comment}{// Afstandssensor}
+119     DistTimer\_Start();
+120     DistTimerInt\_StartEx(DistTimer\_Interrupt);
+121     
+122     \textcolor{comment}{// Lumen sensor}
+123     \hyperlink{_lumen_sensor_8c_a89993394d4ef10fb5362c18ab189ad31}{initLumenSensor}();
+124 
+125     \textcolor{comment}{// LED PWM}
+126     GreenPWM\_Start();
+127     RedPWM\_Start();
+128     BluePWM\_Start();
+129     
+130     \textcolor{comment}{// Main command loop}
+131     \hyperlink{main_8c_ab71b7288d2eed8977e50757ebc2676f7}{initCtrlFlags}();
+132     MetronomeTimer\_Start();
+133     MetronomeISR\_StartEx(Metronome\_Interrupt);
+134     \hyperlink{class_queue_a2f53f032b89a2e6f1906a3d7aef99df3}{queue\_init}(6u);
+135     \hyperlink{i2c_8c_a64303230bf4843297e7ac37ac236ca04}{i2c\_init}();
+136 
+137     \textcolor{keywordflow}{for}(;;)
+138     \{
+139         \textcolor{comment}{// Handle communication with PSoC4Master}
+140         \hyperlink{i2c_8c_aa4ea9909be7f922f5f57629bf81915fb}{i2c\_rx}();
+141         \textcolor{keywordflow}{if}(\hyperlink{class_queue_a0a59d535179c225aa8a08eab5967e80b}{isEmptyQueue}() != 1)
+142         \{   \textcolor{keywordtype}{char} queue[25];
+143             \textcolor{keyword}{struct }\hyperlink{queue_8h_struct_data}{Data} action;
+144             action = \hyperlink{class_queue_ad9db61946726aa012867eb9947a4597b}{frontQueue}();
+145             \hyperlink{handler_8c_af5be5b016b862943cd22504490acc8f4}{handler}(action.cmd\_, action.val\_);
+146             sprintf(queue, \textcolor{stringliteral}{"Queue: %i Cmd: %i Cal: %i\(\backslash\)n\(\backslash\)r"}, \hyperlink{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{queueCount\_},action.cmd\_, action.val\_
+      );
+147             DEBUG\_PutString(queue);
+148             \hyperlink{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b}{popQueue}();
+149         \}
+150         \hyperlink{i2c_8c_a3d3187ad377a6ca29b3fac5c809b6012}{i2c\_tx}();
+151         
+152         \textcolor{comment}{// Afstandssensor}
+153         \textcolor{keywordflow}{if} (\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}{DIST}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}]) \{
+154             \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0ac04fbbdf0d80a4ad25e565541deeebd7}{DIST}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}] = 0;
+155             \textcolor{comment}{// Start the distance sensor by holding the trigger pin high for 10us}
+156             DistReset\_Write(0);
+157             DistTrigger\_Write(1);
+158             CyDelayUs(10);
+159             DistTrigger\_Write(0);
+160         \}
+161 
+162         \textcolor{keywordflow}{if} (\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}][FLAG]) \{
+163             \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}] = 0;
+164             
+165             \textcolor{comment}{// Have to get two "too close" readings in a row to trigger alert}
+166             ++(\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}]);
+167             \textcolor{keywordflow}{if} (!\hyperlink{main_8c_a207aeefbb3ad600c6c96cc609f5c72e1}{distAlertTriggered} && \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[
+      \hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}] >= 1) \{
+168                 \textcolor{comment}{// Set counter to fixed value - keeps it high but prevents overflow}
+169                 \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a2590237029e957b0fb81cd5c2d738b62}{DIST\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a2addb49878f50c95dc669e5fdbd130a2}{COUNT}] = 10;
+170                 \hyperlink{main_8c_a207aeefbb3ad600c6c96cc609f5c72e1}{distAlertTriggered} = 1;
+171                 DistInterruptPin\_Write(1);
+172                 \hyperlink{handler_8c_af5be5b016b862943cd22504490acc8f4}{handler}(\hyperlink{handler_8h_a7ff1eee538e52b66fc7bbfb56e239509}{cmdDistanceAlert}, 0xff);
+173             \}
+174         \}
+175         
+176         \textcolor{comment}{// PIR sensor}
+177         \textcolor{keywordflow}{if} (\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}{PIR}][FLAG]) \{
+178             \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a7cefca5c74725c0b7b00fa4020d957e7}{PIR}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}] = 0;
+179 
+180             \textcolor{keywordflow}{if} (\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}{movementAlertOn}) \{
+181                 \textcolor{comment}{// Read the PIR sensor output}
+182                 \textcolor{keywordtype}{int} tmp = PIR\_Trig\_Read();
+183                 \textcolor{comment}{// If there is movement now but not before}
+184                 \textcolor{keywordflow}{if} (tmp) \{
+185                     \textcolor{comment}{// Movement detected - set movement high}
+186                     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement} = 10;
+187 
+188                     \textcolor{keywordflow}{if} (!\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement}) \{
+189                         \textcolor{comment}{// Did it just happen?}
+190                         \hyperlink{handler_8c_af5be5b016b862943cd22504490acc8f4}{handler}(\hyperlink{handler_8h_a7f220e109d88ae4a5a48cb33de8afb21}{cmdMovementAlert}, 0xff);
+191                     \}
+192                 \} \textcolor{keywordflow}{else} \{
+193                     \textcolor{comment}{// No movement}
+194                     \textcolor{keywordflow}{if} (\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement}) \{
+195                         \textcolor{comment}{// But there were movement before - so slowly decay the indicator}
+196                         --(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement});
+197                     \}
+198                 \}
+199             \} \textcolor{keywordflow}{else} \{
+200                 \textcolor{comment}{// Movement alert is off}
+201                 \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement} = 0;
+202             \}
+203         \}
+204 
+205         \textcolor{keywordflow}{if} (\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}{MOVE\_ALERT}][FLAG]) \{
+206             \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a9b37eea1976590486f7bbc099f50f975}{MOVE\_ALERT}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}] = 0;
+207 
+208             \textcolor{keywordflow}{if} (\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a722c0f415211bda0d848dd8edac4f1fe}{movementAlertOn}) \{
+209                 \textcolor{keywordflow}{if} (\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a8699b179d899b8419f6db53fab22f6cc}{movement}) \{
+210                     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = 1;
+211                     RedPWM\_Start();
+212                     GreenPWM\_Start();
+213                     BluePWM\_Start();
+214                     RedPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct});
+215                     GreenPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct});
+216                     BluePWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct});
+217                 \} \textcolor{keywordflow}{else} \{
+218                     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} = 0;
+219                     RedPWM\_Stop();
+220                     GreenPWM\_Stop();
+221                     BluePWM\_Stop();
+222                 \}
+223             \}
+224         \}
+225 
+226         \textcolor{comment}{// Lumen sensor}
+227         \textcolor{keywordflow}{if} (\hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}{LUMEN}][FLAG]) \{
+228             \hyperlink{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{controlFlags}[\hyperlink{main_8c_ad2c79e7569cbb6bbd9a5632a509151f0a0abc2f9115b93fac8a0f2951a6e17fe3}{LUMEN}][\hyperlink{main_8c_a2ccd086d97741fd5669700e420bed231a391ad3dbcf1f6d5c27590a7e511a1667}{FLAG}] = 0;
+229             \textcolor{comment}{// Read the lux value from the sensor}
+230             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} luxValue = \hyperlink{_lumen_sensor_8c_acbfb15efe3f5e10e4de610ba5e3ef9e7}{readLumenSensor}();
+231             \textcolor{comment}{// Add lux value to history}
+232             \hyperlink{_circular_mean_8c_a6dfc9bb6b16de641325dc73e7f31f7fc}{insertValue}(&\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a2ff5a38714ef318f86285c7d8fe4c8ea}{LumenMean}, luxValue);
+233             \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_aeb23f0cb9c43c48bf83c1d75a5c179a4}{lux} = \hyperlink{_circular_mean_8c_a521968471dd1466d7efc8deb9fb14118}{getMeanValue}(&\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.
+      \hyperlink{_sensor_data_8h_a2ff5a38714ef318f86285c7d8fe4c8ea}{LumenMean});
+234 
+235             \textcolor{keywordflow}{if} (\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a3fc7bb7b6b9d39b2a6ae384d15fc5b9d}{ledPower} && \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.
+      \hyperlink{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}{desiredLux} != 0) \{
+236                 \hyperlink{main_8c_a0fd1541e8b5dd4632bcd172e587867e7}{scaleLedPWM}();
+237             \}
+238             
+239 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+240             sprintf(\hyperlink{main_8c_a5f5aa467e9be80dc4d6ec9632e2bbb21}{bla}, \textcolor{stringliteral}{"Lux: %u, mean: %i\(\backslash\)n\(\backslash\)r"}, luxValue, \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.
+      \hyperlink{_sensor_data_8h_aeb23f0cb9c43c48bf83c1d75a5c179a4}{lux});
+241             DEBUG\_PutString(\hyperlink{main_8c_a5f5aa467e9be80dc4d6ec9632e2bbb21}{bla});
+242 \textcolor{preprocessor}{#endif}
+243         \}
+244     \}
+245 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c_ae66f6b31b5ad750f1fe042a706a4e3d4_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{main.\+c@{main.\+c}!scale\+Led\+P\+WM@{scale\+Led\+P\+WM}}
+\index{scale\+Led\+P\+WM@{scale\+Led\+P\+WM}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{scale\+Led\+P\+W\+M()}{scaleLedPWM()}}]{\setlength{\rightskip}{0pt plus 5cm}void scale\+Led\+P\+WM (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{main_8c_a0fd1541e8b5dd4632bcd172e587867e7}{}\label{main_8c_a0fd1541e8b5dd4632bcd172e587867e7}
+
+
+Should control L\+ED output according to measured and desired lux Does not currently work\+: L\+E\+Ds cannot produce enough light to affect the measured lux in a meaningful way. Should have implemented a primitive P\+ID controller (so far only P-\/part has been attempted implemented). 
+
+\begin{DoxyAuthor}{Forfatter}
+Simon Nejmann (\href{mailto:19981127@uni.au.dk}{\tt 19981127@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 256 i filen main.\+c.
+
+
+
+Indeholder referencer til bla, sensor\+Data\+T\+::blue\+P\+W\+M\+Pct, sensor\+Data\+T\+::desired\+Lux, sensor\+Data\+T\+::green\+P\+W\+M\+Pct, sensor\+Data\+T\+::lux, sensor\+Data\+T\+::red\+P\+W\+M\+Pct, scale\+Lux\+To\+F\+F() og sensor\+Data.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+257 \{
+258     \textcolor{comment}{// Work in scaled units since the LedPWMs also use the 0-255 range}
+259     uint8 luxFF = \hyperlink{_lumen_sensor_8c_a1337221b40e407eeb46861aef99c6b83}{scaleLuxToFF}(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_aeb23f0cb9c43c48bf83c1d75a5c179a4}{lux});
+260     uint8 luxDesFF = \hyperlink{_lumen_sensor_8c_a1337221b40e407eeb46861aef99c6b83}{scaleLuxToFF}(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ad85f2cca5ef7520f1dc87fc48fc6d8e6}{desiredLux});
+261     int16 delta = luxDesFF - luxFF;
+262 
+263     \textcolor{comment}{// Keep delta in check - don't want light-levels jumping too much}
+264     delta = (delta > 10) ? 10 : delta;
+265     delta = (delta < -10) ? -10 : delta;
+266     
+267 \textcolor{preprocessor}{#ifdef DEBUG\_ON}
+268     sprintf(\hyperlink{main_8c_a5f5aa467e9be80dc4d6ec9632e2bbb21}{bla}, \textcolor{stringliteral}{"Delta: %i, RGB: %i, %i, %i\(\backslash\)n\(\backslash\)r"}, delta,
+269         \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct}, \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.
+      \hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct}, \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct});
+270     DEBUG\_PutString(\hyperlink{main_8c_a5f5aa467e9be80dc4d6ec9632e2bbb21}{bla});
+271 \textcolor{preprocessor}{#endif}
+272 
+273 \textcolor{comment}{// Scale LEDs by delta}
+274     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct} += delta;
+275     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct} += delta;
+276     \hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct} += delta;
+277 
+278     RedPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_a6ac22d5f267938f95b2261ffa3d5e2d2}{redPWMPct});
+279     GreenPWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac83b8257127d55e998596d703ff141ac}{greenPWMPct});
+280     BluePWM\_WriteCompare(\hyperlink{_sensor_data_8h_a166db779eaca1ca69d6d63aa4fc36674}{sensorData}.\hyperlink{_sensor_data_8h_ac79167c0eef257a67503f9fbce9d377c}{bluePWMPct});
+281 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=275pt]{main_8c_a0fd1541e8b5dd4632bcd172e587867e7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{main_8c_a0fd1541e8b5dd4632bcd172e587867e7_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Variabel-\/dokumentation}
+\index{main.\+c@{main.\+c}!bla@{bla}}
+\index{bla@{bla}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{bla}{bla}}]{\setlength{\rightskip}{0pt plus 5cm}char bla\mbox{[}150\mbox{]}}\hypertarget{main_8c_a5f5aa467e9be80dc4d6ec9632e2bbb21}{}\label{main_8c_a5f5aa467e9be80dc4d6ec9632e2bbb21}
+
+
+Defineret på linje 23 i filen main.\+c.
+
+
+
+Refereret til af main() og scale\+Led\+P\+W\+M().
+
+\index{main.\+c@{main.\+c}!control\+Flags@{control\+Flags}}
+\index{control\+Flags@{control\+Flags}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{control\+Flags}{controlFlags}}]{\setlength{\rightskip}{0pt plus 5cm}char control\+Flags\mbox{[}5\mbox{]}\mbox{[}3\mbox{]}}\hypertarget{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}{}\label{main_8c_a029a2658ec6fe4bee1a7e60d549e151f}
+{\bfseries Startværdi\+:}
+\begin{DoxyCode}
+= \{
+    \{1,-1, 0\},
+    \{1,-1, 0\},
+    \{1,-1, 0\},
+    \{1,-1, 0\},
+    \{1,-1, 0\}
+\}
+\end{DoxyCode}
+Control matrix\+: flags x event\+\_\+names 
+
+Defineret på linje 33 i filen main.\+c.
+
+
+
+Refereret til af C\+Y\+\_\+\+I\+S\+R(), incr\+Ctrl\+Flag(), init\+Ctrl\+Flags() og main().
+
+\index{main.\+c@{main.\+c}!dist\+Alert\+Triggered@{dist\+Alert\+Triggered}}
+\index{dist\+Alert\+Triggered@{dist\+Alert\+Triggered}!main.\+c@{main.\+c}}
+\paragraph[{\texorpdfstring{dist\+Alert\+Triggered}{distAlertTriggered}}]{\setlength{\rightskip}{0pt plus 5cm}uint8 dist\+Alert\+Triggered = 0}\hypertarget{main_8c_a207aeefbb3ad600c6c96cc609f5c72e1}{}\label{main_8c_a207aeefbb3ad600c6c96cc609f5c72e1}
+Flag\+: Have we already triggered a \char`\"{}too close\char`\"{} alert? 
+
+Defineret på linje 75 i filen main.\+c.
+
+
+
+Refereret til af C\+Y\+\_\+\+I\+S\+R() og main().
+

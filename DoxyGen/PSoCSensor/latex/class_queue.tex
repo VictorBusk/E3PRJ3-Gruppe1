@@ -1,0 +1,537 @@
+\hypertarget{class_queue}{}\subsection{Queue Klasse-\/reference}
+\label{class_queue}\index{Queue@{Queue}}
+
+
+{\ttfamily \#include $<$queue.\+h$>$}
+
+
+
+Samarbejdsdiagram for Queue\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{class_queue__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Offentlige metoder}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_queue_a2f53f032b89a2e6f1906a3d7aef99df3}{queue\+\_\+init} (uint8 queue\+Size)
+\begin{DoxyCompactList}\small\item\em Initialize queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_queue_a0a8b5d336192563403043ec13ab653db}{push\+Queue} (const struct \hyperlink{queue_8h_struct_data}{Data} data)
+\begin{DoxyCompactList}\small\item\em Insert element in F\+I\+FO ordre in queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b}{pop\+Queue} ()
+\begin{DoxyCompactList}\small\item\em Remove front element of the queue. \end{DoxyCompactList}\item 
+struct \hyperlink{queue_8h_struct_data}{Data} \hyperlink{class_queue_ad9db61946726aa012867eb9947a4597b}{front\+Queue} ()
+\begin{DoxyCompactList}\small\item\em Return data from the front element in the queue. \end{DoxyCompactList}\item 
+int \hyperlink{class_queue_a0a59d535179c225aa8a08eab5967e80b}{is\+Empty\+Queue} ()
+\begin{DoxyCompactList}\small\item\em Return 1 (true) if queue is empty or 0 (false) if not. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Private metoder}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_queue_acfcf4994d1169caad1265663e4a12ada}{head\+Insert} (struct \hyperlink{queue_8c_struct_node}{Node} $\ast$$\ast$head\+Ptr, const struct \hyperlink{queue_8h_struct_data}{Data} data)
+\begin{DoxyCompactList}\small\item\em Insert element in the front of the queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_queue_ae54666c891fd21d5497f48c385a00b74}{head\+Remove} (struct \hyperlink{queue_8c_struct_node}{Node} $\ast$$\ast$head\+Ptr)
+\begin{DoxyCompactList}\small\item\em Remove element in front af queue. \end{DoxyCompactList}\item 
+void \hyperlink{class_queue_a8d1efbbc4aca857d5bcbf0ab2625e1dc}{back\+Insert} (struct \hyperlink{queue_8c_struct_node}{Node} $\ast$$\ast$back\+Ptr, const struct \hyperlink{queue_8h_struct_data}{Data} data)
+\begin{DoxyCompactList}\small\item\em Insert element in the back of the queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Private attributter}
+\begin{DoxyCompactItemize}
+\item 
+uint8 \hyperlink{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{queue\+Count\+\_\+}
+\begin{DoxyCompactList}\small\item\em Conuter for elements in the queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Statiske, private attributter}
+\begin{DoxyCompactItemize}
+\item 
+static struct \hyperlink{queue_8c_struct_node}{Node} $\ast$ \hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{front\+Of\+Queue\+Ptr\+\_\+}
+\begin{DoxyCompactList}\small\item\em Pointer to front element in queue. \end{DoxyCompactList}\item 
+static struct \hyperlink{queue_8c_struct_node}{Node} $\ast$ \hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{back\+Of\+Queue\+Ptr\+\_\+}
+\begin{DoxyCompactList}\small\item\em Pointer to back element in queue. \end{DoxyCompactList}\item 
+static uint8 \hyperlink{class_queue_acb6b6e88c9e4d12839594b31e6ff7c5a}{queue\+Max\+\_\+}
+\begin{DoxyCompactList}\small\item\em Maximum elements in queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{Dokumentation af medlemsfunktioner}
+\index{Queue@{Queue}!back\+Insert@{back\+Insert}}
+\index{back\+Insert@{back\+Insert}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{back\+Insert(struct Node $\ast$$\ast$back\+Ptr, const struct Data data)}{backInsert(struct Node **backPtr, const struct Data data)}}]{\setlength{\rightskip}{0pt plus 5cm}void back\+Insert (
+\begin{DoxyParamCaption}
+\item[{struct {\bf Node} $\ast$$\ast$}]{back\+Ptr, }
+\item[{const struct {\bf Data}}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_queue_a8d1efbbc4aca857d5bcbf0ab2625e1dc}{}\label{class_queue_a8d1efbbc4aca857d5bcbf0ab2625e1dc}
+
+
+Insert element in the back of the queue. 
+
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em back\+Ptr} & Pointer to back of queue \\
+\hline
+\mbox{\tt in}  & {\em data} & Struct of data to be placed in the queue\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 213 i filen queue.\+c.
+
+
+
+Indeholder referencer til Node\+::data\+\_\+ og Node\+::next\+\_\+.
+
+
+\begin{DoxyCode}
+214 \{
+215   \textcolor{keywordflow}{if}(*backPtr == NULL)
+216   \{
+217     \textcolor{keywordflow}{return};
+218   \}
+219 
+220   \textcolor{keyword}{struct }\hyperlink{queue_8c_struct_node}{Node}* next = (*backPtr)->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_};
+221   \textcolor{keyword}{struct }\hyperlink{queue_8c_struct_node}{Node}* temp = (\textcolor{keyword}{struct }\hyperlink{queue_8c_struct_node}{Node}*)malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{queue_8c_struct_node}{Node}));
+222   temp->\hyperlink{queue_8c_ab6f992d78ad6bf73e17978ce064d0546}{data\_} = data;
+223   temp->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_} = next;
+224   (*backPtr)->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_} = temp;
+225 \}
+\end{DoxyCode}
+\index{Queue@{Queue}!front\+Queue@{front\+Queue}}
+\index{front\+Queue@{front\+Queue}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{front\+Queue()}{frontQueue()}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Data} front\+Queue (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_queue_ad9db61946726aa012867eb9947a4597b}{}\label{class_queue_ad9db61946726aa012867eb9947a4597b}
+
+
+Return data from the front element in the queue. 
+
+\begin{DoxyReturn}{Returnerer}
+\hyperlink{queue_8h_struct_data}{Data}
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 141 i filen queue.\+c.
+
+
+
+Indeholder referencer til Node\+::data\+\_\+.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+142 \{
+143   \textcolor{keywordflow}{return} \hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{frontOfQueuePtr\_}->\hyperlink{queue_8c_ab6f992d78ad6bf73e17978ce064d0546}{data\_};
+144 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{class_queue_ad9db61946726aa012867eb9947a4597b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Queue@{Queue}!head\+Insert@{head\+Insert}}
+\index{head\+Insert@{head\+Insert}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{head\+Insert(struct Node $\ast$$\ast$head\+Ptr, const struct Data data)}{headInsert(struct Node **headPtr, const struct Data data)}}]{\setlength{\rightskip}{0pt plus 5cm}void head\+Insert (
+\begin{DoxyParamCaption}
+\item[{struct {\bf Node} $\ast$$\ast$}]{head\+Ptr, }
+\item[{const struct {\bf Data}}]{data}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_queue_acfcf4994d1169caad1265663e4a12ada}{}\label{class_queue_acfcf4994d1169caad1265663e4a12ada}
+
+
+Insert element in the front of the queue. 
+
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em head\+Ptr} & Pointer to front of queue \\
+\hline
+\mbox{\tt in}  & {\em data} & Struct of data to be placed in the queue\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 173 i filen queue.\+c.
+
+
+
+Indeholder referencer til Node\+::data\+\_\+ og Node\+::next\+\_\+.
+
+
+\begin{DoxyCode}
+174 \{
+175   \textcolor{keyword}{struct }\hyperlink{queue_8c_struct_node}{Node}* temp = (\textcolor{keyword}{struct }\hyperlink{queue_8c_struct_node}{Node}*)malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{queue_8c_struct_node}{Node}));
+176   \textcolor{keywordflow}{if}(temp == NULL)
+177   \{
+178     \textcolor{keywordflow}{return};
+179   \}
+180 
+181   temp->\hyperlink{queue_8c_ab6f992d78ad6bf73e17978ce064d0546}{data\_} = data;
+182   temp->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_} = NULL;
+183 
+184   *headPtr = temp;
+185 \}
+\end{DoxyCode}
+\index{Queue@{Queue}!head\+Remove@{head\+Remove}}
+\index{head\+Remove@{head\+Remove}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{head\+Remove(struct Node $\ast$$\ast$head\+Ptr)}{headRemove(struct Node **headPtr)}}]{\setlength{\rightskip}{0pt plus 5cm}void head\+Remove (
+\begin{DoxyParamCaption}
+\item[{struct {\bf Node} $\ast$$\ast$}]{head\+Ptr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_queue_ae54666c891fd21d5497f48c385a00b74}{}\label{class_queue_ae54666c891fd21d5497f48c385a00b74}
+
+
+Remove element in front af queue. 
+
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em head\+Ptr} & Pointer to front of queue\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 194 i filen queue.\+c.
+
+
+
+Indeholder referencer til Node\+::next\+\_\+.
+
+
+\begin{DoxyCode}
+195 \{
+196   \textcolor{keywordflow}{if}(headPtr != NULL)
+197   \{
+198 \textcolor{keyword}{struct }\hyperlink{queue_8c_struct_node}{Node}* condemned;
+199     condemned = *headPtr;
+200     *headPtr = (*headPtr)->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_};
+201     free(condemned);
+202   \}
+203 \}
+\end{DoxyCode}
+\index{Queue@{Queue}!is\+Empty\+Queue@{is\+Empty\+Queue}}
+\index{is\+Empty\+Queue@{is\+Empty\+Queue}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{is\+Empty\+Queue()}{isEmptyQueue()}}]{\setlength{\rightskip}{0pt plus 5cm}int is\+Empty\+Queue (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_queue_a0a59d535179c225aa8a08eab5967e80b}{}\label{class_queue_a0a59d535179c225aa8a08eab5967e80b}
+
+
+Return 1 (true) if queue is empty or 0 (false) if not. 
+
+\begin{DoxyReturn}{Returnerer}
+int
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 153 i filen queue.\+c.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+154 \{
+155   \textcolor{keywordflow}{if}(\hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{frontOfQueuePtr\_} == NULL)
+156   \{
+157     \textcolor{keywordflow}{return} 1;
+158   \}
+159   \textcolor{keywordflow}{else}
+160   \{
+161     \textcolor{keywordflow}{return} 0;
+162   \}
+163 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=235pt]{class_queue_a0a59d535179c225aa8a08eab5967e80b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Queue@{Queue}!pop\+Queue@{pop\+Queue}}
+\index{pop\+Queue@{pop\+Queue}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{pop\+Queue()}{popQueue()}}]{\setlength{\rightskip}{0pt plus 5cm}void pop\+Queue (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b}{}\label{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b}
+
+
+Remove front element of the queue. 
+
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 124 i filen queue.\+c.
+
+
+
+Indeholder referencer til head\+Remove(), is\+Empty\+Queue() og queue\+Count\+\_\+.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+125 \{
+126   \hyperlink{class_queue_ae54666c891fd21d5497f48c385a00b74}{headRemove}(&\hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{frontOfQueuePtr\_});
+127   \hyperlink{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{queueCount\_}--;
+128   \textcolor{keywordflow}{if}(\hyperlink{class_queue_a0a59d535179c225aa8a08eab5967e80b}{isEmptyQueue}() == 1)
+129   \{
+130     \hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{backOfQueuePtr\_} = NULL;
+131   \}
+132 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Queue@{Queue}!push\+Queue@{push\+Queue}}
+\index{push\+Queue@{push\+Queue}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{push\+Queue(const struct Data data)}{pushQueue(const struct Data data)}}]{\setlength{\rightskip}{0pt plus 5cm}void push\+Queue (
+\begin{DoxyParamCaption}
+\item[{const struct {\bf Data}}]{data}
+\end{DoxyParamCaption}
+)}\hypertarget{class_queue_a0a8b5d336192563403043ec13ab653db}{}\label{class_queue_a0a8b5d336192563403043ec13ab653db}
+
+
+Insert element in F\+I\+FO ordre in queue. 
+
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em data} & Struct of data to be placed in the queue\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 99 i filen queue.\+c.
+
+
+
+Indeholder referencer til back\+Insert(), head\+Insert(), is\+Empty\+Queue(), Node\+::next\+\_\+ og queue\+Count\+\_\+.
+
+
+
+Refereret til af i2c\+\_\+rx().
+
+
+\begin{DoxyCode}
+100 \{
+101   \textcolor{keywordflow}{if}(\hyperlink{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{queueCount\_}<\hyperlink{class_queue_acb6b6e88c9e4d12839594b31e6ff7c5a}{queueMax\_})
+102   \{
+103   \textcolor{keywordflow}{if}(\hyperlink{class_queue_a0a59d535179c225aa8a08eab5967e80b}{isEmptyQueue}() != 1)
+104   \{
+105     \hyperlink{class_queue_a8d1efbbc4aca857d5bcbf0ab2625e1dc}{backInsert}(&\hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{backOfQueuePtr\_}, data);
+106     \hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{backOfQueuePtr\_} = \hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{backOfQueuePtr\_}->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_};
+107     \hyperlink{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{queueCount\_}++;
+108   \}
+109     \textcolor{keywordflow}{else}
+110     \{
+111       \hyperlink{class_queue_acfcf4994d1169caad1265663e4a12ada}{headInsert}(&\hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{frontOfQueuePtr\_}, data);
+112       \hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{backOfQueuePtr\_} = \hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{frontOfQueuePtr\_};
+113       \hyperlink{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{queueCount\_}++;
+114     \}
+115   \}
+116 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=265pt]{class_queue_a0a8b5d336192563403043ec13ab653db_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{class_queue_a0a8b5d336192563403043ec13ab653db_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Queue@{Queue}!queue\+\_\+init@{queue\+\_\+init}}
+\index{queue\+\_\+init@{queue\+\_\+init}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{queue\+\_\+init(uint8 queue\+Size)}{queue_init(uint8 queueSize)}}]{\setlength{\rightskip}{0pt plus 5cm}void queue\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{uint8}]{queue\+Size}
+\end{DoxyParamCaption}
+)}\hypertarget{class_queue_a2f53f032b89a2e6f1906a3d7aef99df3}{}\label{class_queue_a2f53f032b89a2e6f1906a3d7aef99df3}
+
+
+Initialize queue. 
+
+
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em queue\+Size} & Size of queue.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 82 i filen queue.\+c.
+
+
+
+Indeholder referencer til Node\+::next\+\_\+ og queue\+Count\+\_\+.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+83 \{
+84   \hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{frontOfQueuePtr\_} = NULL;
+85   \hyperlink{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{frontOfQueuePtr\_}->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_} = NULL;
+86   \hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{backOfQueuePtr\_} = NULL;
+87   \hyperlink{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{backOfQueuePtr\_}->\hyperlink{queue_8c_a882bca6dea645e11ca1df6bc3c30ac42}{next\_} = NULL;
+88   \hyperlink{class_queue_acb6b6e88c9e4d12839594b31e6ff7c5a}{queueMax\_} = queueSize;
+89   \hyperlink{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{queueCount\_} = 0;
+90 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{class_queue_a2f53f032b89a2e6f1906a3d7aef99df3_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsubsection{Felt-\/dokumentation}
+\index{Queue@{Queue}!back\+Of\+Queue\+Ptr\+\_\+@{back\+Of\+Queue\+Ptr\+\_\+}}
+\index{back\+Of\+Queue\+Ptr\+\_\+@{back\+Of\+Queue\+Ptr\+\_\+}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{back\+Of\+Queue\+Ptr\+\_\+}{backOfQueuePtr_}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Node}$\ast$ back\+Of\+Queue\+Ptr\+\_\+\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}\hypertarget{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}{}\label{class_queue_a225d2c9ad4e83d6da443e99b8869a51c}
+
+
+Pointer to back element in queue. 
+
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 44 i filen queue.\+c.
+
+\index{Queue@{Queue}!front\+Of\+Queue\+Ptr\+\_\+@{front\+Of\+Queue\+Ptr\+\_\+}}
+\index{front\+Of\+Queue\+Ptr\+\_\+@{front\+Of\+Queue\+Ptr\+\_\+}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{front\+Of\+Queue\+Ptr\+\_\+}{frontOfQueuePtr_}}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf Node}$\ast$ front\+Of\+Queue\+Ptr\+\_\+\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}\hypertarget{class_queue_aa48f05218d0a78402821c8aa9bdad06a}{}\label{class_queue_aa48f05218d0a78402821c8aa9bdad06a}
+
+
+Pointer to front element in queue. 
+
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 36 i filen queue.\+c.
+
+\index{Queue@{Queue}!queue\+Count\+\_\+@{queue\+Count\+\_\+}}
+\index{queue\+Count\+\_\+@{queue\+Count\+\_\+}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{queue\+Count\+\_\+}{queueCount_}}]{\setlength{\rightskip}{0pt plus 5cm}uint8 queue\+Count\+\_\+\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}{}\label{class_queue_ad260f9ccca00e80d161bbf3e70c3ffa6}
+
+
+Conuter for elements in the queue. 
+
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 52 i filen queue.\+c.
+
+
+
+Refereret til af main().
+
+\index{Queue@{Queue}!queue\+Max\+\_\+@{queue\+Max\+\_\+}}
+\index{queue\+Max\+\_\+@{queue\+Max\+\_\+}!Queue@{Queue}}
+\paragraph[{\texorpdfstring{queue\+Max\+\_\+}{queueMax_}}]{\setlength{\rightskip}{0pt plus 5cm}uint8 queue\+Max\+\_\+\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}\hypertarget{class_queue_acb6b6e88c9e4d12839594b31e6ff7c5a}{}\label{class_queue_acb6b6e88c9e4d12839594b31e6ff7c5a}
+
+
+Maximum elements in queue. 
+
+\begin{DoxyAuthor}{Forfatter}
+Jeppe Stærk (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 60 i filen queue.\+c.
+
+
+
+Dokumentationen for denne klasse blev genereret ud fra filen\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{queue_8c}{queue.\+c}\end{DoxyCompactItemize}
