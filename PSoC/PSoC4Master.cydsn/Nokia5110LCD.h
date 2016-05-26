@@ -1,14 +1,10 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
+/*!
+ *  @file       Nokia5110LCD.h
+ *  @brief      Nokia5110LCD Modul (Impoteret)
+ *  @details    Impoteret kildekode til Nokia 5110 LSD
+ *  @author     Matt (cy.wbz)
+ *  @remark     https://www.element14.com/community/thread/26122/l/psoc-4-pioneer-kit-community-project061-nokia-5110-lcd-interface?displayFullThread=true
+ */
 #if !defined(Nokia5110LCD_H) /* Nokia5110LCD_H */
 #define Nokia5110LCD_H
 

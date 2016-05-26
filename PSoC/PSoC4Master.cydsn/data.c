@@ -12,7 +12,7 @@
 
 /**
  *  @brief      Initialiser data modulet
- *  @details    Initialiser dataMaster structen med 0 værdier.
+ *  @details    Initialiser data structen med 0 værdier.
  *  @public
  *  @memberof   Data
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)

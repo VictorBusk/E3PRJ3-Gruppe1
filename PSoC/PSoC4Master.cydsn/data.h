@@ -26,7 +26,7 @@
 
 /*!
  *  @brief      Data struct
- *  @detailes   En data struct der indeholder de sidst kendte værdier fra PSoC-XY -Z og -Sensor.
+ *  @details    En data struct der indeholder de sidst kendte værdier fra PSoC-XY -Z og -Sensor.
  *  @public
  *  @memberof   Data
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)

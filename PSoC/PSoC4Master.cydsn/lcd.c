@@ -29,7 +29,7 @@ char lineStr[6][12];
 /*!
  *  @brief      Udskriver tekst på Nokia 5110 LCD
  *  @details    Metoden bruges til at skrive en ny linje nederst på Nokia 5110 LCD skærmen, den husker på- og flytter de forhenværende linjer en linje op, når der indættes en ny.
- *  @Public
+ *  @public
  *  @memberof   LCD
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */

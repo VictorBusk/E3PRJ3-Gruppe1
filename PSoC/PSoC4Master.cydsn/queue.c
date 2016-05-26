@@ -13,10 +13,8 @@
  ***************************************/
 
 /*!
- *  @brief      Element til køen
+ *  @brief      Node struct
  *  @details    En struct til at oprette et element der kan indsættes i køen.
- *  @private
- *  @memberof   Queue
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct Node

@@ -26,10 +26,8 @@
  ***************************************/
 
 /*!
- *  @brief      En struct til at lager data der skal indsættes i køen
+ *  @brief      Action struct
  *  @details    Structen kan indeholde en kommando og tilhørende værdi, som kan indsættes i FIFO køen.
- *  @public
- *  @memberof   Queue
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct Action
