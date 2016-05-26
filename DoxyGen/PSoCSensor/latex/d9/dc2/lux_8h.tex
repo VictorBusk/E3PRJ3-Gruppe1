@@ -5,8 +5,7 @@
 Code copied from the \char`\"{}\+T\+S\+L2561 Light-\/to-\/digital converter\char`\"{} datasheet.  
 
 
-Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:
-\nopagebreak
+Denne graf viser, hvilke filer der direkte eller indirekte inkluderer denne fil\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -78,6 +77,7 @@ Refereret til af read\+Lumen\+Sensor().
 
 \begin{DoxyCode}
 149 \{
+150   \textcolor{comment}{//}
 151   \textcolor{comment}{// first, scale the channel values depending on the gain and integration time}
 152   \textcolor{comment}{// 16X, 402mS is nominal.}
 153   \textcolor{comment}{// scale if integration time is NOT 402 msec}
@@ -101,6 +101,7 @@ Refereret til af read\+Lumen\+Sensor().
 171   \textcolor{comment}{// scale the channel values}
 172   channel0 = (ch0 * chScale) >> \hyperlink{lux_8c_ae77b11d54490369c690da18aef1e76e5}{CH\_SCALE};
 173   channel1 = (ch1 * chScale) >> \hyperlink{lux_8c_ae77b11d54490369c690da18aef1e76e5}{CH\_SCALE};
+174   \textcolor{comment}{//}
 175   \textcolor{comment}{// find the ratio of the channel values (Channel1/Channel0)}
 176   \textcolor{comment}{// protect against divide by zero}
 177   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} ratio1 = 0;
@@ -152,6 +153,7 @@ Refereret til af read\+Lumen\+Sensor().
 223   temp = ((channel0 * b) - (channel1 * m));
 224   \textcolor{comment}{// do not allow negative lux value}
 225   \textcolor{keywordflow}{if} (temp < 0) temp = 0;
+226   \textcolor{comment}{//}
 227   temp += (1 << (\hyperlink{lux_8c_abe3540b1f05e5974dfa40491719b322a}{LUX\_SCALE}-1));
 228   \textcolor{comment}{// strip off fractional portion}
 229   \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} lux = temp >> \hyperlink{lux_8c_abe3540b1f05e5974dfa40491719b322a}{LUX\_SCALE};
@@ -160,8 +162,7 @@ Refereret til af read\+Lumen\+Sensor().
 \end{DoxyCode}
 
 
-Her er kalder-\/grafen for denne funktion\+:
-\nopagebreak
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

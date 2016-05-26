@@ -14,8 +14,7 @@ Hovedprogram.
 {\ttfamily \#include \char`\"{}spi.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}Nokia5110\+L\+C\+D.\+h\char`\"{}}\\*
 {\ttfamily \#include \char`\"{}lcd.\+h\char`\"{}}\\*
-Inklusions-\/afhængighedsgraf for main.\+c\+:
-\nopagebreak
+Inklusions-\/afhængighedsgraf for main.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -51,7 +50,7 @@ Defineret på linje 19 i filen main.\+c.
 
 
 
-Indeholder referencer til Data\+::data\+\_\+init(), Queue\+::front\+Queue(), Handler\+::handler(), I2\+C\+::i2c\+\_\+init(), Queue\+::is\+Empty\+Queue(), L\+C\+D\+\_\+\+Init(), Queue\+::pop\+Queue(), Queue\+::queue\+\_\+init(), L\+E\+D\+::set\+Led() og S\+P\+I\+::spi\+\_\+init().
+Indeholder referencer til Data\+::data\+\_\+init(), Queue\+::front\+Queue(), Handler\+::handler(), I2\+C\+::i2c\+\_\+init(), Queue\+::is\+Empty\+Queue(), L\+C\+D\+\_\+\+Init(), L\+C\+D\+::lcd\+\_\+newline(), Queue\+::pop\+Queue(), Queue\+::queue\+\_\+init(), L\+E\+D\+::set\+Led() og S\+P\+I\+::spi\+\_\+init().
 
 
 \begin{DoxyCode}
@@ -62,37 +61,43 @@ Indeholder referencer til Data\+::data\+\_\+init(), Queue\+::front\+Queue(), Han
 24   \hyperlink{class_i2_c_a64303230bf4843297e7ac37ac236ca04}{i2c\_init}();
 25   \hyperlink{_nokia5110_l_c_d_8c_aa53c9d40f3aa552a9974cd55ac510cb3}{LCD\_Init}();
 26   DEBUG\_Start();
-27   
-28   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(1,0,0,150);
-29   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,1,0,150);
-30   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,1,150);
-31   
-32   DEBUG\_PutCRLF();
-33   DEBUG\_PutString(\textcolor{stringliteral}{"===== Initializing PSoC Master ====="});
-34   DEBUG\_PutCRLF();
-35   CyGlobalIntEnable; \textcolor{comment}{/* Enable global interrupts. */}
-36   
-37   \textcolor{keywordflow}{for}(;;)
-38   \{
-39     \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
-40     
-41     \textcolor{keywordflow}{while}(\hyperlink{class_queue_aafb324c79731abdc228dbf94d86722a3}{isEmptyQueue}() != 1)
-42     \{
-43       \textcolor{keyword}{struct }\hyperlink{queue_8h_df/d8c/struct_action}{Action} action;
-44       action = \hyperlink{class_queue_a49c50ba30a42033068d8d8e6a23c6ca1}{frontQueue}();
-45       \textcolor{keywordflow}{if}(action.cmd != 0)
-46       \{
-47         \hyperlink{class_handler_af5be5b016b862943cd22504490acc8f4}{handler}(action.cmd, action.val);
-48       \}
-49       \hyperlink{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b}{popQueue}();
-50     \}
-51   \}
-52 \}
+27 
+28   \hyperlink{class_l_c_d_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(\textcolor{stringliteral}{"------------"});
+29   \hyperlink{class_l_c_d_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(\textcolor{stringliteral}{"<          >"});
+30   \hyperlink{class_l_c_d_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(\textcolor{stringliteral}{"< L.A.M.P! >"});
+31   \hyperlink{class_l_c_d_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(\textcolor{stringliteral}{"< Prj3Gpr1 >"});
+32   \hyperlink{class_l_c_d_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(\textcolor{stringliteral}{"<          >"});
+33   \hyperlink{class_l_c_d_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(\textcolor{stringliteral}{"------------"});
+34   
+35   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(1,0,0,150);
+36   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,1,0,150);
+37   \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,1,150);
+38   
+39   DEBUG\_PutCRLF();
+40   DEBUG\_PutString(\textcolor{stringliteral}{"===== Initializing PSoC Master ====="});
+41   DEBUG\_PutCRLF();
+42   CyGlobalIntEnable; \textcolor{comment}{/* Enable global interrupts. */}
+43   
+44   \textcolor{keywordflow}{for}(;;)
+45   \{
+46     \hyperlink{class_l_e_d_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
+47     
+48     \textcolor{keywordflow}{while}(\hyperlink{class_queue_aafb324c79731abdc228dbf94d86722a3}{isEmptyQueue}() != 1)
+49     \{
+50       \textcolor{keyword}{struct }\hyperlink{queue_8h_df/d8c/struct_action}{Action} action;
+51       action = \hyperlink{class_queue_a49c50ba30a42033068d8d8e6a23c6ca1}{frontQueue}();
+52       \textcolor{keywordflow}{if}(action.cmd != 0)
+53       \{
+54         \hyperlink{class_handler_af5be5b016b862943cd22504490acc8f4}{handler}(action.cmd, action.val);
+55       \}
+56       \hyperlink{class_queue_a9ecab9ecdedfc331aed9a0ae63ce193b}{popQueue}();
+57     \}
+58   \}
+59 \}
 \end{DoxyCode}
 
 
-Her er kald-\/grafen for denne funktion\+:
-\nopagebreak
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

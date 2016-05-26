@@ -11,8 +11,7 @@
 
 
 
-Samarbejdsdiagram for S\+PI\+:
-\nopagebreak
+Samarbejdsdiagram for S\+PI\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -69,87 +68,87 @@ Indeholder referencer til Data\+Master\+::b\+Val, Action\+::cmd, C\+M\+D\+\_\+\+
 45   uint16 spiRxBuffer[\hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE}];
 46   uint16 spiTxBuffer[\hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE}];
 47   \textcolor{keyword}{struct }\hyperlink{queue_8h_df/d8c/struct_action}{Action} spiRxAction;
-48   
-49   \textcolor{keywordflow}{while}(SPIS\_SpiUartGetRxBufferSize() > 0)
-50   \{
-51     spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = SPIS\_SpiUartReadRxData();
-52     spiRxAction.val = spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] & 0xff;
-53     spiRxAction.cmd = (spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] >> 8);
-54     
-55     \textcolor{keywordflow}{if}(spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] == 0xBADA)
-56     \{
-57       sprintf(lcd, \textcolor{stringliteral}{"S> %x"},spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}]);
-58       \hyperlink{lcd_8h_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(lcd);
-59       
-60       DEBUG\_PutString(\textcolor{stringliteral}{"S>: val: "});
-61       DEBUG\_PutHexByte(spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}]);
-62       DEBUG\_PutCRLF();
-63     \}
-64     \textcolor{keywordflow}{else}
-65     \{
-66       sprintf(lcd, \textcolor{stringliteral}{">S %4x %2x"}, (\textcolor{keywordtype}{int})spiRxAction.cmd, (\textcolor{keywordtype}{int})spiRxAction.val);
-67       \hyperlink{lcd_8h_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(lcd);
-68       
-69       DEBUG\_PutString(\textcolor{stringliteral}{">S: cmd: "});
-70       DEBUG\_PutHexByte(spiRxAction.cmd);
-71       DEBUG\_PutString(\textcolor{stringliteral}{" val: "});
-72       DEBUG\_PutHexByte(spiRxAction.val);
-73       DEBUG\_PutCRLF();
-74       DEBUG\_PutCRLF();
-75       
-76       \textcolor{keywordflow}{switch}(spiRxAction.cmd) \{
-77         \textcolor{keywordflow}{case} \hyperlink{handler_8h_aa50e083669624eeaef782ebc867008f9}{CMD\_GET\_X\_POS} :
-78           SPIS\_SpiUartClearTxBuffer();
-79           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
+48   DEBUG\_PutString(\textcolor{stringliteral}{"SPI!"});
+49   DEBUG\_PutCRLF();
+50 
+51   \textcolor{keywordflow}{while}(SPIS\_SpiUartGetRxBufferSize() > 0)
+52   \{
+53     spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = SPIS\_SpiUartReadRxData();
+54     spiRxAction.val = spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] & 0xff;
+55     spiRxAction.cmd = (spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] >> 8);
+56     
+57     \textcolor{keywordflow}{if}(spiRxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] == 0xBADA)
+58     \{
+59       sprintf(lcd, \textcolor{stringliteral}{"S> %x"},spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}]);
+60       \hyperlink{lcd_8h_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(lcd);
+61       
+62       DEBUG\_PutString(\textcolor{stringliteral}{"S>: val: "});
+63       DEBUG\_PutHexByte(spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}]);
+64       DEBUG\_PutCRLF();
+65     \}
+66     \textcolor{keywordflow}{else}
+67     \{
+68       sprintf(lcd, \textcolor{stringliteral}{">S %4x %2x"}, (\textcolor{keywordtype}{int})spiRxAction.cmd, (\textcolor{keywordtype}{int})spiRxAction.val);
+69       \hyperlink{lcd_8h_a507dd352aee8161dc556e3d1439a2be2}{lcd\_newline}(lcd);
+70       
+71       DEBUG\_PutString(\textcolor{stringliteral}{">S: cmd: "});
+72       DEBUG\_PutHexByte(spiRxAction.cmd);
+73       DEBUG\_PutString(\textcolor{stringliteral}{" val: "});
+74       DEBUG\_PutHexByte(spiRxAction.val);
+75       DEBUG\_PutCRLF();
+76       DEBUG\_PutCRLF();
+77       
+78       \textcolor{keywordflow}{switch}(spiRxAction.cmd) \{
+79         \textcolor{keywordflow}{case} \hyperlink{handler_8h_aa50e083669624eeaef782ebc867008f9}{CMD\_GET\_X\_POS} :
+80           SPIS\_SpiUartClearTxBuffer();
+81           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
       \hyperlink{data_8h_a6b1a8871e30b304a6f5764c44d89e489}{dataMaster}.\hyperlink{data_8h_a7849f509240fa25127fcda8c5009f02b}{xVal};
-80           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
-81           \textcolor{keywordflow}{break};
-82         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a51053e5251048d6ebbf4d2e23de40761}{CMD\_GET\_Y\_POS} :
-83           SPIS\_SpiUartClearTxBuffer();
-84           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
+82           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
+83           \textcolor{keywordflow}{break};
+84         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a51053e5251048d6ebbf4d2e23de40761}{CMD\_GET\_Y\_POS} :
+85           SPIS\_SpiUartClearTxBuffer();
+86           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
       \hyperlink{data_8h_a6b1a8871e30b304a6f5764c44d89e489}{dataMaster}.\hyperlink{data_8h_a28e89368b5a1aee30ccd952ad63e8c55}{yVal};
-85           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
-86           \textcolor{keywordflow}{break};
-87         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a4d76e78d09a00f75609569d9aa92ab98}{CMD\_GET\_Z\_POS} :
-88           SPIS\_SpiUartClearTxBuffer();
-89           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
+87           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
+88           \textcolor{keywordflow}{break};
+89         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a4d76e78d09a00f75609569d9aa92ab98}{CMD\_GET\_Z\_POS} :
+90           SPIS\_SpiUartClearTxBuffer();
+91           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
       \hyperlink{data_8h_a6b1a8871e30b304a6f5764c44d89e489}{dataMaster}.\hyperlink{data_8h_a767a084c35fdc0f1e3e41972d5415483}{zVal};
-90           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
-91           \textcolor{keywordflow}{break};
-92         \textcolor{keywordflow}{case} \hyperlink{handler_8h_aa2f09e60c4eeae4560da88c6b1b08c60}{CMD\_GET\_RED\_VAL} :
-93           SPIS\_SpiUartClearTxBuffer();
-94           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
+92           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
+93           \textcolor{keywordflow}{break};
+94         \textcolor{keywordflow}{case} \hyperlink{handler_8h_aa2f09e60c4eeae4560da88c6b1b08c60}{CMD\_GET\_RED\_VAL} :
+95           SPIS\_SpiUartClearTxBuffer();
+96           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
       \hyperlink{data_8h_a6b1a8871e30b304a6f5764c44d89e489}{dataMaster}.\hyperlink{data_8h_a3bf14030a39e71a91c0b97a624f95c5d}{rVal};
-95           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
-96           \textcolor{keywordflow}{break};
-97         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a55d24f50aeb52afddd491d97a66c81ef}{CMD\_GET\_GREEN\_VAL} :
-98           SPIS\_SpiUartClearTxBuffer();
-99           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
+97           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
+98           \textcolor{keywordflow}{break};
+99         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a55d24f50aeb52afddd491d97a66c81ef}{CMD\_GET\_GREEN\_VAL} :
+100           SPIS\_SpiUartClearTxBuffer();
+101           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
       \hyperlink{data_8h_a6b1a8871e30b304a6f5764c44d89e489}{dataMaster}.\hyperlink{data_8h_ae02d0c792549f1b88e80ae6eb117f2be}{gVal};
-100           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
-101           \textcolor{keywordflow}{break};
-102         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a81052c67f996705d7eacfcea66bdde08}{CMD\_GET\_BLUE\_VAL} :
-103           SPIS\_SpiUartClearTxBuffer();
-104           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
+102           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
+103           \textcolor{keywordflow}{break};
+104         \textcolor{keywordflow}{case} \hyperlink{handler_8h_a81052c67f996705d7eacfcea66bdde08}{CMD\_GET\_BLUE\_VAL} :
+105           SPIS\_SpiUartClearTxBuffer();
+106           spiTxBuffer[\hyperlink{spi_8h_a5ffe58623f478b7b960a1349530a6655}{SPI\_PACKET\_DATA\_POS}] = (uint16)
       \hyperlink{data_8h_a6b1a8871e30b304a6f5764c44d89e489}{dataMaster}.\hyperlink{data_8h_adf9e1f80891d4eaa914c2bde2502cdf2}{bVal};
-105           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
-106           \textcolor{keywordflow}{break};
-107         \textcolor{keywordflow}{default} :
-108           \hyperlink{queue_8h_a0012fa831aa1529e5ed3a6610b733423}{pushQueue}(spiRxAction);
-109           \textcolor{keywordflow}{break};
-110       \}
-111     \}
-112   \}
-113   
-114   SPIS\_SpiUartClearRxBuffer();
-115   SPIS\_ClearRxInterruptSource(SPIS\_GetRxInterruptSource());
-116   SPIS\_EnableInt();
-117 \}
+107           SPIS\_SpiUartPutArray(spiTxBuffer, \hyperlink{spi_8h_aea54fc09a960e5a1b7096374f3eebee4}{SPI\_PACKET\_SIZE});
+108           \textcolor{keywordflow}{break};
+109         \textcolor{keywordflow}{default} :
+110           \hyperlink{queue_8h_a0012fa831aa1529e5ed3a6610b733423}{pushQueue}(spiRxAction);
+111           \textcolor{keywordflow}{break};
+112       \}
+113     \}
+114   \}
+115   
+116   SPIS\_ClearRxInterruptSource(SPIS\_GetRxInterruptSource());
+117   SPIS\_EnableInt();
+118 \}
 \end{DoxyCode}
 
 
-Her er kald-\/grafen for denne funktion\+:
-\nopagebreak
+Her er kald-\/grafen for denne funktion\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -194,8 +193,7 @@ Refereret til af main().
 \end{DoxyCode}
 
 
-Her er kalder-\/grafen for denne funktion\+:
-\nopagebreak
+Her er kalder-\/grafen for denne funktion\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode

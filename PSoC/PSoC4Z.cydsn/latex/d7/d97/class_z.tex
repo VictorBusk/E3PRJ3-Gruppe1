@@ -1,0 +1,705 @@
+\hypertarget{class_z}{}\subsection{Z Klasse-\/reference}
+\label{class_z}\index{Z@{Z}}
+
+
+\hyperlink{class_z}{Z} class.  
+
+
+
+
+{\ttfamily \#include $<$z.\+h$>$}
+
+
+
+Samarbejdsdiagram for Z\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=183pt]{d5/d58/class_z__coll__graph}
+\end{center}
+\end{figure}
+\subsubsection*{Offentlige metoder}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_z_ac6bb96bf63bd2cae7c7bcc2f6b422b0c}{z\+\_\+init} ()
+\begin{DoxyCompactList}\small\item\em Initialiser \hyperlink{class_z}{Z} modulet. \end{DoxyCompactList}\item 
+void \hyperlink{class_z_affabc649bbf2e5dbeb475777391513d7}{z\+\_\+start} ()
+\begin{DoxyCompactList}\small\item\em Starter \hyperlink{class_z}{Z} modulet. \end{DoxyCompactList}\item 
+\hyperlink{class_z_a8171ad8aabdbfed5d19fbda53c9d28a9}{C\+Y\+\_\+\+I\+SR} (isr\+\_\+Z)
+\begin{DoxyCompactList}\small\item\em Afvikler \char`\"{}\+Interrupt\char`\"{} fra \hyperlink{class_z}{Z}. \end{DoxyCompactList}\item 
+\hyperlink{class_z_a55737cff8ccce80876ed873475f484ba}{C\+Y\+\_\+\+I\+SR} (isr\+\_\+S)
+\begin{DoxyCompactList}\small\item\em Afvikler \char`\"{}\+Interrupt\char`\"{} fra \hyperlink{class_z}{Z}. \end{DoxyCompactList}\item 
+void \hyperlink{class_z_a75e9200c2d48803f4bb723bd1fea24ea}{calibrateZ} ()
+\begin{DoxyCompactList}\small\item\em Kalibrere \hyperlink{class_z}{Z}. \end{DoxyCompactList}\item 
+void \hyperlink{class_z_a32c07d919fae10a36ead3ac6766f7355}{set\+Z\+Pos} (uint8 z\+Val)
+\begin{DoxyCompactList}\small\item\em Sætter ny \hyperlink{class_z}{Z} position. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsubsection*{Private metoder}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_z_aeac8c479305ae54b347729e4ff279d44}{step\+Z\+Forwards} ()
+\begin{DoxyCompactList}\small\item\em Køre \hyperlink{class_z}{Z} motor et step frem. \end{DoxyCompactList}\item 
+void \hyperlink{class_z_ad16ddc5261a237fc03c8a4b30571c528}{step\+Z\+Backwards} ()
+\begin{DoxyCompactList}\small\item\em Køre \hyperlink{class_z}{Z} motor et step tilbage. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsubsection{Detaljeret beskrivelse}
+\hyperlink{class_z}{Z} class. 
+
+Styre \hyperlink{class_z}{Z} modulets funktioner. \begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+\subsubsection{Dokumentation af medlemsfunktioner}
+\index{Z@{Z}!calibrateZ@{calibrateZ}}
+\index{calibrateZ@{calibrateZ}!Z@{Z}}
+\paragraph[{\texorpdfstring{calibrate\+Z()}{calibrateZ()}}]{\setlength{\rightskip}{0pt plus 5cm}void calibrateZ (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_z_a75e9200c2d48803f4bb723bd1fea24ea}{}\label{class_z_a75e9200c2d48803f4bb723bd1fea24ea}
+
+
+Kalibrere \hyperlink{class_z}{Z}. 
+
+Metoden kalibrerer \hyperlink{class_z}{Z} og sætter en ny max værdi for \hyperlink{class_z}{Z}.
+
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 137 i filen z.\+c.
+
+
+
+Indeholder referencer til Data\+Z\+::calibratedZ, dataZ, interrupt\+Steps, Data\+Z\+::interruptZ, L\+E\+D\+::set\+Led(), step\+Z\+Backwards(), step\+Z\+Forwards(), Data\+Z\+::z\+Flag, Data\+Z\+::z\+Max og Data\+Z\+::z\+Pos.
+
+
+
+Refereret til af Handler\+::handler(), main() og set\+Z\+Pos().
+
+
+\begin{DoxyCode}
+138 \{
+139   DEBUG\_PutString(\textcolor{stringliteral}{"Z calibrate pre-zMax: "});
+140   DEBUG\_PutHexInt(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax});
+141   DEBUG\_PutCRLF();
+142   
+143   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ae018a4b3f38c25bf309a70bfa3c2b47b}{calibratedZ} = 0;
+144   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} = 1;
+145   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax} = 0;
+146   
+147   DEBUG\_PutString(\textcolor{stringliteral}{"Going forwards to max"});
+148   \textcolor{keywordflow}{while}(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} == 0 && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} == 1)
+149   \{
+150     DEBUG\_PutString(\textcolor{stringliteral}{"."});
+151     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(1,0,0,0);
+152     \hyperlink{class_z_aeac8c479305ae54b347729e4ff279d44}{stepZForwards}();
+153   \}
+154   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 0;
+155   
+156   DEBUG\_PutString(\textcolor{stringliteral}{"done"});
+157   DEBUG\_PutCRLF();
+158   
+159   DEBUG\_PutString(\textcolor{stringliteral}{"Going backwards to zero"});
+160   \textcolor{keywordflow}{while}(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} == 0 && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} == 0)
+161   \{
+162     DEBUG\_PutString(\textcolor{stringliteral}{"."});
+163     \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(1,0,0,0);
+164     \hyperlink{class_z_ad16ddc5261a237fc03c8a4b30571c528}{stepZBackwards}();
+165     \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax}++;
+166   \}
+167   DEBUG\_PutString(\textcolor{stringliteral}{"done"});
+168 
+169   \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
+170   
+171   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos} = 0;
+172   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax} = \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax} - \hyperlink{z_8h_a319d8f8cbb816fc1ca2306587712b0b7}{interruptSteps};
+173   
+174   DEBUG\_PutString(\textcolor{stringliteral}{" post-zMax: "});
+175   DEBUG\_PutHexInt(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax});
+176   DEBUG\_PutString(\textcolor{stringliteral}{" new xPos: "});
+177   DEBUG\_PutHexInt(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos});
+178   DEBUG\_PutCRLF();
+179   DEBUG\_PutCRLF();
+180   
+181   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ae018a4b3f38c25bf309a70bfa3c2b47b}{calibratedZ} = 1;
+182   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 0;
+183 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=266pt]{d7/d97/class_z_a75e9200c2d48803f4bb723bd1fea24ea_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/d97/class_z_a75e9200c2d48803f4bb723bd1fea24ea_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Z@{Z}!C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}}
+\index{C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}!Z@{Z}}
+\paragraph[{\texorpdfstring{C\+Y\+\_\+\+I\+S\+R(isr\+\_\+\+Z)}{CY_ISR(isr_Z)}}]{\setlength{\rightskip}{0pt plus 5cm}C\+Y\+\_\+\+I\+SR (
+\begin{DoxyParamCaption}
+\item[{isr\+\_\+Z}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_z_a8171ad8aabdbfed5d19fbda53c9d28a9}{}\label{class_z_a8171ad8aabdbfed5d19fbda53c9d28a9}
+
+
+Afvikler \char`\"{}\+Interrupt\char`\"{} fra \hyperlink{class_z}{Z}. 
+
+En \char`\"{}\+Interrupt Service Routine(\+I\+S\+R)\char`\"{} for \hyperlink{class_z}{Z} der aktiveres ved interrupt fra \hyperlink{class_z}{Z} modulet.
+
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 75 i filen z.\+c.
+
+
+
+Indeholder referencer til dataZ, interrupt\+Steps, Data\+Z\+::interruptZ, L\+E\+D\+::set\+Led(), step\+Z\+Forwards() og Data\+Z\+::z\+Flag.
+
+
+\begin{DoxyCode}
+76 \{
+77   DEBUG\_PutString(\textcolor{stringliteral}{"Interrupt Z"});
+78   DEBUG\_PutCRLF();
+79   interrupt\_Z\_Disable();
+80   
+81   uint32 i;
+82   
+83   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 1;
+84 
+85   \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,1,0);
+86   \textcolor{keywordflow}{for}(i = 0; i < \hyperlink{z_8h_a319d8f8cbb816fc1ca2306587712b0b7}{interruptSteps}; i++)
+87   \{
+88     \hyperlink{class_z_aeac8c479305ae54b347729e4ff279d44}{stepZForwards}();
+89   \}
+90   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} = 1;
+91   \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
+92   
+93   interrupt\_Z\_ClearPending();
+94   interrupt\_Z\_Enable();
+95 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=251pt]{d7/d97/class_z_a8171ad8aabdbfed5d19fbda53c9d28a9_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Z@{Z}!C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}}
+\index{C\+Y\+\_\+\+I\+SR@{C\+Y\+\_\+\+I\+SR}!Z@{Z}}
+\paragraph[{\texorpdfstring{C\+Y\+\_\+\+I\+S\+R(isr\+\_\+\+S)}{CY_ISR(isr_S)}}]{\setlength{\rightskip}{0pt plus 5cm}C\+Y\+\_\+\+I\+SR (
+\begin{DoxyParamCaption}
+\item[{isr\+\_\+S}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_z_a55737cff8ccce80876ed873475f484ba}{}\label{class_z_a55737cff8ccce80876ed873475f484ba}
+
+
+Afvikler \char`\"{}\+Interrupt\char`\"{} fra \hyperlink{class_z}{Z}. 
+
+En \char`\"{}\+Interrupt Service Routine(\+I\+S\+R)\char`\"{} for \hyperlink{class_z}{Z} der aktiveres ved interrupt fra \hyperlink{class_z}{Z} modulet.
+
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 106 i filen z.\+c.
+
+
+
+Indeholder referencer til dataZ, interrupt\+Steps, Data\+Z\+::interruptZ, L\+E\+D\+::set\+Led(), step\+Z\+Backwards() og Data\+Z\+::z\+Flag.
+
+
+\begin{DoxyCode}
+107 \{
+108   DEBUG\_PutString(\textcolor{stringliteral}{"Interrupt S"});
+109   DEBUG\_PutCRLF();
+110   interrupt\_S\_Disable();
+111   
+112   uint32 i;
+113   
+114   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 1;
+115   
+116   \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,1,0);
+117   \textcolor{keywordflow}{for}(i = 0; i < \hyperlink{z_8h_a319d8f8cbb816fc1ca2306587712b0b7}{interruptSteps}; i++)
+118   \{
+119     \hyperlink{class_z_ad16ddc5261a237fc03c8a4b30571c528}{stepZBackwards}();
+120   \}
+121   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} = 0;
+122   \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
+123   
+124   interrupt\_S\_ClearPending();
+125   interrupt\_S\_Enable();
+126 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{d7/d97/class_z_a55737cff8ccce80876ed873475f484ba_cgraph}
+\end{center}
+\end{figure}
+
+
+\index{Z@{Z}!set\+Z\+Pos@{set\+Z\+Pos}}
+\index{set\+Z\+Pos@{set\+Z\+Pos}!Z@{Z}}
+\paragraph[{\texorpdfstring{set\+Z\+Pos(uint8 z\+Val)}{setZPos(uint8 zVal)}}]{\setlength{\rightskip}{0pt plus 5cm}void set\+Z\+Pos (
+\begin{DoxyParamCaption}
+\item[{uint8}]{z\+Val}
+\end{DoxyParamCaption}
+)}\hypertarget{class_z_a32c07d919fae10a36ead3ac6766f7355}{}\label{class_z_a32c07d919fae10a36ead3ac6766f7355}
+
+
+Sætter ny \hyperlink{class_z}{Z} position. 
+
+Ud fra den modtaget værdi udregnes antal step og vej til den ønsket destination. 
+\begin{DoxyParams}[1]{Parametre}
+\mbox{\tt in}  & {\em z\+Val} & Værdi for position.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 195 i filen z.\+c.
+
+
+
+Indeholder referencer til Data\+Z\+::calibratedZ, calibrate\+Z(), dataZ, Data\+Z\+::interruptZ, Data\+Z\+::isr\+StopZ, resolution, L\+E\+D\+::set\+Led(), step\+Z\+Backwards(), step\+Z\+Forwards(), Data\+Z\+::z\+Flag, Data\+Z\+::z\+Max og Data\+Z\+::z\+Pos.
+
+
+
+Refereret til af Handler\+::handler().
+
+
+\begin{DoxyCode}
+196 \{
+197   uint32 i;
+198   uint32 zDes = 0;
+199   uint32 zSteps = 0;
+200   
+201   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ae55ff8378d0a07b118000a98b273141f}{isrStopZ} = 0;
+202   
+203   \textcolor{keywordflow}{if}(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ae018a4b3f38c25bf309a70bfa3c2b47b}{calibratedZ} == 1)
+204   \{
+205     zDes = zVal * \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax} / \hyperlink{z_8h_a518902ce4d6b0c41b04e9fcd3c648916}{resolution};
+206     
+207     DEBUG\_PutString(\textcolor{stringliteral}{"Z set value: "});
+208     DEBUG\_PutHexInt(zVal);
+209     DEBUG\_PutString(\textcolor{stringliteral}{" pre-zPos: "});
+210     DEBUG\_PutHexInt(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos});
+211     DEBUG\_PutString(\textcolor{stringliteral}{" zDes: "});
+212     DEBUG\_PutHexInt(zDes);
+213     
+214     \textcolor{keywordflow}{if}(zDes > \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos})
+215     \{
+216       \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,1,0,0);
+217       \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 0;
+218       \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} = 1;
+219       zSteps = zDes - \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos};
+220       
+221       DEBUG\_PutString(\textcolor{stringliteral}{" going forwards steps: "});
+222       DEBUG\_PutHexInt(zSteps);
+223       \textcolor{keywordflow}{for}(i = 0; i < zSteps  && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ae55ff8378d0a07b118000a98b273141f}{isrStopZ} == 0 && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.
+      \hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} == 0 && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} == 1; i++)
+224       \{
+225         DEBUG\_PutString(\textcolor{stringliteral}{"."});
+226         \hyperlink{class_z_aeac8c479305ae54b347729e4ff279d44}{stepZForwards}();
+227         \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos}++;
+228       \}
+229       DEBUG\_PutString(\textcolor{stringliteral}{"done"});
+230       
+231       \textcolor{keywordflow}{if}(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} == 1)
+232       \{
+233         \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos} = \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_a73591b48f5bcc31997bc92dc465d6696}{zMax};
+234       \}
+235       DEBUG\_PutString(\textcolor{stringliteral}{" new-zPos: "});
+236       DEBUG\_PutHexInt(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos});
+237       DEBUG\_PutCRLF();
+238       DEBUG\_PutCRLF();
+239       
+240       \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
+241     \}
+242     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(zDes < \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos})
+243     \{
+244       \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,1,0,0);
+245       
+246       \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 0;
+247       \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} = 0;
+248       zSteps = \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos} - zDes;
+249       
+250       DEBUG\_PutString(\textcolor{stringliteral}{" going backwards steps: "});
+251       DEBUG\_PutHexInt(zSteps);
+252       \textcolor{keywordflow}{for}(i = 0; i < zSteps && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ae55ff8378d0a07b118000a98b273141f}{isrStopZ} == 0 && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.
+      \hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} == 0 && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} == 0; i++)
+253       \{
+254         DEBUG\_PutString(\textcolor{stringliteral}{"."});
+255         \hyperlink{class_z_ad16ddc5261a237fc03c8a4b30571c528}{stepZBackwards}();
+256         \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos}--;
+257       \}
+258       DEBUG\_PutString(\textcolor{stringliteral}{"done"});
+259       \textcolor{keywordflow}{if}(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} == 1)
+260       \{
+261         \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos} = 0;
+262       \}
+263       DEBUG\_PutString(\textcolor{stringliteral}{" new-zPos: "});
+264       DEBUG\_PutHexInt(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_aafb6592f063176df6830ef1f1e29ae72}{zPos});
+265       DEBUG\_PutCRLF();
+266       DEBUG\_PutCRLF();
+267       
+268       \hyperlink{led_8h_a1d8e725e3829da99c1d027ba0a2ce57a}{setLed}(0,0,0,0);
+269     \}
+270   \}
+271   \textcolor{keywordflow}{else}
+272   \{
+273     \hyperlink{class_z_a75e9200c2d48803f4bb723bd1fea24ea}{calibrateZ}();
+274     \hyperlink{class_z_a32c07d919fae10a36ead3ac6766f7355}{setZPos}(zVal);
+275   \}
+276   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 0;
+277 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/d97/class_z_a32c07d919fae10a36ead3ac6766f7355_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{d7/d97/class_z_a32c07d919fae10a36ead3ac6766f7355_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Z@{Z}!step\+Z\+Backwards@{step\+Z\+Backwards}}
+\index{step\+Z\+Backwards@{step\+Z\+Backwards}!Z@{Z}}
+\paragraph[{\texorpdfstring{step\+Z\+Backwards()}{stepZBackwards()}}]{\setlength{\rightskip}{0pt plus 5cm}void step\+Z\+Backwards (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_z_ad16ddc5261a237fc03c8a4b30571c528}{}\label{class_z_ad16ddc5261a237fc03c8a4b30571c528}
+
+
+Køre \hyperlink{class_z}{Z} motor et step tilbage. 
+
+Køre \hyperlink{class_z}{Z} motoren et step tilbage.
+
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 329 i filen z.\+c.
+
+
+
+Indeholder referencer til step\+Delay.
+
+
+
+Refereret til af calibrate\+Z(), C\+Y\+\_\+\+I\+S\+R(), set\+Z\+Pos() og z\+\_\+start().
+
+
+\begin{DoxyCode}
+330 \{
+331   Pin\_1a\_Z\_Write(0);
+332   Pin\_2a\_Z\_Write(0);
+333   Pin\_1b\_Z\_Write(0);
+334   Pin\_2b\_Z\_Write(1);
+335   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+336   
+337   Pin\_1a\_Z\_Write(0);
+338   Pin\_2a\_Z\_Write(0);
+339   Pin\_1b\_Z\_Write(1);
+340   Pin\_2b\_Z\_Write(0);
+341   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+342   
+343   Pin\_1a\_Z\_Write(0);
+344   Pin\_2a\_Z\_Write(1);
+345   Pin\_1b\_Z\_Write(0);
+346   Pin\_2b\_Z\_Write(0);
+347   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+348   
+349   Pin\_1a\_Z\_Write(1);
+350   Pin\_2a\_Z\_Write(0);
+351   Pin\_1b\_Z\_Write(0);
+352   Pin\_2b\_Z\_Write(0);
+353   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+354 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/d97/class_z_ad16ddc5261a237fc03c8a4b30571c528_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Z@{Z}!step\+Z\+Forwards@{step\+Z\+Forwards}}
+\index{step\+Z\+Forwards@{step\+Z\+Forwards}!Z@{Z}}
+\paragraph[{\texorpdfstring{step\+Z\+Forwards()}{stepZForwards()}}]{\setlength{\rightskip}{0pt plus 5cm}void step\+Z\+Forwards (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{class_z_aeac8c479305ae54b347729e4ff279d44}{}\label{class_z_aeac8c479305ae54b347729e4ff279d44}
+
+
+Køre \hyperlink{class_z}{Z} motor et step frem. 
+
+Køre \hyperlink{class_z}{Z} motoren et step fremad.
+
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 293 i filen z.\+c.
+
+
+
+Indeholder referencer til step\+Delay.
+
+
+
+Refereret til af calibrate\+Z(), C\+Y\+\_\+\+I\+S\+R() og set\+Z\+Pos().
+
+
+\begin{DoxyCode}
+294 \{
+295   Pin\_1a\_Z\_Write(1);
+296   Pin\_2a\_Z\_Write(0);
+297   Pin\_1b\_Z\_Write(0);
+298   Pin\_2b\_Z\_Write(0);
+299   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+300   
+301   Pin\_1a\_Z\_Write(0);
+302   Pin\_2a\_Z\_Write(1);
+303   Pin\_1b\_Z\_Write(0);
+304   Pin\_2b\_Z\_Write(0);
+305   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+306   
+307   Pin\_1a\_Z\_Write(0);
+308   Pin\_2a\_Z\_Write(0);
+309   Pin\_1b\_Z\_Write(1);
+310   Pin\_2b\_Z\_Write(0);
+311   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+312   
+313   Pin\_1a\_Z\_Write(0);
+314   Pin\_2a\_Z\_Write(0);
+315   Pin\_1b\_Z\_Write(0);
+316   Pin\_2b\_Z\_Write(1);
+317   CyDelay(\hyperlink{z_8h_af24cf99e186a696ed4f58aff71d09249}{stepDelay});
+318 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/d97/class_z_aeac8c479305ae54b347729e4ff279d44_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Z@{Z}!z\+\_\+init@{z\+\_\+init}}
+\index{z\+\_\+init@{z\+\_\+init}!Z@{Z}}
+\paragraph[{\texorpdfstring{z\+\_\+init()}{z_init()}}]{\setlength{\rightskip}{0pt plus 5cm}void z\+\_\+init (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_z_ac6bb96bf63bd2cae7c7bcc2f6b422b0c}{}\label{class_z_ac6bb96bf63bd2cae7c7bcc2f6b422b0c}
+
+
+Initialiser \hyperlink{class_z}{Z} modulet. 
+
+Initialiser \hyperlink{class_z}{Z} modulets interrupt.
+
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 35 i filen z.\+c.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+36 \{
+37   interrupt\_Z\_StartEx(isr\_Z);
+38   interrupt\_S\_StartEx(isr\_S);
+39 \}
+\end{DoxyCode}
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=193pt]{d7/d97/class_z_ac6bb96bf63bd2cae7c7bcc2f6b422b0c_icgraph}
+\end{center}
+\end{figure}
+
+
+\index{Z@{Z}!z\+\_\+start@{z\+\_\+start}}
+\index{z\+\_\+start@{z\+\_\+start}!Z@{Z}}
+\paragraph[{\texorpdfstring{z\+\_\+start()}{z_start()}}]{\setlength{\rightskip}{0pt plus 5cm}void z\+\_\+start (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}\hypertarget{class_z_affabc649bbf2e5dbeb475777391513d7}{}\label{class_z_affabc649bbf2e5dbeb475777391513d7}
+
+
+Starter \hyperlink{class_z}{Z} modulet. 
+
+Starter \hyperlink{class_z}{Z} modulet, og køre til position 0
+
+\begin{DoxyAuthor}{Forfatter}
+Casper Dieu Le (\href{mailto:201370338@uni.au.dk}{\tt 201370338@uni.\+au.\+dk}) 
+
+Kasper Hinkler Uldbjerg (\href{mailto:201370281@uni.au.dk}{\tt 201370281@uni.\+au.\+dk}) 
+
+Jeppe Stærk Antonsen (\href{mailto:201271201@uni.au.dk}{\tt 201271201@uni.\+au.\+dk}) 
+\end{DoxyAuthor}
+
+
+Defineret på linje 50 i filen z.\+c.
+
+
+
+Indeholder referencer til dataZ, Data\+Z\+::interruptZ, step\+Z\+Backwards() og Data\+Z\+::z\+Flag.
+
+
+
+Refereret til af main().
+
+
+\begin{DoxyCode}
+51 \{
+52   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 0;
+53   DEBUG\_PutString(\textcolor{stringliteral}{"Z initializing going to zero"});
+54   
+55   \textcolor{keywordflow}{while}(\hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} == 0 && \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ac9b1acf86d4646bdf8e9f338aedb56a2}{zFlag} == 0)
+56   \{
+57     DEBUG\_PutString(\textcolor{stringliteral}{"."});
+58     \hyperlink{class_z_ad16ddc5261a237fc03c8a4b30571c528}{stepZBackwards}();
+59   \}
+60   DEBUG\_PutString(\textcolor{stringliteral}{"done"});
+61   DEBUG\_PutCRLF();
+62   
+63   \hyperlink{data_8h_ace1aa5b973b9358f7236c0c9deca9370}{dataZ}.\hyperlink{data_8h_ad31cb1c3240ac1f76fc3faa902b49c24}{interruptZ} = 0;
+64 \}
+\end{DoxyCode}
+
+
+Her er kald-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=252pt]{d7/d97/class_z_affabc649bbf2e5dbeb475777391513d7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Her er kalder-\/grafen for denne funktion\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{d7/d97/class_z_affabc649bbf2e5dbeb475777391513d7_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Dokumentationen for denne klasse blev genereret ud fra filerne\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{z_8h}{z.\+h}\item 
+\hyperlink{z_8c}{z.\+c}\end{DoxyCompactItemize}
