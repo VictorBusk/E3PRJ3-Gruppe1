@@ -1,3 +1,6 @@
+\subsection{Dokumentation af kode}
+Alle metoder, klasser og konstanter er blevet beskrevet i koden løbende. Disse beskrivelse er vha. programmet Doxygen blevet omdannet til html såvel som Latex filer der på struktureret vis opstiller disse med hyperlink til hurtigt og nemt navigere mellem sektioner. Hvis yderligere kodedokumentation ønskes henvises der til disse Doxygen filer. Der kan forefindes doxygen-filer for Devkit8000\footcite{doxy-devkit}, PSoC-Master\footcite{doxy-master}, PSoC-XY\footcite{doxy-xy}, PSoC-Z\footcite{doxy-z} og PSoC-Sensor\footcite{doxy-sensor}.
+
 % 6.1.2 Applikationsmodeller
 \subsection{Applikationsmodeller}
 
@@ -15,7 +18,7 @@ Applikationsmodel for UC1: Kalibrer system.
 \end{figure}
 
 \begin{figure}[H] \centering
-    \fbox{\includegraphics[width=0.95\textwidth]{0_Filer/Figuer/uc3App.png}}
+    \fbox{\includegraphics[width=0.95\textwidth]{0_Filer/Figuer/sdApplikationsmodelUC3-v3.png}}
     \caption{Applikationsmodel med udgangspunkt i UC3}
     \label{fig:uc3App}
 \end{figure}
@@ -181,7 +184,58 @@ uint8 i2c\_txBuffer[]
 \item [Beskrivelse:] Metoden modtager en unsigned int på 16-bit, som den lægger klar til anvendelse via I2C kommuniaktionen.
 \end{labeling}
 
+\subsubsection{PSoC-XY arkitektur og implementering}
 
+\textbf{Styringskode:}\newline 
+Styringen af systemets motorer foregår i tildelte PSoCs. Hver bevægelsesretning har en PSoC tildelt som styrer retning og antal trin motoren skal køre. Aktivering af motorerne kan initieres i PSoC'en på to måder. Manual-mode og Automatic-mode. Der skiftes mellem disse to modes ved tryk på switch på PSoC. Nuværende mode indikeres gennem farven på LED.
+
+\textbf{Manual-Mode:}\newline
+Denne mode blev implementeret i den tidlige fase af implementeringen af XY-delen for at kunne teste systemet. Denne del er koden er blevet undladt i den endelige kode.\newline
+Manuel-mode indikeres med farven rød på LED på PSoC.\newline 
+Når LED’en på PSoC’en lyser rød, er I2C kommunikation med PSoC-Master slået fra, og Capsense slideren på PSoC’en er slået til. 
+Slideren er delt op i fire felter, fra 0 til 128, til manuel bevægelse af motorerne.  Felt 1 er alle værdier under 32. felt 2 er værdier mellem 32 og 64. felt 3 er værdier mellem 64 og 96. felt 4 er værdier over 96.
+Disse fire felter styrer hver deres bevægelse af motorerne. Felt 1 er Y-motorerne i den ene retning, felt 2 er Y-motorerne i modsat retning af Felt 1. Felt 3 er X-motorerne tilsvarende i den ene retning, og Felt 4 er modsat retning af Felt 3. 
+For at aktivere disse retningskørsler trykkes der på et givent felt på Capsense-slideren, og fingeren holdes i kontakt med dette felt, så længe kørsel med motorerne ønskes. Motorerne stoppes når kontakt med felt afbrydes.\newline 
+
+Oversigt over felterne:\newline
+\verb+Kør_X_frem();+       mellem 64 og 96 på touch-sense\newline
+\verb+Kør_X_tilbage();+      over 96 på touch-sense\newline
+\verb+Kør_Y_frem();+	   mellem 64 og 32 på touch-sense\newline
+\verb+Kør_Y_tilbage();+	     under 32 på touch-sense\newline
+
+\textbf{Automatic-Mode:}\newline
+Denne mode blev implementeret i den tidlige fase. Det var her muligt at skifte mellem manuel- og automatic-mode.\newline
+Automatic-mode indikeres med farven grøn på LED på PSoC.\newline 
+Når LED’en på PSoC’en lyser grøn, er Capsense slideren på PSoC’en slået fra, og I2C kommunikation med PSoC-Master er slået til. 
+Ved Automatic-mode modtager PSoC’en til styring af XY-retningen en kommandokode fra PSoCMaster. Denne kommandokode kommer via I2C gennem  P4[0] til SCL og P4[1] til SDA på PSoC-XY.
+Kommandokoden identificeres til et funktionskald og en parameter. For at køre med motorerne, kræver det at det første funktionskald, der bliver givet er kalibrer\textunderscore{}system. 
+
+\textbf{xy\textunderscore{}init()}\newline
+Denne funktion initialisere x og y interrupts. \newline
+\textbf{xy\textunderscore{}start()}\newline
+Denne funktion kaldes ved opstart og ved system afbrydelse. Funktionen positionere X og Y i deres "0" position. \newline
+\textbf{CY\textunderscore{}ISR(isr\textunderscore{}x)}\newline
+Denne interrupt kører X vognen et defineret antal steps tilbage for at sirkre at vognen ikke holder på en "interrupt" switch.\newline
+\textbf{CY\textunderscore{}ISR(isr\textunderscore{}y)}\newline
+Denne interrupt kører Y vognen et defineret antal steps tilbage for at sirkre at vognen ikke holder på en "interrupt" switch.\newline
+\textbf{calibrateX()}\newline
+Denne funktion kalibrer X retningen. Det gøres ved at X vognen først kører til det ene endestop, som er en switch når denne switch aktiveres får PSoCen et interrupt og værdien 0 gemmes. Efter interrupt kører vognen til modsatte endestop switch, her gemmes den talte værdi. Nu er antalet af steps langs X skinnen opdateret i systemet.\newline
+\textbf{calibrateY()}\newline
+Denne funktion kalibrer Y retningen. Det gøres ved at Y vogen først kører til det ene endestop, som er en switch når denne switch aktiveres får PSoCen et interrupt og værdien 0 gemmes. Efter interrupt kører vognen til modsatte endestops switch, her gemmes den talte værdi. Nu er antalet af steps langs Y skinnen opdateret i systemet.\newline
+\textbf{setXPos(unit xVal)}\newline
+Denne funktion aktivere X-motorerne. Funktionen giver et antal steps. Dette antal steps bruges til at sætte den ønskede position som motorerne skal køre til. Hvis ønskede position er det samme som nuværende position, køres der ikke med motorerne. Alt efter hvilken position der bliver ønsket fra PSoC-Master, regner PSoC-XY selv ud hvilken retning motorerne skal køre for at opnå den ønskede position.\newline
+\textbf{setYPos(unit yVal)}\newline
+Denne funktion aktivere Y-motorerne. Funktionen giver et antal steps. Dette antal steps bruges til at sætte den ønskede position som motorerne skal køre til. Hvis ønskede position er det samme som nuværende position, køres der ikke med motorerne. Alt efter hvilken position der bliver ønsket fra PSoC-Master, regner PSoC-XY selv ud hvilken retning motorerne skal køre for at opnå den ønskede position.\newline
+\textbf{stepXForwards()}\newline
+Denne funktion sender signaler til X motorene om at køre frem.\newline
+\textbf{stepXBackwards()}\newline
+Denne funktion sender signaler til X motorene om at køre tilbage.\newline
+\textbf{stepYForwards()}\newline
+Denne funktion sender signaler til Y motorene om at køre frem.\newline
+\textbf{stepYBackwards()}\newline
+Denne funktion sender signaler til Y motorene om at køre tilbage.\newline
+
+For mere detaljeret information af koden til PSoC-XY, refereres der til DoxyGen-XY.\footcite{doxy-xy} 
 
 \subsubsection{PSoC-Sensor arkitektur og implementering}
 
@@ -254,7 +308,7 @@ char controlFlags[5][3] = {
 };
 \end{lstlisting}
 
-Men for at gøre koden mere læsevenlig, så bliver arrayet kun indekseret med enum navne. Det har også den fordel at hvis der skal oprettes et nyt periodisk event, så behøver man kun kopierer en ekstra linje ind i arrayet, og tilføje et navn til en enum liste.
+Men for at gøre koden mere læsevenlig, så bliver arrayet kun indekseret med enum navne. Det har også den fordel at hvis der skal oprettes et nyt periodisk event, så behøver man kun kopiere en ekstra linje ind i arrayet, og tilføje et navn til en enum liste.
 
 \begin{lstlisting}[frame=single, basicstyle=\footnotesize\ttfamily, language=C, numbers=left, numberstyle=\tiny\color{black}, caption={Kodeudsnit: enums og indeksering},captionpos=b]
 enum sensor {DIST, LUMEN, PIR, DIST_ALERT, MOVE_ALERT};
@@ -308,130 +362,141 @@ for(;;)
 \end{lstlisting}
 
 % 6.1.2.3 GUI overvejelser
-\subsubsection{GUI overvejelser}
+\subsection{GUI}
 
 \subsubsection{Overvejelser}
 
-GUI’en skal være produktets fjernbetjening og dermed være brugerens kommunikationsredskab til systemet. GUI’en har derfor til formål at tolke inputtet fra brugeren, f.eks. hvad der sker når en given knap bliver trykket. 
-GUI’en opdeles i henholdsvis en primær UI-fil, der indeholder de primære grafiske elementer som brugeren ser og en dialog-UI til input af data der skal gemmes. Den primære UI behandle positionering, lysindstillinger, sensorstyring og eksekvering af gemte planer. Funktionaltiter som hvordan lampen bevægede sig, hvordan lyset skulle reguleres og måden hvorpå sensorne agerede stod de PSoC'erne for. På denne måde opretholdes ideen om at Devkit8000 skal betragtes som en fjernbetjening, da dens primære funktion er at videresende kommandoer som PSoC'erne har til opgave at tolke og videresende til hardwaren.
+GUI’en skal være produktets fjernbetjening og dermed være brugerens kommunikationsredskab til resten af systemet. GUI’en har derfor til formål at tolke inputtet fra brugeren, f.eks. hvad der sker når en given knap bliver trykket på. 
+GUI’en opdeles i henholdsvis en primær UI-fil, der indeholder de primære grafiske elementer som brugeren ser og en dialog-UI til input af data der skal gemmes. Den primære UI behandler positionering, lysindstillinger, sensorstyring og eksekvering af gemte planer. Funktionaliteter som hvordan lampen skal bevæger sig, hvordan lyset skal reguleres og måden hvorpå sensorerne agerer står PSoC'erne for. På denne måde opretholdes ideen om at Devkit8000 skal betragtes som en fjernbetjening, da dens primære funktion er at videresende kommandoer som PSoC'erne har til opgave at tolke og fordele til hardwaren.
 \newline
 
-Den primære UI-en er dog kun ansvarlig for at registrere input, men selve behandlingen ligger i nogle separate filer. Denne inddeling blev valgt således at selvom alle filerne hørte under den samme UI ville man med sikkerhed vide at når pågældende fil bliver rettet påvirker det følgende del af UI-en. F.eks. påvirkning af position.cpp påvirker positioneringsdelen af UI'en. Behandlingen af inputs sker gennem to primære datasektioner. GUI’ens sektioner er opdelt i tabs for at brugeren kun kan redigere en sektion af gangen, således at en source-fil dedikeres til hvert synliggjort tab.
+Den primære UI er dog kun ansvarlig for at registrere input, men selve behandlingen ligger i nogle separate filer. Denne inddeling blev valgt således, at selvom alle filerne hørte under den samme UI, ville man med sikkerhed vide, at når pågældende source-fil bliver rettet påvirker det følgende del af UI-en. F.eks. så vil påvirkning af position.cpp påvirker positioneringsdelen af UI'en. Behandlingen af inputs sker gennem to primære datasektioner. GUI’ens sektioner er opdelt i faner, for at brugeren kun kan redigere en sektion af gangen, og en source-fil dedikeres til hvert synliggjort fane. Koden til Position fanen kan findes i position.cpp og så videre.
 \newline 
 
-Dialog-UI'en bringer en boks op der indeholder et tekstfelt og to trykknapper, Ok og Cancel, samt et keyboard. Denne dialogboks benyttes af brugeren såfremt at de nuværende positions og lysindstillinger skal gemmes. Når brugeren har oprettet et plannavn, med et maksimum på 8 tegn, og trykket Ok vil planen opstå på det primære UI så brugeren på hvilket som helst tidspunkt kan vende tilbage til gemte indstillinger.
+Dialog-UI'en bringer en dialogboks op, der indeholder et tekstfelt, to trykknapper (Ok og Cancel) og et keyboard. Denne dialogboks benyttes af brugeren såfremt, at brugeren vælger at de nuværende positions og lysindstillinger skal gemmes. Når brugeren har oprettet et plannavn, med et maksimum på 8 tegn, og trykket Ok vil planen opstå på det primære UI så brugeren på hvilket som helst tidspunkt kan vende tilbage til gemte indstillinger.
 \newline
 
-Oprindeligt skulle positioneringen kunne kontrolleres live (opdatere positionen med det samme) med en 4-pile controller (en playstation controller f.eks.), men det ville give komplikationer, da der konstant skulle loades nye koordinator, hvis en pil blev holdt nede. Dette kunne resultere i risiko for stor kommunikationsforsinkelse, da kommunikationssendetiden er aktuel hver gang et nyt sæt data sendes. Dette er meget ofte (hele tiden) hvis pilen holdes nede. Af denne årsag blev sliders i stedet benyttet, da man ved dem kunne sætte nogle x-, y- og z-værdier, som kun skal sendes en gang når brugeren vælger det. Når brugeren har sat de tre sliderpositioner til de valgte værdier, vil et tryk på Go-knappen (placeret under x-, y-, z-sliderne) sendes disse værdier videre til resten af systemet. Således skal kun et sæt data sendes per brugerinput. Brugeren kan følge sliderværdierne i nogle labels, der er dedikeret til hver retningsakse. Brugeren oplyses om, hvor lampen er på nuværende tidspunkt, og hvor den vil bevæge sig hen efter Go-knappen trykkes, som markeres med to separate symboler på en graf, der dog kun angiver x- og y-position, da 2D repræsentation benyttes.
+Oprindeligt skulle positioneringen kunne kontrolleres live (opdatere positionen med det samme) med en 4-pile controller (en playstation controller f.eks.), men det ville give komplikationer, da der konstant skulle loades nye koordinator, hvis en pil blev holdt nede. Dette kunne resultere i risiko for stor kommunikationsforsinkelse, da kommunikationssendetiden er aktuel hver gang et nyt sæt data sendes. Ligeledes ville bufferen blive fyldt med data, på meget kort tid. Af disse årsager blev sliders i stedet benyttet, da man ved dem kunne sætte nogle x-, y- og z-værdier, som kun sendes en gang når brugeren vælger det. Når brugeren har sat de tre sliderpositioner til de valgte værdier, vil et tryk på Go-knappen (placeret under x-, y-, z-sliderne) sendes disse værdier videre til resten af systemet gennem PSoC-Master beskedcentralen. Således skal kun et sæt data sendes per brugerinput. Brugeren oplyses om, hvor lampen er på nuværende tidspunkt, og hvor den vil bevæge sig hen efter Go-knappen trykkes, som markeres med to separate symboler på en graf, der dog kun angiver x- og y-position, da 2D repræsentation benyttes. En rød indikator viser hvor lampen vil bevæge sig hen hvis data vælges videresendt og en grøn indikator viser hvor lampen er på nuværende tidspunkt.
 \newline
 
-Tanken bag light var, at brugeren skal kunne indstille farveoutput på de tre RGB-LED’er, endnu engang med tre sliders, der angiver farverne rød, grøn og blå. At skrue op og ned for disse farver enkeltvis vil resultere i en ny farve repræsenteret med en farvepalette. Denne farve bliver vist i Light-taben, så brugeren kan se, hvilken farve der er ved at blive blandet i Light-taben selv forinden at kommandoen sendes videre i systemet, endnu engang med en Go-knap placeret under sliderne.  
+Tanken bag light var, at brugeren skal kunne indstille farveoutput på de tre RGB-LED’er, endnu engang med tre sliders, der angiver farverne rød ("R"-slider), grøn ("G"-slider) og blå ("B"-slider). At skrue op og ned for disse farver enkeltvis vil resultere i at en ny farve bliver repræsenteret med en farvepalette. Farvepaletten illustrerer farven der bliver dannet af de samlede farveværdier f.eks. 255, 255, 255 for hvidt lys. Denne farve bliver vist i Light-fanen, så brugeren kan se, hvilken farve der er ved at blive blandet i Light-fanen selv forinden at kommandoen sendes videre i systemet, endnu engang med en Go-knap placeret under sliderne. Brugeren kan følge sliderværdierne i nogle labels, der er dedikeret til hver slider.
 \newline
 
 \subsubsection{Position}
-Position er det første tab, der ses når applikationen bliver startet. Alle knapperne der visualiseres på displayet er angivet i en UI-fil, der hedder "display". I position.cpp vil interaktionen med alle GUI’ens elementer i Position-taben blive behandlet. Denne fils primære formål er at stå for at sende de beskeder, som motorerne skal modtage for x-, y- og z-aksen videre vha. spi-kommunikation. Denne styring involverer elementer, som sliders der benyttes af brugeren til at fremstille koordinator, som lampen skal bevæge sig til ved klik på Go-knappen. Klikket på Go-knappen fortæller systemet at beskeden skal sendes videre til PSoC Master. I dette tab er der ligeledes en rektangulær boks i den højre side. Over denne er en Add- og Delete-knap. Ved tryk på Add vil dialog-boksen komme frem. Når en plan er oprettet vil denne blive fremvist i den rektangulære boks med et maximum på 4 planer. Hvis en plan er markeret og der trykkes på delete vil planen blive nedlagt og ophøre med at eksistere.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\linewidth]{0_Filer/Figuer/Position.png}
-\caption{Position-tab}
+\caption{Position-fane}
 \label{fig:GUI Position}
 \end{figure}
 
+Position er det første faneblad, der ses når applikationen bliver startet. Alle knapperne der visualiseres på skærmen er angivet i en UI-fil, der hedder "display". I position.cpp vil interaktionen med alle GUI’ens elementer i Position-fanen blive behandlet. Denne fils primære formål er at stå for at sende de beskeder, som motorerne skal modtage for x-, y- og z-aksen videre vha. SPI-kommunikation. Denne styring involverer elementer, som sliders der benyttes af brugeren til at fremstille koordinator, som lampen skal bevæge sig til ved klik på Go-knappen. Klikket på Go-knappen fortæller systemet at beskeden skal sendes videre til PSoC-Master. I denne fane er der ligeledes en rektangulær boks i den højre side. Over denne boks er en Add- og Delete-knap. Ved tryk på Add vil dialogboksen komme frem. Når en plan er oprettet vil denne blive fremvist i den rektangulære boks med et maximum på 4 planer. Hvis en plan er markeret vil et tryk på Delete resultere i at planen bliver nedlagt og ophøre med at eksistere.
+
 \subsubsection{Light}
-Light er den anden tab fra venstre mod højre, som kan ses i tab-widget menuen. Det er i denne tab, hvor interaktionen med lysstyring foretages. Selve vinduet er bygget op som en del af tab-widgetten i Displays's UI, men det er light.cpp, der står for behandlingen af interaktionerne, der sker i dette tab. 
-Nedenfor ses et klassediagram for GUI'en, hvor klasserelationerne kan ses. Det fremgår af klasserelationerne, at Position som primære fil står for at hente data fra GUI'en og brugerens interaktionen med den, hvilket hovedsagligt foregår med signals \& slots. Signals \& slots er GUI'ens interne eventhandler. Når dette event sker, sendes dette signal til dette slot (funktion) som udfører det og det. QT er et eventbaseret system, så opbygningen af den er primært bestående af forståelsen for hvordan delelementer snakker sammen, eller snarer hvordan man får dem til at snakke sammen. Arv og pointerlogik spiller her en stor rolle.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\linewidth]{0_Filer/Figuer/Light.png}
-\caption{Light-tab}
+\caption{Light-fane}
 \label{fig:GUI Light}
 \end{figure}
 
+Light er det andet faneblad fra venstre mod højre, som kan ses i tab-widget menuen. Det er i denne fane, hvor interaktionen med lysstyring foretages. Selve vinduet er bygget op som en del af tab-widgetten i Displays's UI, men det er light.cpp, der står for behandlingen af interaktionerne, der sker i denne fane. 
+Nedenfor ses et klassediagram for GUI'en, hvor klasserelationerne kan ses. Det fremgår af klasserelationerne, at Position som primære fil står for at hente data fra GUI'en og brugerens interaktionen med den, hvilket hovedsagligt foregår med signals \& slots. Signals \& slots er GUI'ens interne eventhandler. Når et event sker, sendes dette signal til dette slot (funktion) som udfører det og det. QT er et eventbaseret system, så opbygningen af den er primært bestående af forståelsen for hvordan delelementer snakker sammen, eller snarer hvordan man får dem til at snakke sammen. Arv og pointerlogik spiller her en stor rolle.
+
 \subsubsection{Settings}
-Settings er den tredje tab fra venstre mod højre. Denne tab har til ansvar at sætte sensorindstillingerne. Disse sensorer indbefatter afstandssensor, bevælgelsessensor og lumensensor. Bevægelsessensoren og lumensensoren er helt simplistisk bestående af sliders som kan sættes til minumum, der beskriver tilstanden Off eller maksimum, der beskriver tilstande On. Når disse er On betyder det at sensorne er aktive og deres respons på virker udfaldsforløbet. Afstandssensoren er opbygget med af en spinbox, hvori man kan indstille hvilken afstand den skal registrere at et objekt er for tæt på. Dette er en heltalsværdi med minimum på 3 og maximum på 255 med enheden centimeter. Det er også i denne tab at kalibreringsknappen ”Calibrate” kan findes. Calibrate er noget brugeren kan benytte til at rette op på uoverensstemmelser i positionering hvis denne er skredet fra det forventet. Dette påbegynder en bevægelsesrutine og lagrer ved afslutning nogle calibreringsdata på de respektive slave PSoC'er, PSoC-XY og PSoC-Z.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\linewidth]{0_Filer/Figuer/Settings.png}
-\caption{Settings-tab}
-\label{fig:GUI Position}
+\caption{Settings-fane}
+\label{fig:GUI Settings}
 \end{figure}
 
-\subsubsection{PlannerDialog og planner}
-Plannerdialogboksen er den dialogboks der bringes frem, når man trykker på Add-knappen, hvis brugeren vælger at oprette en plan der skal gemmes. Dialogboksen indeholder et tekstfelt hvori navnet på planen indtastes. Der kan heri indtastes alle tegntyper begrænset til maksimalt 8-tegn. Dette antal er valgt for at de oprettede knapper har et navn det fylder maksimalt en linje med en skriftstørrelse, der vil være læsbar på et display af den størrelse der benyttes til dette produkt (480*272). Alt over 8-tegn ville kræve at skriftstørrelsen skulle være mindre eller der skulle laves linjeskift, hvilket ikke ville være hensigtsmæssigt. Indtastningen i indtastningsfeltet gøres vha. af det virtuelle keyboard, der befinder sig i den nederste halvdel af skærmen i dialogboksen. 
+Settings er det tredje faneblad fra venstre mod højre. Denne fane har til ansvar at sætte sensorindstillingerne. Disse sensorer indbefatter afstandssensor, bevælgelsessensor og lumensensor. Bevægelsessensoren og lumensensoren er helt simplistisk bestående af sliders som kan sættes til minumum, der beskriver tilstanden Off, eller maksimum, der beskriver tilstande On. Når disse er On, betyder det at sensorne er aktive og deres respons påvirker udfaldsforløbet for det samlede system. Afstandssensoren er opbygget af en spinbox, hvori man kan indstille hvilken afstand den skal registrere at et objekt er for tæt på. Dette er en heltalsværdi med et minimum på 3 og et maximum på 255 med enheden centimeter. Det er også i denne fane at kalibreringsknappen ”Calibrate” kan findes. Calibrate er noget brugeren kan benytte til at rette op på uoverensstemmelser i positionering hvis denne er skredet fra det forventet. Dette påbegynder en bevægelsesrutine og lagrer ved afslutning nogle calibreringsdata på de respektive slave PSoC'er, PSoC-XY og PSoC-Z.
 
-Keyboardet er ikke lavet af denne gruppe, men er blevet downloadet og implementeret fra "the Free Software Foundation". Keyboardet er dog blevet modificeret i størrelse og indtastningsvenlighed, og "Hide"-knappen der oprindeligt skulle benyttes til at skjule keyboardet er blevet gjort funktionsløst, da denne funktionalitet var unødvendig for dette produkt. For mere information om dette keyboard samt et downloadlink til det kan ses fra følgende reference\#. Under indtastningsfeltet kan findes en Ok- og Cancel-knap. Tryk på Ok-knappen opretter planen med det indtastede navn, hvorimod Cancel-knappen annulerer oprettelse af plan og returnere brugeren til den forhenværende brugerflade. For at undgå at navneløse planer bliver oprettet er Ok-knappen disablet indtil mindst et eller flere tegn indtastes i indtastningsfeltet. Der er en begrænsning på mængden af planer på 4, da dette var den maksimale mængde, der var plads til foruden knapstørrelsen skulle formindskes. Hvis en plan ønskes fjernet skal brugeren trykke på givne plan og trykke på Delete-knappen placeret ved siden af Add-knappen.
+\subsubsection{PlannerDialog og planner}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\linewidth]{0_Filer/Figuer/plannerDialog.png}
-\caption{Settings-tab}
+\caption{Settings-fane}
 \label{fig:GUI Dialog}
 \end{figure}
+
+Plannerdialogboksen er den dialogboks der bringes frem, når man trykker på Add-knappen, hvis brugeren vælger at oprette en plan. Dialogboksen indeholder et tekstfelt hvori navnet på planen indtastes. Der kan heri indtastes alle tegntyper begrænset til maksimalt 8-tegn. Dette antal er valgt, for at de oprettede knapper har et navn der fylder maksimalt en linje med en skriftstørrelse, der vil være læsbar på en skærm af den størrelse der benyttes til dette produkt (480*272). Alt over 8-tegn ville kræve at skriftstørrelsen skulle være mindre eller der skulle laves linjeskift, hvilket ikke ville være hensigtsmæssigt. Indtastningen i indtastningsfeltet gøres vha. af det virtuelle keyboard, der befinder sig i den nederste halvdel af skærmen i dialogboksen. 
+
+Keyboardet er ikke lavet af denne gruppe, men er blevet downloadet og implementeret fra "the Free Software Foundation". Keyboardet er dog blevet modificeret i størrelse og indtastningsvenlighed, og "Hide"-knappen der oprindeligt benyttes til at skjule keyboardet er blevet gjort funktionsløst, da denne funktionalitet var unødvendig for dette produkt. For mere information om dette keyboard samt et downloadlink til det kan ses fra følgende reference \footcite{qtvirtkey}. Under indtastningsfeltet kan findes en Ok- og Cancel-knap. Tryk på Ok-knappen opretter planen med det indtastede navn, hvorimod Cancel-knappen annulerer oprettelse af plan og returnerer brugeren til den forhenværende brugerflade. For at undgå at navneløse planer bliver oprettet er Ok-knappen disablet indtil mindst et eller flere tegn indtastes i indtastningsfeltet. Der er en begrænsning på mængden af planer på 4, da dette var den maksimale mængde, der var plads til foruden knapstørrelsen skulle formindskes. Hvis en plan ønskes fjernet skal brugeren trykke på givne plan og trykke på Delete-knappen placeret ved siden af Add-knappen.
 
 % 6.1.2.4 Klassebeskrivelser Devkit8000
 \subsection{Klassebeskrivelse Devkit8000}
 
-MainDisplay er den første UI, som åbnes, når applikationen startes og det eneste, som forbliver åbent. Det er applikationens primære UI-fil, hvor den hovedsaglige interaktion foretages og fungerer som bindeled for GUI'ens klasser. Denne QWidget indeholder en stor række af GUI'ens funktionaliteter da GUI'en blev opbygget i tabs i stedet for i seperate QWidgets. MainDisplay's UI-fil indeholder den grundlæggende funktionalitet, som er nødvendig for at oprette vinduet.
+MainDisplay er den første UI der kan ses, som åbnes, når applikationen startes og er den eneste, som forbliver åbent. Det er applikationens primære UI-fil, hvor den hovedsaglige interaktion foretages og fungerer som bindeled for GUI'ens klasser. Denne widget indeholder en stor række af GUI'ens funktionaliteter, da GUI'en blev opbygget i faner i stedet for i separate QWidgets (Applikationsvinduer). MainDisplay's UI-fil indeholder den grundlæggende funktionalitet, som er nødvendig for at oprette vinduet.
 \newline
 
-Nedenfor ses et klassediagram for GUI’en, hvor det fremgår, at MainDisplay er den ledende klasse med det UI, som de andre klasser bruges i. Det fremgår af klasserelationen, at MainDisplay som Main Window anvender GUI’ens resterende klasser, hvilket hovedsagligt foregår med signals \& slots. Position, Planner og Light har ikke deres egne QWidget klasser da de alle er bygget på MainDisplay QWidgeten, hvilket har resulteret i en stor samling af klasse i en fil.
+Nedenfor ses et klassediagram for GUI’en, hvor det fremgår, at MainDisplay er den ledende klasse med det UI, som de andre klasser bruges i. Det fremgår af klasserelationen, at MainDisplay som QWidget anvender GUI’ens resterende klasser, hvilket hovedsagligt foregår med signals \& slots. Position, Planner, Light og Settings har ikke deres egne QWidget klasser, da de alle er bygget på MainDisplay QWidgeten, hvilket har resulteret i en stor samling af metoder i en fil.
 
 \begin{figure}[H] \centering
     \fbox{\includegraphics[width=0.95\textwidth]{0_Filer/Figuer/guiClassDia.png}}
-    \caption{GUI klassediagram}
+    \caption{GUI klassediagram genereret vha. Enterprise Architect}
     \label{fig:GUI klassediagram}
 \end{figure}
 
 % 6.1.2.5 GUI repræsentationsbeskrivelse
 \subsection{GUI repræsentationsbeskrivelse}
 
-Klassen Position består af følgende filer:
+Klassen MainDisplay, der kan forefindes i maindisplay.h, indeholder metoder fra følgende filer:
 \begin{itemize}
 \item display.ui
 \item position.cpp
-\item maindisplay.h
+\item planner.cpp
+\item light.cpp
+\item settings.cpp
 \end{itemize}
 
-display.ui er den UI-fil der indeholder de grafiske elementer der kodes for og denne UI-fil kræver sin tilhørende headerfil maindisplay.h. Source-filen position.cpp er der hvor al funktionalitet kodes.
-\newline
+Klassen PlannerDialog, der kan forefindes i plannerdialog.h, indeholder metoder fra følgende filer:
+\begin{itemize}
+\item plannerdialog.ui
+\item plannerdialog.cpp
+\end{itemize}
 
 GUI-filen repræsenterer et vindue bestående af følgende elementer:
 \begin{itemize}
 
-\item Tab Widget - Indeholder tre separate tabs: Position, Light og Settings.
+\item Tab Widget - Indeholder tre separate faner: Position, Light og Settings.
 
-\item Sliders (Position-tab) – Til indstilling af lampens position i X-, Y- og Z-aksen i trin mellem 0 og 255.
+\item Sliders (Position-fane) – Til indstilling af lampens position i X-, Y- og Z-aksen i trin mellem 0 og 255.
 
-\item Go-knap (Position-tab) – Til at udsende sliderværdierne for X, Y og Z til bevægelse af lampe.
+\item Go-knap (Position-fane) – Til at udsende sliderværdierne for X, Y og Z til bevægelse af lampe.
 
-\item Add-knap (Position-tab) - Til åbne dialogboksen til oprettelse af en plan.
+\item Add-knap (Position-fane) - Til åbne dialogboksen til oprettelse af en plan.
 
-\item Sliders (Light-tab) - Til indstilling af farven der udsendes til lampen i trin mellem 0 og 255.
+\item Sliders (Light-fane) - Til indstilling af farven der udsendes til lampen i trin mellem 0 og 255.
 
-\item Trinbokse (Light-tab og Position-tab) - Til visning af sliders trinværdi.
+\item Trinbokse (Light-fane og Position-fane) - Til visning af sliders trinværdi.
 
-\item Farvepalette (Light-tab) - Hvor indstillede farve vises, der forventes at blive vist på lysenhed.
+\item Farvepalette (Light-fane) - Hvor indstillede farve vises, der forventes at blive vist på lysenhed.
 
-\item On/Off-knapper (Light-tab) – On-knap til at sætte RGB-LED’erne på sidste lysindstilling forinden den blev slukket og Off-knap for at slukke lyset.
+\item On/Off-knapper (Light-fane) – On-knap til at sætte RGB-LED’erne på sidste lysindstilling forinden den blev slukket og Off-knap for at slukke lyset.
 
-\item Up/Down-knapper (Light-tab) - Bruges til at flytte farvesliders enten op eller ned med 5 steps.
+\item Up/Down-knapper (Light-fane) - Bruges til at flytte farvesliders enten op eller ned med 5 steps.
 
 \item Labels – Position: X, Y og Z til identifikation af hvilken slider der kontrollerer hvilken akse. Light: R, G og B til identifikation af sliders for farverne rød, grøn og blå.
 
 \item Plot – Et X-, Y-koordinatsystem til visualisering af lampens nuværende position (med grønt ikon) og dens kommende position (rødt ikon), hvis sliders er blevet flyttet.
 
-\item Lumen slider (Settings-tab) - En slider til at sende en tænd- eller slukbesked til lyssensoren.
+\item Lumen slider (Settings-fane) - En slider til at sende en tænd- eller slukbesked til lyssensoren.
 
-\item Movement slider (Setttings-tab) - En slider til at sende en tænd- eller slukbesked til bevægelsessensoren.
+\item Movement slider (Setttings-fane) - En slider til at sende en tænd- eller slukbesked til bevægelsessensoren.
 
-\item Distance spinbox (Settings-tab) - En spinbox der sætter den værdi hvorindenfor afstandssensoren sender en advarsel.
+\item Distance spinbox (Settings-fane) - En spinbox der sætter den værdi hvorindenfor afstandssensoren sender en advarsel.
+
+\item Calibrate-knap (Settings-fane) - Starter kalibreringsprocessen ved tryk.
 
 \end{itemize}
 
-I constructoren til klassen MainDisplay sker opsætningen af GUI'en, når den startes. Her får vi komponenter fra UI'et til at kommunikere sammen med signals \& slots. Dette gøres vha. connect() metoder, så der kan emittes signaler, hvorefter de tilhørende slots kaldes. I dette specifikke kodeudsnit ses hvordan slidernes signaler er blevet sat op. Alle sliderne fra de tre tabs connectes samtidig. Position, Light og Settings er dermed klar til intern kommunikation forinden metoderne kaldes.
+I constructoren til klassen MainDisplay sker opsætningen af GUI'en, når den startes. Her får vi komponenter fra UI'et til at kommunikere sammen med signals \& slots. Dette gøres vha. connect() metoder, så der kan emittes signaler, hvorefter de tilhørende slots kaldes. I dette specifikke kodeudsnit ses hvordan slidernes signaler er blevet sat op. Alle sliderne fra de tre faner connectes samtidig. Position, Light og Settings er dermed klar til intern kommunikation forinden metoderne kaldes.
 
 \begin{figure}[H]
 \centering
@@ -440,164 +505,14 @@ I constructoren til klassen MainDisplay sker opsætningen af GUI'en, når den st
 \label{fig:signalSlot}
 \end{figure}
 
-{\centering \textbf{spi-api} \par}
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|l|}
-    \hline
-    \multicolumn{1}{|c|}{<<boundary>>} \\
-    \multicolumn{1}{|c|}{\textbf{spi-api}} \\
-    \hline
-    \\
-    \hline
-    + txPacket(unsigned char* const, unsigned char* const) : int \\
-    + rxPacket(unsigned char* const, unsigned int*) : int \\
-    \hline
-    \end{tabular}
-    \caption{Klasse spi-api}
-    \label{tab:classSpiApi}
-\end{table}
-
-\begin{labeling}{Attributter:}
-\item[Ansvar:] At være et lag imellem \textit{applications}-laget og \textit{device driver}-laget ifa. et \textit{kernemodul} på DevKit8000 som står for SPI kommunikationen.
-\item[Attributter:] Ingen.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[int txPacket(unsigned char* const, unsigned char* const)]
-\item[Parametre:] Modtager to unsigned char pointere som peger på hhv. kommandoen og dataen der skal sendes via SPI-netværket til PSoC master fra DevKit8000.
-\item [Returværdi:] Retunere en int med værdien 0 ved succes ellers en negativ værdi i overenstemmelse med fejl-listen.
-\item [Beskrivelse:] Metoden skal sende en kommando og dertilhørende data væredi som en pakke via SPI-netværket fra DevKit8000 til PSoC Master med en kommando og data.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[int rxPacket(unsigned char* const, unsigned int*)]
-\item[Parametre:] Modtager en unsigned char pointer og en unsigned int pointer som peger på hhv. kommandoen der skal sendes til, og dataen hvor retur værdien skal lageres, som sendes via SPI-netværket til PSoC master fra DevKit8000.
-\item [Returværdi:] Retunere en int med værdien 0 ved succes ellers en negativ værdi i overenstemmelse med fejl-listen.
-\item [Beskrivelse:] Metoden skal sende en data pakke med kommandoen og derefter aflæse retur data fra PSoC Master som lagers på den dertil angivet unsigned int pointer, via SPI-netværket fra DevKit8000 til PSoC Master og retur.
-\end{labeling}
-
-{\centering \textbf{Position} \par}
-
-\begin{labeling}{Attributter:}
-\item[Ansvar:] Tage imod brugerens valg af lampeposition ud fra sliderenes position i taben ved navn Position.
-\item[Attributter:] qunt8 x\_: En unsigned 8-bit integer som bestemmer lampens x-værdi (til koordinatstyring). \\
-quint8 y\_: En unsigned 8-bit integer som bestemmer lampens y-værdi (til koordinatstyring). \\
-quint8 z\_: En unsigned 8-bit integer som bestemmer lampens z-værdi (til koordinatstyring).
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[struct setXYZ(quint8, quint8, quint8)]
-\item [Parametre:] Unsigned int med x-værdi. \\
-Unsigned int med y-værdi. \\
-Unsigned int med z-værdi.
-\item [Returværdi:] x, y og z’s sliderværdier til positionering.
-\item [Beskrivelse:] En struct med ansvar for at sætte x-, y- og z-værdierne som skal sendes videre så motorerne kan styres i tre dimensioner.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void on\_PosChanged()]
-\item[Parametre:] Ingen.
-\item [Returværdi:] Ingen.
-\item [Beskrivelse:] Metoden er et slot til sliderReleased() signaler og kaldes ved sliderReleaseEvent
-(når en slider slippes efter brug). Den sætter koordinatværdier ud fra sliderpositioner i trin mellem 0 og 255. Disse sendes videre til lampepositionering.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void on\_calButton\_clicked()]
-\item[Parametre:] Ingen.
-\item [Returværdi:] Ingen.
-\item [Beskrivelse:] Kalibrerer system ved først at set X, Y og Z til den maksimale værdi muligt og returnerer til positionen før kalibrering når opgaven er tilendebragt.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[Display::\char`\~Display()]
-\item[Parametre:] Ingen
-\item [Returværdi:] Ingen
-\item [Beskrivelse:] Destructor til nedlæggelse af det grafiske interface, når den kaldes
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[bool getCalStatus()]
-\item[Parametre:] Ingen
-\item [Returværdi:] En true eller false der beskriver om kalibrering forløber korrekt.
-\item [Beskrivelse:] Hvis kalibrering forløber fejlfrit vil true blive returneret og ellers returneres false. En information, der kan bruges til fejlhåndtering.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void setStatusLine(const QString)]
-\item[Parametre:] Et tekststykke der beskriver sidste handling udført.
-\item [Returværdi:] Ingen.
-\item [Beskrivelse:] En statuslinje der udskriver hvad status for systemet er lige nu.
-\end{labeling}
-
-{\centering \textbf{Light} \par}
-
-\begin{labeling}{Attributter:}
-\item[Ansvar:] Indstille lysets farve og intensitet for lampen.
-\item[Attributter:] quint8 red\_: En unsigned 8-bit integer som bestemmer lampens røde farveintensitet.\\
-quint8 green\_: En unsigned 8-bit integer som bestemmer lampens grønne farveintensitet. \\
-quint8 blue\_: En unsigned 8-bit integer som bestemmer lampens blå farveintensitet.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[struct setSliders(quint8, quint8, quint8)]
-\item[Parametre:] Unsigned 8-bit integer med red\_. Unsigned 8-bit integer med green\_. Unsigned 8-bit integer med blue\_.
-\item [Returværdi:] En struct med ansvar for at sætte R-, G- og B-værdierne, som skal sendes videre så RGB’ernes farveniveauer kan styres.
-\item [Beskrivelse:] En struct med ansvar for at sætte red-, green- og blue-værdierne, som skal sendes videre til lampens RGB-LED’ers farve og lysintensitet. Alle farverne bestemmes med en trinværdi mellem 0 og 255.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void on\_upButton\_clicked()]
-\item[Parametre:] Ingen.
-\item [Returværdi:] Ingen.
-\item [Beskrivelse:] Øger lampens lysintensitet ved at lægge en til alle farver (rød, grøn og blå), ved klik på Up-knappen i GUI’ens Light-tab.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void on\_downButton\_clicked()]
-\item[Parametre:] Ingen.
-\item [Returværdi:] Ingen.
-\item [Beskrivelse:] Sænker lampens lysintensitet ved trække en fra alle farver (rød, grøn og blå), ved klik på Down-knappen i GUI’ens Light-tab.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void on\_onButton\_clicked()]
-\item[Parametre:] Ingen.
-\item [Returværdi:] Ingen.
-\item [Beskrivelse:] Tænder lampens lys med sidst benyttede intensitet, ved klik på On-knappen i GUI’ens Light-tab.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void on\_offButton\_clicked()]
-\item[Parametre:] Ingen.
-\item [Returværdi:] Ingen.
-\item [Beskrivelse:] Slukker lampens lys ved klik på Off-knappen i GUI’ens Light-tab.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[void updatePalette(QColor\&)]
-\item[Parametre:] Reference til farve som Color Preview sættes med.
-\item [Returværdi:] En struct med ansvar for at sætte R-, G- og B-værdierne som skal sendes videre så RGB’ernes farveniveauer kan styres.
-\item [Beskrivelse:] En struct med ansvar for at sætte red-, green- og blue-værdierne, som skal sendes videre til lampens RGB-LED’ers farve og lysintensitet. Alle farverne bestemmes med en trinværdi mellem 0 og 255.
-\end{labeling}
-
-\begin{labeling}{Beskrivelse:}
-\item[bool lightSens()]
-\item[Parametre:] Ingen.
-\item [Returværdi:] True hvis lyssensorens input skal behandles eller false hvis kommunikation med lyssensor er deaktiveret.
-\item [Beskrivelse:] Der vil her blive angivet og hvor vidt kommunikation med lyssensoren vil blive behandlet.
-\end{labeling}
-
 \subsection{GUI modultest}
-Der er blevet lavet en række forskellige test på GUI'en for at sikre at alle funktionerne har de korrekte funktionaliteter. Koden indeholder mange metoder og interne signaler der skal sendes rigtigt hele vejen igennem systemet for at sikre at resten af systemet vil kunne bruge de udsendte data. GUI test er primært blevet fortaget med QDebugger som bliver brugt til at udskrive data og tekststrenge for at de kunne følge kodens forløb. \newline
+Der er blevet foretaget en række forskellige test på GUI'en for at sikre at alle funktionerne har de korrekte funktionaliteter. Koden indeholder en række metoder og interne signaler, der skal sendes rigtigt hele vejen igennem systemet for at sikre, at resten af systemet vil kunne bruge disse. GUI test er primært blevet fortaget med QDebugger, som er blevet brugt til at udskrive data og tekststrenge så kodeeksekveringen kunne følges. \newline
 
 \begin{table}[H]
 \begin{tabular}{|l|l|}\hline
 \textbf{Test} & Positionsindstilling ved sliderændringer \\\hline
 
-\textbf{Testbeskrivelse} & \multicolumn{1}{|m{11.5cm}|}{Det testes, om ændring af X-, Y- og Z-sliders positioner sætter nogle værdier og om de bliver sendt korrekt ved tryk på Go-knap.  QDebug() bruges til at udskrive positionsværdierne i metoden on\_PosChanged(), der kaldes ved valueChanged(int).} \\\hline
+\textbf{Testbeskrivelse} & \multicolumn{1}{|m{11.5cm}|}{Der testes, om ændring af X-, Y- og Z-sliders positioner sætter nogle værdier og om de bliver sendt korrekt ved tryk på Go-knap.  QDebug() bruges til at udskrive positionsværdierne i metoden on\_PosChanged(), der kaldes ved valueChanged(int).} \\\hline
 
 
 \textbf{Input} & \multicolumn{1}{|m{11.5cm}|}{Sliders positioner ændres til hhv. 255, 255, 255. Derefter trykkes Go-knappen ned og slippes igen.} \\\hline
@@ -611,7 +526,7 @@ Der er blevet lavet en række forskellige test på GUI'en for at sikre at alle f
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\linewidth]{0_Filer/Figuer/testPosition.png}
+\includegraphics[width=1.0\linewidth]{0_Filer/Figuer/testPosition.png}
 \caption{Debug output ved sliderværdierne (X, Y, Z): 255, 255, 255, den sendte værdi currentpos: 255, 255, 255 og negative sendte kommandoer.}
 \label{fig:testPosition}
 \end{figure}
@@ -634,7 +549,7 @@ Der er blevet lavet en række forskellige test på GUI'en for at sikre at alle f
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\linewidth]{0_Filer/Figuer/testLight.png}
+\includegraphics[width=1.0\linewidth]{0_Filer/Figuer/testLight.png}
 \caption{Debug output ved sliderværdierne Color values (R, G, B): 255, 255, 255, den sendte værdi Sending color: 255, 255, 255 og negative sendte kommandoer.}
 \label{fig:testLight}
 \end{figure}
@@ -645,7 +560,7 @@ Der er blevet lavet en række forskellige test på GUI'en for at sikre at alle f
 \begin{tabular}{|l|l|}\hline
 \textbf{Test} & Sensorindstilling ved slider og spinboxændringer \\\hline
 
-\textbf{Testbeskrivelse} & \multicolumn{1}{|m{11.5cm}|}{Det testes, om ændring af Movementslider og Lumensensor samt Distancespinbox bliver sendt videre med spi kommandoer.} \\\hline
+\textbf{Testbeskrivelse} & \multicolumn{1}{|m{11.5cm}|}{Det testes, om ændring af Movementslider, Lumensensor samt Distancespinbox bliver sendt videre med SPI kommandoer.} \\\hline
 
 \textbf{Input} & \multicolumn{1}{|m{11.5cm}|}{Sliders position for Movement og Lumen ændres fra Off til On. Derefter ændres Distancespinboxværdien til 4.} \\\hline
 
@@ -658,7 +573,7 @@ Der er blevet lavet en række forskellige test på GUI'en for at sikre at alle f
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\linewidth]{0_Filer/Figuer/testSettings.png}
+\includegraphics[width=1.0\linewidth]{0_Filer/Figuer/testSettings.png}
 \caption{Debug output ved sliderværdierne Lumen value: 1, Movement value: 1, spinboxværdien Distance value: 4 og negative sendte kommandoer.}
 \label{fig:testSettings}
 \end{figure}
@@ -682,7 +597,7 @@ Der er blevet lavet en række forskellige test på GUI'en for at sikre at alle f
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\linewidth]{0_Filer/Figuer/testMakePlan.png}
+\includegraphics[width=1.0\linewidth]{0_Filer/Figuer/testMakePlan.png}
 \caption{Debug output ved satte plan X, Y og Z Setting plan position: (255, 255, 255), lyset R, G, B Setting plan Light (255, 0, 0) og Setting according to plan}
 \label{fig:testmakePlan}
 \end{figure}

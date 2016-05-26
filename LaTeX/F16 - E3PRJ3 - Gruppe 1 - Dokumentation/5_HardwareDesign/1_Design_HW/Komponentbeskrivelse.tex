@@ -118,7 +118,7 @@ Repeatable trigger: Når sensoren aktiveres går output benet højt, og så læn
 \end{minipage}
 \end{figure}
 
-Til styring af X,Y og Z retning benyttes en 5V stepper motor af typen 28BYJ-48. Motoren er et oplagt valg, siden den er let tilgængelig på embedded stock, og da den lever op til de krav, som er til systemet. Yderligere er 28BYJ-48-motoren mere kompatibel med det størrelsesforhold prototypen bygges i. Der udover er motorens præcision fordelagtig for projektet, da den har en gearing på 64x48. Dvs. at der er 3072 steps pr. omgang, som gør at lampen kan positioneres meget præcist.
+Til styring af X,Y og Z retning benyttes en 5V stepper motor af typen 28BYJ-48 \footcite{28BYJ-48-5V}. Motoren er et oplagt valg, siden den er let tilgængelig på embedded stock, og da den lever op til de krav, som er til systemet. Yderligere er 28BYJ-48-motoren mere kompatibel med det størrelsesforhold prototypen bygges i. Der udover er motorens præcision fordelagtig for projektet, da den har en gearing på 64x48. Dvs. at der er 3072 steps pr. omgang, som gør at lampen kan positioneres meget præcist.
 
 \begin{figure}[H] \centering
     \fbox{\includegraphics[width=.6\textwidth]{0_Filer/Figuer/5_HW_Design/Bipolar_motor_diagram.png}}
@@ -128,7 +128,7 @@ Til styring af X,Y og Z retning benyttes en 5V stepper motor af typen 28BYJ-48. 
 
 Forklaringen herunder tager udgangspunkt i Stator A.
 \newline Motoren består af 2 statorer med en nord- og en sydpol. Hver stator har viklinger med to ende tilslutninger, phase A og phase A’, mellem de to ende tilslutninger tilsluttes en 5VDC spænding(Vm). Se figur \ref{fig:HWD_Bipolar_Stepper_Motor}.
-Ved at tilslutte phase A til stel, vil strømmen bevæge sig fra Vm til phase A gennem viklingerne, denne bevægelse vil danne et magnetfelt, hvor nord og sydpolen er som på figur \ref{fig:HWD_Bipolar_Stepper_Motor}. Ved tilslutning af phase A’ vil strømmen bevæge sig i modsat retning og de to poler vil bytte plads. Dette gælder også for stator B. Når polerne skifter vil rotorens poler i motoren blive henholdsvis tiltrukket og afvist af statorens poler.
+Ved at tilslutte phase A til stel, vil strømmen bevæge sig fra Vm til phase A gennem viklingerne, denne bevægelse vil danne et magnetfelt, hvor nord og sydpolen er som på figur \ref{fig:HWD_Bipolar_Stepper_Motor}. Ved tilslutning af phase A’ vil strømmen bevæge sig i modsat retning og de to poler vil bytte plads. Dette gælder også for stator B. Når polerne skifter vil rotorens poler i motoren blive henholdsvis tiltrukket og afvist af statorens poler. \footcite{gfv}
 
 \subsubsection{Micro switch}
 
@@ -137,18 +137,18 @@ Ved at tilslutte phase A til stel, vil strømmen bevæge sig fra Vm til phase A 
 \begin{minipage}{.5\textwidth}
   \centering
   \includegraphics[width=\linewidth]{0_Filer/Figuer/5_HW_Design/Micro_switch.png}
-  \caption{Micro Switch (DM1-01P-30-3)}
+  \caption{Micro Switch (DM1-01P-30-3) \footcite{DM1-01P-30-3}}
   \label{fig:HWD_Micro_switch}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
   \centering
   \includegraphics[width=\linewidth]{0_Filer/Figuer/5_HW_Design/Micro_switch_diagram.png}
-  \caption{Forbindelses diagram af micro switch}
+  \caption{Forbindelses diagram af micro switch \footcite{DM1-01P-30-3}}
   \label{fig:HWD_Micro_Diagram}
 \end{minipage}
 \end{figure}
 
-Til håndtering af ende stop og kalibrering af X-,Y- og Z-retninger, installeres 5 micro switches(DM1-01P-30-3). To switches placeres i enderne på X-skinnen, to på Y-skinnens ender og en ved lampens top-position. Ved aktivering af en af micro switches sættes en port høj på den tilhørende PSoC4, som vil stoppe den bevægelse der nu er nået enden.
+Til håndtering af ende stop og kalibrering af X-,Y- og Z-retninger, installeres 5 micro switches(DM1-01P-30-3) \footcite{DM1-01P-30-3}. To switches placeres i enderne på X-skinnen, to på Y-skinnens ender og en ved lampens top-position. Ved aktivering af en af micro switches sættes en port høj på den tilhørende PSoC4, som vil stoppe den bevægelse der nu er nået enden.
 Micro switchen forbindes som en NO(normaly open) switch med 5V på COM benet og NO benet forbundet til PSoC4. Se \ref{fig:HWD_Micro_Diagram}.
 Iflg. Databladet er micro switchen rated 5V DC og 30mA.
 
@@ -161,68 +161,38 @@ En enkelt motor bruger 150 mA, når den ikke drejer. Strømforbruget falder når
 Et styringsprint er lavet til positionering af vores stepper-motorer. Dette er valgt for at lave en samlet printboks bestående af prints og PSoC’s i vores system. På denne måde kan diverse ledninger, der ellers ville ligge rodet oven i hinanden, blive pakket kompakt i en mere æstetisk behagelig kasse.
 
 \begin{figure}[H] \centering
-    \fbox{\includegraphics[width=\textwidth]{0_Filer/Figuer/5_HW_Design/X-Diagrammet.PNG}}
-    \caption{Styringsprint til X-akse og 34-leder}
-    \label{fig:HWD_Styringsprint_til_x_print}
+    \fbox{\includegraphics[width=\textwidth]{0_Filer/Figuer/5_HW_Design/XVogn.PNG}}
+    \caption{X-Motor Monteringsboard}
+    \label{fig:XVogn}
 \end{figure}
 
-Kommunikationen går fra de styrende prints gennem et 34-lederkabel og ud til aktuatorerne. På Figur \ref{fig:HWD_Styringsprint_til_x_print} ses et diagram for udlægget af 34-lederkablet. I forsyningskredsløbet sendes der et input ind fra den styrende PSoC, som da bliver forstærket igennem en MosFet. Herefter bliver det sendt ud på 34-lederkablet og går op i et splitterprint i vognene på X- og Y-aksen. Fra disse splitterprints, går signalet direkte ud til steppermotorerne. 
+Kommunikationen går fra de styrende prints gennem et 34-lederkabel og ud til aktuatorerne. På Figur \ref{fig:XVogn} ses et diagram for udlægget af 34-lederkablet. I forsyningskredsløbet sendes der et input ind fra den styrende PSoC, som da bliver forstærket igennem en MosFet. Herefter bliver det sendt ud på 34-lederkablet og går op i et splitterprint i vognene på X- og Y-aksen. Fra disse splitterprints, går signalet direkte ud til steppermotorerne. 
 
 
-\textbf{Styringskode:}\newline 
-Styringen af systemets motorer foregår i tildelte PSoCs. Hver bevægelsesretning har en PSoC tildelt som styre retning og antal trin motoren skal køre. Aktivering af motorerne kan initieres i PSoC'en på to måder. Manual-mode og Automatic-mode. Der skiftes mellem disse to modes ved tryk på switch på PSoC. Nuværende mode indikeres gennem farven på LED.
+\subsubsection{Print layout}
 
-\textbf{Manual-Mode:} Indikeres med farven rød på LED på PSoC.\newline 
-Når LED’en på PSoC’en lyser rød, er I2C kommunikation med Master-PSoC slået fra, og Capsense slideren på PSoC’en er slået til. 
-Slideren er delt op i fire felter, fra 0 til 128, til manuel bevægelse af motorerne.  Felt 1 er alle værdier under 32. felt 2 er værdier mellem 32 og 64. felt 3 er værdier mellem 64 og 96. felt 4 er værdier over 96.
-Disse fire felter styrer hver deres bevægelse af motorerne. Felt 1 er Y-motorerne i den ene retning, felt 2 er Y-motorerne i modsat retning af Felt 1. Felt 3 er X-motorerne tilsvarende i den ene retning, og Felt 4 er modsat retning af Felt 3. 
-For at aktivere disse retningskørsler trykkes der på et givent felt på Capsense-slideren, og fingeren holdes i kontakt med dette felt, så længe kørsel med motorerne ønskes. Motorerne stoppes når kontakt med felt afbrydes.\newline 
+Systemet består af tre vero printboards et Unified Board(Figur \ref{fig:UniBoard}), et X-Motor Monteringsboard(Figur \ref{fig:XVogn1}) og et YZ-Motor Monteringboard(Figur \ref{fig:YZVogn}).
 
-Oversigt over felterne:\newline
-\verb+Kør_X_frem();+       mellem 64 og 96 på touch-sense\newline
-\verb+Kør_X_tilbage();+      over 96 på touch-sense\newline
-\verb+Kør_Y_frem();+	   mellem 64 og 32 på touch-sense\newline
-\verb+Kør_Y_tilbage();+	     under 32 på touch-sense\newline
-
-\textbf{Automatic-Mode:} Indikeres med farven grøn på LED på PSoC.\newline 
-Når LED’en på PSoC’en lyser grøn, er Capsense slideren på PSoC’en slået fra, og I2C kommunikation med Master-PSoC er slået til. 
-Ved Automatic-mode modtager PSoC’en til styring af XY-retningen en kommandokode fra PSoCMaster. Denne kommandokode kommer via I2C gennem  P4[0] til SCL og P4[1] til SDA på PSoC-XY.
-Kommandokoden identificeres til et funktionskald og en parameter. For at køre med motorerne, kræver det at det første funktionskald, der bliver givet er kalibrer\textunderscore{}system. 
-
-\textbf{Styringskode opbygning:}\newline
-For overskuelighed er koden delt op i nogle header- og source filer se \ref{fig:XYhs} 
-
-% XY header/source filer
+% Unified Board
 \begin{figure}[H] \centering
-    \includegraphics[width=0.3\linewidth]{0_Filer/Figuer/5_HW_Design/HeaderSourceOversigt.PNG}
-    \caption{XY header/source filer}
-    \label{fig:XYhs}
+    \includegraphics[width=\linewidth]{0_Filer/Figuer/5_HW_Design/UnifiedBoard.PNG}
+    \caption{Unified Board}
+    \label{fig:UniBoard}
 \end{figure}
+Dette printboard indeholder de tre motorstyringer til X, Y og Z, hardwaren til I2C kommunikationen og forbinder systemet med PSoC-Master, -XY, -Z og -Sensor.
 
-\verb+cyapicallbacks:+\newline
-Denne del er koden sørger for at når der kommer en kommando på I2C, kalder den et interupt, der stopper programmet og ser på hvilken kommando der er kommet. Efter følgene hopper den tilbage hvor den kom til i programmet og fortsætter med de eventuelt nye parametre der er kommet. \newline
-\verb+data:+\newline
+% X Vogn
+\begin{figure}[H] \centering
+    \includegraphics[width=\linewidth]{0_Filer/Figuer/5_HW_Design/XVogn.PNG}
+    \caption{X-Motor Monteringsboard}
+    \label{fig:XVogn1}
+\end{figure}
+Dette printboard indeholder X-motor monteringen samt forbindelserne videre ud i systemet.
 
-\verb+handler:+\newline
-\verb+i2c:+\newline
-\verb+led:+\newline
-\verb+queue:+\newline
-\verb+xy:+\newline
-\verb+main:+\newline
-
-%Venter med resten for at se hvad jeppe skriver
-
-\textbf{Kalibrer\textunderscore{}system()}\newline 
-Dette funktionskald aktiverer X-motorerne i den ene retning. Når retningens grænse er nået, vil en fysisk afbryder blive aktiveret og herved leverer besked til PSoC-XY om at den nedre grænse er nået. Herefter vil X-motorerne køre i den anden retning til de rammer den øvre grænse hvor endnu en afbryder bliver aktiveret. \newline 
-De steps motoren tager imellem den nedre og øvre grænse bliver gemt i en integer variabel kaldet X-max. Motorens nuværende position ved den øvre grænse gemmes i en integer variabel kaldet X-position som bliver sat til 0. \newline 
-Når X-max og X-position er sat, aktiveres Y-motorerne i den ene retning. Når retningens grænse er nået, vil en fysisk afbryder blive aktiveret og herved leverer besked til PSoC-XY om at den nedre grænse er nået. Herefter vil Y-motorerne køre i den anden retning til de rammer den øvre grænse hvor endnu en afbryder bliver aktiveret. \newline 
-Her bliver antal steps Y-motorerne har kørt gemt i en integer variabel kaldet Y-max, og motorens nuværende position bliver gemt i en integer variabel kaldet Y-position som sættes til 0. 
-Hermed er skinnernes længde målt ud, lampens position er sat og systemet er nu kalibreret.   \newline  
-\textbf{Get\textunderscore{}X()}\newline 
-Denne funktion returnerer motorens position fra 0 til 255 fordelt ud på X-max værdien.  \newline 
-\textbf{Set\textunderscore{}X()}\newline 
-Denne funktion aktivere X-motorerne. Funktionen giver en parameter fra 0 til 255. Denne parameter bruges til at sætte den ønskede position som motorerne skal køre til. Hvis ønskede position er det samme som nuværende position, køres der ikke med motorerne. Alt efter hvilken position der bliverønsket fra PSoC-Master, regner PSoC-XY selv ud hvilken retning motorerne skal køre for at opnå den ønskede position. \newline  
-\textbf{Get\textunderscore{}Y()}\newline 
-Denne funktion returnerer motorens position fra 0 til 255 fordelt ud på Y-max værdien.  \newline 
-\textbf{Set\textunderscore{}Y()}\newline 
-Denne funktion aktivere Y-motorerne. Funktionen giver en parameter fra 0 til 255. Denne parameter bruges til at sætte den ønskede position som motorerne skal køre til. Hvis ønskede position er det samme som nuværende position, køres der ikke med motorerne. Alt efter hvilken position der bliver ønsket fra PSoC-Master, regner PSoC-XY selv ud hvilken retning motorerne skal køre for at opnå den ønskede position.  \newline 
+% YZ Vogn
+\begin{figure}[H] \centering
+    \includegraphics[width=\linewidth]{0_Filer/Figuer/5_HW_Design/YZVogn.PNG}
+    \caption{YZ-Motor Monteringsboard}
+    \label{fig:YZVogn}
+\end{figure}
+Dette printboard indeholder YZ-motor monteringerne, forbindelser til PIR-, Lumen- og afstands- sensorerne og RGB dioderne.

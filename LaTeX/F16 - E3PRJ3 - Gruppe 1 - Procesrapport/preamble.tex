@@ -16,29 +16,31 @@
 %\usepackage{wrapfig}						% Indsaettelse af figurer omsvoebt af tekst. \begin{wrapfigure}{Placering}{Stoerrelse}
 \usepackage{multirow}                		% Fletning af raekker og kolonner (\multicolumn og \multirow)
 \usepackage{multicol}         	        	% Muliggoer output i spalter
-\usepackage{rotating}						% Rotation af tekst med \begin{sideways}...\end{sideways}
-\usepackage{colortbl} 						% Farver i tabeller (fx \columncolor og \rowcolor)
-\usepackage{xcolor}							% Definer farver med \definecolor. Se mere: http://en.wikibooks.org/wiki/LaTeX/Colors
+%\usepackage{rotating}						% Rotation af tekst med \begin{sideways}...\end{sideways}
+%\usepackage{colortbl} 						% Farver i tabeller (fx \columncolor og \rowcolor)
+%\usepackage{xcolor}						% Definer farver med \definecolor. Se mere: http://en.wikibooks.org/wiki/LaTeX/Colors
 \usepackage{flafter}						% Soerger for at floats ikke optraeder i teksten foer deres reference
-\let\newfloat\relax 						% Justering mellem float-pakken og memoir
+%\let\newfloat\relax 						% Justering mellem float-pakken og memoir
 \usepackage{float}							% Muliggoer eksakt placering af floats, f.eks. \begin{figure}[H]
 \usepackage{longtable}
 \usepackage[section]{placeins}
 
 % ¤¤ Matematik mm. ¤¤
-\usepackage{amsmath,amssymb,stmaryrd} 		% Avancerede matematik-udvidelser
-\usepackage{mathtools}						% Andre matematik- og tegnudvidelser
-\usepackage{textcomp}                 		% Symbol-udvidelser (f.eks. promille-tegn med \textperthousand )
-\usepackage{rsphrase}						% Kemi-pakke til RS-saetninger, f.eks. \rsphrase{R1}
-\usepackage[version=3]{mhchem} 				% Kemi-pakke til flot og let notation af formler, f.eks. \ce{Fe2O3}
-\usepackage{siunitx}						% Flot og konsistent praesentation af tal og enheder med \si{enhed} og \SI{tal}{enhed}
-\sisetup{output-decimal-marker = {,}}		% Opsaetning af \SI (DE for komma som decimalseparator) 
+%\usepackage{amsmath,amssymb,stmaryrd} 		% Avancerede matematik-udvidelser
+%\usepackage{mathtools}						% Andre matematik- og tegnudvidelser
+%\usepackage{textcomp}                 		% Symbol-udvidelser (f.eks. promille-tegn med \textperthousand )
+%\usepackage{rsphrase}						% Kemi-pakke til RS-saetninger, f.eks. \rsphrase{R1}
+%\usepackage[version=3]{mhchem} 			% Kemi-pakke til flot og let notation af formler, f.eks. \ce{Fe2O3}
+%\usepackage{siunitx}						% Flot og konsistent praesentation af tal og enheder med \si{enhed} og \SI{tal}{enhed}
+%\sisetup{output-decimal-marker = {,}}		% Opsaetning af \SI (DE for komma som decimalseparator) 
 
 % ¤¤ Referencer og kilder ¤¤ %
 \usepackage[danish]{varioref}				% Muliggoer bl.a. krydshenvisninger med sidetal (\vref)
-\usepackage{natbib}							% Udvidelse med naturvidenskabelige citationsmodeller
+%\usepackage{natbib}						% Udvidelse med naturvidenskabelige citationsmodeller
 %\usepackage{xr}							% Referencer til eksternt dokument med \externaldocument{<NAVN>}
 %\usepackage{glossaries}					% Terminologi- eller symbolliste (se mere i Daleifs Latex-bog)
+\usepackage[backend=biber,style=ieee,sorting=none,citestyle=authortitle,uniquename=init]{biblatex}
+\usepackage{csquotes}
 
 % ¤¤ Misc. ¤¤ %
 \usepackage{listings}						% Placer kildekode i dokumentet med \begin{lstlisting}...\end{lstlisting}
@@ -47,6 +49,7 @@
 \usepackage{pdfpages}						% Goer det muligt at inkludere pdf-dokumenter med kommandoen \includepdf[pages={x-y}]{fil.pdf}	
 \pdfoptionpdfminorversion=6					% Muliggoer inkludering af pdf dokumenter, af version 1.6 og hoejere
 \pretolerance=2500 							% Justering af afstand mellem ord (hoejt tal, mindre orddeling og mere luft mellem ord)
+%\usepackage{minted}
 
 % Kommentarer og rettelser med \fxnote. Med 'final' i stedet for 'draft' udloeser hver note en error i den faerdige rapport.
 \usepackage[footnote,draft,danish,silent,nomargin]{fixme}		
@@ -68,8 +71,8 @@
 \linespread{1,1}							% Linie afstand
 
 % ¤¤ Litteraturlisten ¤¤ %
-\bibpunct[,]{[}{]}{;}{a}{,}{,} 				% Definerer de 6 parametre ved Harvard henvisning (bl.a. parantestype og seperatortegn)
-\bibliographystyle{bibtex/harvard}			% Udseende af litteraturlisten.
+%\bibpunct[,]{[}{]}{;}{a}{,}{,} 			% Definerer de 6 parametre ved Harvard henvisning (bl.a. parantestype og seperatortegn)
+%\bibliographystyle{plainnat}			    % Udseende af litteraturlisten.
 
 % ¤¤ Indholdsfortegnelse ¤¤ %
 \setsecnumdepth{subsection}		 			% Dybden af nummerede overkrifter (part/chapter/section/subsection)
@@ -100,23 +103,38 @@
 		
 % ¤¤ Opsaetning af listings ¤¤ %
 
-\definecolor{commentGreen}{RGB}{34,139,24}
-\definecolor{stringPurple}{RGB}{208,76,239}
+% \definecolor{commentGreen}{RGB}{34,139,24}
+% \definecolor{stringPurple}{RGB}{208,76,239}
 
-\lstset{language=Matlab,					% Sprog
-	basicstyle=\ttfamily\scriptsize,		% Opsaetning af teksten
-	keywords={for,if,while,else,elseif,		% Noegleord at fremhaeve
-			  end,break,return,case,
-			  switch,function},
-	keywordstyle=\color{blue},				% Opsaetning af noegleord
-	commentstyle=\color{commentGreen},		% Opsaetning af kommentarer
-	stringstyle=\color{stringPurple},		% Opsaetning af strenge
-	showstringspaces=false,					% Mellemrum i strenge enten vist eller blanke
-	numbers=left, numberstyle=\tiny,		% Linjenumre
-	extendedchars=true, 					% Tillader specielle karakterer
-	columns=flexible,						% Kolonnejustering
-	breaklines, breakatwhitespace=true,		% Bryd lange linjer
-}
+%\lstset{%language=Matab,					% Sprog
+% 	basicstyle=\ttfamily\scriptsize,		% Opsaetning af teksten
+% 	keywords={for,if,while,else,elseif,		% Noegleord at fremhaeve
+% 			  end,break,return,case,
+% 			  switch,function},
+% 	keywordstyle=\color{blue},				% Opsaetning af noegleord
+% 	commentstyle=\color{commentGreen},		% Opsaetning af kommentarer
+% 	stringstyle=\color{stringPurple},		% Opsaetning af strenge
+% 	showstringspaces=false,					% Mellemrum i strenge enten vist eller blanke
+% 	numbers=left, numberstyle=\tiny,		% Linjenumre
+% 	extendedchars=true, 					% Tillader specielle karakterer
+% 	columns=flexible,						% Kolonnejustering
+% 	breaklines, breakatwhitespace=true,		% Bryd lange linjer
+%}
+
+\lstset{language=C,
+    basicstyle=\ttfamily\scriptsize,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    numberstyle=\tiny,
+    numbers=left,
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    }
 
 % ¤¤ Navngivning ¤¤ %
 \addto\captionsdanish{
@@ -192,27 +210,27 @@
 %%%% CUSTOM COMMANDS %%%%
 
 % ¤¤ Billede hack ¤¤ %
-\newcommand{\figur}[4]{
-		\begin{figure}[H] \centering
-			\includegraphics[width=#1\textwidth]{billeder/#2}
-			\caption{#3}\label{#4}
-		\end{figure} 
-}
+% \newcommand{\figur}[4]{
+% 		\begin{figure}[H] \centering
+% 			\includegraphics[width=#1\textwidth]{billeder/#2}
+% 			\caption{#3}\label{#4}
+% 		\end{figure} 
+% }
 
 % ¤¤ Specielle tegn ¤¤ %
-\newcommand{\decC}{^{\circ}\text{C}}
-\newcommand{\dec}{^{\circ}}
-\newcommand{\m}{\cdot}
+% \newcommand{\decC}{^{\circ}\text{C}}
+% \newcommand{\dec}{^{\circ}}
+% \newcommand{\m}{\cdot}
 
 
 %%%% ORDDELING %%%%
 
-%%%% noget jesper har smidt ind %%%%
-\hyphenation{}
+% %%%% noget jesper har smidt ind %%%%
+% \hyphenation{}
 
-\usepackage{graphicx}
+% \usepackage{graphicx}
 
-\newcommand\xput[2][0.5]{%
-    \rule{#1\linewidth}{0pt}\makebox[0pt][c]{#2}\hfill}
+% \newcommand\xput[2][0.5]{%
+%     \rule{#1\linewidth}{0pt}\makebox[0pt][c]{#2}\hfill}
 
-%%%% the end %%%%
+% %%%% the end %%%%

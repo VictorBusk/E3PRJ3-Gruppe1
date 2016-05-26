@@ -1,12 +1,12 @@
 \subsection{Kommunikationsbus}
 
-Til projektet bruges to forskellige typer bus. Mellem DevKit8000 og PSoC-Master benyttes SPI, og mellem PSoC-Master og de tre andre PSoCs (XY, Z og Sensor), samt mellem PSoC-Sensor og nogle af vores sensorer benyttes I2C.
+Til projektet bruges to forskellige typer bus\footcite{gfv}. Mellem DevKit8000 og PSoC-Master benyttes SPI, og mellem PSoC-Master og de tre andre PSoCs (XY, Z og Sensor), samt mellem PSoC-Sensor og nogle af vores sensorer benyttes I2C.
 
 Denne konfiguration er valgt, fordi det kunne være interessant at prøve at bruge mere end én type bus, og fordi det giver en fornuftig afkobling mellem brugerinterfacet på DevKit8000 og resten af systemet. Denne afkobling kunne derefter, i en videreudvikling af systemet, konverteres fra SPI til en form for wireless kommunikation – for eksempel Wifi eller Bluetooth.
 
 \subsubsection{Serial Peripheral Interface (SPI)}
 
-Serial Peripheral Interface (SPI) er en 4-wire, seriel data bus, der understøtter fuld duplex kommunikation mellem en enkelt master enhed og flere slave enheder.
+Serial Peripheral Interface (SPI) er en 4-wire, seriel data bus, der understøtter fuld duplex kommunikation mellem en enkelt master enhed og flere slave enheder\footcite{gfv}.
 
 Hardwaremæssigt kræver SPI fire ledninger fra master enheden til slave enhederne (der findes også specielle konfigurationer med færre ledninger, men dem kommes der ikke ind på her):
 
@@ -48,7 +48,7 @@ Men der er også nogle ulemper ved SPI:
 
 \subsubsection{Inter-Integrated Circuit (I2C)}
 
-Inter-Integrated Circuit (I\textsuperscript{2}C eller I2C) er en 2-wire, seriel bus, der understøtter halv duplex kommunikation mellem flere enheder – i princippet er alle enheder lige i I2C, men i praksis vil de oftest være delt ind i masters og slaver ligesom i SPI, dog med den undtagelse at I2C understøtter flere masters på en bus og at enheder kan skifte roller.
+Inter-Integrated Circuit (I\textsuperscript{2}C eller I2C) er en 2-wire, seriel bus, der understøtter halv duplex kommunikation mellem flere enheder\footcite{gfv} – i princippet er alle enheder lige i I2C, men i praksis vil de oftest være delt ind i masters og slaver ligesom i SPI, dog med den undtagelse at I2C understøtter flere masters på en bus og at enheder kan skifte roller.
 
 Hardwaremæssigt kræver I2C kun to ledninger, der er delt mellem alle enheder på bussen. Dog skal de begge have en pull-up modstand, så de bliver holdt høj, når de er idle. De to linjer er:
 
