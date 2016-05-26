@@ -24,7 +24,7 @@
  *      while the second only detects infrared light. The amount of visible
  *      light is then calculated by substracting a scaling fraction of the
  *      second detector value from a scaling fraction of the first.
- *  @param[out] The calculated lux value
+ *  @return The calculated lux value
  *  @param[in]  iGain Is internal scaling enabled in the sensor (0 = x1, 1 = x16)
  *  @param[in]  tInt Integration time set in the sensor (0 = 13.7ms, 1 = 101ms, 2 = 402ms)
  *  @param[in]  ch0 Value read from detector 0

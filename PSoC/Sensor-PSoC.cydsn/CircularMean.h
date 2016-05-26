@@ -40,7 +40,7 @@ void insertValue(struct CircularMean *buf, int val);
 /*!
  *  @brief      Get the average value of all the ints in the buffer
  *  @param[in]  buf Pointer to the CircularMean
- *  @param[out] The average value calculated
+ *  @return     The average value calculated
  *  @public
  *  @author     Simon Nejmann (19981127@uni.au.dk)
  */

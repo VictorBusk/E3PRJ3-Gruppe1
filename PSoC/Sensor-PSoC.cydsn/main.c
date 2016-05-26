@@ -25,8 +25,11 @@ char bla[150];
 void scaleLedPWM();
 
 // Main loop control stuff
+/*! List of event names */
 enum sensor {DIST, LUMEN, PIR, DIST_ALERT, MOVE_ALERT};
+/*! Flag names */
 enum ctrl {COUNT, RATE, FLAG};
+/*! Control matrix: flags x event_names */
 char controlFlags[5][3] = {
     {1,-1, 0},
     {1,-1, 0},
@@ -34,6 +37,7 @@ char controlFlags[5][3] = {
     {1,-1, 0},
     {1,-1, 0}
 };
+/*! Initializer for control structure */
 void initCtrlFlags()
 {
     controlFlags[DIST][RATE] = 3;
@@ -42,6 +46,7 @@ void initCtrlFlags()
 
     controlFlags[MOVE_ALERT][RATE] = 1;
 }
+/*! Helper function: Increase count, check for overflow, and raise flag if needed */
 void incrCtrlFlag(enum sensor se)
 {
     controlFlags[se][COUNT] = (controlFlags[se][COUNT] + 1) % controlFlags[se][RATE];
@@ -49,6 +54,7 @@ void incrCtrlFlag(enum sensor se)
         controlFlags[se][FLAG] = 1;
     }
 }
+/*! Metronome timer interrupt handler */
 CY_ISR(Metronome_Interrupt)
 {
     // Clear interrupt
@@ -65,9 +71,10 @@ CY_ISR(Metronome_Interrupt)
 #endif
 }
 
-// Flag: Have we already triggered a "too close" alert?
+/*! Flag: Have we already triggered a "too close" alert? */
 uint8 distAlertTriggered = 0;
 // Afstandssensor
+/*! Timer interrupt for ultrasonic distance sensor */
 CY_ISR(DistTimer_Interrupt)
 {
     //  Calculate distance from delay. Basic formula: cm = micro-seconds / 58
@@ -96,6 +103,11 @@ CY_ISR(DistTimer_Interrupt)
 #endif
 }
 
+/*!
+ *  @brief      Main function
+ *  @public
+ *  @author      Simon Nejmann (19981127@uni.au.dk)
+ */
 int main()
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
@@ -232,6 +244,15 @@ int main()
     }
 }
 
+/*!
+ *  @brief      Should control LED output according to measured and desired lux
+ *  Does not currently work: LEDs cannot produce enough light to affect the
+ *      measured lux in a meaningful way.
+ *      Should have implemented a primitive PID controller (so far only P-part
+ *      has been attempted implemented).
+ *  @public
+ *  @author      Simon Nejmann (19981127@uni.au.dk)
+ */
 void scaleLedPWM()
 {
     // Work in scaled units since the LedPWMs also use the 0-255 range

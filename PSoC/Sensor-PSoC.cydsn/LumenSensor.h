@@ -18,7 +18,7 @@ void initLumenSensor();
 
 /*!
  *  @brief      Read sensor data from the light sensor
- *  @param[out] The lux value of the perceived light
+ *  @return The lux value of the perceived light
  *  @public
  *  @author      Simon Nejmann (19981127@uni.au.dk)
  */
@@ -29,8 +29,8 @@ unsigned int readLumenSensor();
  *  Due to the limited range to scale into, lux over 1530 is scaled to 255.
  *      The top 1530 vas chosen because 1530/255 = 6.
  *
- *  @param[out] The lux value scaled down into a single uint8
- *  @param[in]  The lux value to scale down
+ *  @return The lux value scaled down into a single uint8
+ *  @param[in]  val The lux value to scale down
  *  @public
  *  @author      Simon Nejmann (19981127@uni.au.dk)
  */
@@ -41,7 +41,7 @@ uint8 scaleLuxToFF(unsigned int val);
  *  Due to the limited input range 1530 has been chosen as max value for lux.
  *      The top 1530 vas chosen because 1530/255 = 6.
  *
- *  @param[out] The an upscaled lux value
+ *  @return The an upscaled lux value
  *  @param[in]  val uint8 containing a value to scale up
  *  @public
  *  @author      Simon Nejmann (19981127@uni.au.dk)
