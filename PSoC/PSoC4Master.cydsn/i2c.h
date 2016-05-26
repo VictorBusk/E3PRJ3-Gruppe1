@@ -1,9 +1,7 @@
 /*!
  *  @file       i2c.h
  *  @brief      I2C modul
- *  @details    Håndter kommunikation via I2C-busset
- *  @ingroup    master
- *  @class      I2CMaster i2c.h
+ *  @details    Håndter kommunikation via I2C-busset.
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef I2C_H
@@ -11,6 +9,17 @@
 
 #include <project.h>
 
+/***************************************
+ *       Class
+ ***************************************/
+    
+/*!
+ *  @class      I2C i2c.h
+ *  @brief      I2C class
+ *  @details    Håndter kommunikation via I2C-busset.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+    
 /***************************************
  *       Public methods
  ***************************************/

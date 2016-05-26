@@ -1,9 +1,7 @@
 /*!
  *  @file       led.h
- *  @brief      Led modul
+ *  @brief      LED modul
  *  @details    Håndtere PSoC'ens røde, grønne og blå led.
- *  @ingroup    master
- *  @class      LedMaster led.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef LED_H
@@ -11,6 +9,18 @@
 
 #include <project.h>
 
+/***************************************
+ *       Class
+ ***************************************/
+    
+/*!
+ *  @class      LED led.h
+ *  @brief      LED class
+ *  @details    Håndtere PSoC'ens røde, grønne og blå led
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+    
+ 
 /***************************************
  *       Public methods
  ***************************************/

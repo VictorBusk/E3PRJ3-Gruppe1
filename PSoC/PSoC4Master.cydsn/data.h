@@ -2,8 +2,6 @@
  *  @file       data.h
  *  @brief      Data modul
  *  @details    Indeholder data hentet fra PSoC-XY, -Z og -Sensor.
- *  @ingroup    master
- *  @class      DataMaster data.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef DATA_H
@@ -12,15 +10,25 @@
 #include <project.h>
 
 /***************************************
+ *       Class
+ ***************************************/
+    
+/*!
+ *  @class      Data data.h
+ *  @brief      Data class
+ *  @details    Indeholder data hentet fra PSoC-XY, -Z og -Sensor.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+    
+/***************************************
  *       Public data types
  ***************************************/
 
 /*!
  *  @brief      Data struct
  *  @detailes   En data struct der indeholder de sidst kendte værdier fra PSoC-XY -Z og -Sensor.
- *  @ingroup    master
  *  @public
- *  @memberof   DataMaster
+ *  @memberof   Data
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 struct DataMaster

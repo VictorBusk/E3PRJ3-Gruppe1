@@ -1,9 +1,7 @@
 /*!
  *  @file       spi.h
  *  @brief      SPI modul
- *  @details    Håndter kommunikation via SPI-busset
- *  @ingroup    master
- *  @class      SPIMaster spi.h
+ *  @details    Håndter kommunikation via SPI-busset.
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef SPI_H
@@ -11,6 +9,18 @@
 
 #include <project.h>
 
+/***************************************
+ *       Class
+ ***************************************/
+    
+/*!
+ *  @class      SPI spi.h
+ *  @brief      SPI class
+ *  @details    Håndter kommunikation via SPI-busset.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+    
+    
 /***************************************
  *       Public methods
  ***************************************/

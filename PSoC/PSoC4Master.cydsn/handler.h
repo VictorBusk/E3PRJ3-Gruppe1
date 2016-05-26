@@ -2,8 +2,6 @@
  *  @file       handler.h
  *  @brief      Handler modul
  *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
- *  @ingroup    master
- *  @class      HandlerMaster handler.h
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #ifndef HANDLER_H
@@ -11,6 +9,18 @@
 
 #include <project.h>
 
+/***************************************
+ *       Class
+ ***************************************/
+    
+/*!
+ *  @class      Handler handler.h
+ *  @brief      Handler class
+ *  @details    Håndtere indkommende kommandoer med tilhørende værdier.
+ *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
+ */
+    
+    
 /***************************************
  *       Public methods
  ***************************************/

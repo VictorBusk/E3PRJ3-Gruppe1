@@ -2,7 +2,6 @@
  *  @file       i2c.c
  *  @brief      I2C modul
  *  @details    Håndter kommunikation via I2C-busset
- *  @ingroup    master
  *  @author     Jeppe Stærk Antonsen (201271201@uni.au.dk)
  */
 #include "i2c.h"
@@ -25,9 +24,8 @@ static uint8 i2c_rx(uint8 i2cRxAddr, uint8* i2cRxCmd, uint8* i2cRxVal);
 /*!
  *  @brief      Initialiser I2C modulet.
  *  @details    Initailiser I2C komponent på PSoC'en.
- *  @ingroup    master
  *  @public
- *  @memberof   I2CMaster
+ *  @memberof   I2C
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
  */
 void i2c_init()
@@ -41,7 +39,7 @@ void i2c_init()
  *  @param[in]  i2cAddr I2C adresse på modtager.
  *  @param[in]  i2cCmd Kommando til modtager.
  *  @param[in]  i2cVal Værdi til modtager.
- *  @ingroup    master
+ *
  *  @public
  *  @memberof   I2CMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
@@ -80,7 +78,7 @@ void i2c_setPacket(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
  *  @param[in]  i2cCmd Kommando til modtager.
  *  @param[out] i2cVal Pointer til variabel hvor den hentet værdi skal lagers.
  *  @return     Status på kommunikation.
- *  @ingroup    master
+ *
  *  @public
  *  @memberof   I2CMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
@@ -150,7 +148,7 @@ void i2c_getPacket(uint8 i2cAddr, uint8 i2cCmd, uint8* i2cVal)
  *  @param[in]  i2cTxCmd Kommando til modtager.
  *  @param[in]  i2cTxVal Værdi til modtager.
  *  @return     Status på kommunikation.
- *  @ingroup    master
+ *
  *  @private
  *  @memberof   I2CMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
@@ -188,7 +186,7 @@ uint8 i2c_tx(uint8 i2cAddr, uint8 i2cCmd, uint8 i2cVal)
  *  @param[in]  i2cRxCmd Kommando til modtager.
  *  @param[out] i2cRxVal Pointer til variabel hvor den hentet værdi skal lagers.
  *  @return     Status på kommunikation.
- *  @ingroup    master
+ *
  *  @private
  *  @memberof   I2CMaster
  *  @author     Jeppe Stærk (201271201@uni.au.dk)
